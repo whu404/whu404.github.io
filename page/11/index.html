@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Hexo</title>
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/page/11/index.html">
@@ -28,2530 +25,785 @@
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="http://example.com/page/11/">
-
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/11/index.html","title":""}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo</title>
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/page/11/index.html">
   
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
 
 
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
         </a>
-      </li>
-  </ul>
-</nav>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
 
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
     </div>
   </div>
+</div>
+
 
 </div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
         
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
         </li>
-        <li class="sidebar-nav-overview">
-          Overview
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
         </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
       </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
 
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
         </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">125</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">28</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
+</div>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/">Web Server</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/uncategorized/">uncategorized</a><span class="category-list-count">76</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%90%E9%95%BF/">成长</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%98%85%E8%AF%BB/">阅读</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul>
+    </div>
   </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner index posts-expand">
 
     
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" class="post-title-link" itemprop="url">PHP编码规范</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-22 16:44:26" itemprop="dateCreated datePublished" datetime="2018-04-22T16:44:26+08:00">2018-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p> </p>
-<ol>
-<li><strong>0 前言</strong></li>
-</ol>
-<p> </p>
-<p>编码风格没有太多的好坏之分, 最重要的是风格保持一致，编码规范有助于规范我们编码的风格，使代码具有更好的可读性。编码风格百家齐放，不利于我们代码的维护和传承，根据大家平时的开发情况，制定了此PHP编码规范。</p>
-<p>每项规范前面的(强制) 代表该规范需要强制执行, (建议)代表推荐执行但不强制。</p>
-<p>注: 文中所有的变量名前面为了方便没有加”$”, 示意即可。</p>
-<p><strong>1</strong> <strong>排版</strong></p>
-<p><strong>1-1<strong><strong>：(强制)程序块要采用缩进风格编写，缩进的空格数为</strong></strong>4****个。</strong></p>
-<p>说明：不同的缩进风格对代码的可读性影响很大，以tab为缩进单位在不同的tab step   下可读性也相差很多，所以将缩进定为一个soft tab即4个空格，这样在所有环境下缩进都会保持一致。</p>
-<p><strong>1-2****：(建议)关键字与其后的左括号之间有一个空格，而函数名与左括号之间不应有任何字符包括空格。</strong></p>
-<p>说明:虽然很多情况下编辑器的highlight已经做了区分，但是从格式上区分关键字和函数适用于所有的情况。</p>
-<p>如:</p>
-<p>关键字 if (a &gt; b) 函数名  funcA()</p>
-<p><strong>1-3：(强制)开始的大括号位于一行的末尾，结束的括号位于最末一行后，且独占一行。</strong></p>
-<p>如:</p>
-<p>if (a &gt; b) {</p>
-<p>}</p>
-<p><strong>1-4**<strong>：</strong></strong>(强制)if&#x2F;while等结构体，即使只有一行，也必须加上左右花括号，不允许写成一行。**</p>
-<p>说明: 这样做可读性更好，并且方便修改。</p>
-<p>如：</p>
-<p>if (a &gt; b) {</p>
-<p> a &#x3D; 1;</p>
-<p>}</p>
-<p> </p>
-<p><strong>1-5**<strong>：</strong></strong>(建议)适当控制每行代码的长度(一般不超过80个字符)**</p>
-<p>说明: 代码更美观， 可读性更好</p>
-<p><strong>1-6**<strong>：</strong></strong>(强制)elseif语句使用elseif形式，不使用else if形式。**</p>
-<p>说明: elseif 为标准语法</p>
-<p><strong>1-7**<strong>：</strong></strong>(建议)函数名与其后的左括号之间不应有任何字符(包括空格),函数调用的左括号与其第一个参数之间不应有任何字符(包括空格)最后一个参数与右括号之间不应有任何字符(包括空格)参数列表的逗号后面应有一个空格**</p>
-<p>如:</p>
-<p>funcA(a, b, c) {</p>
-<p>}</p>
-<p><strong>1-8：(建议)避免由于对错误的条件做判断带来if的嵌套。</strong></p>
-<p>说明: 减少if&#x2F;else嵌套， 更利于代码逻辑的理解。</p>
-<p>不推荐的方式:</p>
-<p>if (a &#x3D;&#x3D;&#x3D; false) {</p>
-<p> &#x2F;&#x2F; error handle</p>
-<p>} else {</p>
-<p>if (b &#x3D;&#x3D;&#x3D; false) {</p>
-<p> &#x2F;&#x2F; handle</p>
-<p>}</p>
-<p>}</p>
-<p> </p>
-<p> 推荐的方式:</p>
-<p>if (a &#x3D;&#x3D;&#x3D; false) {</p>
-<p> &#x2F;&#x2F; error handle</p>
-<p>} </p>
-<p>if (b &#x3D;&#x3D;&#x3D; false) {</p>
-<p> &#x2F;&#x2F; handle</p>
-<p>}</p>
-<p> </p>
-<p><strong>1-9**<strong>：</strong></strong>(强制)如果过长的话需要另起一行。if 语句的条件若较多较长，应折行；新行以逻辑运算符起始，与第一行 if 左括号后的第一个字符对齐；折行后，每行条件具有独立而明确的语义。**</p>
-<p>说明: 这样做逻辑更一目了然。</p>
-<p>if (a &gt; b &amp;&amp; c &gt; d</p>
-<p>&amp;&amp; e &gt; f &amp;&amp; h &gt; j</p>
-<p>&amp;&amp; z &gt; x) {</p>
-<p>}</p>
-<p><strong>1-10：(建议)多行的”&#x3D;”可能的话尽量用空格对齐。</strong></p>
-<p>a     &#x3D; 1;</p>
-<p>ab   &#x3D; 2;</p>
-<p>abc &#x3D; 3;</p>
-<p><strong>1-11: (强制)Switch语句中每个case的break必须和case间有4个空格的缩进。</strong></p>
-<p>case ‘A’:</p>
-<p> a  &#x3D; 2;</p>
-<p> break;</p>
-<p><strong>1-12:（强制）初始化array如果采用多行结构时，数据项部分需要缩进，且最后一个数据项后面的逗号不可省略。</strong></p>
-<p>说明：这样做在修改代码增加数据项的时候不容易出现语法错误。</p>
-<p>$a &#x3D; array(</p>
-<p> ‘a’ &#x3D;&gt; ‘b’,</p>
-<p> ‘b’ &#x3D;&gt; ‘c’,</p>
-<p> ‘c’ &#x3D;&gt; ‘d’,</p>
-<p>);</p>
-<p> </p>
-<p><strong>2</strong> <strong>命名</strong></p>
-<p><strong>2-1：(强制)全局变量以g_开头。</strong></p>
-<p> 说明: 全局变量对代码影响很大，以g_开头变能在代码中一眼看出是全局变量。</p>
-<p> 如:</p>
-<p>g_count;</p>
-<p> </p>
-<p><strong>2-2**<strong>：</strong></strong>(强制)常量命名使用全部大写字符，单词之间以’_’连接。**</p>
-<p> 如:</p>
-<p>PAGE_NUM</p>
-<p> </p>
-<p><strong>2-3**<strong>：</strong></strong>(强制)对于代码中的常量，必须用常量或define表示，不允许直接写在代码中。**</p>
-<p> 如:</p>
-<p>define(‘PAGE_NUM’, 3);</p>
-<p> </p>
-<p><strong>2-4**<strong>：</strong></strong>(强制)关键字true、false、null必须小写**</p>
-<p><strong>2-5: (强制)私有函数命名需加上 ‘_’前缀。</strong></p>
-<p>private function _myPrivateFunc() {</p>
-<p>}</p>
-<p> </p>
-<p><strong>2-6:  (强制)类method命名采用驼峰命名, 普通function采用过程函数风格命名。</strong></p>
-<p>如:</p>
-<p>类method:</p>
-<p>public function getName() {</p>
-<p>}</p>
-<p>普通function:</p>
-<p>function show_me_the_money() {</p>
-<p>}</p>
-<p> </p>
-<p><strong>2-7:  (强制)文件(除了类)命名使用小写字母，单词之间以’_’连接。</strong></p>
-<p>如:</p>
-<p>show_lemma.php</p>
-<p> </p>
-<p><strong>2-8: (建议)配置文件的名称为配置文件名 + .conf.php, 不涉及类的都小写通过”_”连接。Yaf等框架要求的命名规范除外。</strong></p>
-<p>如:</p>
-<p>good_version.conf.php</p>
-<p> </p>
-<p><strong>2-9:  (建议)类名应以大写字母开头，每个单词的首字母大写。</strong></p>
-<p>如:</p>
-<p>ActionController</p>
-<ol>
-<li><p><strong>3</strong> <strong>注释</strong></p>
-</li>
-<li><p><strong>3-1：(强制)文件、函数、类以及成员变量都必须包含注释。</strong></p>
-</li>
-<li><p>类文件&#x2F;普通文件的注释, 说明该文件的主要作用。</p>
-</li>
-<li><p>例:</p>
-</li>
-<li><p>“A simple class describing employees” 说明类文件的主要作用。</p>
-</li>
-<li><p>“@package Employee” 说明namespace(如果有)</p>
-</li>
-<li><p>“@author George Schlossnagle” 说明作者信息</p>
-</li>
-</ol>
-<p>&#x2F;**</p>
-<ul>
-<li><p>A simple class describing employees</p>
-</li>
-<li></li>
-<li><p>@package Employee</p>
-</li>
-<li><p>@author George Schlossnagle</p>
-</li>
-</ul>
-<p> *&#x2F;</p>
-<ol start="2">
-<li>类注释， 说明类的主要工作。</li>
-<li>例：</li>
-<li>“An example of documenting a class” 说明类的主要作用。</li>
-<li>“The employees annual salary” 说明变量的作用。</li>
-<li>“@var number” 说明变量的类型。</li>
-<li>“The class constructor” 说明方法的作用。</li>
-<li>“@param” 说明参数类型。</li>
-<li>“@access” 说明访问权限。</li>
-<li>“@return” 说明返回值。</li>
-</ol>
-<p>&#x2F;**</p>
-<ul>
-<li>An example of documenting a class</li>
-</ul>
-<p> *&#x2F;</p>
-<p>class Employee</p>
-<p>{</p>
-<p> &#x2F;**</p>
-<ul>
-<li>@var string</li>
-</ul>
-<p> *&#x2F;</p>
-<p> var $name;</p>
-<p> &#x2F;**</p>
-<ul>
-<li><p>The employees annual salary</p>
-</li>
-<li><p>@var number</p>
-</li>
-</ul>
-<p> *&#x2F;</p>
-<p> var $salary;</p>
-<p> &#x2F;**</p>
-<ul>
-<li>@var number</li>
-</ul>
-<p> *&#x2F;</p>
-<p> var $employee_id;</p>
-<p> &#x2F;**</p>
-<ul>
-<li><p>The class constructor</p>
-</li>
-<li><p>@param number</p>
-</li>
-</ul>
-<p> *&#x2F;</p>
-<p> function Employee($employee_id &#x3D; false) {</p>
-<p> if ($employee_id) {</p>
-<p> $this-&gt;employee_id &#x3D; $employee_id;</p>
-<p> $this-&gt;_fetchInfo();</p>
-<p> }</p>
-<p> }</p>
-<p> &#x2F;**</p>
-<ul>
-<li><p>Fetches info for employee</p>
-</li>
-<li></li>
-<li><p>@access private</p>
-</li>
-</ul>
-<p> *&#x2F;</p>
-<p> function _fetchInfo() {</p>
-<p> $query &#x3D; “SELECT name,</p>
-<p> salary</p>
-<p> FROM employees</p>
-<p> WHERE employee_id &#x3D; $this-&gt;employee_id”;</p>
-<p> $result &#x3D; mysql_query($query);</p>
-<p> list($this-&gt;name, $this-&gt;department_id) &#x3D; mysql_fetch_row($result);</p>
-<p> }</p>
-<p> &#x2F;**</p>
-<ul>
-<li><p>Returns the monthly salary for the employee</p>
-</li>
-<li><p>@returns number Monthly salary in dollars</p>
-</li>
-</ul>
-<p> *&#x2F;</p>
-<p> function monthlySalary() {</p>
-<p> return $this-&gt;salary&#x2F;12;</p>
-<p> }</p>
-<p>}</p>
-<p> </p>
-<p><strong>3-2:</strong> **(强制)不能使用#作为单行注释, 多行注释&#x2F;* *   <strong>&#x2F;不能出现在同一行。</strong></p>
-<p> </p>
-<p><strong>3-3: (强制)函数必须通过param和return标记指明其参数和返回值。</strong></p>
-<p> </p>
-<p><strong>3-4:  (建议)必要的地方使用非文档性注释，提高代码易读性。</strong></p>
-<p> </p>
-<p>注释规范遵守phpDocumentor注释规范, 更多请参见: <a target="_blank" rel="noopener" href="http://manual.phpdoc.org/"><strong>http://manual.phpdoc.org/</strong></a></p>
-<p><strong>4</strong> <strong>编码原则</strong></p>
-<p><strong>4-1：(强制)整形参数，需要用intval函数处理，注意intval返回有符号的数值，若数值过大，可以考虑使用floatval。</strong></p>
-<p>如:</p>
-<p>intSalary &#x3D; intval(salary);</p>
-<p><strong>4-2**<strong>：</strong></strong>(强制)对于函数返回值的判断，特别是true&#x2F;false, 用&#x3D;&#x3D;&#x3D;&#x2F;!&#x3D;&#x3D; 而不是&#x3D;&#x3D;&#x2F;!&#x3D;。**</p>
-<p><strong>4-3:</strong> <strong>(强制)生成一个对象时，必须使用new Classname()的方式，不能用new Classname的方式。</strong></p>
-<p><strong>4-4:</strong> <strong>(强制)所有的文件路径都需要利用框架提供的宏写成绝对路径。</strong></p>
-<p><strong>4-5: (强制)对于长时间运行的脚本并且含有占用内存较大的变量，使用完后必须unset掉，避免内存占用过多。</strong></p>
-<p><strong>4-6: (强制)对于一些系统操作，使用php内置的函数例如rename、touch等即可。尽量避免使用exec调用shell命令。</strong></p>
-<p><strong>4-7: (强制)除非特殊情况，否则不允许使用require和include,而使用对应的require_once&#x2F;include_once。</strong></p>
-<p><strong>4-8: (强制)预定义变量一律使用短格式，即：$_POST、$_GET、$_SERVER、$_ENV、$GLOBALS、$_COOKIE、$_SESSION、$_REQUEST、$_FILES等，不再使用长格式：$_HTTP_POST_VARS、$_HTTP_GET_VARS。</strong></p>
-<p><strong>4-9: (建议)每个类单独为一个文件, 文件名为 原类名 + .class.php。文件中的类名由文件夹结构 + “_” + 原类名的形式组成。Yaf&#x2F;Thinkphp等框架****要求的类和类文件命名规范除外。</strong></p>
-<p>说明: 利于管理，逻辑清楚，方便autoload等。</p>
-<p>例如: 文件名: baidu&#x2F;acl&#x2F;Filter.class.php</p>
-<p> 原类名: Filter </p>
-<p> 文件中的class的名称: class Baidu_Acl_Filter</p>
-<p> 文件夹结构相当于package的名称，这样不会存在多产品命名冲突。</p>
-<p><strong>4-11:  (建议)尽量不要在php代码中出现html标签，将模板和代码分离。</strong></p>
-<p><strong>4-12:   (建议)能用foreach的就不要用for,能用for的就不要用while。</strong></p>
-<p>说明: foreach比for容易理解，for比while容易理解。</p>
-<p><strong>4-13:</strong> <strong>(强制)前端访问必须有日志记录，记录条数应与访问一一对应。</strong></p>
-<p><strong>4-14:(建议)数据库写操作必须有日志记录；记录条数应与操作一一对应。</strong></p>
-<p><strong>4-15:(强制)对于文件更新操作，必须先写到一个临时文件中，然后用rename&#x2F;mv操作。切忌直接在原文件上做更新。</strong></p>
-<p><strong>4-16:(建议)字符串尽量用’ ‘而不是” “进行引用，一个是效率问题，一个是安全问题。</strong></p>
-<p><strong>4-17: (强制)所有的define语句，常量必须用’’包括起来。</strong></p>
-<p>define(‘PAGE_NUM’, 3);</p>
-<p><strong>4-18: (强制)require后面需要带上括号。</strong></p>
-<p>require_once(“a.php”);</p>
-<p><strong>4-19: (强制)函数允许使用默认参数,但是默认参数需要放到参数列表最后面。</strong></p>
-<p><strong>4-20: (强制)所有的全局变量应该写在函数的最开头，并且和后面的代码以空行隔开。</strong></p>
-<p>function a() {</p>
-<p> global g_count;</p>
-<p> global g_time;</p>
-<p> a &#x3D; 1; </p>
-<p>}</p>
-<p> </p>
-<p>**4-21: (强制)**在头文件中定义全局变量必须用$GLOBALS的形式，这样可以避免在函数中include导致的作用域问题。</p>
-<?php
-
-function func() {
-
- require_once('a.conf.php');
-
- // do something
-
-}
-
-func();
-
-require_once('a.conf.php');
-
-echo "bad: $g_bad\\ngood: $g_good\\n";
-
-?>
-
-<ol>
-<li>conf.php</li>
-</ol>
-<?php
-
-// bad
-
-$g_bad = 'bad';
-
-// good
-
-$GLOBALS\['g_good'\] = 'good';
-
-?>
-
-<p> </p>
-<p> <strong>5.安全编码</strong></p>
-<p> </p>
-<p>**5-1: (强制)所有的用户输入都是有害的,**<strong>对所有从客户端传入的数据都不信任, 需要做判断和过滤,否则可能会受到SQL Injection、XSS等攻击。</strong></p>
-<p>  例如: $_GET, $_POST, $_COOKIE, $_FILES, $REQUEST等。</p>
-<p> 直接使用将可能存在被注入的危险。</p>
-<p> </p>
-<p><strong>5-2： (强制)用户的相关输入涉及数据库操作、文件操作等敏感操作时需要对输入做专门的转换。</strong></p>
-<p> 例如: 数据库操作中数字型的需要做intval转换，字符串类型的需要通过mysql_real_escape_string过滤。</p>
-<p> 文件操作中类似 include_once(“$userInput”)等操作。</p>
-<p> </p>
-<p>**5-3:  (强制)**<strong>用户上传的文件的文件名必须重新命名，并限制其后缀。</strong></p>
-<p> </p>
-<p><strong>5-4:  (强制)将php配置中的 register_globals 设置为 Off。</strong></p>
-<p>  register_globals允许php将$_GET，$_POST，$_COOKIE等变量里的内容自动注册为全局变量，如果程序里的某些变量没有经过初始化而直接使用将导致安全问题。</p>
-<p> </p>
-<p><strong>5-5：</strong> <strong>(强制)将php配置中的expose_php设置为Off。</strong></p>
-<p>  避免PHP版本信息暴露。</p>
-<p><strong>5-6: (强制)php配置中error_reporting应该设置为输出 E_NOTICE级别的日志。</strong></p>
-<p> E_NOTICE级别的日志虽然算不上错误日志，但是却告诉了我们哪些地方存在安全隐患，例如：变量未初始化等等， 打开E_NOTICE有助于我们减少bug, 提前发现安全漏洞。</p>
-
       
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">Web服务器</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/" rel="tag">go</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nosql/" rel="tag">nosql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E5%85%A8/" rel="tag">安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD/" rel="tag">性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E9%95%BF/" rel="tag">成长</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE/" rel="tag">数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E5%AD%A6/" rel="tag">文学</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84/" rel="tag">架构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag">生活</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%93%E5%AD%98/" rel="tag">缓存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
     </div>
+  </div>
+
 
     
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
       
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">php操作数据库的几种方式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-22 16:30:16" itemprop="dateCreated datePublished" datetime="2018-04-22T16:30:16+08:00">2018-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong><a target="_blank" rel="noopener" href="http://lib.csdn.net/base/php" title="PHP知识库">PHP</a>的<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/mysql" title="MySQL知识库">MySQL</a>扩展</strong></p>
-<p>设计开发允许PHP应用与MySQL<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/mysql" title="MySQL知识库">数据库</a>交互的早期扩展。mysql扩展提供了一个<strong>面向过程</strong>的接口；</p>
-<p>并且是针对MySQL4.1.3或更早版本设计的。因此，这个扩展虽然可以与MySQL4.1.3或更新的数 ；</p>
-<p>据库服务端 进行交互，但并不支持后期MySQL服务端提供的一些特性。</p>
-<p><strong>PHP的mysqli扩展</strong></p>
-<p>mysqli扩展，我们有时称之为MySQL增强扩展，可以用于使用 MySQL4.1.3或更新版本中新的高级特性；</p>
-<p>mysqli扩展在PHP 5及以后版本中包含；</p>
-<p>mysqli扩展有一系列的优势，相对于mysql扩展的提升主要有：面向对象接口、 prepared语句支持、多语句执行支持、事务支持、增强的调试能力、<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/embeddeddevelopment" title="嵌入式开发知识库">嵌入式</a>服务支持。</p>
-<p>PHP数据对象(PDO)</p>
-<p>PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以，使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器。</p>
-<p> </p>
-<hr>
-<p> </p>
-<p>Mysql连接：</p>
-<?php
-$conn= @ mysql_connect("localhost", "root", "") or die("数据库连接错误");
-mysql_select_db("bbs", $conn);
-mysql_query("set names 'utf8'");
-echo
-"数据库连接成功";
-?>
-
-<p>Mysqli连接：</p>
-<?php
-$conn= mysqli_connect('localhost', 'root', '', 'bbs');
-if(!$conn){
-    die("数据库连接错误". mysqli_connect_error());
-}else{
-    echo"数据库连接成功";
-}
-?>
-
-<p>Pdo连接：</p>
-<?php
-try{
-    $pdo=new  pdo("mysql:host=localhost;dbname=bbs","root","");
-}catch(PDDException $e){
-    echo"数据库连接错误";
-}
-echo"数据库连接成功";
-?>
-
-<p>以下是我在网站看到的Mysql、Mysqli、Pdo三种方式的区别对比</p>
-<hr>
-<p><strong>PHP-MySQL</strong> 是 PHP 操作 MySQL 资料库最原始的 Extension ，<strong>PHP-MySQLi</strong> 的 i 代表 Improvement ，提更了相对进阶的功能，就 Extension 而言，本身也增加了安全性。而 <strong>PDO (PHP Data Object)</strong> 则是提供了一个 Abstraction Layer 来操作资料库</p>
-<p>1.<strong>mysql与mysqli</strong></p>
-<p>mysqli是php5提供的新函数库，(i)表示改进，其执行速度更快.当然也更安全</p>
-<p>mysql是非持继连接函数而mysqli是永远连接函数。也就是说，mysql每次链接都会打开一个连接的进程而mysqli多次运行mysqli将使用同一连接进程,从而减少了服务器的开销 有些朋友在编程的时候，使用new mysqli(‘localhost’, usenamer’, ‘password’, ‘databasename’);总是报错，Fatal error: Class ‘mysqli’ not found in d:\…</p>
-<p><strong>mysqli类不是php自带的吗？</strong></p>
-<p>不是默认开启的，win下要改php.ini,去掉php_mysqli.dll前的#;,<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux" title="Linux知识库">Linux</a>下要把mysqli编译进去。</p>
-<p>一:Mysqli.dll是一个允许以对象的方式或者过程操作数据库的，它的使用方式也很容易。这里就几个常</p>
-<?php
-mysql_connect($db_host, $db_user, $db_password);
-mysql_select_db($dn_name);
-$result= mysql_query("SELECT \`name\` FROM \`users\` WHERE \`location\` = '$location'");
-while
-($row= mysql_fetch_array($result, MYSQL_ASSOC)){
-    echo $row\['name'\];
-}
-mysql_free_result($result);
-?>
-
-<p>其实背后有些学问… 这种方式不能 Bind Column ，以前例的 SQL 叙述来说，$location 的地方容易被 SQL Injection。后来于是发展出了 mysql_escape_string() (备注：5.3.0之后弃用) 以及 mysql_real_escape_string()来解决这个问题，不过这麽一搞，整个叙述会变得複杂且丑陋，而且如果栏位多了，可以想见会是怎样的情形…</p>
-<?php
-$query = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'"; 
-mysql_real_escape_string($user);
-mysql_real_escape_string($password)); 
-mysql_query($query);
-?>
-
-<p>在 PHP-MySQLi 中有了不少进步，除了透过 Bind Column 来解决上述问题，而且也多援 Transaction, Multi Query ，并且同时提供了 Object oriented style (下面这段 PHP-MySQLi 范例的写法) 和 Procedural style</p>
-<?php 
-$mysqli = new mysqli($db_host, $db_user, $db_password, $db_name); 
-$sql = "INSERT INTO \`users\` (id, name, gender, location) VALUES (?, ?, ?, ?)"; 
-$stmt = $mysqli->prepare($sql); 
-$stmt->bind_param('dsss', $source_id, $source_name, $source_gender, $source_location); 
-$stmt->execute(); 
-$stmt->bind_result($id, $name, $gender, $location); 
-while ($stmt->fetch()){ 
-    echo $id . $name . $gender . $location; 
-} 
-$stmt->close(); 
-$mysqli->close();
-?>
-
-<p>但看到这边又发现了一些缺点，例如得 Bind Result，这个就有点多馀，不过这其实无关紧要，因为最大的问题还是在于这不是一个抽象(Abstraction)的方法，所以当后端更换资料库的时候，就是痛苦的开始… 于是 PDO 就出现了</p>
-<p>2.PDO与mysql</p>
-<p>PDO是PHP5.1之后才支持的，他为访问数据库采用了一致性的接口。但是国内众多的开源程序都是使用MySQL的extension所提供的function连接数据库，进行查询。PDO功能强大为何国内成熟的PHP系统都不使用呢？问过几个朋友为啥用PDO,答案是“快”，PDO连接数据库会快么？为什么使用PDO?他们两种方式有什么区别？首先还是比较关心的性能问题.写了1个脚本测试向MySQL插入100万条数据。</p>
-<?php 
-$link = mysql_connect("localhost", "root", "root") or die('mysql connect error');
-
-$num = 100000;
-$dsn = "mysql:host=127.0.0.1;dbname=performace_test"; 
-$db = new PDO($dsn, 'root', 'root', array(PDO::ATTR_PERSISTENT => true)); 
-mysql_query('TRUNCATE TABLE \`performace_test\`.\`myquery\`',$link);  //Truncate Table 
-$query = "INSERT INTO \`performace_test\`.\`myquery\`(\`goods_id\`,\`cat_id\`,\`click_count\`,\`goods_number\`,\`goods_weight\`,\`goods_sn\`,\`goods_name\`,\`goods_reason\`,\`brand_name\`,\`goods_thumb\`,\`brand_id\`,\`is_on_sale\`,\`wap_cod\`,\`wap_title\`,\`wap_detail\`,\`wap_flag\`,\`wap_onsale\`,\`shop_price\`,\`cost_price\`,\`channel_rate\`,\`channel_onsale\`,\`add_time\`,\`is_main\`,\`last_update\`,\`brand_logo\`) VALUES ( ’80′,’298′,’65′,’100′,’0.125′,’SMT000080′,’健康′,”,’健康120’,'images/201004 /thumb_img/80_thumb_G_1272071721054.jpg’,’1′,’0′,’0′,NULL,NULL,NULL,’0′,’2980.00′,’0.00′,’1.250000′,’1′,’1271612064′,’0′,’1297624384′,’1293649512083026412.jpg’)"; 
-$start_time = microtime(true); 
-for($i=0;$i<$num;$i++){ 
-    mysql_query($query,$link);
-}
-echo "USE MySQL extension: ". (microtime(true)-$start_time); 
-mysql_query(‘TRUNCATE TABLE \`performace_test\`.\`myquery\`’,$link);  //Truncate Table 
-$start_time = microtime(true); 
-for($i=0;$i<$num;$i++){ 
-    $db->exec($query); 
-} 
-echo "\\r\\nUSE PDO : ". (microtime(true)-$start_time);
-
-输出结果：
-
-USE MySQL extension: 95.233189106s
-USE PDO : 99.1193888187s
-
-在链接MySQL上几乎没有区别。PDO的性能损失完全可以忽略不计。
-
-但是却有非常多的操作却是MySQL扩展库所不具备的：
-
-1:PDO真正的以底层实现的统一接口数库操作接口
-
-2:PDO支持更高级的DB特性操作，如：存储过程的调度等,mysql原生库是不支持的.
-
-3:PDO是PHP官方的PECL库，兼容性稳定性必然要高于MySQL Extension,可以直接使用 pecl upgrade pdo 命令升级.
-
-PHP6默认也是使用PDO进行数据库链接，MySQL Extension会作为辅助。所以我们在日常项目中，如果环境允许，尽可能去使用PDO来进行MySQL数据库操作。
-
- 
-
-### **名词解释:**
-
-最开始的初学者，往往搞不清mysqli,mysqlnd,pdo到底是什么，下面先直接贴出最直观的名字吧。
-
-> MYSQL:This extension is deprecated as of PHP 5.5.0, and has been removed as of PHP 7.0.0.
-> MYSQLI: MySQL Improved Extension
-> MySQLND: MySQL Native Drive
-> PDO:The PHP Data Objects。extension defines a lightweight, consistent interface for accessing databases in PHP。
-
-以上摘自 PHP官方手册: [http://php.net/manual/en/book.mysqli.php](http://php.net/manual/en/book.mysqli.php)
-
-用中文说:
-MYSQL 也叫 Original MySQL，PHP4版本的MYSQL扩展，从PHP5起已经被废弃，并别从PHP7开始已经被移除。
-
-MYSQLI 叫做 “MySQL增强扩展”。
-
-MYSQLND MYSQL NATIVE DIRVER 叫做MYSQL “官方驱动”或者更加直接点的叫做“原生驱动”
-
-PDO PHP Data Objects PHP数据对象，是PHP应用中的一个数据库抽象层规范。
-
-针对本篇文章
-
-### **再补充几个名词解释：**
-
-1 什么是API？
-
-> 一个应用程序接口（Application Programming Interface的缩写），定义了类，方法，函数，变量等等一切 你的应用程序中为了完成特定任务而需要调用的内容。在PHP应用程序需要和数据库进行交互的时候所需要的API 通常是通过PHP扩展暴露出来（给终端PHP程序员调用）。
-
-**上文所说的MYSQL 和MYSQLI扩展就提供了这样的API。**
-
-2什么是驱动？
-
-> 驱动是一段设计用来于一种特定类型的数据库服务器进行交互的软件代码。驱动可能会调用一些库，比如MySQL客户端库或者MySQL Native驱动库。 这些库实现了用于和MySQL数据库服务器进行交互的底层协议。
-
-**在PHP拓展的角度上看，MYSQL和MYSQLi还是比较上层的拓展，依赖更底层的库去连接和访问数据库。**
-**上文所说的MYSQLND 就是所说的底层的数据库驱动。当然，还有一个驱动叫做libmysqlclient。至于如何选择使用这两种驱动的哪一种，请看这里[选择哪一种底层数据库驱动](http://php.net/manual/en/mysqlinfo.library.choosing.php)。**
-
-### **总的来说:**
-
-从应用的层面上看，我们通过PHP 的MYSQL或者MYSQLi扩展提供的API去操作数据库。
-
-从底层来看，MYSQLND提供了底层和数据库交互的支持(可以简单理解为和MySQL server进行网络协议交互)。
-
-而PDO，则提供了一个统一的API接口，使得你的PHP应用不去关心具体要连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器。比如MYSQL,SQLITE任何数据库都行。
-
-即从大部分功能上看，PDO提供的API接口和MYSQLI提供的接口对于普通的增删改查效果是一致的。
-      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 13.2px;">Web服务器</a> <a href="/tags/go/" style="font-size: 13px;">go</a> <a href="/tags/js/" style="font-size: 13px;">js</a> <a href="/tags/linux/" style="font-size: 13.8px;">linux</a> <a href="/tags/mysql/" style="font-size: 13.4px;">mysql</a> <a href="/tags/nginx/" style="font-size: 13px;">nginx</a> <a href="/tags/nosql/" style="font-size: 13px;">nosql</a> <a href="/tags/php/" style="font-size: 14px;">php</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/redis/" style="font-size: 13.4px;">redis</a> <a href="/tags/shell/" style="font-size: 13.6px;">shell</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13px;">前端</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 13px;">安全</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 13.4px;">工具</a> <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 13px;">微服务</a> <a href="/tags/%E6%80%A7%E8%83%BD/" style="font-size: 13px;">性能</a> <a href="/tags/%E6%88%90%E9%95%BF/" style="font-size: 13.4px;">成长</a> <a href="/tags/%E6%95%B0%E6%8D%AE/" style="font-size: 13px;">数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.6px;">数据库</a> <a href="/tags/%E6%96%87%E5%AD%A6/" style="font-size: 13px;">文学</a> <a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 13.6px;">架构</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 13.2px;">生活</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13px;">算法</a> <a href="/tags/%E7%BC%93%E5%AD%98/" style="font-size: 13px;">缓存</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" style="font-size: 13.4px;">软件工程</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 13.4px;">运维</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
     </div>
+  </div>
 
     
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
       
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/" class="post-title-link" itemprop="url">php用户输入过滤</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-22 16:12:50" itemprop="dateCreated datePublished" datetime="2018-04-22T16:12:50+08:00">2018-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>作为PHP程序员，特别是新手，对于互联网的险恶总是知道的太少，对于外部的入侵有很多时候是素手无策的，他们根本不知道黑客是如何入侵的、提交入侵、上传漏洞、sql 注入、跨脚本攻击等等。</p>
-<p>作为最基本的防范你需要注意你的外部提交，做好第一面安全机制处理防火墙。<br><strong>规则 1：绝不要信任外部数据或输入</strong> 关于Web应用程序安全性，必须认识到的第一件事是不应该信任外部数据。外部数据(outside data) 包括不是由程序员在PHP代码中直接输入的任何数据。在采取措施确保安全之前，来自任何其他来源(比如 GET 变量、表单 POST、数据库、配置文件、会话变量或 cookie)的任何数据都是不可信任的。<br>例如，下面的数据元素可以被认为是安全的，因为它们是在PHP中设置的。</p>
-<p>复制代码代码如下:</p>
-<?php
-$myUsername = 'tmyer';
-$arrayUsers = array('tmyer', 'tom', 'tommy');
-define(”GREETING”, 'hello there' . $myUsername);
-?>
-
-<p>但是，下面的数据元素都是有瑕疵的。<br><strong>清单 2. 不安全、有瑕疵的代码</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$myUsername = $_POST\['username'\]; //tainted!
-$arrayUsers = array($myUsername, 'tom', 'tommy'); //tainted!
-define(”GREETING”, 'hello there' . $myUsername); //tainted!
-?>
-
-<p>为 什么第一个变量 $myUsername 是有瑕疵的？因为它直接来自表单 POST。用户可以在这个输入域中输入任何字符串，包括用来清除文件或运行以前上传的文件的恶意命令。您可能会问，“难道不能使用只接受字母 A-Z 的客户端（Javascrīpt）表单检验脚本来避免这种危险吗？”是的，这总是一个有好处的步骤，但是正如在后面会看到的，任何人都可以将任何表单下载 到自己的机器上，修改它，然后重新提交他们需要的任何内容。<br>解决方案很简单：必须对 $_POST[‘username’] 运行清理代码。如果不这么做，那么在使用 $myUsername 的任何其他时候（比如在数组或常量中），就可能污染这些对象。<br>对用户输入进行清理的一个简单方法是，使用正则表达式来处理它。在这个示例中，只希望接受字母。将字符串限制为特定数量的字符，或者要求所有字母都是小写的，这可能也是个好主意。<br><strong>清单 3. 使用户输入变得安全</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$myUsername = cleanInput($_POST\['username'\]); //clean!
-$arrayUsers = array($myUsername, 'tom', 'tommy'); //clean!
-define(”GREETING”, 'hello there' . $myUsername); //clean!
-function cleanInput($input){
-$clean = strtolower($input);
-$clean = preg_replace(”/\[^a-z\]/”, “”, $clean);
-$clean = substr($clean,0,12);
-return $clean;
-}
-?>
-
-<p><strong>规则 2：禁用那些使安全性难以实施的 PHP 设置</strong> 已经知道了不能信任用户输入，还应该知道不应该信任机器上配置 PHP 的方式。例如，要确保禁用 register_globals。如果启用了 register_globals，就可能做一些粗心的事情，比如使用 $variable 替换同名的 GET 或 POST 字符串。通过禁用这个设置，PHP 强迫您在正确的名称空间中引用正确的变量。要使用来自表单 POST 的变量，应该引用 $_POST[‘variable’]。这样就不会将这个特定变量误会成 cookie、会话或 GET 变量。<br><strong>规则 3：如果不能理解它，就不能保护它</strong> 一些开发人员使用奇怪的语法，或者将语句组织得很紧凑，形成简短但是含义模糊的代码。这种方式可能效率高，但是如果您不理解代码正在做什么，那么就无法决定如何保护它。<br>例如，您喜欢下面两段代码中的哪一段？<br><strong>清单 4. 使代码容易得到保护</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-//obfuscated code
-$input = (isset($_POST\['username'\]) ? $_POST\['username'\]:”);
-//unobfuscated code
-$input = ”;
-if (isset($_POST\['username'\])){
-$input = $_POST\['username'\];
-}else{
-$input = ”;
-}
-?>
-
-<p>在第二个比较清晰的代码段中，很容易看出 $input 是有瑕疵的，需要进行清理，然后才能安全地处理。<br><strong>规则 4：“纵深防御” 是新的法宝</strong> 本教程将用示例来说明如何保护在线表单，同时在处理表单的 PHP 代码中采用必要的措施。同样，即使使用 PHP regex 来确保 GET 变量完全是数字的，仍然可以采取措施确保 SQL 查询使用转义的用户输入。<br>纵深防御不只是一种好思想，它可以确保您不会陷入严重的麻烦。<br>既然已经讨论了基本规则，现在就来研究第一种威胁：SQL 注入攻击。<br>防止 SQL 注入攻击<br>在 SQL 注入攻击 中，用户通过操纵表单或 GET 查询字符串，将信息添加到数据库查询中。例如，假设有一个简单的登录数据库。这个数据库中的每个记录都有一个用户名字段和一个密码字段。构建一个登录表单，让用户能够登录。<br><strong>清单 5. 简单的登录表单</strong> </p>
-<p>复制代码代码如下:</p>
-<html>
-<head>
-<title>Login</title>
-</head>
-<body>
-<form action=”verify.php” method=”post”>
-<p><label for='user'>Username</label>
-<input type='text' name='user' id='user'/>
-</p>
-<p><label for='pw'>Password</label>
-<input type='password' name='pw' id='pw'/>
-</p>
-<p><input type='submit' value='login'/></p>
-</form>
-</body>
-</html>
-
-<p>这个表单接受用户输入的用户名和密码，并将用户输入提交给名为 verify.php 的文件。在这个文件中，PHP 处理来自登录表单的数据，如下所示：<br><strong>清单 6. 不安全的 PHP 表单处理代码</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$okay = 0;
-$username = $_POST\['user'\];
-$pw = $_POST\['pw'\];
-$sql = “select count(*) as ctr from users where username='”.$username.”' and password='”. $pw.”' limit 1″;
-$result = mysql_query($sql);
-while ($data = mysql_fetch_object($result)){
-if ($data->ctr == 1){
-//they're okay to enter the application!
-$okay = 1;
-}
-}
-if ($okay){
-$_SESSION\['loginokay'\] = true;
-header(”index.php”);
-}else{
-header(”login.php”);
-}
-?>
-
-<p>这 段代码看起来没问题，对吗？世界各地成百（甚至成千）的 PHP&#x2F;MySQL 站点都在使用这样的代码。它错在哪里？好，记住 “不能信任用户输入”。这里没有对来自用户的任何信息进行转义，因此使应用程序容易受到攻击。具体来说，可能会出现任何类型的 SQL 注入攻击。<br>例如，如果用户输入 foo 作为用户名，输入 ‘ or ‘1′&#x3D;’1 作为密码，那么实际上会将以下字符串传递给 PHP，然后将查询传递给 MySQL：</p>
-<p>复制代码代码如下:</p>
-<?php
-$sql = “select count(*) as ctr from users where username='foo' and password=” or '1′='1′ limit 1″;
-?>
-
-<p>这个查询总是返回计数值 1，因此 PHP 会允许进行访问。通过在密码字符串的末尾注入某些恶意 SQL，黑客就能装扮成合法的用户。<br>解 决这个问题的办法是，将 PHP 的内置 mysql_real_escape_string() 函数用作任何用户输入的包装器。这个函数对字符串中的字符进行转义，使字符串不可能传递撇号等特殊字符并让 MySQL 根据特殊字符进行操作。清单 7 展示了带转义处理的代码。<br><strong>清单 7. 安全的 PHP 表单处理代码</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$okay = 0;
-$username = $_POST\['user'\];
-$pw = $_POST\['pw'\];
-$sql = “select count(*) as ctr from users where username='”.mysql_real_escape_string($username).”' and password='”. mysql_real_escape_string($pw).”' limit 1″;
-$result = mysql_query($sql);
-while ($data = mysql_fetch_object($result)){
-if ($data->ctr == 1){
-//they're okay to enter the application!
-$okay = 1;
-}
-}
-if ($okay){
-$_SESSION\['loginokay'\] = true;
-header(”index.php”);
-}else{
-header(”login.php”);
-}
-?>
-
-<p>使用 mysql_real_escape_string() 作为用户输入的包装器，就可以避免用户输入中的任何恶意 SQL 注入。如果用户尝试通过 SQL 注入传递畸形的密码，那么会将以下查询传递给数据库：<br>select count(*) as ctr from users where username&#x3D;’foo’ and password&#x3D;’\‘ or \‘1\‘&#x3D;\‘1′ limit 1″<br>数据库中没有任何东西与这样的密码匹配。仅仅采用一个简单的步骤，就堵住了 Web 应用程序中的一个大漏洞。这里得出的经验是，总是应该对 SQL 查询的用户输入进行转义。<br>但是，还有几个安全漏洞需要堵住。下一项是操纵 GET 变量。<br>防止用户操纵 GET 变量<br>在前一节中，防止了用户使用畸形的密码进行登录。如果您很聪明，应该应用您学到的方法，确保对 SQL 语句的所有用户输入进行转义。<br>但 是，用户现在已经安全地登录了。用户拥有有效的密码，并不意味着他将按照规则行事 —— 他有很多机会能够造成损害。例如，应用程序可能允许用户查看特殊的内容。所有链接指向 template.php?pid&#x3D;33 或 template.php?pid&#x3D;321 这样的位置。URL 中问号后面的部分称为查询字符串。因为查询字符串直接放在 URL 中，所以也称为 GET 查询字符串。<br>在 PHP 中，如果禁用了 register_globals，那么可以用 $_GET[‘pid’] 访问这个字符串。在 template.php 页面中，可能会执行与清单 8 相似的操作。<br><strong>清单 8. 示例 template.php</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$pid = $_GET\['pid'\];
-//we create an object of a fictional class Page
-$obj = new Page;
-$content = $obj->fetchPage($pid);
-//and now we have a bunch of PHP that displays the page
-?>
-
-<p>这 里有什么错吗？首先，这里隐含地相信来自浏览器的 GET 变量 pid 是安全的。这会怎么样呢？大多数用户没那么聪明，无法构造出语义攻击。但是，如果他们注意到浏览器的 URL 位置域中的 pid&#x3D;33，就可能开始捣乱。如果他们输入另一个数字，那么可能没问题；但是如果输入别的东西，比如输入 SQL 命令或某个文件的名称（比如 &#x2F;etc&#x2F;passwd），或者搞别的恶作剧，比如输入长达 3,000 个字符的数值，那么会发生什么呢？<br>在这种情况下，要记住基本规则，不要信任用户输入。应用程序开发人员知道 template.php 接受的个人标识符（PID）应该是数字，所以可以使用 PHP 的 is_numeric() 函数确保不接受非数字的 PID，如下所示：<br><strong>清单 9. 使用 is_numeric() 来限制 GET 变量</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$pid = $_GET\['pid'\];
-if (is_numeric($pid)){
-//we create an object of a fictional class Page
-$obj = new Page;
-$content = $obj->fetchPage($pid);
-//and now we have a bunch of PHP that displays the page
-}else{
-//didn't pass the is_numeric() test, do something else!
-}
-?>
-
-<p>这个方法似乎是有效的，但是以下这些输入都能够轻松地通过 is_numeric() 的检查：<br>100 （有效）<br>100.1 （不应该有小数位）<br>+0123.45e6 （科学计数法 —— 不好）<br>0xff33669f （十六进制 —— 危险！危险！）<br>那么，有安全意识的 PHP 开发人员应该怎么做呢？多年的经验表明，最好的做法是使用正则表达式来确保整个 GET 变量由数字组成，如下所示：<br><strong>清单 10. 使用正则表达式限制 GET 变量</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$pid = $_GET\['pid'\];
-if (strlen($pid)){
-if (!ereg(”^\[0-9\]+$”,$pid)){
-//do something appropriate, like maybe logging them out or sending them back to home page
-}
-}else{
-//empty $pid, so send them back to the home page
-}
-//we create an object of a fictional class Page, which is now
-//moderately protected from evil user input
-$obj = new Page;
-$content = $obj->fetchPage($pid);
-//and now we have a bunch of PHP that displays the page
-?>
-
-<p>需 要做的只是使用 strlen() 检查变量的长度是否非零；如果是，就使用一个全数字正则表达式来确保数据元素是有效的。如果 PID 包含字母、斜线、点号或任何与十六进制相似的内容，那么这个例程捕获它并将页面从用户活动中屏蔽。如果看一下 Page 类幕后的情况，就会看到有安全意识的 PHP 开发人员已经对用户输入 $pid 进行了转义，从而保护了 fetchPage() 方法，如下所示：<br><strong>清单 11. 对 fetchPage() 方法进行转义</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-class Page{
-function fetchPage($pid){
-$sql = “select pid,title,desc,kw,content,status from page where pid='”.mysql_real_escape_string($pid).”'”;
-}
-}
-?>
-
-<p>您可能会问，“既然已经确保 PID 是数字，那么为什么还要进行转义？” 因为不知道在多少不同的上下文和情况中会使用 fetchPage() 方法。必须在调用这个方法的所有地方进行保护，而方法中的转义体现了纵深防御的意义。<br>如 果用户尝试输入非常长的数值，比如长达 1000 个字符，试图发起缓冲区溢出攻击，那么会发生什么呢？下一节更详细地讨论这个问题，但是目前可以添加另一个检查，确保输入的 PID 具有正确的长度。您知道数据库的 pid 字段的最大长度是 5 位，所以可以添加下面的检查。<br><strong>清单 12. 使用正则表达式和长度检查来限制 GET 变量</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$pid = $_GET\['pid'\];
-if (strlen($pid)){
-if (!ereg(”^\[0-9\]+$”,$pid) && strlen($pid) > 5){
-//do something appropriate, like maybe logging them out or sending them back to home page
-}
-} else {
-//empty $pid, so send them back to the home page
-}
-//we create an object of a fictional class Page, which is now
-//even more protected from evil user input
-$obj = new Page;
-$content = $obj->fetchPage($pid);
-//and now we have a bunch of PHP that displays the page
-?>
-
-<p>现在，任何人都无法在数据库应用程序中塞进一个 5,000 位的数值 —— 至少在涉及 GET 字符串的地方不会有这种情况。想像一下黑客在试图突破您的应用程序而遭到挫折时咬牙切齿的样子吧！而且因为关闭了错误报告，黑客更难进行侦察。<br>缓冲区溢出攻击<br>缓冲区溢出攻击 试图使 PHP 应用程序中（或者更精确地说，在 Apache 或底层操作系统中）的内存分配缓冲区发生溢出。请记住，您可能是使用 PHP 这样的高级语言来编写 Web 应用程序，但是最终还是要调用 C（在 Apache 的情况下）。与大多数低级语言一样，C 对于内存分配有严格的规则。<br>缓冲区溢出攻击向缓冲区发送大量数据，使部分数据溢出到相邻的内存缓冲区，从而破坏缓冲区或者重写逻辑。这样就能够造成拒绝服务、破坏数据或者在远程服务器上执行恶意代码。<br>防止缓冲区溢出攻击的惟一方法是检查所有用户输入的长度。例如，如果有一个表单元素要求输入用户的名字，那么在这个域上添加值为 40 的 maxlength 属性，并在后端使用 substr() 进行检查。清单 13 给出表单和 PHP 代码的简短示例。<br><strong>清单 13. 检查用户输入的长度</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-if ($_POST\['submit'\] == “go”){
-$name = substr($_POST\['name'\],0,40);
-}
-?>
-<form action=”<?php echo $_SERVER\['PHP_SELF'\];?>” method=”post”>
-<p><label for=”name”>Name</label>
-<input type=”text” name=”name” id=”name” size=”20″ maxlength=”40″/></p>
-<p><input type=”submit” name=”submit” value=”go”/></p>
-</form>
-
-<p>为 什么既提供 maxlength 属性，又在后端进行 substr() 检查？因为纵深防御总是好的。浏览器防止用户输入 PHP 或 MySQL 不能安全地处理的超长字符串（想像一下有人试图输入长达 1,000 个字符的名称），而后端 PHP 检查会确保没有人远程地或者在浏览器中操纵表单数据。<br>正如您看到的，这种方式与前一节中使用 strlen() 检查 GET 变量 pid 的长度相似。在这个示例中，忽略长度超过 5 位的任何输入值，但是也可以很容易地将值截短到适当的长度，如下所示：<br><strong>清单 14. 改变输入的 GET 变量的长度</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-$pid = $_GET\['pid'\];
-if (strlen($pid)){
-if (!ereg(”^\[0-9\]+$”,$pid)){
-//if non numeric $pid, send them back to home page
-}
-}else{
-//empty $pid, so send them back to the home page
-}
-//we have a numeric pid, but it may be too long, so let's check
-if (strlen($pid)>5){
-$pid = substr($pid,0,5);
-}
-//we create an object of a fictional class Page, which is now
-//even more protected from evil user input
-$obj = new Page;
-$content = $obj->fetchPage($pid);
-//and now we have a bunch of PHP that displays the page
-?>
-
-<p>注 意，缓冲区溢出攻击并不限于长的数字串或字母串。也可能会看到长的十六进制字符串（往往看起来像 \xA3 或 \xFF）。记住，任何缓冲区溢出攻击的目的都是淹没特定的缓冲区，并将恶意代码或指令放到下一个缓冲区中，从而破坏数据或执行恶意代码。对付十六进制缓 冲区溢出最简单的方法也是不允许输入超过特定的长度。<br>如果您处理的是允许在数据库中输入较长条目的表单文本区，那么无法在客户端轻松地限制数据的长度。在数据到达 PHP 之后，可以使用正则表达式清除任何像十六进制的字符串。<br><strong>清单 15. 防止十六进制字符串</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-if ($_POST\['submit'\] == “go”){
-$name = substr($_POST\['name'\],0,40);
-//clean out any potential hexadecimal characters
-$name = cleanHex($name);
-//continue processing….
-}
-function cleanHex($input){
-$clean = preg_replace(”!\[\\\]\[xX\](\[A-Fa-f0-9\]{1,3})!”, “”,$input);
-return $clean;
-}
-?>
-<form action=”<?php echo $_SERVER\['PHP_SELF'\];?>” method=”post”>
-<p><label for=”name”>Name</label>
-<input type=”text” name=”name” id=”name” size=”20″ maxlength=”40″/></p>
-<p><input type=”submit” name=”submit” value=”go”/></p>
-</form>
-
-<p>您 可能会发现这一系列操作有点儿太严格了。毕竟，十六进制串有合法的用途，比如输出外语中的字符。如何部署十六进制 regex 由您自己决定。比较好的策略是，只有在一行中包含过多十六进制串时，或者字符串的字符超过特定数量（比如 128 或 255）时，才删除十六进制串。<br>跨站点脚本攻击<br>在跨站点脚本（XSS）攻击中，往往有一个恶意用户在表单中（或通过其他用户输入方式）输入信息，这些输入将恶 意的客户端标记插入过程或数据库中。例如，假设站点上有一个简单的来客登记簿程序，让访问者能够留下姓名、电子邮件地址和简短的消息。恶意用户可以利用这 个机会插入简短消息之外的东西，比如对于其他用户不合适的图片或将用户重定向到另一个站点的 Javascrīpt，或者窃取 cookie 信息。<br>幸运的是，PHP 提供了 strip_tags() 函数，这个函数可以清除任何包围在 HTML 标记中的内容。strip_tags() 函数还允许提供允许标记的列表，比如 <b> 或 <i>。<br>浏览器内的数据操纵<br>有一类浏览器插件允许用户篡改页面上的头部元素和表单元素。使用 Tamper Data（一个 Mozilla 插件），可以很容易地操纵包含许多隐藏文本字段的简单表单，从而向 PHP 和 MySQL 发送指令。<br>用户在点击表单上的 Submit 之前，他可以启动 Tamper Data。在提交表单时，他会看到表单数据字段的列表。Tamper Data 允许用户篡改这些数据，然后浏览器完成表单提交。<br>让我们回到前面建立的示例。已经检查了字符串长度、清除了 HTML 标记并删除了十六进制字符。但是，添加了一些隐藏的文本字段，如下所示：<br><strong>清单 17. 隐藏变量</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-if ($_POST\['submit'\] == “go”){
-//strip_tags
-$name = strip_tags($_POST\['name'\]);
-$name = substr($name,0,40);
-//clean out any potential hexadecimal characters
-$name = cleanHex($name);
-//continue processing….
-}
-function cleanHex($input){
-$clean = preg_replace(”!\[\\\]\[xX\](\[A-Fa-f0-9\]{1,3})!”, “”,$input);
-return $clean;
-}
-?>
-<form action=”<?php echo $_SERVER\['PHP_SELF'\];?>” method=”post”>
-<p><label for=”name”>Name</label>
-<input type=”text” name=”name” id=”name” size=”20″ maxlength=”40″/></p>
-<input type=”hidden” name=”table” value=”users”/>
-<input type=”hidden” name=”action” value=”create”/>
-<input type=”hidden” name=”status” value=”live\\”/>
-<p><input type=”submit” name=”submit” value=”go”/></p>
-</form>
-
-<p>注意，隐藏变量之一暴露了表名：users。还会看到一个值为 create 的 action 字段。只要有基本的 SQL 经验，就能够看出这些命令可能控制着中间件中的一个 SQL 引擎。想搞大破坏的人只需改变表名或提供另一个选项，比如 delete。<br>现在还剩下什么问题呢？远程表单提交。<br>远程表单提交<br>Web 的好处是可以分享信息和服务。坏处也是可以分享信息和服务，因为有些人做事毫无顾忌。<br>以 表单为例。任何人都能够访问一个 Web 站点，并使用浏览器上的 File &gt; Save As 建立表单的本地副本。然后，他可以修改 action 参数来指向一个完全限定的 URL（不指向 formHandler.php，而是指向 <a target="_blank" rel="noopener" href="http://www.yoursite.com/formHandler.php%EF%BC%8C%E5%9B%A0%E4%B8%BA%E8%A1%A8%E5%8D%95%E5%9C%A8%E8%BF%99%E4%B8%AA%E7%AB%99%E7%82%B9%E4%B8%8A%EF%BC%89%EF%BC%8C%E5%81%9A%E4%BB%96%E5%B8%8C%E6%9C%9B%E7%9A%84%E4%BB%BB%E4%BD%95%E4%BF%AE%E6%94%B9%EF%BC%8C%E7%82%B9%E5%87%BB">http://www.yoursite.com/formHandler.php，因为表单在这个站点上），做他希望的任何修改，点击</a> Submit，服务器会把这个表单数据作为合法通信流接收。<br>首先可能考虑检查 $_SERVER[‘HTTP_REFERER’]，从而判断请求是否来自自己的服务器，这种方法可以挡住大多数恶意用户，但是挡不住最高明的黑客。这些人足够聪明，能够篡改头部中的引用者信息，使表单的远程副本看起来像是从您的服务器提交的。<br>处理远程表单提交更好的方式是，根据一个惟一的字符串或时间戳生成一个令牌，并将这个令牌放在会话变量和表单中。提交表单之后，检查两个令牌是否匹配。如果不匹配，就知道有人试图从表单的远程副本发送数据。<br>要创建随机的令牌，可以使用 PHP 内置的 md5()、uniqid() 和 rand() 函数，如下所示：<br><strong>清单 18. 防御远程表单提交</strong> </p>
-<p>复制代码代码如下:</p>
-<?php
-session_start();
-if ($_POST\['submit'\] == “go”){
-//check token
-if ($_POST\['token'\] == $_SESSION\['token'\]){
-//strip_tags
-$name = strip_tags($_POST\['name'\]);
-$name = substr($name,0,40);
-//clean out any potential hexadecimal characters
-$name = cleanHex($name);
-//continue processing….
-}else{
-//stop all processing! remote form posting attempt!
-}
-}
-$token = md5(uniqid(rand(), true));
-$_SESSION\['token'\]= $token;
-function cleanHex($input){
-$clean = preg_replace(”!\[\\\]\[xX\](\[A-Fa-f0-9\]{1,3})!”, “”,$input);
-return $clean;
-}
-?>
-<form action=”<?php echo $_SERVER\['PHP_SELF'\];?>” method=”post”>
-<p><label for=”name”>Name</label>
-<input type=”text” name=”name” id=”name” size=”20″ maxlength=”40″/></p>
-<input type=”hidden” name=”token” value=”<?php echo $token;?>”/>
-<p><input type=”submit” name=”submit” value=”go”/></p>
-</form>
-
-<p>这种技术是有效的，这是因为在 PHP 中会话数据无法在服务器之间迁移。即使有人获得了您的 PHP 源代码，将它转移到自己的服务器上，并向您的服务器提交信息，您的服务器接收的也只是空的或畸形的会话令牌和原来提供的表单令牌。它们不匹配，远程表单提交就失败了。</p>
-
-      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">47</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
+  </div>
+
 
     
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
       
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/21/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%E5%A4%A7%E5%85%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/21/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%E5%A4%A7%E5%85%A8/" class="post-title-link" itemprop="url">vim命令大全</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-21 13:34:12" itemprop="dateCreated datePublished" datetime="2018-04-21T13:34:12+08:00">2018-04-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id=""><a href="#" class="headerlink" title=""></a><img src="http://blog.91shouzhuan.com/wp-content/uploads/2018/04/20160712110935064-286x300.png"></h3><h3 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="http://blog.91shouzhuan.com/wp-content/uploads/2018/04/175824-20161123224659425-328736487-300x212.png"></h3><p><strong>vim 选择文本，删除，复制，粘贴</strong> </p>
-<p>文本的选择，对于编辑器来说，是很基本的东西，也经常被用到，总结如下：</p>
-<p>v    从光标当前位置开始，光标所经过的地方会被选中，再按一下v结束。</p>
-<p>V    从光标当前行开始，光标经过的行都会被选中，再按一下Ｖ结束。</p>
-<p>Ctrl + v   从光标当前位置开始，选中光标起点和终点所构成的矩形区域，再按一下Ｃtrl + v结束。</p>
-<p>ggVG 选中全部的文本， 其中gg为跳到行首，V选中整行，G末尾</p>
-<p>选中后就可以用编辑命令对其进行编辑，如<br>d   删除</p>
-<p>y   复制 （默认是复制到”寄存器）</p>
-<p>p  粘贴 （默认从”寄存器取出内容粘贴）</p>
-<p> </p>
-<p>“+y    复制到系统剪贴板(也就是vim的+寄存器）</p>
-<p>“+p   从系统剪贴板粘贴</p>
-<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p><strong>vim命令总结</strong></p>
-<p> </p>
-<p>1.删除字符<br>要删除一个字符，只需要将光标移到该字符上按下”x”。</p>
-<p>2.删除一行<br>删除一整行内容使用”dd”命令。删除后下面的行会移上来填补空缺。</p>
-<p>3.删除换行符<br>在Vim中你可以把两行合并为一行，也就是说两行之间的换行符被删除了：命令是”J”。</p>
-<p>4.撤销<br>如果你误删了过多的内容。显然你可以再输入一遍，但是命令”u” 更简便，它可以撤消上一次的操作。</p>
-<p>5.重做<br>如果你撤消了多次，你还可以用CTRL-R(重做)来反转撤消的动作。换句话说，它是对撤消的撤消。撤消命令还有另一种形式，”U”命令，它一次撤消对一行的全部操作。第二次使用该命令则会撤消前一个”U”的操作。用”u”和CTRL-R你可以找回任何一个操作状态。</p>
-<p>6.追加<br>“i”命令可以在当前光标之前插入文本。<br>“a”命令可以在当前光标之后插入文本。<br>“o”命令可以在当前行的下面另起一行，并使当前模式转为Insert模式。<br>“O”命令(注意是大写的字母O)将在当前行的上面另起一行。</p>
-<p>7.使用命令计数<br>假设你要向上移动9行。这可以用”kkkkkkkkk”或”9k”来完成。事实上，很多命令都可以接受一个数字作为重复执行同一命令的次数。比如刚才的例子，要在行尾追加三个感叹号，当时用的命令是”a!!!”。另一个办法是用”3a!”命令。3说明该命令将被重复执行3次。同样，删除3个字符可以用”3x”。指定的数字要紧挨在它所要修饰的命令前面。</p>
-<p>8.退出<br>要退出Vim，用命令”ZZ”。该命令保存当前文件并退出Vim。</p>
-<p>9.放弃编辑<br>丢弃所有的修改并退出，用命令”:q!”。用”:e!”命令放弃所有修改并重新载入该文件的原始内容。</p>
-<p>10.以Word为单位的移动<br>使用”w”命令可以将光标向前移动一个word的首字符上；比如”3w”将光标向前移动3个words。”b”命令则将光标向后移动到前一个word的首字符上。<br>“e”命令会将光标移动到下一个word的最后一个字符。命令”ge”，它将光标移动到前一个word的最后一个字符上。、</p>
-<p>11.移动到行首或行尾<br>“$”命令将光标移动到当前行行尾。如果你的键盘上有一个键，它的作用也一样。”^”命令将光标移动到当前行的第一个非空白字符上。”0”命令则总是把光标移动到当前行的第一个字符上。键也是如此。”$”命令还可接受一个计数，如”1$”会将光标移动到当前行行尾，”2$”则会移动到下一行的行尾，如此类推。”0”命令却不能接受类似这样的计数，命令”^”前加上一个计数也没有任何效果。</p>
-<p>12.移动到指定字符上<br>命令”fx”在当前行上查找下一个字符x（向右方向），可以带一个命令计数”F”命令向左方向搜索。”tx”命令形同”fx”命令，只不过它不是把光标停留在被搜索字符上，而是在它之前的一个字符上。提示：”t”意为”To”。该命令的反方向版是”Tx”。这4个命令都可以用”;”来重复。以”,”也是重复同样的命令，但是方向与原命令的方向相反。</p>
-<p>13.以匹配一个括号为目的移动<br>用命令”%”跳转到与当前光标下的括号相匹配的那一个括号上去。如果当前光标在”(“上，它就向前跳转到与它匹配的”)”上，如果当前在”)”上，它就向后自动跳转到匹配的”(“上去.</p>
-<p>14.移动到指定行<br>用”G”命令指定一个命令计数，这个命令就会把光标定位到由命令计数指定的行上。比如”33G”就会把光标置于第33行上。没有指定命令计数作为参数的话, “G”会把光标定位到最后一行上。”gg”命令是跳转到第一行的快捷的方法。<br>另一个移动到某行的方法是在命令”%”之前指定一个命令计数比如”50%”将会把光标定位在文件的中间. “90%”跳到接近文件尾的地方。<br>命令”H”,”M”,”L”,分别将光标跳转到第一行，中间行，结尾行部分。</p>
-<p>15.告诉你当前的位置<br>使用CTRL-G命令。”set number”在每行的前面显示一个行号。相反关闭行号用命令”:set nonumber”。”:set ruler”在Vim窗口的右下角显示当前光标位置。</p>
-<p>16.滚屏<br>CTRL-U显示文本的窗口向上滚动了半屏。CTRL-D命令将窗口向下移动半屏。一次滚动一行可以使用CTRL-E(向上滚动)和CTRL-Y(向下滚动)。要向前滚动一整屏使用命令CTRL-F。另外CTRL-B是它的反向版。”zz”命令会把当前行置为屏幕正中央，”zt”命令会把当前行置于屏幕顶端，”zb”则把当前行置于屏幕底端.</p>
-<p>17.简单搜索<br>“&#x2F;string”命令可用于搜索一个字符串。要查找上次查找的字符串的下一个位置,使用”n”命令。如果你知道你要找的确切位置是目标字符串的第几次出现，还可以在”n”之前放置一个命令计数。”3n”会去查找目标字符串的第3次出现。<br>“?”命令与”&#x2F;“的工作相同，只是搜索方向相反.”N”命令会重复前一次查找，但是与最初用”&#x2F;“或”?”指定的搜索方向相反。<br>如果查找内容忽略大小写，则用命令”set ignorecase”, 返回精确匹配用命令”set noignorecase” 。</p>
-<p>18.在文本中查找下一个word<br>把光标定位于这个word上然后按下”<em>“键。Vim将会取当前光标所在的word并将它作用目标字符串进行搜索。”#”命令是”</em>“的反向版。还可以在这两个命令前加一个命令计数:”3*”查找当前光标下的word的第三次出现。</p>
-<p>19.查找整个word<br>如果你用”&#x2F;the”来查找Vim也会匹配到”there”。要查找作为独立单词的”the”使用如下命令：”&#x2F;the\&gt;”。”\&gt;”是一个特殊的记法，它只匹配一个word的结束处。近似地，”\&lt;”匹配到一个word的开始处。这样查找作为一个word的”the”就可以用:”&#x2F;\“。</p>
-<p>20.高亮显示搜索结果<br>开启这一功能用”:set hlsearch”，关闭这一功能：”:set nohlsearch”。如果只是想去掉当前的高亮显示，可以使用下面的命令：”:nohlsearch”(可以简写为noh)。</p>
-<p>21.匹配一行的开头与结尾<br>^ 字符匹配一行的开头。$字符匹配一行的末尾。<br>所以”&#x2F;was$”只匹配位于一行末尾的单词was，所以”&#x2F;^was”只匹配位于一行开始的单词was。</p>
-<p>22.匹配任何的单字符<br>.这个字符可以匹配到任何字符。比如”c.m”可以匹配任何前一个字符是c，后一个字符是m的情况，不管中间的字符是什么。</p>
-<p>23.匹配特殊字符<br>放一个反斜杠在特殊字符前面。如果你查找”ter。”，用命令”&#x2F;ter\。”</p>
-<p>24.使用标记<br>当你用”G”命令从一个地方跳转到另一个地方时，Vim会记得你起跳的位置。这个位置在Vim中是一个标记。使用命令” `` “可以使你跳回到刚才的出发点。<br>``命令可以在两点之间来回跳转。CTRL-O命令是跳转到你更早些时间停置光标的位置(提示:O意为older). CTRL-I则是跳回到后来停置光标的更新的位置(提示：I在键盘上位于O前面)。<br>注:使用CTRL-I 与按下键一样。</p>
-<p>25.具名标记<br>命令”ma”将当前光标下的位置名之为标记”a”。从a到z一共可以使用26个自定义的标记。要跳转到一个你定义过的标记，使用命令” `marks “marks就是定义的标记的名字。命令” ‘a “使你跳转到a所在行的行首，” `a “会精确定位a所在的位置。命令：”:marks”用来查看标记的列表。<br>命令delm！删除所有标记。</p>
-<p>26.操作符命令和位移<br>“dw”命令可以删除一个word，”d4w”命令是删除4个word，依此类推。类似有”d2e”、”d$”。此类命令有一个固定的模式：操作符命令+位移命令。首先键入一个操作符命令。比如”d”是一个删除操作符。接下来是一个位移命。比如”w”。这样任何移动光标命令所及之处，都是命令的作用范围。</p>
-<p>27.改变文本<br>操作符命令是”c”，改变命令。它的行为与”d”命令类似，不过在命令执行后会进入Insert模式。比如”cw”改变一个word。或者，更准确地说，它删除一个word并让你置身于Insert模式。<br>“cc”命令可以改变整行。不过仍保持原来的缩进。<br>“c$”改变当前光标到行尾的内容。<br>快捷命令：x 代表dl(删除当前光标下的字符)<br>X 代表dh(删除当前光标左边的字符)<br>D 代表d$(删除到行尾的内容)<br>C 代表c$(修改到行尾的内容)<br>s 代表cl(修改一个字符)<br>S 代表cc(修改一整行)<br>命令”3dw”和”d3w”都是删除3个word。第一个命令”3dw”可以看作是删除一个word的操作执行3次；第二个命令”d3w”是一次删除3个word。这是其中不明显的差异。事实上你可以在两处都放上命令记数，比如，”3d2w”是删除两个word，重复执行3次，总共是6个word。</p>
-<p>28.替换单个字符<br>“r”命令不是一个操作符命令。它等待你键入下一个字符用以替换当前光标下的那个字符。”r”命令前辍以一个命令记数是将多个字符都替换为即将输入的那个字符。要把一个字符替换为一个换行符使用”r”。它会删除一个字符并插入一个换行符。在此处使用命令记数只会删除指定个数的字符：”4r”将把4个字符替换为一个换行符。</p>
-<p>29.重复改动<br>“.”命令会重复上一次做出的改动。”.”命令会重复你做出的所有修改，除了”u”命令CTRL-R和以冒号开头的命令。”.”需要在Normal模式下执行，它重复的是命令，而不是被改动的内容，</p>
-<p>30.Visual模式<br>按”v”可以进入Visual模式。移动光标以覆盖你想操纵的文本范围。同时被选中的文本会以高亮显示。最后键入操作符命令。</p>
-<p>31.移动文本<br>以”d”或”x”这样的命令删除文本时，被删除的内容还是被保存了起来。你还可以用p命令把它取回来。”P”命令是把被去回的内容放在光标之前，”p”则是放在光标之后。对于以”dd”删除的整行内容，”P”会把它置于当前行的上一行。”p”则是至于当前行的后一行。也可以对命令”p”和”P”命令使用命令记数。它的效果是同样的内容被取回指定的次数。这样一来”dd”之后的”3p”就可以把被删除行的3 份副本放到当前位置。<br>命令”xp”将光标所在的字符与后一个字符交换。</p>
-<p>**32.**<strong>复制文本（VIM编辑器内复制）</strong><br>“y”操作符命令会把文本复制到一个寄存器3中。然后可以用”p”命令把它取回。因为”y”是一个操作符命令，所以你可以用”yw”来复制一个word. 同样可以使用命令记数。如下例中用”y2w”命令复制两个word，”yy”命令复制一整行，”Y”也是复制整行的内容，复制当前光标至行尾的命令是”y$”。</p>
-<p>33.文本对象<br>“diw” 删除当前光标所在的word(不包括空白字符) “daw” 删除当前光标所在的word(包括空白字符)</p>
-<p>34.快捷命令<br>x 删除当前光标下的字符(“dl”的快捷命令)<br>X 删除当前光标之前的字符(“dh”的快捷命令)<br>D 删除自当前光标至行尾的内容(“d$”的快捷命令)<br>dw 删除自当前光标至下一个word的开头<br>db 删除自当前光标至前一个word的开始<br>diw 删除当前光标所在的word(不包括空白字符)<br>daw 删除当前光标所在的word(包括空白字符)<br>dG 删除当前行至文件尾的内容<br>dgg 删除当前行至文件头的内容<br>如果你用”c”命令代替”d”这些命令就都变成更改命令。使用”y”就是yank命令，如此类推。</p>
-<p>35.编辑另一个文件<br>用命令”:edit foo.txt”，也可简写为”:e foo.txt”。</p>
-<p>36.文件列表<br>可以在启动Vim时就指定要编辑多个文件，用命令”vim one.c two.c three.c”。Vim将在启动后只显示第一个文件，完成该文件的编辑后，可以用令：”:next”或”:n”要保存工作成果并继续下一个文件的编辑，命令：”:wnext”或”:wn”可以合并这一过程。</p>
-<p>37.显示当前正在编辑的文件<br>用命令”:args”。</p>
-<p>38.移动到另一个文件<br>用命令”:previous” “:prev”回到上一个文件,合并保存步骤则是”:wprevious” “:wprev”。要移到最后一个文件”:last”,到第一个”:first”.不过没有”:wlast”或者”:wfirst”这样的命令。可以在”:next”和”:previous”命令前面使用一个命令计数。</p>
-<p>39.编辑另一个文件列表<br>不用重新启动Vim，就可以重新定义一个文件列表。命令”:args five.c six.c seven.h”定义了要编辑的三个文件。</p>
-<p>39.自动存盘<br>命令”:set autowrite”,”set aw”。自动把内容写回文件: 如果文件被修改过，在每个:next、:rewind、:last、:first、:previous、:stop、:suspend、:tag、:!、:make、CTRL-] 和 CTRL-^命令时进行。<br>命令”:set autowriteall”,”set awa”。和 ‘autowrite’ 类似，但也适用于”:edit”、”:enew”、”:quit”、”:qall”、”:exit”、”:xit”、”:recover” 和关闭 Vim 窗口。置位本选项也意味着 Vim 的行为就像打开 ‘autowrite’ 一样。</p>
-<p>40.切换到另一文件<br>要在两个文件间快速切换，使用CTRL-^。</p>
-<p>41.文件标记<br>以大写字母命名的标记。它们是全局标记，它们可以用在任何文件中。比如，正在编辑”fab1.<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/javaee" title="Java EE知识库">Java</a>“,用命令”50%mF”在文件的中间设置一个名为F的标记。然后在”fab2.java”文件中，用命令”GnB”在最后一行设置名为B的标记。在可以用”F”命令跳转到文件”fab1.java”的半中间。或者编辑另一个文件，”‘B”命令会再把你带回文件”fab2.java”的最后一行。<br>要知道某个标记所代表的位置是什么，可以将该标记的名字作为”marks”命令的参数”:marks M”或者连续跟上几个参数”:marks MJK”<br>可以用CTRL-O和CTRL-I可以跳转到较早的位置和靠后的某位置。</p>
-<p>42.查看文件<br>仅是查看文件，不向文件写入内容，可以用只读形式编辑文件。用命令：<br>vim -R file。如果是想强制性地避免对文件进行修改，可以用命令：<br>vim -M file。</p>
-<p>43.更改文件名<br>将现有文件存成新的文件，用命令”:sav(eas) move.c”。如果想改变当前正在编辑的文件名，但不想保存该文件，就可以用命令：”:f(ile) move.c”。</p>
-<p>44.分割一个窗口<br>打开一个新窗口最简单的办法就是使用命令：”:split”。CTRL-W 命令可以切换当前活动窗口。</p>
-<p>45.关闭窗口<br>用命令：”close”.可以关闭当前窗口。实际上,任何退出文件编辑的命令”:quit”和”ZZ”都会关闭窗口，但是用”:close”可以阻止你关闭最后一个Vim，以免以意外地整个关闭了Vim。</p>
-<p>46.关闭除当前窗口外的所有其他窗口<br>用命令：”:only”,关闭除当前窗口外的所有其它窗口。如果这些窗口中有被修改过的，你会得到一个错误信息，同时那个窗口会被留下来。</p>
-<p>47.为另一个文件分隔出一个窗口<br>命令”:split two.c”可以打开第二个窗口同时在新打开的窗口中开始编辑作为<br>参数的文件。如果要打开一个新窗口并开始编辑一个空的缓冲区，使用命令:”:new”。</p>
-<p>48.垂直分割<br>用命令”:vsplit或：:vsplit two.c”。同样有一个对应的”:vnew”命令，用于垂直分隔窗口并在其中打开一个新的空缓冲区。</p>
-<p>49.切换窗口<br>CTRL-W h 到左边的窗口<br>CTRL-W j 到下面的窗口<br>CTRL-W k 到上面的窗口<br>CTRL-W l 到右边的窗口<br>CTRL-W t 到顶部窗口<br>CTRL-W b 到底部窗口</p>
-<p>50.针对所有窗口操作的命令<br>“:qall”放弃所有操作并退出，”:wall”保存所有，”:wqall”保存所有并退出。</p>
-<p>51.为每一个文件打开一个窗口<br>使用”-o”选项可以让Vim为每一个文件打开一个窗口：<br>“vim -o one.txt two.txt three.txt”。</p>
-<p>52.使用vimdiff查看不同<br>“vimdiff main.c~ main.c”,另一种进入diff模式的办法可以在Vim运行中操作。编辑文件”main.c”，然后打开另一个分隔窗口显示其不同:<br>“:edit main.c”<br>“:vertical diffpatch main.c.diff”。<br>53.页签<br>命令”:tabe(dit) thatfile”在一个窗口中打开”thatfile”，该窗口占据着整个的Vim显示区域。命令”:tab split&#x2F;new”结果是新建了一个拥有一个窗口的页签。以用”gt”命令在不同的页签间切换。</p>
-<p> </p>
-<p><strong>本文转自：</strong> <a target="_blank" rel="noopener" href="http://fableking.iteye.com/blog/1141518">http://fableking.iteye.com/blog/1141518</a></p>
-<hr>
-<p>这是我总结的一些基本用法,可能对初用者会有帮助,独乐乐不如众乐乐,是吧!</p>
-<p>说明：以下黑色为vi和vim均有的一般功能，而红色为Vim（Vi Improved）所特有功能。Vim一般的Unix和<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux" title="Linux知识库">Linux</a>下均有安装。<br> 三种状态<br>Command： 任何输入都会作为编辑命令，而不会出现在屏幕上，任何输入都引起立即反映<br>Insert：  任何输入的数据都置于编辑寄存器，按ESC，可跳回command方式<br>Escape：  以“：”或者“&#x2F;”为前导的指令，出现在屏幕的最下一行，任何输入都被当成特别指令。<br> 离开vi<br>:q!    离开vi，并放弃刚在缓冲区内编辑的内容。<br>:wq   将缓冲区内的资料写入磁盘中，并离开vi。<br>:x    同wq。<br>（注意—— :X 是文件加密，一定要与:x存盘退出相区别）<br> 进入输入模式<br>a (append)  由游标之后加入资料。<br>A    由该行之末加入资料。<br>i (insert)   由游标之前加入资料。<br>I    由该行之首加入资料。<br>o (open)   新增一行於该行之下供输入资料之用。<br>O    新增一行於该行之上供输入资料之用。<br> 删除与修改<br>x    删除游标所在该字元。<br>X    删除游标所在之前一字元。<br>r    用接於此指令之后的字元取代(replace)游标所在字元。如：ra将游标所在字元以 a 取代之。<br>R    进入取代状态，直到《ESC》为止。<br>s    删除游标所在之字元，并进入输入模式直到《ESC》。<br>S    删除游标所在之该行资料，并进入输入模式直到《ESC》。<br> 光标的移动<br>m<a-z>  设置书签<a-z><br>‘<a-z>  移至书签<a-z>处<br>0    移至该行之首<br>$    移至该行之末。<br>e   移动到下个字的最後一个字母<br>w    移动到下个字的第一个字母。<br>b    移动到上个字的第一个字母。<br>^    移至该行的第一个字元处。<br>H    移至视窗的第一行。<br>M    移至视窗的中间那行。<br>L    移至视窗的最后一行。<br>G    移至该文件的最后一行。<br>+    移至下一列的第一个字元处。</p>
-<ul>
-<li>移至上一列的第一个字元处。<br>:n    移至该文件的第 n 列。<br>n+    移至游标所在位置之后的第 n 列。<br>n-    移至游标所在位置之前的第 n 列。<br><Ctrl><g>  显示该行之行号、文件名称、文件中最末行之行号、游标所在行号占总行号之百分比。</li>
-</ul>
-<p>（Vim） 光标移动基本用法小解：<br>(这只要组合上边的功能就可以明白了，不用再一一讲解了吧！)<br>ge     b   w          e<br>←    ←    —→        –→<br>This is-a  line,  with special&#x2F;separated&#x2F;words (and some more).<br>←-  ←–    —————–→     —→<br>GE   B        W      E</p>
-<p> 视窗的移动<br><Ctrl><f>  视窗往下卷一页。<br><Ctrl><b>  视窗往上卷一页。<br><Ctrl><d>  视窗往下卷半页。<br><Ctrl><u>  视窗往上卷半页。<br><Ctrl><e>  视窗往下卷一行。<br><Ctrl><y>  视窗往上卷一行。<br> 剪切、复制、删除<br>Operator + Scope &#x3D; command<br> Operator<br>d    剪切<br>y    复制。<br>p    粘帖，与 d 和 y 配和使用。可将最后d或y的资料放置於游标所在位置之行列下。<br>c    修改，类似delete与insert的组和。删除一个字组、句子等之资料，并插入新建资料。<br> Scope<br>e    由游标所在位置至该字串的最后一个字元。<br>w    由游标所在位置至下一个字串的第一个字元。<br>b    由游标所在位置至前一个字串的第一个字元。<br>$    由游标所在位置至该行的最后一个字元。<br>0    由游标所在位置至该行的第一个字元。<br> 整行动作<br>dd    删除整行。<br>D    以行为单位，删除游标后之所有字元。<br>cc    修改整行的内容。<br>yy   使游标所在该行复制到记忆体缓冲区。<br> 取消前一动作(Undo)<br>u    恢复最后一个指令之前的结果。<br>U    恢复游标该行之所有改变。<br>(vim) u   可以多次撤消指令，一次撤消一个操作，直至本次操作开始为止。<br>(vim) Ctrl+r 可以恢复撤消前内容，按多次可恢复多次。<br> 查找与替换<br>&#x2F;字串   往游标之后寻找该字串。<br>?字串   往游标之前寻找该字串。<br>n    往下继续寻找下一个相同的字串。<br>N    往上继续寻找下一个相同的字串。<br>%   查找“(”，“)”，“{”，“}”的配对符。<br>s   搜寻某行列范围。<br>g   搜寻整个编辑缓冲区的资料。<br>:1,$s&#x2F;old&#x2F;new&#x2F;g 将文件中所有的『old』改成『new』。<br>:10,20s&#x2F;^&#x2F; &#x2F;  将第10行至第20行资料的最前面插入5个空白。<br>(vim)<br>&#x2F;字符串   后边输入查询内容可保存至缓冲区中，可用↑↓进行以往内容选择。<br>另外：将光标移动在选定单词下方按*，则可以选中此单词作为查询字符，可以避免输入一长串字符的麻烦。<br> (vim) 大小写替换<br>首先用按v开启选择功能，然后用↑↓←→键来选定所要替换的字符，若是小写变大写，则按U;反之按u;<br>如果是选择单词，则可以在按v后，按w，最后按U&#x2F;u,这样就可以将字符随意的改变大小写了，而不用删除后重新敲入。</p>
-<p> 资料的连接<br>J    句子的连接。将游标所在之下一行连接至游标该行的后面。<br> 环境的设定<br>:set all  可设置的环境变量列表<br>:set   环境变量的当前值<br>:set nu   设定资料的行号。<br>:set nonu  取消行号设定。<br>:set ai   自动内缩。<br>:set noai   取消自动内缩。<br>(vim)<br>:set ruler  会在屏幕右下角显示当前光标所处位置，并随光移动而改变，占用屏幕空间较小，使用也比较方便，推荐使用。<br>:set hlsearch 在使用查找功能时，会高亮显示所有匹配的内容。<br>:set nohlsearch  关闭此功能。<br>:set incsearch  使Vim在输入字符串的过程中，光标就可定位显示匹配点。<br>:set nowrapscan 关闭查找自动回环功能，即查找到文件结尾处，结束查找；默认状态是自动回环</p>
-<p> ex指令<br> 读写资料<br>:10,20w test  将第10行至第20行的资料写入test文件。<br>:10,20w&gt;&gt;test 将第10行至第20行的资料加在test文件之后。<br>:r test   将test文件的资料读入编辑缓冲区的最后。<br>:e [filename] 编辑新的文件。<br>:e! [filename] 放弃当前修改的文件，编辑新的文件。<br>:sh   进入shell环境，使用exit退出，回到编辑器中。</p>
-<p>:!cmd  运行命令cmd后，返回到编辑器中。<br> 删除、复制及搬移<br>:10,20d   删除第10行至第20行的资料。<br>:10d   删除第10行的资料。<br>:%d   删除整个编辑缓冲区。<br>:10,20co30  将第10行至第20行的资料复制至第30行之后。<br>:10,20mo30  将第10行至第20行的资料搬移至第30行之后。</p>
-<p>在命令状态下对当前行用&#x3D;&#x3D; （连按&#x3D;两次）, 或对多行用n&#x3D;&#x3D;（n是自然数）表示自动缩进从当前行起的下面n行。你可以试试把代码缩进任意打乱再用n&#x3D;&#x3D;排版，相当于一般IDE里的code format。使用gg&#x3D;G可对整篇代码进行排版。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" class="post-title-link" itemprop="url">Redis基础、高级特性与性能调优</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-13 17:45:51" itemprop="dateCreated datePublished" datetime="2018-04-13T17:45:51+08:00">2018-04-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将从Redis的基本特性入手，通过讲述Redis的数据结构和主要命令对Redis的基本能力进行直观介绍。之后概览Redis提供的高级功能，并在部署、维护、性能调优等多个方面进行更深入的介绍。<br>本文适合使用Redis的普通开发人员，以及对Redis进行选型、架构设计和性能调优的架构设计人员。</p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li>概述</li>
-<li>Redis的数据结构和相关常用命令</li>
-<li>数据持久化</li>
-<li>内存管理与数据淘汰机制</li>
-<li>Pipelining</li>
-<li>事务与Scripting</li>
-<li>Redis性能调优</li>
-<li>主从复制与集群分片</li>
-<li>Redis Java客户端的选择</li>
-</ul>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Redis是一个开源的，基于内存的结构化数据存储媒介，可以作为数据库、缓存服务或消息服务使用。<br>Redis支持多种数据结构，包括字符串、哈希表、链表、集合、有序集合、位图、Hyperloglogs等。<br>Redis具备LRU淘汰、事务实现、以及不同级别的硬盘持久化等能力，并且支持副本集和通过Redis Sentinel实现的高可用方案，同时还支持通过Redis Cluster实现的数据自动分片能力。</p>
-<p>Redis的主要功能都基于单线程模型实现，也就是说Redis使用一个线程来服务所有的客户端请求，同时Redis采用了非阻塞式IO，并精细地优化各种命令的算法时间复杂度，这些信息意味着：</p>
-<ul>
-<li>Redis是线程安全的（因为只有一个线程），其所有操作都是原子的，不会因并发产生数据异常</li>
-<li>Redis的速度非常快（因为使用非阻塞式IO，且大部分命令的算法时间复杂度都是O(1))</li>
-<li>使用高耗时的Redis命令是很危险的，会占用唯一的一个线程的大量处理时间，导致所有的请求都被拖慢。（例如时间复杂度为O(N)的KEYS命令，严格禁止在生产环境中使用）</li>
-</ul>
-<h2 id="Redis的数据结构和相关常用命令"><a href="#Redis的数据结构和相关常用命令" class="headerlink" title="Redis的数据结构和相关常用命令"></a>Redis的数据结构和相关常用命令</h2><p>本节中将介绍Redis支持的主要数据结构，以及相关的常用Redis命令。本节只对Redis命令进行扼要的介绍，且只列出了较常用的命令。如果想要了解完整的Redis命令集，或了解某个命令的详细使用方法，请参考官方文档：<a target="_blank" rel="noopener" href="https://redis.io/commands">https://redis.io/commands</a></p>
-<h3 id="Key"><a href="#Key" class="headerlink" title="Key"></a>Key</h3><p>Redis采用Key-Value型的基本数据结构，任何二进制序列都可以作为Redis的Key使用（例如普通的字符串或一张JPEG图片）<br>关于Key的一些注意事项：</p>
-<ul>
-<li>不要使用过长的Key。例如使用一个1024字节的key就不是一个好主意，不仅会消耗更多的内存，还会导致查找的效率降低</li>
-<li>Key短到缺失了可读性也是不好的，例如”u1000flw”比起”user:1000:followers”来说，节省了寥寥的存储空间，却引发了可读性和可维护性上的麻烦</li>
-<li>最好使用统一的规范来设计Key，比如”object-type:id:attr”，以这一规范设计出的Key可能是”user:1000”或”comment:1234:reply-to”</li>
-<li>Redis允许的最大Key长度是512MB（对Value的长度限制也是512MB）</li>
-</ul>
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>String是Redis的基础数据类型，Redis没有Int、Float、Boolean等数据类型的概念，所有的基本类型在Redis中都以String体现。</p>
-<p>与String相关的常用命令：</p>
-<ul>
-<li><strong>SET</strong>：为一个key设置value，可以配合EX&#x2F;PX参数指定key的有效期，通过NX&#x2F;XX参数针对key是否存在的情况进行区别操作，时间复杂度O(1)</li>
-<li><strong>GET</strong>：获取某个key对应的value，时间复杂度O(1)</li>
-<li><strong>GETSET</strong>：为一个key设置value，并返回该key的原value，时间复杂度O(1)</li>
-<li><strong>MSET</strong>：为多个key设置value，时间复杂度O(N)</li>
-<li><strong>MSETNX</strong>：同MSET，如果指定的key中有任意一个已存在，则不进行任何操作，时间复杂度O(N)</li>
-<li><strong>MGET</strong>：获取多个key对应的value，时间复杂度O(N)</li>
-</ul>
-<p>上文提到过，Redis的基本数据类型只有String，但Redis可以把String作为整型或浮点型数字来使用，主要体现在INCR、DECR类的命令上：</p>
-<ul>
-<li><strong>INCR</strong>：将key对应的value值自增1，并返回自增后的值。只对可以转换为整型的String数据起作用。时间复杂度O(1)</li>
-<li><strong>INCRBY</strong>：将key对应的value值自增指定的整型数值，并返回自增后的值。只对可以转换为整型的String数据起作用。时间复杂度O(1)</li>
-<li><strong>DECR&#x2F;DECRBY</strong>：同INCR&#x2F;INCRBY，自增改为自减。</li>
-</ul>
-<p>INCR&#x2F;DECR系列命令要求操作的value类型为String，并可以转换为64位带符号的整型数字，否则会返回错误。<br>也就是说，进行INCR&#x2F;DECR系列命令的value，必须在[-2^63 ~ 2^63 - 1]范围内。</p>
-<p>前文提到过，Redis采用单线程模型，天然是线程安全的，这使得INCR&#x2F;DECR命令可以非常便利的实现高并发场景下的精确控制。</p>
-<h4 id="例1：库存控制"><a href="#例1：库存控制" class="headerlink" title="例1：库存控制"></a>例1：库存控制</h4><p>在高并发场景下实现库存余量的精准校验，确保不出现超卖的情况。</p>
-<p>设置库存总量：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET inv:remain &quot;100&quot;</span><br></pre></td></tr></table></figure>
-
-<p>库存扣减+余量校验：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DECR inv:remain</span><br></pre></td></tr></table></figure>
-
-<p>当DECR命令返回值大于等于0时，说明库存余量校验通过，如果返回小于0的值，则说明库存已耗尽。</p>
-<p>假设同时有300个并发请求进行库存扣减，Redis能够确保这300个请求分别得到99到-200的返回值，每个请求得到的返回值都是唯一的，绝对不会找出现两个请求得到一样的返回值的情况。</p>
-<h4 id="例2：自增序列生成"><a href="#例2：自增序列生成" class="headerlink" title="例2：自增序列生成"></a>例2：自增序列生成</h4><p>实现类似于RDBMS的Sequence功能，生成一系列唯一的序列号</p>
-<p>设置序列起始值：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET sequence &quot;10000&quot;</span><br></pre></td></tr></table></figure>
-
-<p>获取一个序列值：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INCR sequence</span><br></pre></td></tr></table></figure>
-
-<p>直接将返回值作为序列使用即可。</p>
-<p>获取一批（如100个）序列值：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INCRBY sequence 100</span><br></pre></td></tr></table></figure>
-
-<p>假设返回值为N，那么[N - 99 ~ N]的数值都是可用的序列值。</p>
-<p>当多个客户端同时向Redis申请自增序列时，Redis能够确保每个客户端得到的序列值或序列范围都是全局唯一的，绝对不会出现不同客户端得到了重复的序列值的情况。</p>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>Redis的List是链表型的数据结构，可以使用LPUSH&#x2F;RPUSH&#x2F;LPOP&#x2F;RPOP等命令在List的两端执行插入元素和弹出元素的操作。虽然List也支持在特定index上插入和读取元素的功能，但其时间复杂度较高（O(N)），应小心使用。</p>
-<p>与List相关的常用命令：</p>
-<ul>
-<li><strong>LPUSH</strong>：向指定List的左侧（即头部）插入1个或多个元素，返回插入后的List长度。时间复杂度O(N)，N为插入元素的数量</li>
-<li><strong>RPUSH</strong>：同LPUSH，向指定List的右侧（即尾部）插入1或多个元素</li>
-<li><strong>LPOP</strong>：从指定List的左侧（即头部）移除一个元素并返回，时间复杂度O(1)</li>
-<li><strong>RPOP</strong>：同LPOP，从指定List的右侧（即尾部）移除1个元素并返回</li>
-<li><strong>LPUSHX&#x2F;RPUSHX</strong>：与LPUSH&#x2F;RPUSH类似，区别在于，LPUSHX&#x2F;RPUSHX操作的key如果不存在，则不会进行任何操作</li>
-<li><strong>LLEN</strong>：返回指定List的长度，时间复杂度O(1)</li>
-<li><strong>LRANGE</strong>：返回指定List中指定范围的元素（双端包含，即LRANGE key 0 10会返回11个元素），时间复杂度O(N)。应尽可能控制一次获取的元素数量，一次获取过大范围的List元素会导致延迟，同时对长度不可预知的List，避免使用LRANGE key 0 -1这样的完整遍历操作。</li>
-</ul>
-<p>应谨慎使用的List相关命令：</p>
-<ul>
-<li><strong>LINDEX</strong>：返回指定List指定index上的元素，如果index越界，返回nil。index数值是回环的，即-1代表List最后一个位置，-2代表List倒数第二个位置。时间复杂度O(N)</li>
-<li><strong>LSET</strong>：将指定List指定index上的元素设置为value，如果index越界则返回错误，时间复杂度O(N)，如果操作的是头&#x2F;尾部的元素，则时间复杂度为O(1)</li>
-<li><strong>LINSERT</strong>：向指定List中指定元素之前&#x2F;之后插入一个新元素，并返回操作后的List长度。如果指定的元素不存在，返回-1。如果指定key不存在，不会进行任何操作，时间复杂度O(N)</li>
-</ul>
-<p>由于Redis的List是链表结构的，上述的三个命令的算法效率较低，需要对List进行遍历，命令的耗时无法预估，在List长度大的情况下耗时会明显增加，应谨慎使用。</p>
-<p>换句话说，Redis的List实际是设计来用于实现队列，而不是用于实现类似ArrayList这样的列表的。如果你不是想要实现一个双端出入的队列，那么请尽量不要使用Redis的List数据结构。</p>
-<p>为了更好支持队列的特性，Redis还提供了一系列阻塞式的操作命令，如BLPOP&#x2F;BRPOP等，能够实现类似于BlockingQueue的能力，即在List为空时，阻塞该连接，直到List中有对象可以出队时再返回。针对阻塞类的命令，此处不做详细探讨，请参考官方文档（<a target="_blank" rel="noopener" href="https://redis.io/topics/data-types-intro%EF%BC%89">https://redis.io/topics/data-types-intro）</a> 中”Blocking operations on lists”一节。</p>
-<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Hash即哈希表，Redis的Hash和传统的哈希表一样，是一种field-value型的数据结构，可以理解成将HashMap搬入Redis。<br>Hash非常适合用于表现对象类型的数据，用Hash中的field对应对象的field即可。<br>Hash的优点包括：</p>
-<ul>
-<li>可以实现二元查找，如”查找ID为1000的用户的年龄”</li>
-<li>比起将整个对象序列化后作为String存储的方法，Hash能够有效地减少网络传输的消耗</li>
-<li>当使用Hash维护一个集合时，提供了比List效率高得多的随机访问命令</li>
-</ul>
-<p>与Hash相关的常用命令：</p>
-<ul>
-<li><strong>HSET</strong>：将key对应的Hash中的field设置为value。如果该Hash不存在，会自动创建一个。时间复杂度O(1)</li>
-<li><strong>HGET</strong>：返回指定Hash中field字段的值，时间复杂度O(1)</li>
-<li><strong>HMSET&#x2F;HMGET</strong>：同HSET和HGET，可以批量操作同一个key下的多个field，时间复杂度：O(N)，N为一次操作的field数量</li>
-<li><strong>HSETNX</strong>：同HSET，但如field已经存在，HSETNX不会进行任何操作，时间复杂度O(1)</li>
-<li><strong>HEXISTS</strong>：判断指定Hash中field是否存在，存在返回1，不存在返回0，时间复杂度O(1)</li>
-<li><strong>HDEL</strong>：删除指定Hash中的field（1个或多个），时间复杂度：O(N)，N为操作的field数量</li>
-<li><strong>HINCRBY</strong>：同INCRBY命令，对指定Hash中的一个field进行INCRBY，时间复杂度O(1)</li>
-</ul>
-<p>应谨慎使用的Hash相关命令：</p>
-<ul>
-<li><strong>HGETALL</strong>：返回指定Hash中所有的field-value对。返回结果为数组，数组中field和value交替出现。时间复杂度O(N)</li>
-<li><strong>HKEYS&#x2F;HVALS</strong>：返回指定Hash中所有的field&#x2F;value，时间复杂度O(N)</li>
-</ul>
-<p>上述三个命令都会对Hash进行完整遍历，Hash中的field数量与命令的耗时线性相关，对于尺寸不可预知的Hash，应严格避免使用上面三个命令，而改为使用HSCAN命令进行游标式的遍历，具体请见 <a target="_blank" rel="noopener" href="https://redis.io/commands/scan">https://redis.io/commands/scan</a></p>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Redis Set是无序的，不可重复的String集合。</p>
-<p>与Set相关的常用命令：</p>
-<ul>
-<li><strong>SADD</strong>：向指定Set中添加1个或多个member，如果指定Set不存在，会自动创建一个。时间复杂度O(N)，N为添加的member个数</li>
-<li><strong>SREM</strong>：从指定Set中移除1个或多个member，时间复杂度O(N)，N为移除的member个数</li>
-<li><strong>SRANDMEMBER</strong>：从指定Set中随机返回1个或多个member，时间复杂度O(N)，N为返回的member个数</li>
-<li><strong>SPOP</strong>：从指定Set中随机移除并返回count个member，时间复杂度O(N)，N为移除的member个数</li>
-<li><strong>SCARD</strong>：返回指定Set中的member个数，时间复杂度O(1)</li>
-<li><strong>SISMEMBER</strong>：判断指定的value是否存在于指定Set中，时间复杂度O(1)</li>
-<li><strong>SMOVE</strong>：将指定member从一个Set移至另一个Set</li>
-</ul>
-<p>慎用的Set相关命令：</p>
-<ul>
-<li><strong>SMEMBERS</strong>：返回指定Hash中所有的member，时间复杂度O(N)</li>
-<li><strong>SUNION&#x2F;SUNIONSTORE</strong>：计算多个Set的并集并返回&#x2F;存储至另一个Set中，时间复杂度O(N)，N为参与计算的所有集合的总member数</li>
-<li><strong>SINTER&#x2F;SINTERSTORE</strong>：计算多个Set的交集并返回&#x2F;存储至另一个Set中，时间复杂度O(N)，N为参与计算的所有集合的总member数</li>
-<li><strong>SDIFF&#x2F;SDIFFSTORE</strong>：计算1个Set与1或多个Set的差集并返回&#x2F;存储至另一个Set中，时间复杂度O(N)，N为参与计算的所有集合的总member数</li>
-</ul>
-<p>上述几个命令涉及的计算量大，应谨慎使用，特别是在参与计算的Set尺寸不可知的情况下，应严格避免使用。可以考虑通过SSCAN命令遍历获取相关Set的全部member（具体请见 <a target="_blank" rel="noopener" href="https://redis.io/commands/scan">https://redis.io/commands/scan</a> ），如果需要做并集&#x2F;交集&#x2F;差集计算，可以在客户端进行，或在不服务实时查询请求的Slave上进行。</p>
-<h3 id="Sorted-Set"><a href="#Sorted-Set" class="headerlink" title="Sorted Set"></a>Sorted Set</h3><p>Redis Sorted Set是有序的、不可重复的String集合。Sorted Set中的每个元素都需要指派一个分数(score)，Sorted Set会根据score对元素进行升序排序。如果多个member拥有相同的score，则以字典序进行升序排序。</p>
-<p>Sorted Set非常适合用于实现排名。</p>
-<p>Sorted Set的主要命令：</p>
-<ul>
-<li><strong>ZADD</strong>：向指定Sorted Set中添加1个或多个member，时间复杂度O(Mlog(N))，M为添加的member数量，N为Sorted Set中的member数量</li>
-<li><strong>ZREM</strong>：从指定Sorted Set中删除1个或多个member，时间复杂度O(Mlog(N))，M为删除的member数量，N为Sorted Set中的member数量</li>
-<li><strong>ZCOUNT</strong>：返回指定Sorted Set中指定score范围内的member数量，时间复杂度：O(log(N))</li>
-<li><strong>ZCARD</strong>：返回指定Sorted Set中的member数量，时间复杂度O(1)</li>
-<li><strong>ZSCORE</strong>：返回指定Sorted Set中指定member的score，时间复杂度O(1)</li>
-<li><strong>ZRANK&#x2F;ZREVRANK</strong>：返回指定member在Sorted Set中的排名，ZRANK返回按升序排序的排名，ZREVRANK则返回按降序排序的排名。时间复杂度O(log(N))</li>
-<li><strong>ZINCRBY</strong>：同INCRBY，对指定Sorted Set中的指定member的score进行自增，时间复杂度O(log(N))</li>
-</ul>
-<p>慎用的Sorted Set相关命令：</p>
-<ul>
-<li><strong>ZRANGE&#x2F;ZREVRANGE</strong>：返回指定Sorted Set中指定排名范围内的所有member，ZRANGE为按score升序排序，ZREVRANGE为按score降序排序，时间复杂度O(log(N)+M)，M为本次返回的member数</li>
-<li><strong>ZRANGEBYSCORE&#x2F;ZREVRANGEBYSCORE</strong>：返回指定Sorted Set中指定score范围内的所有member，返回结果以升序&#x2F;降序排序，min和max可以指定为-inf和+inf，代表返回所有的member。时间复杂度O(log(N)+M)</li>
-<li><strong>ZREMRANGEBYRANK&#x2F;ZREMRANGEBYSCORE</strong>：移除Sorted Set中指定排名范围&#x2F;指定score范围内的所有member。时间复杂度O(log(N)+M)</li>
-</ul>
-<p>上述几个命令，应尽量避免传递[0 -1]或[-inf +inf]这样的参数，来对Sorted Set做一次性的完整遍历，特别是在Sorted Set的尺寸不可预知的情况下。可以通过ZSCAN命令来进行游标式的遍历（具体请见 <a target="_blank" rel="noopener" href="https://redis.io/commands/scan">https://redis.io/commands/scan</a> ），或通过LIMIT参数来限制返回member的数量（适用于ZRANGEBYSCORE和ZREVRANGEBYSCORE命令），以实现游标式的遍历。</p>
-<h3 id="Bitmap和HyperLogLog"><a href="#Bitmap和HyperLogLog" class="headerlink" title="Bitmap和HyperLogLog"></a>Bitmap和HyperLogLog</h3><p>Redis的这两种数据结构相较之前的并不常用，在本文中只做简要介绍，如想要详细了解这两种数据结构与其相关的命令，请参考官方文档<a target="_blank" rel="noopener" href="https://redis.io/topics/data-types-intro">https://redis.io/topics/data-types-intro</a> 中的相关章节</p>
-<p>Bitmap在Redis中不是一种实际的数据类型，而是一种将String作为Bitmap使用的方法。可以理解为将String转换为bit数组。使用Bitmap来存储true&#x2F;false类型的简单数据极为节省空间。</p>
-<p>HyperLogLogs是一种主要用于数量统计的数据结构，它和Set类似，维护一个不可重复的String集合，但是HyperLogLogs并不维护具体的member内容，只维护member的个数。也就是说，HyperLogLogs只能用于计算一个集合中不重复的元素数量，所以它比Set要节省很多内存空间。</p>
-<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><ul>
-<li><strong>EXISTS</strong>：判断指定的key是否存在，返回1代表存在，0代表不存在，时间复杂度O(1)</li>
-<li><strong>DEL</strong>：删除指定的key及其对应的value，时间复杂度O(N)，N为删除的key数量</li>
-<li><strong>EXPIRE&#x2F;PEXPIRE</strong>：为一个key设置有效期，单位为秒或毫秒，时间复杂度O(1)</li>
-<li><strong>TTL&#x2F;PTTL</strong>：返回一个key剩余的有效时间，单位为秒或毫秒，时间复杂度O(1)</li>
-<li><strong>RENAME&#x2F;RENAMENX</strong>：将key重命名为newkey。使用RENAME时，如果newkey已经存在，其值会被覆盖；使用RENAMENX时，如果newkey已经存在，则不会进行任何操作，时间复杂度O(1)</li>
-<li><strong>TYPE</strong>：返回指定key的类型，string, list, set, zset, hash。时间复杂度O(1)</li>
-<li><strong>CONFIG GET</strong>：获得Redis某配置项的当前值，可以使用*通配符，时间复杂度O(1)</li>
-<li><strong>CONFIG SET</strong>：为Redis某个配置项设置新值，时间复杂度O(1)</li>
-<li><strong>CONFIG REWRITE</strong>：让Redis重新加载redis.conf中的配置</li>
-</ul>
-<h2 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h2><p>Redis提供了将数据定期自动持久化至硬盘的能力，包括RDB和AOF两种方案，两种方案分别有其长处和短板，可以配合起来同时运行，确保数据的稳定性。</p>
-<h3 id="必须使用数据持久化吗？"><a href="#必须使用数据持久化吗？" class="headerlink" title="必须使用数据持久化吗？"></a>必须使用数据持久化吗？</h3><p>Redis的数据持久化机制是可以关闭的。如果你只把Redis作为缓存服务使用，Redis中存储的所有数据都不是该数据的主体而仅仅是同步过来的备份，那么可以关闭Redis的数据持久化机制。<br>但通常来说，仍然建议至少开启RDB方式的数据持久化，因为：</p>
-<ul>
-<li>RDB方式的持久化几乎不损耗Redis本身的性能，在进行RDB持久化时，Redis主进程唯一需要做的事情就是fork出一个子进程，所有持久化工作都由子进程完成</li>
-<li>Redis无论因为什么原因crash掉之后，重启时能够自动恢复到上一次RDB快照中记录的数据。这省去了手工从其他数据源（如DB）同步数据的过程，而且要比其他任何的数据恢复方式都要快</li>
-<li>现在硬盘那么大，真的不缺那一点地方</li>
-</ul>
-<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>采用RDB持久方式，Redis会定期保存数据快照至一个rbd文件中，并在启动时自动加载rdb文件，恢复之前保存的数据。可以在配置文件中配置Redis进行快照保存的时机：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save [seconds] [changes]</span><br></pre></td></tr></table></figure>
-
-<p>意为在[seconds]秒内如果发生了[changes]次数据修改，则进行一次RDB快照保存，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save 60 100</span><br></pre></td></tr></table></figure>
-
-<p>会让Redis每60秒检查一次数据变更情况，如果发生了100次或以上的数据变更，则进行RDB快照保存。<br>可以配置多条save指令，让Redis执行多级的快照保存策略。<br>Redis默认开启RDB快照，默认的RDB策略如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
-
-<p>也可以通过<strong>BGSAVE</strong>命令手工触发RDB快照保存。</p>
-<p><strong>RDB的优点：</strong></p>
-<ul>
-<li>对性能影响最小。如前文所述，Redis在保存RDB快照时会fork出子进程进行，几乎不影响Redis处理客户端请求的效率。</li>
-<li>每次快照会生成一个完整的数据快照文件，所以可以辅以其他手段保存多个时间点的快照（例如把每天0点的快照备份至其他存储媒介中），作为非常可靠的灾难恢复手段。</li>
-<li>使用RDB文件进行数据恢复比使用AOF要快很多。</li>
-</ul>
-<p><strong>RDB的缺点：</strong></p>
-<ul>
-<li>快照是定期生成的，所以在Redis crash时或多或少会丢失一部分数据。</li>
-<li>如果数据集非常大且CPU不够强（比如单核CPU），Redis在fork子进程时可能会消耗相对较长的时间（长至1秒），影响这期间的客户端请求。</li>
-</ul>
-<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>采用AOF持久方式时，Redis会把每一个写请求都记录在一个日志文件里。在Redis重启时，会把AOF文件中记录的所有写操作顺序执行一遍，确保数据恢复到最新。</p>
-<p>AOF默认是关闭的，如要开启，进行如下配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appendonly yes</span><br></pre></td></tr></table></figure>
-
-<p>AOF提供了三种fsync配置，always&#x2F;everysec&#x2F;no，通过配置项[appendfsync]指定：</p>
-<ul>
-<li>appendfsync no：不进行fsync，将flush文件的时机交给OS决定，速度最快</li>
-<li>appendfsync always：每写入一条日志就进行一次fsync操作，数据安全性最高，但速度最慢</li>
-<li>appendfsync everysec：折中的做法，交由后台线程每秒fsync一次</li>
-</ul>
-<p>随着AOF不断地记录写操作日志，必定会出现一些无用的日志，例如某个时间点执行了命令<strong>SET key1 “abc”<strong>，在之后某个时间点又执行了</strong>SET key1 “bcd”<strong>，那么第一条命令很显然是没有用的。大量的无用日志会让AOF文件过大，也会让数据恢复的时间过长。<br>所以Redis提供了AOF rewrite功能，可以重写AOF文件，只保留能够把数据恢复到最新状态的最小写操作集。<br>AOF rewrite可以通过</strong>BGREWRITEAOF</strong>命令触发，也可以配置Redis定期自动进行：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
-
-<p>上面两行配置的含义是，Redis在每次AOF rewrite时，会记录完成rewrite后的AOF日志大小，当AOF日志大小在该基础上增长了100%后，自动进行AOF rewrite。同时如果增长的大小没有达到64mb，则不会进行rewrite。</p>
-<p><strong>AOF的优点：</strong></p>
-<ul>
-<li>最安全，在启用appendfsync always时，任何已写入的数据都不会丢失，使用在启用appendfsync everysec也至多只会丢失1秒的数据。</li>
-<li>AOF文件在发生断电等问题时也不会损坏，即使出现了某条日志只写入了一半的情况，也可以使用redis-check-aof工具轻松修复。</li>
-<li>AOF文件易读，可修改，在进行了某些错误的数据清除操作后，只要AOF文件没有rewrite，就可以把AOF文件备份出来，把错误的命令删除，然后恢复数据。</li>
-</ul>
-<p><strong>AOF的缺点：</strong></p>
-<ul>
-<li>AOF文件通常比RDB文件更大</li>
-<li>性能消耗比RDB高</li>
-<li>数据恢复速度比RDB慢</li>
-</ul>
-<h2 id="内存管理与数据淘汰机制"><a href="#内存管理与数据淘汰机制" class="headerlink" title="内存管理与数据淘汰机制"></a>内存管理与数据淘汰机制</h2><h3 id="最大内存设置"><a href="#最大内存设置" class="headerlink" title="最大内存设置"></a>最大内存设置</h3><p>默认情况下，在32位OS中，Redis最大使用3GB的内存，在64位OS中则没有限制。</p>
-<p>在使用Redis时，应该对数据占用的最大空间有一个基本准确的预估，并为Redis设定最大使用的内存。否则在64位OS中Redis会无限制地占用内存（当物理内存被占满后会使用swap空间），容易引发各种各样的问题。</p>
-<p>通过如下配置控制Redis使用的最大内存：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maxmemory 100mb</span><br></pre></td></tr></table></figure>
-
-<p>在内存占用达到了maxmemory后，再向Redis写入数据时，Redis会：</p>
-<ul>
-<li>根据配置的数据淘汰策略尝试淘汰数据，释放空间</li>
-<li>如果没有数据可以淘汰，或者没有配置数据淘汰策略，那么Redis会对所有写请求返回错误，但读请求仍然可以正常执行</li>
-</ul>
-<p>在为Redis设置maxmemory时，需要注意：</p>
-<ul>
-<li>如果采用了Redis的主从同步，主节点向从节点同步数据时，会占用掉一部分内存空间，如果maxmemory过于接近主机的可用内存，导致数据同步时内存不足。所以设置的maxmemory不要过于接近主机可用的内存，留出一部分预留用作主从同步。</li>
-</ul>
-<h3 id="数据淘汰机制"><a href="#数据淘汰机制" class="headerlink" title="数据淘汰机制"></a>数据淘汰机制</h3><p>Redis提供了5种数据淘汰策略：</p>
-<ul>
-<li>volatile-lru：使用LRU算法进行数据淘汰（淘汰上次使用时间最早的，且使用次数最少的key），只淘汰设定了有效期的key</li>
-<li>allkeys-lru：使用LRU算法进行数据淘汰，所有的key都可以被淘汰</li>
-<li>volatile-random：随机淘汰数据，只淘汰设定了有效期的key</li>
-<li>allkeys-random：随机淘汰数据，所有的key都可以被淘汰</li>
-<li>volatile-ttl：淘汰剩余有效期最短的key</li>
-</ul>
-<p>最好为Redis指定一种有效的数据淘汰策略以配合maxmemory设置，避免在内存使用满后发生写入失败的情况。</p>
-<p>一般来说，推荐使用的策略是volatile-lru，并辨识Redis中保存的数据的重要性。对于那些重要的，绝对不能丢弃的数据（如配置类数据等），应不设置有效期，这样Redis就永远不会淘汰这些数据。对于那些相对不是那么重要的，并且能够热加载的数据（比如缓存最近登录的用户信息，当在Redis中找不到时，程序会去DB中读取），可以设置上有效期，这样在内存不够时Redis就会淘汰这部分数据。</p>
-<p>配置方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maxmemory-policy volatile-lru   #默认是noeviction，即不进行数据淘汰</span><br></pre></td></tr></table></figure>
-
-<h2 id="Pipelining"><a href="#Pipelining" class="headerlink" title="Pipelining"></a>Pipelining</h2><h3 id="Pipelining-1"><a href="#Pipelining-1" class="headerlink" title="Pipelining"></a>Pipelining</h3><p>Redis提供许多批量操作的命令，如MSET&#x2F;MGET&#x2F;HMSET&#x2F;HMGET等等，这些命令存在的意义是减少维护网络连接和传输数据所消耗的资源和时间。<br>例如连续使用5次SET命令设置5个不同的key，比起使用一次MSET命令设置5个不同的key，效果是一样的，但前者会消耗更多的RTT(Round Trip Time)时长，永远应优先使用后者。</p>
-<p>然而，如果客户端要连续执行的多次操作无法通过Redis命令组合在一起，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET a &quot;abc&quot;</span><br><span class="line">INCR b</span><br><span class="line">HSET c name &quot;hi&quot;</span><br></pre></td></tr></table></figure>
-
-<p>此时便可以使用Redis提供的pipelining功能来实现在一次交互中执行多条命令。<br>使用pipelining时，只需要从客户端一次向Redis发送多条命令（以\r\n）分隔，Redis就会依次执行这些命令，并且把每个命令的返回按顺序组装在一起一次返回，比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ (printf &quot;PING\r\nPING\r\nPING\r\n&quot;; sleep 1)  nc localhost 6379</span><br><span class="line">+PONG</span><br><span class="line">+PONG</span><br><span class="line">+PONG</span><br></pre></td></tr></table></figure>
-
-<p>大部分的Redis客户端都对Pipelining提供支持，所以开发者通常并不需要自己手工拼装命令列表。</p>
-<h5 id="Pipelining的局限性"><a href="#Pipelining的局限性" class="headerlink" title="Pipelining的局限性"></a>Pipelining的局限性</h5><p>Pipelining只能用于执行<strong>连续且无相关性</strong>的命令，当某个命令的生成需要依赖于前一个命令的返回时，就无法使用Pipelining了。</p>
-<p>通过Scripting功能，可以规避这一局限性</p>
-<h2 id="事务与Scripting"><a href="#事务与Scripting" class="headerlink" title="事务与Scripting"></a>事务与Scripting</h2><p>Pipelining能够让Redis在一次交互中处理多条命令，然而在一些场景下，我们可能需要在此基础上确保这一组命令是连续执行的。</p>
-<p>比如获取当前累计的PV数并将其清0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; GET vCount</span><br><span class="line">12384</span><br><span class="line">&gt; SET vCount 0</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
-
-<p>如果在GET和SET命令之间插进来一个INCR vCount，就会使客户端拿到的vCount不准确。</p>
-<p>Redis的事务可以确保复数命令执行时的原子性。也就是说Redis能够保证：一个事务中的一组命令是绝对连续执行的，在这些命令执行完成之前，绝对不会有来自于其他连接的其他命令插进去执行。</p>
-<p>通过MULTI和EXEC命令来把这两个命令加入一个事务中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">&gt; GET vCount</span><br><span class="line">QUEUED</span><br><span class="line">&gt; SET vCount 0</span><br><span class="line">QUEUED</span><br><span class="line">&gt; EXEC</span><br><span class="line">1) 12384</span><br><span class="line">2) OK</span><br></pre></td></tr></table></figure>
-
-<p>Redis在接收到MULTI命令后便会开启一个事务，这之后的所有读写命令都会保存在队列中但并不执行，直到接收到EXEC命令后，Redis会把队列中的所有命令连续顺序执行，并以数组形式返回每个命令的返回结果。</p>
-<p>可以使用DISCARD命令放弃当前的事务，将保存的命令队列清空。</p>
-<p>需要注意的是，<strong>Redis事务不支持回滚</strong>：<br>如果一个事务中的命令出现了语法错误，大部分客户端驱动会返回错误，2.6.5版本以上的Redis也会在执行EXEC时检查队列中的命令是否存在语法错误，如果存在，则会自动放弃事务并返回错误。<br>但如果一个事务中的命令有非语法类的错误（比如对String执行HSET操作），无论客户端驱动还是Redis都无法在真正执行这条命令之前发现，所以事务中的所有命令仍然会被依次执行。在这种情况下，会出现一个事务中部分命令成功部分命令失败的情况，然而与RDBMS不同，Redis不提供事务回滚的功能，所以只能通过其他方法进行数据的回滚。</p>
-<h3 id="通过事务实现CAS"><a href="#通过事务实现CAS" class="headerlink" title="通过事务实现CAS"></a>通过事务实现CAS</h3><p>Redis提供了WATCH命令与事务搭配使用，实现CAS乐观锁的机制。</p>
-<p>假设要实现将某个商品的状态改为已售：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(exec(HGET stock:1001 state) == &quot;in stock&quot;)</span><br><span class="line">    exec(HSET stock:1001 state &quot;sold&quot;);</span><br></pre></td></tr></table></figure>
-
-<p>这一伪代码执行时，无法确保并发安全性，有可能多个客户端都获取到了”in stock”的状态，导致一个库存被售卖多次。</p>
-<p>使用WATCH命令和事务可以解决这一问题：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exec(WATCH stock:1001);</span><br><span class="line">if(exec(HGET stock:1001 state) == &quot;in stock&quot;) &#123;</span><br><span class="line">    exec(MULTI);</span><br><span class="line">    exec(HSET stock:1001 state &quot;sold&quot;);</span><br><span class="line">    exec(EXEC);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>WATCH的机制是：在事务EXEC命令执行时，Redis会检查被WATCH的key，只有被WATCH的key从WATCH起始时至今没有发生过变更，EXEC才会被执行。如果WATCH的key在WATCH命令到EXEC命令之间发生过变化，则EXEC命令会返回失败。</p>
-<h3 id="Scripting"><a href="#Scripting" class="headerlink" title="Scripting"></a>Scripting</h3><p>通过EVAL与EVALSHA命令，可以让Redis执行LUA脚本。这就类似于RDBMS的存储过程一样，可以把客户端与Redis之间密集的读&#x2F;写交互放在服务端进行，避免过多的数据交互，提升性能。</p>
-<p>Scripting功能是作为事务功能的替代者诞生的，事务提供的所有能力Scripting都可以做到。Redis官方推荐使用LUA Script来代替事务，前者的效率和便利性都超过了事务。</p>
-<p>关于Scripting的具体使用，本文不做详细介绍，请参考官方文档 <a target="_blank" rel="noopener" href="https://redis.io/commands/eval">https://redis.io/commands/eval</a></p>
-<h2 id="Redis性能调优"><a href="#Redis性能调优" class="headerlink" title="Redis性能调优"></a>Redis性能调优</h2><p>尽管Redis是一个非常快速的内存数据存储媒介，也并不代表Redis不会产生性能问题。<br>前文中提到过，Redis采用单线程模型，所有的命令都是由一个线程串行执行的，所以当某个命令执行耗时较长时，会拖慢其后的所有命令，这使得Redis对每个任务的执行效率更加敏感。</p>
-<p>针对Redis的性能优化，主要从下面几个层面入手：</p>
-<ul>
-<li><p>最初的也是最重要的，确保没有让Redis执行耗时长的命令</p>
-</li>
-<li><p>使用pipelining将连续执行的命令组合执行</p>
-</li>
-<li><p>操作系统的Transparent huge pages功能必须关闭：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果在虚拟机中运行Redis，可能天然就有虚拟机环境带来的固有延迟。可以通过.&#x2F;redis-cli –intrinsic-latency 100命令查看固有延迟。同时如果对Redis的性能有较高要求的话，应尽可能在物理机上直接部署Redis。</p>
-</li>
-<li><p>检查数据持久化策略</p>
-</li>
-<li><p>考虑引入读写分离机制</p>
-</li>
-</ul>
-<h3 id="长耗时命令"><a href="#长耗时命令" class="headerlink" title="长耗时命令"></a>长耗时命令</h3><p>Redis绝大多数读写命令的时间复杂度都在O(1)到O(N)之间，在文本和官方文档中均对每个命令的时间复杂度有说明。</p>
-<p>通常来说，O(1)的命令是安全的，O(N)命令在使用时需要注意，如果N的数量级不可预知，则应避免使用。例如对一个field数未知的Hash数据执行HGETALL&#x2F;HKEYS&#x2F;HVALS命令，通常来说这些命令执行的很快，但如果这个Hash中的field数量极多，耗时就会成倍增长。<br>又如使用SUNION对两个Set执行Union操作，或使用SORT对List&#x2F;Set执行排序操作等时，都应该严加注意。</p>
-<p>避免在使用这些O(N)命令时发生问题主要有几个办法：</p>
-<ul>
-<li>不要把List当做列表使用，仅当做队列来使用</li>
-<li>通过机制严格控制Hash、Set、Sorted Set的大小</li>
-<li>可能的话，将排序、并集、交集等操作放在客户端执行</li>
-<li>绝对禁止使用KEYS命令</li>
-<li>避免一次性遍历集合类型的所有成员，而应使用SCAN类的命令进行分批的，游标式的遍历</li>
-</ul>
-<p>Redis提供了SCAN命令，可以对Redis中存储的所有key进行游标式的遍历，避免使用KEYS命令带来的性能问题。同时还有SSCAN&#x2F;HSCAN&#x2F;ZSCAN等命令，分别用于对Set&#x2F;Hash&#x2F;Sorted Set中的元素进行游标式遍历。SCAN类命令的使用请参考官方文档：<a target="_blank" rel="noopener" href="https://redis.io/commands/scan">https://redis.io/commands/scan</a></p>
-<p>Redis提供了Slow Log功能，可以自动记录耗时较长的命令。相关的配置参数有两个：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slowlog-log-slower-than xxxms  #执行时间慢于xxx毫秒的命令计入Slow Log</span><br><span class="line">slowlog-max-len xxx  #Slow Log的长度，即最大纪录多少条Slow Log</span><br></pre></td></tr></table></figure>
-
-<p>使用<strong>SLOWLOG GET [number]<strong>命令，可以输出最近进入Slow Log的number条命令。<br>使用</strong>SLOWLOG RESET</strong>命令，可以重置Slow Log</p>
-<h3 id="网络引发的延迟"><a href="#网络引发的延迟" class="headerlink" title="网络引发的延迟"></a>网络引发的延迟</h3><ul>
-<li>尽可能使用长连接或连接池，避免频繁创建销毁连接</li>
-<li>客户端进行的批量数据操作，应使用Pipeline特性在一次交互中完成。具体请参照本文的Pipelining章节</li>
-</ul>
-<h3 id="数据持久化引发的延迟"><a href="#数据持久化引发的延迟" class="headerlink" title="数据持久化引发的延迟"></a>数据持久化引发的延迟</h3><p>Redis的数据持久化工作本身就会带来延迟，需要根据数据的安全级别和性能要求制定合理的持久化策略：</p>
-<ul>
-<li>AOF + fsync always的设置虽然能够绝对确保数据安全，但每个操作都会触发一次fsync，会对Redis的性能有比较明显的影响</li>
-<li>AOF + fsync every second是比较好的折中方案，每秒fsync一次</li>
-<li>AOF + fsync never会提供AOF持久化方案下的最优性能</li>
-<li>使用RDB持久化通常会提供比使用AOF更高的性能，但需要注意RDB的策略配置</li>
-<li>每一次RDB快照和AOF Rewrite都需要Redis主进程进行fork操作。fork操作本身可能会产生较高的耗时，与CPU和Redis占用的内存大小有关。根据具体的情况合理配置RDB快照和AOF Rewrite时机，避免过于频繁的fork带来的延迟</li>
-</ul>
-<blockquote>
-<p>Redis在fork子进程时需要将内存分页表拷贝至子进程，以占用了24GB内存的Redis实例为例，共需要拷贝24GB &#x2F; 4kB * 8 &#x3D; 48MB的数据。在使用单Xeon 2.27Ghz的物理机上，这一fork操作耗时216ms。</p>
-<p>可以通过<strong>INFO</strong>命令返回的latest_fork_usec字段查看上一次fork操作的耗时（微秒）</p>
-</blockquote>
-<h3 id="Swap引发的延迟"><a href="#Swap引发的延迟" class="headerlink" title="Swap引发的延迟"></a>Swap引发的延迟</h3><p>当Linux将Redis所用的内存分页移至swap空间时，将会阻塞Redis进程，导致Redis出现不正常的延迟。Swap通常在物理内存不足或一些进程在进行大量I&#x2F;O操作时发生，应尽可能避免上述两种情况的出现。</p>
-<p>&#x2F;proc&#x2F;<pid>&#x2F;smaps文件中会保存进程的swap记录，通过查看这个文件，能够判断Redis的延迟是否由Swap产生。如果这个文件中记录了较大的Swap size，则说明延迟很有可能是Swap造成的。</p>
-<h3 id="数据淘汰引发的延迟"><a href="#数据淘汰引发的延迟" class="headerlink" title="数据淘汰引发的延迟"></a>数据淘汰引发的延迟</h3><p>当同一秒内有大量key过期时，也会引发Redis的延迟。在使用时应尽量将key的失效时间错开。</p>
-<h3 id="引入读写分离机制"><a href="#引入读写分离机制" class="headerlink" title="引入读写分离机制"></a>引入读写分离机制</h3><p>Redis的主从复制能力可以实现一主多从的多节点架构，在这一架构下，主节点接收所有写请求，并将数据同步给多个从节点。<br>在这一基础上，我们可以让从节点提供对实时性要求不高的读请求服务，以减小主节点的压力。<br>尤其是针对一些使用了长耗时命令的统计类任务，完全可以指定在一个或多个从节点上执行，避免这些长耗时命令影响其他请求的响应。</p>
-<p>关于读写分离的具体说明，请参见后续章节</p>
-<h2 id="主从复制与集群分片"><a href="#主从复制与集群分片" class="headerlink" title="主从复制与集群分片"></a>主从复制与集群分片</h2><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>Redis支持一主多从的主从复制架构。一个Master实例负责处理所有的写请求，Master将写操作同步至所有Slave。<br>借助Redis的主从复制，可以实现读写分离和高可用：</p>
-<ul>
-<li>实时性要求不是特别高的读请求，可以在Slave上完成，提升效率。特别是一些周期性执行的统计任务，这些任务可能需要执行一些长耗时的Redis命令，可以专门规划出1个或几个Slave用于服务这些统计任务</li>
-<li>借助Redis Sentinel可以实现高可用，当Master crash后，Redis Sentinel能够自动将一个Slave晋升为Master，继续提供服务</li>
-</ul>
-<p>启用主从复制非常简单，只需要配置多个Redis实例，在作为Slave的Redis实例中配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slaveof 192.168.1.1 6379  #指定Master的IP和端口</span><br></pre></td></tr></table></figure>
-
-<p>当Slave启动后，会从Master进行一次冷启动数据同步，由Master触发BGSAVE生成RDB文件推送给Slave进行导入，导入完成后Master再将增量数据通过Redis Protocol同步给Slave。之后主从之间的数据便一直以Redis Protocol进行同步</p>
-<h4 id="使用Sentinel做自动failover"><a href="#使用Sentinel做自动failover" class="headerlink" title="使用Sentinel做自动failover"></a>使用Sentinel做自动failover</h4><p>Redis的主从复制功能本身只是做数据同步，并不提供监控和自动failover能力，要通过主从复制功能来实现Redis的高可用，还需要引入一个组件：Redis Sentinel</p>
-<p>Redis Sentinel是Redis官方开发的监控组件，可以监控Redis实例的状态，通过Master节点自动发现Slave节点，并在监测到Master节点失效时选举出一个新的Master，并向所有Redis实例推送新的主从配置。</p>
-<p>Redis Sentinel需要至少部署3个实例才能形成选举关系。</p>
-<p>关键配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster 127.0.0.1 6379 2  #Master实例的IP、端口，以及选举需要的赞成票数</span><br><span class="line">sentinel down-after-milliseconds mymaster 60000  #多长时间没有响应视为Master失效</span><br><span class="line">sentinel failover-timeout mymaster 180000  #两次failover尝试间的间隔时长</span><br><span class="line">sentinel parallel-syncs mymaster 1  #如果有多个Slave，可以通过此配置指定同时从新Master进行数据同步的Slave数，避免所有Slave同时进行数据同步导致查询服务也不可用</span><br></pre></td></tr></table></figure>
-
-<p>另外需要注意的是，Redis Sentinel实现的自动failover不是在同一个IP和端口上完成的，也就是说自动failover产生的新Master提供服务的IP和端口与之前的Master是不一样的，所以要实现HA，还要求客户端必须支持Sentinel，能够与Sentinel交互获得新Master的信息才行。</p>
-<h3 id="集群分片"><a href="#集群分片" class="headerlink" title="集群分片"></a>集群分片</h3><p>为何要做集群分片：</p>
-<ul>
-<li>Redis中存储的数据量大，一台主机的物理内存已经无法容纳</li>
-<li>Redis的写请求并发量大，一个Redis实例以无法承载</li>
-</ul>
-<p>当上述两个问题出现时，就必须要对Redis进行分片了。<br>Redis的分片方案有很多种，例如很多Redis的客户端都自行实现了分片功能，也有向Twemproxy这样的以代理方式实现的Redis分片方案。然而首选的方案还应该是Redis官方在3.0版本中推出的Redis Cluster分片方案。</p>
-<p>本文不会对Redis Cluster的具体安装和部署细节进行介绍，重点介绍Redis Cluster带来的好处与弊端。</p>
-<h4 id="Redis-Cluster的能力"><a href="#Redis-Cluster的能力" class="headerlink" title="Redis Cluster的能力"></a>Redis Cluster的能力</h4><ul>
-<li>能够自动将数据分散在多个节点上</li>
-<li>当访问的key不在当前分片上时，能够自动将请求转发至正确的分片</li>
-<li>当集群中部分节点失效时仍能提供服务</li>
-</ul>
-<p>其中第三点是基于主从复制来实现的，Redis Cluster的每个数据分片都采用了主从复制的结构，原理和前文所述的主从复制完全一致，唯一的区别是省去了Redis Sentinel这一额外的组件，由Redis Cluster负责进行一个分片内部的节点监控和自动failover。</p>
-<h4 id="Redis-Cluster分片原理"><a href="#Redis-Cluster分片原理" class="headerlink" title="Redis Cluster分片原理"></a>Redis Cluster分片原理</h4><p>Redis Cluster中共有16384个hash slot，Redis会计算每个key的CRC16，将结果与16384取模，来决定该key存储在哪一个hash slot中，同时需要指定Redis Cluster中每个数据分片负责的Slot数。Slot的分配在任何时间点都可以进行重新分配。</p>
-<p>客户端在对key进行读写操作时，可以连接Cluster中的任意一个分片，如果操作的key不在此分片负责的Slot范围内，Redis Cluster会自动将请求重定向到正确的分片上。</p>
-<h4 id="hash-tags"><a href="#hash-tags" class="headerlink" title="hash tags"></a>hash tags</h4><p>在基础的分片原则上，Redis还支持hash tags功能，以hash tags要求的格式命名的key，将会确保进入同一个Slot中。例如：{uiv}user:1000和{uiv}user:1001拥有同样的hash tag {uiv}，会保存在同一个Slot中。</p>
-<p>使用Redis Cluster时，pipelining、事务和LUA Script功能涉及的key必须在同一个数据分片上，否则将会返回错误。如要在Redis Cluster中使用上述功能，就必须通过hash tags来确保一个pipeline或一个事务中操作的所有key都位于同一个Slot中。</p>
-<blockquote>
-<p>有一些客户端（如Redisson）实现了集群化的pipelining操作，可以自动将一个pipeline里的命令按key所在的分片进行分组，分别发到不同的分片上执行。但是Redis不支持跨分片的事务，事务和LUA Script还是必须遵循所有key在一个分片上的规则要求。</p>
-</blockquote>
-<h3 id="主从复制-vs-集群分片"><a href="#主从复制-vs-集群分片" class="headerlink" title="主从复制 vs 集群分片"></a>主从复制 vs 集群分片</h3><p>在设计软件架构时，要如何在主从复制和集群分片两种部署方案中取舍呢？</p>
-<p>从各个方面看，Redis Cluster都是优于主从复制的方案</p>
-<ul>
-<li>Redis Cluster能够解决单节点上数据量过大的问题</li>
-<li>Redis Cluster能够解决单节点访问压力过大的问题</li>
-<li>Redis Cluster包含了主从复制的能力</li>
-</ul>
-<p>那是不是代表Redis Cluster永远是优于主从复制的选择呢？</p>
-<p>并不是。</p>
-<p>软件架构永远不是越复杂越好，复杂的架构在带来显著好处的同时，一定也会带来相应的弊端。采用Redis Cluster的弊端包括：</p>
-<ul>
-<li>维护难度增加。在使用Redis Cluster时，需要维护的Redis实例数倍增，需要监控的主机数量也相应增加，数据备份&#x2F;持久化的复杂度也会增加。同时在进行分片的增减操作时，还需要进行reshard操作，远比主从模式下增加一个Slave的复杂度要高。</li>
-<li>客户端资源消耗增加。当客户端使用连接池时，需要为每一个数据分片维护一个连接池，客户端同时需要保持的连接数成倍增多，加大了客户端本身和操作系统资源的消耗。</li>
-<li>性能优化难度增加。你可能需要在多个分片上查看Slow Log和Swap日志才能定位性能问题。</li>
-<li>事务和LUA Script的使用成本增加。在Redis Cluster中使用事务和LUA Script特性有严格的限制条件，事务和Script中操作的key必须位于同一个分片上，这就使得在开发时必须对相应场景下涉及的key进行额外的规划和规范要求。如果应用的场景中大量涉及事务和Script的使用，如何在保证这两个功能的正常运作前提下把数据平均分到多个数据分片中就会成为难点。</li>
-</ul>
-<p>所以说，在主从复制和集群分片两个方案中做出选择时，应该从应用软件的功能特性、数据和访问量级、未来发展规划等方面综合考虑，只在<strong>确实有必要</strong>引入数据分片时再使用Redis Cluster。<br>下面是一些建议：</p>
-<ol>
-<li>需要在Redis中存储的数据有多大？未来2年内可能发展为多大？这些数据是否都需要长期保存？是否可以使用LRU算法进行非热点数据的淘汰？综合考虑前面几个因素，评估出Redis需要使用的物理内存。</li>
-<li>用于部署Redis的主机物理内存有多大？有多少可以分配给Redis使用？对比(1)中的内存需求评估，是否足够用？</li>
-<li>Redis面临的并发写压力会有多大？在不使用pipelining时，Redis的写性能可以超过10万次&#x2F;秒（更多的benchmark可以参考 <a target="_blank" rel="noopener" href="https://redis.io/topics/benchmarks">https://redis.io/topics/benchmarks</a> ）</li>
-<li>在使用Redis时，是否会使用到pipelining和事务功能？使用的场景多不多？</li>
-</ol>
-<p>综合上面几点考虑，如果单台主机的可用物理内存完全足以支撑对Redis的容量需求，且Redis面临的并发写压力距离Benchmark值还尚有距离，建议采用主从复制的架构，可以省去很多不必要的麻烦。同时，如果应用中大量使用pipelining和事务，也建议尽可能选择主从复制架构，可以减少设计和开发时的复杂度。</p>
-<h2 id="Redis-Java客户端的选择"><a href="#Redis-Java客户端的选择" class="headerlink" title="Redis Java客户端的选择"></a>Redis Java客户端的选择</h2><p>Redis的Java客户端很多，官方推荐的有三种：Jedis、Redisson和lettuce。</p>
-<p>在这里对Jedis和Redisson进行对比介绍</p>
-<p>Jedis：</p>
-<ul>
-<li>轻量，简洁，便于集成和改造</li>
-<li>支持连接池</li>
-<li>支持pipelining、事务、LUA Scripting、Redis Sentinel、Redis Cluster</li>
-<li>不支持读写分离，需要自己实现</li>
-<li>文档差（真的很差，几乎没有……）</li>
-</ul>
-<p>Redisson：</p>
-<ul>
-<li>基于Netty实现，采用非阻塞IO，性能高</li>
-<li>支持异步请求</li>
-<li>支持连接池</li>
-<li>支持pipelining、LUA Scripting、Redis Sentinel、Redis Cluster</li>
-<li>不支持事务，官方建议以LUA Scripting代替事务</li>
-<li>支持在Redis Cluster架构下使用pipelining</li>
-<li>支持读写分离，支持读负载均衡，在主从复制和Redis Cluster架构下都可以使用</li>
-<li>内建Tomcat Session Manager，为Tomcat 6&#x2F;7&#x2F;8提供了会话共享功能</li>
-<li>可以与Spring Session集成，实现基于Redis的会话共享</li>
-<li>文档较丰富，有中文文档</li>
-</ul>
-<p>对于Jedis和Redisson的选择，同样应遵循前述的原理，尽管Jedis比起Redisson有各种各样的不足，但也应该在需要使用Redisson的高级特性时再选用Redisson，避免造成不必要的程序复杂度提升。</p>
-<p>Jedis：<br>github：<a target="_blank" rel="noopener" href="https://github.com/xetorthio/jedis">https://github.com/xetorthio/jedis</a><br>文档：<a target="_blank" rel="noopener" href="https://github.com/xetorthio/jedis/wiki">https://github.com/xetorthio/jedis/wiki</a></p>
-<p>Redisson：<br>github：<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">https://github.com/redisson/redisson</a><br>文档：<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson/wiki">https://github.com/redisson/redisson/wiki</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">进程管理supervisor的简单说明</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-13 17:40:47" itemprop="dateCreated datePublished" datetime="2018-04-13T17:40:47+08:00">2018-04-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h2><p>项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里<a target="_blank" rel="noopener" href="http://supervisord.org/">Supervisor</a>。关于<a target="_blank" rel="noopener" href="http://supervisord.org/introduction.html">supervisor的介绍</a>在网上大致搜索总结如下：</p>
-<p>Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行进程变为后台daemon，并监控进程状态，异常退出时能自动重启。它是通过fork&#x2F;exec的方式把这些被管理的进程当作supervisor的子进程来启动，这样只要在supervisor的配置文件中，把要管理的进程的可执行文件的路径写进去即可。也实现当子进程挂掉的时候，父进程可以准确获取子进程挂掉的信息的，可以选择是否自己启动和报警。supervisor还提供了一个功能，可以为supervisord或者每个子进程，设置一个非root的user，这个user就可以管理它对应的进程。</p>
-<h2 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h2><p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/installing.html">1，安装</a></strong></p>
-<p>1：easy_install 安装：<br>easy_install supervisor</p>
-<p>2：pip 安装：<br>pip install supervisor</p>
-<p>3：Debian &#x2F; Ubuntu可以直接通过apt安装：<br>apt-get install supervisor</p>
-<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/configuration.html">2，配置文件</a></strong></p>
-<p><strong>1）</strong>通过apt-get install安装后，supervisor的配置文件在：</p>
-<p>&#x2F;etc&#x2F;supervisor&#x2F;supervisord.conf </p>
-<p>supervisor的配置文件默认是不全的，不过在大部分默认的情况下，上面说的基本功能已经满足。而其管理的<a target="_blank" rel="noopener" href="http://supervisord.org/subprocess.html">子进程配置</a>文件在：</p>
-<p>&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;*.conf</p>
-<p>然后，开始给自己需要的脚本程序编写一个子进程配置文件，让supervisor来管理它，放在&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;目录下，以.conf作为扩展名（每个进程的配置文件都可以单独分拆也可以把相关的脚本放一起）。如任意定义一个和脚本相关的项目名称的选项组（&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;test.conf）：</p>
-<p><strong>#项目名</strong><br>[program:blog]<br>#脚本目录<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>#脚本执行命令<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;test.py<br>#supervisor启动的时候是否随着同时启动，默认True<br>autostart&#x3D;true<br>#当程序exit的时候，这个program不会自动重启,默认unexpected<br>#设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected和true。如果为false的时候，无论什么情况下，都不会被重新启动，如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的<br>autorestart&#x3D;false<br>#这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启动成功了。默认值为1<br>startsecs&#x3D;1<br>#日志输出<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;blog_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;blog_stdout.log<br>#脚本运行的用户身份<br>user &#x3D; zhoujy<br>#把 stderr 重定向到 stdout，默认 false<br>redirect_stderr &#x3D; true<br>#stdout 日志文件大小，默认 50MB<br>stdout_logfile_maxbytes &#x3D; 20M<br>#stdout 日志文件备份数<br>stdout_logfile_backups &#x3D; 20</p>
-<p>[program:zhoujy] #说明同上<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;zhoujy.py<br>autostart&#x3D;true<br>autorestart&#x3D;false<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stdout.log<br>#user &#x3D; zhoujy</p>
-<p><strong>2）</strong>通过easy_install安装后，配置文件不存在，需要自己导入。</p>
-<p>①：运行<a target="_blank" rel="noopener" href="http://supervisord.org/installing.html">echo_supervisord_conf</a>打印出一个配置文件的样本，样本说明可以看<a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的详细说明，要是设置样本为一个配置文件则：</p>
-<p>1：运行 echo_supervisord_conf，查看配置样本：<br>echo_supervisord_conf</p>
-<p>2：创建配置文件：<br>echo_supervisord_conf &gt; &#x2F;etc&#x2F;supervisord.conf</p>
-<p>②：配置子进程配置文件，可以直接在supervisor中的**;[program:theprogramname]**里设置。</p>
-<p>详细的<a target="_blank" rel="noopener" href="http://supervisord.org/subprocess.html">子进程配置</a>文件：</p>
-<p>样本：</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">;[program:theprogramname]</p>
-<p>;command&#x3D;&#x2F;bin&#x2F;cat              ; the program (relative uses PATH, can take args)<br>;process_name&#x3D;%(program_name)s ; process_name expr (default %(program_name)s)<br>;numprocs&#x3D;1                    ; number of processes copies to start (def 1)<br>;directory&#x3D;&#x2F;tmp                ; directory to cwd to before exec (def no cwd)<br>;umask&#x3D;022                     ; umask for process (default None)<br>;priority&#x3D;999                  ; the relative start priority (default 999)<br>;autostart&#x3D;true                ; start at supervisord start (default: true)<br>;startsecs&#x3D;1                   ; # of secs prog must stay up to be running (def. 1)<br>;startretries&#x3D;3                ; max # of serial start failures when starting (default 3)<br>;autorestart&#x3D;unexpected        ; when to restart if exited after running (def: unexpected)<br>;exitcodes&#x3D;0,2                 ; ‘expected’ exit codes used with autorestart (default 0,2)<br>;stopsignal&#x3D;QUIT               ; signal used to kill process (default TERM)<br>;stopwaitsecs&#x3D;10               ; max num secs to wait b4 SIGKILL (default 10)<br>;stopasgroup&#x3D;false             ; send stop signal to the UNIX process group (default false)<br>;killasgroup&#x3D;false             ; SIGKILL the UNIX process group (def false)<br>;user&#x3D;chrism                   ; setuid to this UNIX account to run the program<br>;redirect_stderr&#x3D;true          ; redirect proc stderr to stdout (default false)<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; stdout log path, NONE for none; default AUTO<br>;stdout_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stdout_logfile_backups&#x3D;10     ; # of stdout logfile backups (default 10)<br>;stdout_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stdout_events_enabled&#x3D;false   ; emit events on stdout writes (default false)<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; stderr log path, NONE for none; default AUTO<br>;stderr_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stderr_logfile_backups&#x3D;10     ; # of stderr logfile backups (default 10)<br>;stderr_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stderr_events_enabled&#x3D;false   ; emit events on stderr writes (default false)<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; process environment additions (def no adds)<br>;serverurl&#x3D;AUTO                ; override serverurl computation (childutils)</p>
-<p>说明：</p>
-<p>;[program:theprogramname]      ;这个就是咱们要管理的子进程了，”:”后面的是名字，最好别乱写和实际进程<br>                                有点关联最好。这样的program我们可以设置一个或多个，一个program就是<br>                                要被管理的一个进程<br>;command&#x3D;&#x2F;bin&#x2F;cat              ; 这个就是我们的要启动进程的命令路径了，可以带参数<br>                                例子：&#x2F;home&#x2F;test.py -a ‘hehe’<br>                                有一点需要注意的是，我们的command只能是那种在终端运行的进程，不能是<br>                                守护进程。这个想想也知道了，比如说command&#x3D;service httpd start。<br>                                httpd这个进程被linux的service管理了，我们的supervisor再去启动这个命令<br>                                这已经不是严格意义的子进程了。<br>                                这个是个必须设置的项<br>;process_name&#x3D;%(program_name)s ; 这个是进程名，如果我们下面的numprocs参数为1的话，就不用管这个参数<br>                                 了，它默认值%(program_name)s也就是上面的那个program冒号后面的名字，<br>                                 但是如果numprocs为多个的话，那就不能这么干了。想想也知道，不可能每个<br>                                 进程都用同一个进程名吧。</p>
-<p>;numprocs&#x3D;1                    ; 启动进程的数目。当不为1时，就是进程池的概念，注意process_name的设置<br>                                 默认为1    。。非必须设置<br>;directory&#x3D;&#x2F;tmp                ; 进程运行前，会前切换到这个目录<br>                                 默认不设置。。。非必须设置<br>;umask&#x3D;022                     ; 进程掩码，默认none，非必须<br>;priority&#x3D;999                  ; 子进程启动关闭优先级，优先级低的，最先启动，关闭的时候最后关闭<br>                                 默认值为999 。。非必须设置<br>;autostart&#x3D;true                ; 如果是true的话，子进程将在supervisord启动后被自动启动<br>                                 默认就是true   。。非必须设置<br>;autorestart&#x3D;unexpected        ; 这个是设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected<br>                                 和true。如果为false的时候，无论什么情况下，都不会被重新启动，<br>                                 如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的退<br>                                 出码的时候，才会被自动重启。当为true的时候，只要子进程挂掉，将会被无<br>                                 条件的重启<br>;startsecs&#x3D;1                   ; 这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启<br>                                 动成功了<br>                                 默认值为1 。。非必须设置<br>;startretries&#x3D;3                ; 当进程启动失败后，最大尝试启动的次数。。当超过3次后，supervisor将把<br>                                 此进程的状态置为FAIL<br>                                 默认值为3 。。非必须设置<br>;exitcodes&#x3D;0,2                 ; 注意和上面的的autorestart&#x3D;unexpected对应。。exitcodes里面的定义的<br>                                 退出码是expected的。<br>;stopsignal&#x3D;QUIT               ; 进程停止信号，可以为TERM, HUP, INT, QUIT, KILL, USR1, or USR2等信号<br>                                  默认为TERM 。。当用设定的信号去干掉进程，退出码会被认为是expected<br>                                  非必须设置<br>;stopwaitsecs&#x3D;10               ; 这个是当我们向子进程发送stopsignal信号后，到系统返回信息<br>                                 给supervisord，所等待的最大时间。 超过这个时间，supervisord会向该<br>                                 子进程发送一个强制kill的信号。<br>                                 默认为10秒。。非必须设置<br>;stopasgroup&#x3D;false             ; 这个东西主要用于，supervisord管理的子进程，这个子进程本身还有<br>                                 子进程。那么我们如果仅仅干掉supervisord的子进程的话，子进程的子进程<br>                                 有可能会变成孤儿进程。所以咱们可以设置可个选项，把整个该子进程的<br>                                 整个进程组都干掉。 设置为true的话，一般killasgroup也会被设置为true。<br>                                 需要注意的是，该选项发送的是stop信号<br>                                 默认为false。。非必须设置。。<br>;killasgroup&#x3D;false             ; 这个和上面的stopasgroup类似，不过发送的是kill信号<br>;user&#x3D;chrism                   ; 如果supervisord是root启动，我们在这里设置这个非root用户，可以用来<br>                                 管理该program<br>                                 默认不设置。。。非必须设置项<br>;redirect_stderr&#x3D;true          ; 如果为true，则stderr的日志会被写入stdout日志文件中<br>                                 默认为false，非必须设置<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; 子进程的stdout的日志路径，可以指定路径，AUTO，none等三个选项。<br>                                 设置为none的话，将没有日志产生。设置为AUTO的话，将随机找一个地方<br>                                 生成日志文件，而且当supervisord重新启动的时候，以前的日志文件会被<br>                                 清空。当 redirect_stderr&#x3D;true的时候，sterr也会写进这个日志文件<br>;stdout_logfile_maxbytes&#x3D;1MB   ; 日志文件最大大小，和[supervisord]中定义的一样。默认为50<br>;stdout_logfile_backups&#x3D;10     ; 和[supervisord]定义的一样。默认10<br>;stdout_capture_maxbytes&#x3D;1MB   ; 这个东西是设定capture管道的大小，当值不为0的时候，子进程可以从stdout<br>                                 发送信息，而supervisor可以根据信息，发送相应的event。<br>                                 默认为0，为0的时候表达关闭管道。。。非必须项<br>;stdout_events_enabled&#x3D;false   ; 当设置为ture的时候，当子进程由stdout向文件描述符中写日志的时候，将<br>                                 触发supervisord发送PROCESS_LOG_STDOUT类型的event<br>                                 默认为false。。。非必须设置<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; 这个东西是设置stderr写的日志路径，当redirect_stderr&#x3D;true。这个就不用<br>                                 设置了，设置了也是白搭。因为它会被写入stdout_logfile的同一个文件中<br>                                 默认为AUTO，也就是随便找个地存，supervisord重启被清空。。非必须设置<br>;stderr_logfile_maxbytes&#x3D;1MB   ; 这个出现好几次了，就不重复了<br>;stderr_logfile_backups&#x3D;10     ; 这个也是<br>;stderr_capture_maxbytes&#x3D;1MB   ; 这个一样，和stdout_capture一样。 默认为0，关闭状态<br>;stderr_events_enabled&#x3D;false   ; 这个也是一样，默认为false<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; 这个是该子进程的环境变量，和别的子进程是不共享的<br>;serverurl&#x3D;AUTO                ;</p>
-<p> </p>
-<p>改成自己实际的配置文件：和①上面一样。</p>
-<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/running.html">3：运行</a></strong></p>
-<p>1）apt-get install 安装的supervisor直接可以通过 &#x2F;etc&#x2F;init.d&#x2F;supervisor 运行：</p>
-<p>&#x2F;etc&#x2F;init.d&#x2F;supervisor start</p>
-<p>2）通过easy_install 安装的supervisor运行supervisord 运行：</p>
-<p>supervisord</p>
-<p><strong>4：web界面操作</strong></p>
-<p>需要在supervisor的配置文件里添加[inet_http_server]选项组：之后可以通过<a href="http://10.211.55.11:9001来访问控制子线程的管理。">http://10.211.55.11:9001来访问控制子线程的管理。</a></p>
-<p>[inet_http_server]<br>port&#x3D;10.211.55.11:9001<br>username&#x3D;user<br>password&#x3D;123</p>
-<p>效果：</p>
-<p><img src="https://images2015.cnblogs.com/blog/163084/201611/163084-20161118021632920-889244058.png"></p>
-<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/running.html#running-supervisorctl">5：子进程管理</a>(supervisorctl)</strong> </p>
-<ol>
-<li>查看所有子进程的状态：</li>
-</ol>
-<p># <strong>supervisorctl status</strong><br>blog                             RUNNING    pid 2395, uptime 0:08:41<br>zhoujy                           RUNNING    pid 2396, uptime 0:08:41</p>
-<p>2）关闭、开启指定的子进程：</p>
-<p># <strong>supervisorctl stop zhoujy</strong><br>zhoujy: stopped</p>
-<h1 id="supervisorctl-start-zhoujy"><a href="#supervisorctl-start-zhoujy" class="headerlink" title="supervisorctl start zhoujy"></a><strong>supervisorctl start zhoujy</strong></h1><p>zhoujy: started</p>
-<p>3）关闭、开启所有的子进程：</p>
-<p># <strong>supervisorctl stop all</strong><br>blog: stopped<br>zhoujy: stopped</p>
-<h1 id="supervisorctl-start-all"><a href="#supervisorctl-start-all" class="headerlink" title="supervisorctl start all"></a><strong>supervisorctl start all</strong></h1><p>blog: started<br>zhoujy: started</p>
-<p>4）：其他参数：supervisor开启后子进程自动开启（<strong>autostart&#x3D;true</strong>）和子进程退出后自动启动（<strong>autorestart&#x3D;ture</strong>）</p>
-<p>更多的参数可以看<a target="_blank" rel="noopener" href="http://supervisord.org/configuration.html">官方文档</a>和<a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的说明。</p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>我们需要的功能在上面介绍的supervisor的基本功能中已经实现，supervisor还有其他的一些功能：如进程组、web页面管理子进程、监控子线程情况等等，更多的信息可以去<a target="_blank" rel="noopener" href="http://supervisord.org/">官网</a>上查看。</p>
-<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a target="_blank" rel="noopener" href="http://supervisord.org/">Supervisor官方文档</a></p>
-<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">Supervisor(一)基础篇</a></p>
-<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1540169" title="supervisor(二)event">Supervisor(二)event</a></p>
-<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1540795" title="supervisor(三)xml_rpc">Supervisor(三)xml_rpc</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/" class="post-title-link" itemprop="url">一道PHP面试题的思考</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-08 19:13:53" itemprop="dateCreated datePublished" datetime="2018-04-08T19:13:53+08:00">2018-04-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>题目是这样的：写一个php函数，将’9123456789’,转话成’9,123,456,789’的形式。</p>
-<p>解法1：</p>
-<p>function changeStr($str) {<br>    return number_format($str, 0, ‘,’, ‘,’);<br>}</p>
-<p>解法2：</p>
-<p>function changeStr($str) {<br>    return preg_replace(‘&#x2F;\B(?&#x3D;(\d{3})+$)&#x2F;i’, ‘,’, $str);<br>}</p>
-<p>解法3：</p>
-<p>function changeStr($str) {<br>    return preg_replace(‘&#x2F;\B(\d{3})&#x2F;i’, ‘,$1’, $str);<br>}</p>
-<p>解法4：</p>
-<p>function changeStr($str) {<br>    $ret  &#x3D; ‘’;<br>    $len  &#x3D; strlen($str);<br>    $left &#x3D; $len%3;<br>    for ($i&#x3D;0; $i&lt;$len; $i++) {<br>        if ($i%3 &#x3D;&#x3D; $left &amp;&amp; $i !&#x3D;&#x3D;0) {<br>            $ret .&#x3D;’,’;<br>        }<br>        $ret .&#x3D; $str[$i];<br>    }<br>    return $ret;<br>}</p>
-<p>除了php提供的number_format外，使用正则替换是最简洁的方法了，当然，在使用number_format前，需要确认提供的字符串是否为数字串。</p>
-<p>正则表达式在处理字符串问题时，是一个强有力的工具，下面再看些例子。</p>
-<p>例1：实现一个unix样式的命令行过滤器，将段落开始部分的大写字母转换为小写。</p>
-<?php
-$fp = fopen("php://stdin", "r") or die("can't read stdin");
-while (!feof($fp)) {
-    $line = fgets($fp);
-    $line = preg_replace_callback(
-            '/\\s*\\w/',
-            function ($matches) {
-                return strtolower($matches\[0\]);
-            },
-    $line
-    );
-    echo $line;
-}
-fclose($fp);
-
-例2：BB码转html
-
-<?php
-$input = "plain \[indent\] deep \[indent\] deeper \[/indent\] deep \[/indent\] plain";
-function parseTagsRecursive($input) {
-    $regex = '#\\\[indent\]((?:\[^\[\]\\\[(?!/?indent\])(?R))+)\\\[/indent\]#';
-     if (is_array($input)) {
-         $input = '<div style="margin-left: 10px">'.$input\[1\].'</div>';
- }
- return preg_replace_callback($regex, 'parseTagsRecursive', $input);
-}
-$output = parseTagsRecursive($input);
-echo $output;
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/%E9%9A%8F%E7%AC%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/07/%E9%9A%8F%E7%AC%94/" class="post-title-link" itemprop="url">随笔</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-07 19:38:15" itemprop="dateCreated datePublished" datetime="2018-04-07T19:38:15+08:00">2018-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/02/20/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-02-20T03:02:51.068Z" itemprop="datePublished">2022-02-20</time>
+              </p>
+            </div>
+          </li>
           
-      
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%88%90%E9%95%BF/">成长</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/" class="title">间歇性努力的人，持续性一事无成</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-16T14:31:29.000Z" itemprop="datePublished">2021-03-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/php/">php</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/" class="title">php面试题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-20T11:28:15.000Z" itemprop="datePublished">2021-01-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Go/">Go</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/20/golang%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="title">golang的一些最佳实践</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-20T11:23:45.000Z" itemprop="datePublished">2021-01-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/uncategorized/">uncategorized</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/06/tim-yang%E5%8D%9A%E5%AE%A2/" class="title">Tim Yang博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-05T16:03:47.000Z" itemprop="datePublished">2021-01-06</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
     </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
+  </div>
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E8%89%AF%E7%9A%84%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/07/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E8%89%AF%E7%9A%84%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">如何设计出一个优良的系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-07 14:06:51" itemprop="dateCreated datePublished" datetime="2018-04-07T14:06:51+08:00">2018-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9E%B6%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
-        </span>
-    </span>
+    
+  </div>
+</aside>
 
   
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>【一】-软件架构设计过程</p>
-<p>软件架构设计尚没有万灵的方法论支持，还是个非常新兴的行业，给出个人理解的行业软件架构设计过程，受个人水平有限，仅供参考：</p>
-<p>1.业务分析：针对目标行业的业务战略、蓝图、业务功能及流程进行分析，提出其中部分功能可以使用信息化进行处理，通过分析可以得出信息化要解决的问题。</p>
-<p>2.解决方案设计：根据业务战略，形成行业信息化解决方案。他是一个系统组，同时明确各系统间的支撑关系。</p>
-<p>3.系统功能设计：明确信息化系统功能列表及功能层次（层次，例如经验决策层工，管理层功能，业务操作功能等），将功能散列在这些层次中，根据功能及应用特点形成一个或者多个子系统。可参考下图理解。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310034566ohdR.gif"></p>
-<p>4.系统架构设计：针对某一系统明确系统IT支撑表达，层次化关系表达及功能、技术核心元素</p>
-<p>5.技术体系设计：针对系统的接口、数据存储，技术路线、部署及实现抽象进行设计</p>
-<p>总体过程如下图所示</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_131003417322Zc.gif"></p>
-<p>【二】-系统总体架构设计</p>
-<p>统总体架构非常重要，但在表达上都不尽相同，下面介绍几种常用的系统架构模式，供参考：</p>
-<p><strong>ASSF（access-service(biz)-standard-fundation)模式</strong>：访问-服务（业务功能）-标准-基础，对系统架构各个层次均有表达，但部署应用模式需要有单独说明，如下图方式组织系统总体架构：</p>
-<p><strong><img src="http://www.uml.org.cn/zjjs/images/0_1310015991k0f8.gif"></strong></p>
-<p><strong>Location模式</strong>：适合集团级应用，对于应用逻辑表达较为清晰，如下图所示：</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_131001601305H4.gif"></p>
-<p><strong>3 management-level模式</strong>：表达从决策层-管理层-操作层各个层次使用的功能。对于系统功能表达较为清晰，对于与客户达成一致性理解有较好效果，如下图所示：</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310016000Tu6f.gif"></p>
-<p>个人比较推荐ASSF模式做为主架构，同时制定Location模式与3management-level模式附加说明系统，从各个层次表达系统架构。</p>
-<p>【三】-系统架构中的数据分布设计</p>
-<p>在大型系统中，数据分布设计非常重要，整理数据分布设计的6中常见策略，仅供参考：</p>
-<p><strong>独立Schema</strong>:当一个大系统由相关的多个小系统组成，且不同小系统具有互不相同的数据库Schema定义。独立模式可管理性高，通信开销小。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310013876EahE.gif"></p>
-<p><strong>集中</strong>：一个大系统必须支持来自不同地方的访问，或者该系统由多个不同的小系统组成，而数据进行集中化，统一格式存储。可管理性、数据一致性高。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310013913eA85.gif"></p>
-<p><strong>分区</strong>：分为水平分析与垂直分区，当系统为“地域分布广泛的用户”提供“相同服务”时，常常使用水平分区策略。垂直分区为字段分隔，一般较少使用。采用分区方式，可伸缩性好。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310013891jmvm.gif"></p>
-<p><strong>复制</strong>：在整个分布式系统中，保存多个副本、并且以某种机制保持多个数据副本之间的数据一致性。复制方式可有效提升数据可靠性。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_13100139022qGq.gif"></p>
-<p><strong>子集</strong>：“子集”是“复制”的特殊方式，就是某节点因功能或非功能考虑而保持全体数据的一个相对固定的子集。</p>
-<p><strong><img src="http://www.uml.org.cn/zjjs/images/0_1310013937Y5e5.gif"></strong></p>
-<p><strong>重组</strong>：不同数据节点因要支持的功能不同，而以不同的schema保持数据—但本质上数据时同源的。重组以“重新组织”的格式进行传递和保持。</p>
-<p><strong><img src="http://www.uml.org.cn/zjjs/images/0_1310013926jJyJ.gif"></strong></p>
-<p>6中策略总结可以使用如下图表示：</p>
-<p> <strong><img src="http://www.uml.org.cn/zjjs/images/0_1310013985vAxa.gif"></strong> </p>
-<p>在应用过程中，应当灵活使用各种策略，策略应用的一般化原则如下所示：</p>
-<p> <strong><img src="http://www.uml.org.cn/zjjs/images/0_13100139957A64.gif"></strong> </p>
-<p><strong>总结</strong>：在应用过程中，根据实际应用进行分析，选择合适的数据分布策略，也可以组合使用，合适的数据分布策略将使系统的稳定性及功能满足新大大提高，可以使用如下过程确定数据分布策略：</p>
-<p>在表格中列出6种不同的数据分布策略，如下表所示：</p>
-<p>名称</p>
-<p>对吗</p>
-<p>好吗</p>
-<p>总分</p>
-<p>独立</p>
-<p>是&#x2F;否</p>
-<p>0~100分</p>
-<p>…</p>
-<p>根据系统应用特点，通过以上分析，去除不适用的策略，根据总分确定所采用的数据分布策略，在有些地方也可以使用组合策略。</p>
-<p>【四】-系统架构中的数据集成设计</p>
-<p>在系统架构设计中，经常面临多个业务系统数据集成共享的问题，以下主要分享数据集成设计的相关内容。</p>
-<p><strong>数据物理集中</strong>：将全部数据放在一起，由一个统一的数据库服务器管理，实现数据统一访问，访问效率高、适合大数据量查询的决策分析应用其缺点是实时性较差、风险大、时间长</p>
-<p><strong>逻辑集中</strong>：适用于业务系统分布在多个地方，由统一的整合平台实现各物理分布数据之间的数据共享，可实时访问分布在各处的数据，实施速度快，其缺点是受网络传输影响，不适合长事物。</p>
-<p>例如在销售行业的客户信息集成，如果是逻辑集中，那就是客户数据依然存在于各个地方，但是可以通过统一的数据整合平台进行访问。如果是物理集中，则可以通过集中的数据库进行访问。</p>
-<p>推荐结合逻辑集中与物理集中的优势，在实施初期采用逻辑集中，快速实现统一访问与数据共享，对访问量大、实时性要求不高的数据逐步实现物理集中，从而提高访问效率，类似于BI技术中的自顶向下与自底向上想结合的数据集成策略。</p>
-<p>下面介绍数据集成设计的三种常用模式：</p>
-<p>**数据联邦模式(DataFederation)**：将分布的数据逻辑集中，应用通过访问整合平台的虚拟数据库进行数据访问，数据在不同数据库实例中，此时，数据整合平台做为数据访问通道。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_13100327098KD7.gif"></p>
-<p>**数据复制模式(Data Replication)**：采用数据复制模式，通过数据一致性服务</p>
-<p>实现多个数据源的数据一致性，各数据库均保留共享数据备份。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310032721ev8i.gif"></p>
-<p>**基于接口的数据集成模式(Interface Level)**：系统间通过接口适配器方式共享数据，比较适合实时性较高且数据量较小应用。接口模式适合分区及独立模式的数据集成。</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310032729lw9Q.gif"></p>
-<p>在实际应用中，可以根据特点，灵活选用相应的策略。</p>
-<p>【五】-应用集成设计</p>
-<p>系统架构设计中，多个系统经常需要进行应用交互，这时就需要进行应用集成设计，介绍几种常用的应用集成概念：</p>
-<p><strong>EAI</strong>：EAI(EnterpriseApplication Integration)，是企业应用集成EAI是将基于各种不同平台、用不同方案建立的异构应用集成的一种方法和技术。EAI通过建立底层结构，来联系横贯整个企业的异构系统、应用、数据源等，完成在企业内部的ERP、CRM、SCM、数据库、数据仓库，以及其他重要的内部系统之间无缝地共享和交换数据的需要。有了EAI，企业就可以将企业核心应用和新的Internet解决方案结合在一起。</p>
-<p><strong>MOM</strong>：MOM指的是利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。MOM交互策略如下图所示：</p>
-<p><strong><img src="http://www.uml.org.cn/zjjs/images/0_13100905630zOc.gif"></strong></p>
-<p><strong>SOA</strong>：面向服务的体系结构（Service-OrientedArchitecture，SOA）是一个组件模型，它将应用程序的不同功能单元（称为服务）通过这些服务之间定义良好的接口和契约联系起来。接口是采用中立的方式进行定义的，它应该独立于实现服务的硬件平台、操作系统和编程语言。这使得构建在各种这样的系统中的服务可以一种统一和通用的方式进行交互。</p>
-<p>常用的应用集成交互策略如下图所示：</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310090600P481.gif"></p>
-<p>在实际应用过程中，只有最适合的策略，没有最好的策略，需要综合考虑实施的复杂度，理论上来说，总线模式是比较优良的应用交互策略，可以实现完全的平台无关性与服务重用，但是相对来说改造及维护难度较大，无意中也增加了应用集成的复杂度。因此，在选择过程中需要谨慎评估集成规模及集成策略的适用性。如果企业中只有两个系统需要进行交互，采用硬编码的方式也有可能是非常适用的策略。</p>
-<p>【六】-接口设计</p>
-<p>接口设计是系统架构师的重要职责，首先明确几个概念</p>
-<p>1.协作决定接口！</p>
-<p>2.子系统或者实现决定接口是错误的！</p>
-<p>给出接口设计的一般步骤如下：</p>
-<p><img src="http://www.uml.org.cn/zjjs/images/0_1310092168o1zQ.gif"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
+  <main class="main" role="main">
   
+  <div class="content article-list">
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">PHP编码规范</a>
+    </h1>
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/%E9%AB%98%E7%BA%A7shell%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/07/%E9%AB%98%E7%BA%A7shell%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">高级Shell命令使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-07 14:03:30" itemprop="dateCreated datePublished" datetime="2018-04-07T14:03:30+08:00">2018-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
+  </div>
   
-</div>
-
-        </div>
-      </header>
-
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" class="article-date">
+	  <time datetime="2018-04-22T08:44:26.000Z" itemprop="datePublished">Apr 22</time>
+	</a>
+</span>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>一、将输入信息转换为大写字符后再进行条件判断：</strong></p>
-<p>我们在读取用户的正常输入后，很有可能会将这些输入信息用于条件判断，那么在进行比较时，我们将不得不考虑这些信息的大小写匹配问题。<br> <em>&#x2F;&gt; cat &gt; test1.sh</em><br>#!&#x2F;bin&#x2F;sh<br>echo -n “Please let me know your name. “<br>read name<br> <em>#将变量name的值通过管道输出到tr命令，再由tr命令进行大小写转换后重新赋值给name变量。</em><br>name&#x3D;`echo $name tr [a-z] [A-Z]`<br>if [[ $name &#x3D;&#x3D; “STEPHEN” ]]; then<br>echo “Hello, Stephen.”<br>else<br>echo “You are not Stephen.”<br>fi<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test1.sh<br>Please let me know your name. stephen<br>Hello, Stephen.</p>
-<p><strong>二、为调试信息设置输出级别：</strong></p>
-<p>我们经常在调试脚本时添加一些必要的调试信息，以便跟踪到程序中的错误。在完成调试后，一般都会选择删除这些额外的调试信息，在过了一段时间之后，如果脚本需要添加新的功能，那么我们将不得不重新进行调试，这样又有可能需要添加这些调试信息，在调试成功之后，这些信息可能会被再次删除。如果我们能够为我们的调试信息添加调试级别，使其只在必要的时候输出，我想这将会是一件非常惬意的事情。<br>&#x2F;&gt; cat &gt; test2.sh<br>#!&#x2F;bin&#x2F;sh<br>if [[ $# &#x3D;&#x3D; 0 ]]; then<br>echo “Usage: .&#x2F;test2.sh -d debug_level”<br>exit 1<br>fi<br> <em>#1. 读取脚本的命令行选项参数，并将选项赋值给变量argument。</em><br>while getopts d: argument<br>do<br> <em>#2. 只有到选项为d(-d)时有效，同时将-d后面的参数($OPTARG)赋值给变量debug，表示当前脚本的调试级别。</em><br>case $argument in<br>d) debug_level&#x3D;$OPTARG ;;<br>\?) echo “Usage: .&#x2F;test2.sh -d debug_level”<br>exit 1<br>;;<br>esac<br>done<br> <em>#3. 如果debug此时的值为空或者不是0-9之间的数字，给debug变量赋缺省值0.</em><br>if [[ -z $debug_level   $debug_level !&#x3D; [0-9] ]]; then<br>debug_level&#x3D;0<br>fi<br>echo “The current debug_level level is $debug_level.”<br>echo -n “Tell me your name.”<br>read name<br>name&#x3D;`echo $name tr [a-z] [A-Z]`<br>if [ $name &#x3D; “STEPHEN” ];then<br> <em>#4. 根据当前脚本的调试级别判断是否输出其后的调试信息，此时当debug_level &gt; 0时输出该调试信息。</em><br>test $debug_level -gt 0 &amp;&amp; echo “This is stephen.”<br>#do something you want here.<br>elif [ $name &#x3D; “ANN” ]; then<br> <em>#5. 当debug_level &gt; 1时输出该调试信息。</em><br>test $debug_level -gt 1 &amp;&amp; echo “This is ann.”<br>#do something you want here.<br>else<br> <em>#6. 当debug_level &gt; 2时输出该调试信息。</em><br>test $debug_level -gt 2 &amp;&amp; echo “This is others.”<br>#do any other else.<br>fi<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test2.sh<br>Usage: .&#x2F;test2.sh -d debug_level<br>&#x2F;&gt; .&#x2F;test2.sh -d 1<br>The current debug level is 1.<br>Tell me your name. ann<br>&#x2F;&gt; .&#x2F;test2.sh -d 2<br>The current debug level is 2.<br>Tell me your name. ann<br>This is ann.</p>
-<p><strong>三、判断参数是否为数字：</strong></p>
-<p>有些时候我们需要验证脚本的参数或某些变量的值是否为数字，如果不是则需要需要给出提示，并退出脚本。<br>&#x2F;&gt; cat &gt; test3.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. $1是脚本的第一个参数，这里作为awk命令的第一个参数传入给awk命令。</em><br> <em>#2. 由于没有输入文件作为输入流，因此这里只是在BEGIN块中完成。</em><br> <em>#3. 在awk中ARGV数组表示awk命令的参数数组，ARGV[0]表示命令本身，ARGV[1]表示第一个参数。</em><br> <em>#4. match是awk的内置函数，返回值为匹配的正则表达式在字符串中(ARGV[1])的起始位置，没有找到返回0。</em><br> <em>#5. 正则表达式的写法已经保证了匹配的字符串一定是十进制的正整数，如需要浮点数或负数，仅需修改正则即可。</em><br> <em>#6. awk执行完成后将结果返回给isdigit变量，并作为其初始化值。</em><br> <em>#7. isdigit&#x3D;`echo $1 awk ‘{ if (match($1, “^[0-9]+$”) !&#x3D; 0) print “true”; else print “false” }’ `</em><br> <em>#8. 上面的写法也能实现该功能，但是由于有多个进程参与，因此效率低于下面的写法。</em><br>isdigit&#x3D;`awk ‘BEGIN { if (match(ARGV[1],”^[0-9]+$”) !&#x3D; 0) print “true”; else print “false” }’ $1`<br>if [[ $isdigit &#x3D;&#x3D; “true” ]]; then<br>echo “This is numeric variable.”<br>number&#x3D;$1<br>else<br>echo “This is not numeric variable.”<br>number&#x3D;0<br>fi<br> <strong>CTRL+D</strong><br>&#x2F;&gt; .&#x2F;test3.sh 12<br>This is numeric variable.<br>&#x2F;&gt; .&#x2F;test3.sh 12r<br>This is not numeric variable.</p>
-<p><strong>四、判断整数变量的奇偶性：</strong></p>
-<p>为了简化问题和突出重点，这里我们假设脚本的输入参数一定为合法的整数类型，因而在脚本内部将不再进行参数的合法性判断。<br>&#x2F;&gt; cat &gt; test4.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 这里的重点主要是sed命令中正则表达式的写法，它将原有的数字拆分为两个模式(用圆括号拆分)，一个前面的所有高位数字，另一个是最后一位低位数字，之后再用替换符的方式(\2)，将原有数字替换为只有最后一位的数字，最后将结果返回为last_digit变量。</em><br>last_digit&#x3D;`echo $1 sed ‘s&#x2F;.∗.∗..$&#x2F;\2&#x2F;‘`<br> <em>#2. 如果last_digit的值为0,2,4,6,8，就表示其为偶数，否则为奇数。</em><br>case $last_digit in<br>02468)<br>echo “This is an even number.” ;;<br>*)<br>echo “This is not an even number.” ;;<br>esac<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test4.sh 34<br>This is an even number.<br>&#x2F;&gt; .&#x2F;test4.sh 345<br>This is not an even number.</p>
-<p><strong>五、将Shell命令赋值给指定变量，以保证脚本的移植性：</strong></p>
-<p>有的时候当我们在脚本中执行某个命令时，由于操作系统的不同，可能会导致命令所在路径的不同，甚至是命令名称或选项的不同，为了保证脚本具有更好的平台移植性，我们可以将该功能的命令赋值给指定的变量，之后再使用该命令时，直接使用该变量即可。这样在今后增加更多OS时，我们只需为该变量基于新系统赋予不同的值即可，否则我们将不得不修改更多的地方，这样很容易导致因误修改而引发的Bug。<br>&#x2F;&gt; cat &gt; test5.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 通过uname命令获取当前的系统名称，之后再根据OS名称的不同，给PING变量赋值不同的ping命令的全称。</em><br>osname&#x3D;`uname -s`<br> <em>#2. 可以在case的条件中添加更多的操作系统名称。</em><br>case $osname in<br>“Linux”)<br>PING&#x3D;&#x2F;usr&#x2F;sbin&#x2F;ping ;;<br>“FreeBSD”)<br>PING&#x3D;&#x2F;sbin&#x2F;ping ;;<br>“SunOS”)<br>PING&#x3D;&#x2F;usr&#x2F;sbin&#x2F;ping ;;<br>*)<br>;;<br>esac<br>CTRL+D<br>&#x2F;&gt; . .&#x2F;test5.sh<br>&#x2F;&gt; echo $PING<br>&#x2F;usr&#x2F;sbin&#x2F;ping</p>
-<p><strong>六、获取当前时间距纪元时间(1970年1月1日)所经过的天数：</strong></p>
-<p>在获取两个时间之间的差值时，需要考虑很多问题，如闰年、月份中不同的天数等。然而如果我们能够确定两个时间点之间天数的差值，那么再计算时分秒的差值时就非常简单了。在系统提供的C语言函数中，获取的时间值是从1970年1月1日0点到当前时间所流经的秒数，如果我们基于此计算两个时间之间天数的差值，将会大大简化我们的计算公式。<br>&#x2F;&gt; cat &gt; test6.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 将date命令的执行结果(秒 分 小时 日 月 年)赋值给数组变量DATE。</em><br>declare -a DATE&#x3D;(`date +”%S %M %k %d %m %Y”`)<br> <em>#2. 为了提高效率，这个直接给出1970年1月1日到新纪元所流经的天数常量。</em><br>epoch_days&#x3D;719591<br> <em>#3. 从数组中提取各个时间部分值。</em><br>year&#x3D;${DATE[5]}<br>month&#x3D;${DATE[4]}<br>day&#x3D;${DATE[3]}<br>hour&#x3D;${DATE[2]}<br>minute&#x3D;${DATE[1]}<br>second&#x3D;${DATE[0]}<br> <em>#4. 当月份值为1或2的时候，将月份变量的值加一，否则将月份值加13，年变量的值减一，这样做主要是因为后面的公式中取月平均天数时的需要。</em><br>if [ $month -gt 2 ]; then<br>month&#x3D;$((month+1))<br>else<br>month&#x3D;$((month+13))<br>year&#x3D;$((year-1))<br>fi<br> <em>#5. year变量参与的运算是需要考虑闰年问题的，该问题可以自行去google。</em><br> <em>#6. month变量参与的运算主要是考虑月平均天数。</em><br> <em>#7. 计算结果为当前日期距新世纪所流经的天数。</em><br>today_days&#x3D;$(((year<em>365)+(year&#x2F;4)-(year&#x2F;100)+(year&#x2F;400)+(month</em>306001&#x2F;10000)+day))<br> <em>#8. 总天数减去纪元距离新世纪的天数即可得出我们需要的天数了。</em><br>days_since_epoch&#x3D;$((today_days-epoch_days))<br>echo $days_since_epoch<br>seconds_since_epoch&#x3D;$(((days_since_epoch<em>86400)+(hour</em>3600)+(minute*60)+second))<br>echo $seconds_since_epoch<br>CTRL+D<br>&#x2F;&gt; . .&#x2F;test6.sh<br>15310<br>1322829080</p>
-<p>需要说明的是，推荐将该脚本的内容放到一个函数中，以便于我们今后计算类似的时间数据时使用。</p>
-<p><strong>七、非直接引用变量：</strong></p>
-<p>在Shell中提供了三种为标准(直接)变量赋值的方式：</p>
-<ol>
-<li>直接赋值。</li>
-<li>存储一个命令的输出。</li>
-<li>存储某类型计算的结果。<br>然而这三种方式都是给已知变量名的变量赋值，如name&#x3D;Stephen。但是在有些情况下，变量名本身就是动态的，需要依照运行的结果来构造变量名，之后才是为该变量赋值。这种变量被成为动态变量，或非直接变量。<br>&#x2F;&gt; cat &gt; test7.sh<br>#!&#x2F;bin&#x2F;sh<br>work_dir&#x3D;`pwd`<br> <em>#1. 由于变量名中不能存在反斜杠，因此这里需要将其替换为下划线。</em><br> <em>#2. work_dir和file_count两个变量的变量值用于构建动态变量的变量名。</em><br>work_dir&#x3D;`echo $work_dir sed ‘s&#x2F;\&#x2F;&#x2F;<em>&#x2F;g’`<br>file_count&#x3D;`ls wc -l`<br> <em>#3. 输出work_dir和file_count两个变量的值，以便确认这里的输出结果和后面构建的命令名一致。</em><br>echo “work_dir &#x3D; “ $work_dir<br>echo “file_count &#x3D; “ $file_count<br> <em>#4. 通过eval命令进行评估，将变量名展开，如${work_dir}和$file_count，并用其值将其替换，如果不使用eval命令，将不会完成这些展开和替换的操作。最后为动态变量赋值。</em><br>eval BASE${work_dir}</em>$file_count&#x3D;$(ls $(pwd) wc -l)<br> <em>#5. 先将echo命令后面用双引号扩住的部分进行展开和替换，由于是在双引号内，仅完成展开和替换操作即可。</em><br> <em>#6. echo命令后面的参数部分，先进行展开和替换，使其成为$BASE_root_test_1动态变量，之后在用该变量的值替换该变量本身作为结果输出。</em><br>eval echo “BASE${work_dir}<em>$file_count &#x3D; “ ‘$BASE’${work_dir}</em>$file_count<br>CTRL+D<br>&#x2F;&gt; . .&#x2F;test7.sh<br>work_dir &#x3D;  _root_test<br>file_count &#x3D;  1<br>BASE_root_test_1 &#x3D; 1</li>
-</ol>
-<p><strong>八、在循环中使用管道的技巧：</strong></p>
-<p>在Bash Shell中，管道的最后一个命令都是在子Shell中执行的。这意味着在子Shell中赋值的变量对父Shell是无效的。所以当我们将管道输出传送到一个循环结构，填入随后将要使用的变量，那么就会产生很多问题。一旦循环完成，其所依赖的变量就不存在了。<br>&#x2F;&gt; cat &gt; test8_1.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 先将ls -l命令的结果通过管道传给grep命令作为管道输入。</em><br> <em>#2. grep命令过滤掉包含total的行，之后再通过管道将数据传给while循环。</em><br> <em>#3. while read line命令从grep的输出中读取数据。注意，while是管道的最后一个命令，将在子Shell中运行。</em><br>ls -l grep -v total while read line<br>do<br> <em>#4. all变量是在while块内声明并赋值的。</em><br>all&#x3D;”$all $line”<br>echo $line<br>done<br> <em>#5. 由于上面的all变量在while内声明并初始化，而while内的命令都是在子Shell中运行，包括all变量的赋值，因此该变量的值将不会传递到while块外，因为块外地命令是它的父Shell中执行。</em><br>echo “all &#x3D; “ $all<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test8_1.sh<br>-rw-r–r–.  1 root root 193 Nov 24 11:25 outfile<br>-rwxr-xr-x. 1 root root 284 Nov 24 10:01 test7.sh<br>-rwxr-xr-x. 1 root root 108 Nov 24 12:48 test8_1.sh<br>all &#x3D;</p>
-<p>为了解决该问题，我们可以将while之前的命令结果先输出到一个临时文件，之后再将该临时文件作为while的重定向输入，这样while内部和外部的命令都将在同一个Shell内完成。<br>&#x2F;&gt; cat &gt; test8_2.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 这里我们已经将命令的结果重定向到一个临时文件中。</em><br>ls -l grep -v total &gt; outfile<br>while read line<br>do<br> <em>#2. all变量是在while块内声明并赋值的。</em><br>all&#x3D;”$all $line”<br>echo $line<br> <em>#3. 通过重定向输入的方式，将临时文件中的内容传递给while循环。</em><br>done &lt; outfile<br> _#4. 删除该临时文件。_<br>rm -f outfile<br> _#5. 在while块内声明和赋值的all变量，其值在循环外部仍然有效。_<br>echo “all &#x3D; “ $all<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test8_2.sh<br>-rw-r–r–.  1 root root   0 Nov 24 12:58 outfile<br>-rwxr-xr-x. 1 root root 284 Nov 24 10:01 test7.sh<br>-rwxr-xr-x. 1 root root 140 Nov 24 12:58 test8_2.sh<br>all &#x3D;  -rwxr-xr-x. 1 root root 284 Nov 24 10:01 test7.sh -rwxr-xr-x. 1 root root 135 Nov 24 13:16 test8_2.sh</p>
-<p>上面的方法只是解决了该问题，然而却带来了一些新问题，比如临时文件的产生容易导致性能问题，以及在脚本异常退出时未能及时删除当前使用的临时文件，从而导致生成过多的垃圾文件等。下面将再介绍一种方法，该方法将同时解决以上两种方法同时存在的问题。该方法是通过HERE-Document的方式来替代之前的临时文件方法。<br>&#x2F;&gt; cat &gt; test8_3.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 将命令的结果传给一个变量</em><br>OUTFILE&#x3D;`ls -l grep -v total`<br>while read line<br>do<br>all&#x3D;”$all $line”<br>echo $line<br>done &lt;&lt;EOF<br> _#2. 将该变量作为该循环的HERE文档输入。_<br>$OUTFILE<br>EOF<br> _#3. 在循环外部输出循环内声明并初始化的变量all的值。_<br>echo “all &#x3D; “ $all<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test8_3.sh<br>-rwxr-xr-x. 1 root root 284 Nov 24 10:01 test7.sh<br>-rwxr-xr-x. 1 root root 135 Nov 24 13:16 test8_3.sh<br>all &#x3D;  -rwxr-xr-x. 1 root root 284 Nov 24 10:01 test7.sh -rwxr-xr-x. 1 root root 135 Nov 24 13:16 test8_3.sh</p>
-<p><strong>九、自链接脚本：</strong></p>
-<p>通常而言，我们是通过脚本的命令行选项来确定脚本的不同行为，告诉它该如何操作。这里我们将介绍另外一种方式来完成类似的功能，即通过脚本的软连接名来帮助脚本决定其行为。<br>&#x2F;&gt; cat &gt; test9.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. basename命令将剥离脚本的目录信息，只保留脚本名，从而确保在相对路径的模式下执行也没有任何差异。</em><br> <em>#2. 通过sed命令过滤掉脚本的扩展名。</em><br>dowhat&#x3D;`basename $0 sed ‘s&#x2F;\.sh&#x2F;&#x2F;‘`<br> <em>#3. 这里的case语句只是为了演示方便，因此模拟了应用场景，在实际应用中，可以为不同的分支执行不同的操作，或将某些变量初始化为不同的值和状态。</em><br>case $dowhat in<br>test9)<br>echo “I am test9.sh”<br>;;<br>test9_1)<br>echo “I am test9_1.sh.”<br>;;<br>test9_2)<br>echo “I am test9_2.sh.”<br>;;<br>*)<br>echo “You are illegal link file.”<br>;;<br>esac<br>CTRL+D<br>&#x2F;&gt; chmod a+x test9.sh<br>&#x2F;&gt; ln -s test9.sh test9_1.sh<br>&#x2F;&gt; ln -s test9.sh test9_2.sh<br>&#x2F;&gt; ls -l<br>lrwxrwxrwx. 1 root root   8 Nov 24 14:32 test9_1.sh -&gt; test9.sh<br>lrwxrwxrwx. 1 root root   8 Nov 24 14:32 test9_2.sh -&gt; test9.sh<br>-rwxr-xr-x. 1 root root 235 Nov 24 14:35 test9.sh<br>&#x2F;&gt; .&#x2F;test9.sh<br>I am test9.sh.<br>&#x2F;&gt; .&#x2F;test9_1.sh<br>I am test9_1.sh.<br>&#x2F;&gt; .&#x2F;test9_2.sh<br>I am test9_2.sh.</p>
-<p><strong>十、Here文档的使用技巧：</strong></p>
-<p>在命令行交互模式下，我们通常希望能够直接输入更多的信息，以便当前的命令能够完成一定的自动化任务，特别是对于那些支持自定义脚本的命令来说，我们可以将脚本作为输入的一部分传递给该命令，以使其完成该自动化任务。<br> <em>#1. 通过sqlplus以dba的身份登录Oracle数据库服务器。</em><br> <em>#2. 在通过登录后，立即在sqlplus中执行oracle的脚本CreateMyTables和CreateMyViews。</em><br> <em>#3. 最后执行sqlplus的退出命令，退出sqlplus。自动化工作完成。</em><br>&#x2F;&gt; sqlplus “&#x2F;as sysdba” &lt;&lt;-SQL</p>
-<blockquote>
-<p>@CreateMyTables<br>@CreateMyViews<br>exit<br>SQL</p>
-</blockquote>
-<p><strong>十一、获取进程的运行时长(单位: 分钟)：</strong></p>
-<p>在进程监控脚本中，我们通常需要根据脚本的参数来确定有哪些性能参数将被收集，当这些性能参数大于最高阈值或小于最低阈值时，监控脚本将根据实际的情况，采取预置的措施，如邮件通知、直接杀死进程等，这里我们给出的例子是收集进程运行时长性能参数。<br>ps命令的etime值将给出每个进程的运行时长，其格式主要为以下三种：</p>
-<ol>
-<li>minutes:seconds，如20:30</li>
-<li>hours:minutes:seconds，如1:20:30</li>
-<li>days-hours:minute:seconds，如2-18:20:30<br>该脚本将会同时处理这三种格式的时间信息，并最终转换为进程所流经的分钟数。<br>&#x2F;&gt; cat &gt; test11.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 通过ps命令获取所有进程的pid、etime和comm数据。</em><br> <em>#2. 再通过grep命令过滤，只获取init进程的数据记录，这里我们可以根据需要替换为自己想要监控的进程名。</em><br> <em>#3. 输出结果通常为：1 09:42:09 init</em><br>pid_string&#x3D;`ps -eo pid,etime,comm grep “init” grep -v grep`<br> <em>#3. 从这一条记录信息中抽取出etime数据，即第二列的值09:42:09，并赋值给exec_time变量。</em><br>exec_time&#x3D;`echo $pid_string awk ‘{print $2}’`<br> <em>#4. 获取exec_time变量的时间组成部分的数量，这里是3个部分，即时:分:秒，是上述格式中的第二种。</em><br>time_field_count&#x3D;`echo $exec_time awk -F: ‘{print NF}’`<br> <em>#5. 从exec_time变量中直接提取分钟数，即倒数第二列的数据(42)。</em><br>count_of_minutes&#x3D;`echo $exec_time awk -F: ‘{print $(NF-1)}’`</li>
-</ol>
-<p> <em>#6. 判断当前exec_time变量存储的时间数据是属于以上哪种格式。</em><br> <em>#7. 如果是第一种，那么天数和小时数均为0。</em><br> <em>#8. 如果是后两种之一，则需要继续判断到底是第一种还是第二种，如果是第二种，其小时部分将不存在横线(-)分隔符分隔天数和小时数，否则需要将这两个时间字段继续拆分，以获取具体的天数和小时数。对于第二种，天数为0.</em><br>if [ $time_field_count -lt 3 ]; then<br>count_of_hours&#x3D;0<br>count_of_days&#x3D;0<br>else<br>count_of_hours&#x3D;`echo $exec_time awk -F: ‘{print $(NF-2)}’`<br>fields&#x3D;`echo $count_of_hours awk -F- ‘{print NF}’`<br>if [ $fields -ne 1 ]; then<br>count_of_days&#x3D;`echo $count_of_hours awk -F- ‘{print $1}’`<br>count_of_hours&#x3D;`echo $count_of_hours awk -F- ‘{print $2}’`<br>else<br>count_of_days&#x3D;0<br>fi<br>fi<br> <em>#9. 通过之前代码获取的各个字段值，计算出该进程实际所流经的分钟数。</em><br> <em>#10. bc命令是计算器命令，可以将echo输出的数学表达式计算为最终的数字值。</em><br>elapsed_minutes&#x3D;`echo “$count_of_days*1440+$count_of_hours*60+$count_of_minutes” bc`<br>echo “The elapsed minutes of init process is” $elapsed_minutes “minutes.”<br> <strong>CTRL+D</strong><br>&#x2F;&gt; .&#x2F;test11.sh<br>The elapsed minutes of init process is 577 minutes.</p>
-<p><strong>十二、模拟简单的top命令：</strong></p>
-<p>这里用脚本实现了一个极为简单的top命令。为了演示方便，我们在脚本中将很多参数都写成硬代码，你可以根据需要更换这些参数，或者用更为灵活的方式替换现有的实现。<br>&#x2F;&gt; cat &gt; test12.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 将ps命令的title赋值给一个变量，这样在每次输出时，直接打印该变量即可。</em><br>header&#x3D;`ps aux head -n 1`<br> <em>#2. 这里是一个无限循环，等价于while true</em><br> <em>#3. 每次循环先清屏，之后打印uptime命令的输出。</em><br> <em>#4. 输出ps的title。</em><br> <em>#5. 这里需要用sed命令删除ps的title行，以避免其参与sort命令的排序。</em><br> <em>#6. sort先基于CPU%倒排，再基于owner排序，最后基于pid排序，最后再将结果输出给head命令，仅显示前20行的数据。</em><br> <em>#7. 每次等待5秒后刷新一次。</em><br>while :<br>do<br>clear<br>uptime<br>echo “$header”<br>ps aux sed -e 1d sort -k3nr -k1,1 -k2n head -n 20<br>sleep 5<br>done<br>CTRL+D<br>&#x2F;&gt; .&#x2F;test12.sh<br>21:55:07 up 13:42,  2 users,  load average: 0.00, 0.00, 0.00<br>USER       PID %CPU %MEM    VSZ   RSS   TTY      STAT START   TIME   COMMAND<br>root      6408     2.0      0.0   4740   932   pts&#x2F;2    R+    21:45     0:00   ps aux<br>root      1755     0.2      2.0  96976 21260   ?        S      08:14     2:08   nautilus<br>68        1195     0.0      0.4   6940   4416    ?        Ss    08:13     0:00   hald<br>postfix   1399    0.0      0.2  10312  2120    ?        S      08:13     0:00   qmgr -l -t fifo -u<br>postfix   6021    0.0      0.2  10244  2080    ?        S      21:33     0:00   pickup -l -t fifo -u<br>root         1       0.0      0.1   2828   1364    ?        Ss     08:12    0:02   &#x2F;sbin&#x2F;init<br>… …</p>
-<p><strong>十三、格式化输出指定用户的当前运行进程：</strong></p>
-<p>在这个例子中，我们通过脚本参数的形式，将用户列表传递给该脚本，脚本在读取参数后，以树的形式将用户列表中用户的所属进程打印出来。<br> <em>&#x2F;&gt; cat &gt; test13.sh<br>#!&#x2F;bin&#x2F;sh</em><br> <em>#1. 循环读取脚本参数，构造egrep可以识别的用户列表变量(基于grep的扩展正则表达式)。</em><br> <em>#2. userlist变量尚未赋值，则直接使用第一个参数为它赋值。<br>#3. 如果已经赋值，且脚本参数中存在多个用户，这里需要在每个用户名之间加一个竖线，在egrep中，竖线是分割的元素之间是或的关系。<br>#4. shift命令向左移动一个脚本的位置参数，这样可以使循环中始终操作第一个参数。<br>while [ $# -gt 0 ]<br>do<br>if [ -z “$userlist” ]; then<br>userlist&#x3D;”$1”<br>else<br>userlist&#x3D;”$userlist$1”<br>fi</em><br>  <em>shift<br>done</em><br> <em>#5. 如果没有用户列表，则搜索所有用户的进程。</em><br> <em>#6. “^ *($userlist) “: 下面的调用方式，该正则的展开形式为”^ *(rootavahipostfixrpcdbus) “。其含义为，以0个或多个空格开头，之后将是root、avahi、postfix、rpc或dbus之中的任何一个字符串，后面再跟随一个空格。</em><br> <em>if [ -z “$userlist” ]; then<br>userlist&#x3D;”.”<br>else<br>userlist&#x3D;”^ *($userlist) “<br>fi</em><br> <em>#7. ps命令输出所有进程的user和命令信息，将结果传递给sed命令，sed将删除ps的title部分。</em><br> <em>#8. egrep过滤所有进程记录中，包含指定用户列表的进程记录，再将过滤后的结果传递给sort命令。</em><br> <em>#9. sort命令中的-b选项将忽略前置空格，并以user，再以进程名排序，将结果传递个uniq命令。</em><br> <em>#10.uniq命令将合并重复记录，-c选项将会使每条记录前加重复的行数。</em><br> <em>#11.第二个sort将再做一次排序，先以user，再以重复计数由大到小，最后以进程名排序。将结果传给awk命令。</em><br> <em>#12.awk命令将数据进行格式化，并删除重复的user。</em><br> <em>ps -eo user,comm sed -e 1d egrep “$userlist”<br>sort -b -k1,1 -k2,2 uniq -c sort -b -k2,2 -k1nr,1 -k3,3<br>awk ‘ { user &#x3D; (lastuser &#x3D;&#x3D; $2) ? “ “ : $2;<br>lastuser &#x3D; $2;<br>printf(“%-15s\t%2d\t%s\n”,user,$1,$3)<br>}’</em><br> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test13.sh root avahi postfix rpc dbus</em><br>avahi             2      avahi-daemon<br>dbus             1      dbus-daemon<br>postfix          1      pickup<br>1      qmgr<br>root              5      mingetty<br>3      udevd<br>2      sort<br>2      sshd<br>… …<br>rpc               1      rpcbind</p>
-<p><strong>十四、用脚本完成which命令的基本功能：</strong></p>
-<p>我们经常会在脚本中调用其他的应用程序，为了保证脚本具有更好的健壮性，以及错误提示的准确性，我们可能需要在执行前验证该命令是否存在，或者说是否可以被执行。这首先要确认该命令是否位于PATH变量包含的目录中，再有就是该文件是否为可执行文件。<br> <em>&#x2F;&gt; cat &gt; test14.sh<br>#!&#x2F;bin&#x2F;sh</em><br> <em>#1. 该函数用于判断参数1中的命令是否位于参数2所包含的目录列表中。需要说明的是，函数里面的$1和$2是指函数的参数，而不是脚本的参数，后面也是如此。</em><br> <em>#2. cmd&#x3D;$1和path&#x3D;$2，将参数赋给有意义的变量名，是一个很好的习惯。</em><br> <em>#3. 由于PATH环境变量中，目录之间的分隔符是冒号，因此这里需要临时将IFS设置为冒号，函数结束后再还原。</em><br> <em>#4. 在for循环中，逐个变量目录列表中的目录，以判断该命令是否存在，且为可执行程序。</em><br> <em>isInPath() {<br>cmd&#x3D;$1        path&#x3D;$2      result&#x3D;1<br>oldIFS&#x3D;$IFS   IFS&#x3D;”:”<br>for dir in $path<br>do<br>if [ -x $dir&#x2F;$cmd ]; then<br>result&#x3D;0<br>fi<br>done<br>IFS&#x3D;oldifs<br>return $result<br>}</em><br> <em>#5. 检查命令是否存在的主功能函数，先判断是否为绝对路径，即$var变量的第一个字符是否为&#x2F;，如果是，再判断它是否有可执行权限。</em><br> <em>#6. 如果不是绝对路径，通过isInPath函数判断是否该命令在PATH环境变量指定的目录中。</em><br> <em>checkCommand() {<br>var&#x3D;$1<br>if [ ! -z “$var” ]; then<br>if [ “${var:0:1}” &#x3D; “&#x2F;“ ]; then<br>if [ ! -x $var ]; then<br>return 1<br>fi<br>elif ! isInPath $var $PATH ; then<br>return 2<br>fi<br>fi<br>}</em><br> <em>#7. 脚本参数的合法性验证。</em><br> <em>if [ $# -ne 1 ]; then<br>echo “Usage: $0 command” &gt;&amp;2;<br>fi</em><br> <em>#8. 根据返回值打印不同的信息。我们可以在这里根据我们的需求完成不同的工作。</em><br> _checkCommand $1<br>case $? in<br>0) echo “$1 found in PATH.” ;;</p>
-<ol>
-<li>echo “$1 not found or not executable.” ;;</li>
-<li>echo “$1 not found in PATH.” ;;<br>esac<br>exit 0_</li>
-</ol>
-<p> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test14.sh echo</em><br>echo found in PATH.<br><em>&#x2F;&gt; .&#x2F;test14.sh MyTest</em><br>MyTest not found in PATH.<br><em>&#x2F;&gt; .&#x2F;test14.sh &#x2F;bin&#x2F;MyTest</em><br>&#x2F;bin&#x2F;MyTest not found or not executable.</p>
-<p><strong>十五、验证输入信息是否合法：</strong></p>
-<p>这里给出的例子是验证用户输入的信息是否都是数字和字母。需要说明的是，之所以将其收集到该系列中，主要是因为它实现的方式比较巧妙。<br> <em>&#x2F;&gt; cat &gt; test15.sh<br>#!&#x2F;bin&#x2F;sh<br>echo -n “Enter your input: “<br>read input</em><br> <em>#1. 事实上，这里的巧妙之处就是先用sed替换了非法部分，之后再将替换后的结果与原字符串比较。这种写法也比较容易扩展。</em><br> <em>parsed_input&#x3D;`echo $input sed ‘s&#x2F;[^[:alnum:]]&#x2F;&#x2F;g’`<br>if [ “$parsed_input” !&#x3D; “$input” ]; then<br>echo “Your input must consist of only letters and numbers.”<br>else<br>echo “Input is OK.”<br>fi</em><br> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test15.sh</em><br>Enter your input: <strong>hello123</strong><br>Input is OK.<br> <em>&#x2F;&gt; .&#x2F;test15.sh</em><br>Enter your input: <strong>hello world</strong><br>Your input must consist of only letters and numbers.</p>
-<p><strong>十六、整数验证：</strong></p>
-<p>整数的重要特征就是只是包含数字0到9和负号(-)。<br> <em>&#x2F;&gt; cat &gt; test16.sh<br>#!&#x2F;bin&#x2F;sh</em><br> <em>#1. 判断变量number的第一个字符是否为负号(-)，如果只是则删除该负号，并将删除后的结果赋值给left_number变量。</em><br> <em>#2. “${number#-}”的具体含义，可以参考该系列博客中”Linux Shell常用技巧(十一)”，搜索关键字”变量模式匹配运算符”即可。</em><br> <em>number&#x3D;$1<br>if [ “${number:0:1}” &#x3D; “-“ ]; then<br>left_number&#x3D;”${number#-}”<br>else<br>left_number&#x3D;$number<br>fi</em><br> <em>#3. 将left_number变量中所有的数字都替换掉，因此如果返回的字符串变量为空，则表示left_number所包含的字符均为数字。</em><br> <em>nodigits&#x3D;`echo $left_number sed ‘s&#x2F;[[:digit:]]&#x2F;&#x2F;g’`<br>if [ “$nodigits” !&#x3D; “” ]; then<br>echo “Invalid number format!”<br>else<br>echo “You are valid number.”<br>fi</em><br> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test16.sh -123</em><br>You are valid number.<br> <em>&#x2F;&gt; .&#x2F;test16.sh 123e</em><br>Invalid number format!</p>
-<p><strong>十七、判断指定的年份是否为闰年：</strong></p>
-<p>这里我们先列出闰年的规则:</p>
-<ol>
-<li>不能被4整除的年一定不是闰年；</li>
-<li>可以同时整除4和400的年一定是闰年；</li>
-<li>可以整除4和100，但是不能整除400的年，不是闰年；</li>
-<li>其他可以整除的年都是闰年。<br> <em>#!&#x2F;bin&#x2F;sh<br>year&#x3D;$1<br>if [ “$((year % 4))” -ne 0 ]; then<br>echo “This is not a leap year.”<br>exit 1<br>elif [ “$((year % 400))” -eq 0 ]; then<br>echo “This is a leap year.”<br>exit 0<br>elif [ “$((year % 100))” -eq 0 ]; then<br>echo “This is not a leap year.”<br>exit 1<br>else<br>echo “This is a leap year.”<br>exit 0<br>fi</em></li>
-</ol>
-<p> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test17.sh 1933</em><br>This is not a leap year.<br><em>&#x2F;&gt; .&#x2F;test17.sh 1936</em><br>This is a leap year.</p>
-<p><strong>十八、将单列显示转换为多列显示：</strong></p>
-<p>我们经常会在显示时将单行的输出，格式化为多行的输出，通常情况下，为了完成该操作，我们将加入更多的代码，将输出的结果存入数组或临时文件，之后再重新遍历它们，从而实现单行转多行的目的。在这里我们介绍一个使用xargs命令的技巧，可以用更简单、更高效的方式来完成该功能。 <em>&#x2F;&gt; cat &gt; test18.sh<br>#!&#x2F;bin&#x2F;sh</em><br> <em>#1. passwd文件中，有可能在一行内出现一个或者多个空格字符，因此在直接使用cat命令的结果时，for循环会被空格字符切开，从而导致一行的文本被当做多次for循环的输入，这样我们不得不在sed命令中，将cat输出的每行文本进行全局替换，将空格字符替换为%20。事实上，我们当然可以将cat &#x2F;etc&#x2F;passwd的输出以管道的形式传递给cut命令，这里之所以这样写，主要是为了演示一旦出现类似的问题该如果巧妙的处理。</em><br> <em>#2. 这里将for循环的输出以管道的形式传递给sort命令，sort命令将基于user排序。</em><br> <em>#3. -xargs -n 2是这个技巧的重点，它将sort的输出进行合并，-n选项后面的数字参数将提示xargs命令将多少次输出合并为一次输出，并传递给其后面的命令。在本例中，xargs会将从sort得到的每两行数据合并为一行，中间用空格符分离，之后再将合并后的数据传递给后面的awk命令。事实上，对于awk而言，你也可以简单的认为xargs减少了对它(awk)的一半调用。</em><br> <em>#4. 如果打算在一行内显示3行或更多的行，可以将-n后面的数字修改为3或其它更高的数字。你还可以修改awk中的print命令，使用更为复杂打印输出命令，以得到更为可读的输出效果。</em><br> <em>for line in `cat &#x2F;etc&#x2F;passwd sed ‘s&#x2F; &#x2F;%20&#x2F;g’`<br>do<br>user&#x3D;`echo $line cut -d: -f1`<br>echo $user<br>done \<br>sort -k1,1 \<br>xargs -n 2 \<br>awk ‘{print $1, $2}’</em><br> <strong>CTRL+D</strong><br> <em>&#x2F;&gt; .&#x2F;test18.sh</em><br>abrt adm<br>apache avahi<br>avahi-autoipd bin<br>daemon daihw<br>dbus ftp<br>games gdm<br>gopher haldaemon<br>halt lp<br>mail nobody<br>ntp operator<br>postfix pulse<br>root rtkit<br>saslauth shutdown<br>sshd sync<br>tcpdump usbmuxd<br>uucp vcsa</p>
-<p> </p>
-<p><strong>十九、将文件的输出格式化为指定的宽度：</strong></p>
-<p>在这个技巧中，不仅包含了如何获取和文件相关的详细信息，如行数，字符等，而且还可以让文件按照指定的宽度输出。这种应用在输出帮助信息、License相关信息时还是比较有用的。<br>&#x2F;&gt; cat &gt; test19.sh<br>#!&#x2F;bin&#x2F;sh<br> <em>#1. 这里我们将缺省宽度设置为75，如果超过该宽度，将考虑折行显示，否则直接在一行中全部打印输出。这里只是为了演示方便，事实上，你完全可以将该值作为脚本或函数的参数传入，那样你将会得到更高的灵活性。</em><br>my_width&#x3D;75<br> <em>#2. for循环的读取列表来自于脚本的参数。</em><br> <em>#3. 在获取lines和chars变量时，sed命令用于过滤掉多余的空格字符。</em><br> _#4. 在if的条件判断中$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/php/">php</a>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/php/" rel="tag">php</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">php操作数据库的几种方式</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+	  <time datetime="2018-04-22T08:30:16.000Z" itemprop="datePublished">Apr 22</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/php/">php</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/php/" rel="tag">php</a>, <a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/">php用户输入过滤</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/" class="article-date">
+	  <time datetime="2018-04-22T08:12:50.000Z" itemprop="datePublished">Apr 22</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/php/">php</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/php/" rel="tag">php</a>, <a class="article-tag-link-link" href="/tags/%E5%AE%89%E5%85%A8/" rel="tag">安全</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/21/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%E5%A4%A7%E5%85%A8/">vim命令大全</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/21/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%E5%A4%A7%E5%85%A8/" class="article-date">
+	  <time datetime="2018-04-21T05:34:12.000Z" itemprop="datePublished">Apr 21</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/21/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%E5%A4%A7%E5%85%A8/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">Redis基础、高级特性与性能调优</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" class="article-date">
+	  <time datetime="2018-04-13T09:45:51.000Z" itemprop="datePublished">Apr 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/redis/" rel="tag">redis</a>, <a class="article-tag-link-link" href="/tags/%E7%BC%93%E5%AD%98/" rel="tag">缓存</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/">进程管理supervisor的简单说明</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/" class="article-date">
+	  <time datetime="2018-04-13T09:40:47.000Z" itemprop="datePublished">Apr 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/">一道PHP面试题的思考</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/" class="article-date">
+	  <time datetime="2018-04-08T11:13:53.000Z" itemprop="datePublished">Apr 8</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/php/">php</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/07/%E9%9A%8F%E7%AC%94/">随笔</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/07/%E9%9A%8F%E7%AC%94/" class="article-date">
+	  <time datetime="2018-04-07T11:38:15.000Z" itemprop="datePublished">Apr 7</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/uncategorized/">uncategorized</a>
+  </span>
+
+    
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/07/%E9%9A%8F%E7%AC%94/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/07/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E8%89%AF%E7%9A%84%E7%B3%BB%E7%BB%9F/">如何设计出一个优良的系统</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/07/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E8%89%AF%E7%9A%84%E7%B3%BB%E7%BB%9F/" class="article-date">
+	  <time datetime="2018-04-07T06:06:51.000Z" itemprop="datePublished">Apr 7</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E6%9E%B6%E6%9E%84/" rel="tag">架构</a>, <a class="article-tag-link-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/07/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E8%89%AF%E7%9A%84%E7%B3%BB%E7%BB%9F/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/07/%E9%AB%98%E7%BA%A7shell%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">高级Shell命令使用</a>
+    </h1>
+  
+
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/04/07/%E9%AB%98%E7%BA%A7shell%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="article-date">
+	  <time datetime="2018-04-07T06:03:30.000Z" itemprop="datePublished">Apr 7</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/linux/" rel="tag">linux</a>, <a class="article-tag-link-link" href="/tags/shell/" rel="tag">shell</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/04/07/%E9%AB%98%E7%BA%A7shell%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/#comments" class="article-comment-link">Comments</a></span>
+    
+  </p>
+</article>
+
+    
   </div>
 
+  
+    
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+        <div class="bar-inner">
+        <ul class="pager pull-left">
+            
+            <li class="prev">
+                <a href="/page/10/">
+                    <i class="icon icon-angle-left"></i>
+                    Prev
+                </a>
+            </li>
+            
+            
+            <li class="next">
+                <a href="/page/12/">
+                    Next
+                    <i class="icon icon-angle-right"></i>
+                </a>
+            </li>
+            
+        </ul>
+            <div class="total-article bar-right">Page 11 of 13</div>
+        </div>
+    </nav>
+    
+ 
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
     </div>
-  </footer>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
 
-  
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
-
-  
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
-<script src="/js/third-party/search/local-search.js"></script>
+<script src="/js/plugin.min.js"></script>
 
 
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
 
 
 
-  
+
+
+
+   
+
+
+
+
 
 
 

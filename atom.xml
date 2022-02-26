@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2022-02-20T03:02:51.068Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://example.com/2022/02/20/hello-world/"/>
+    <id>http://example.com/2022/02/20/hello-world/</id>
+    <published>2022-02-20T03:02:51.068Z</published>
+    <updated>2022-02-20T03:02:51.068Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>间歇性努力的人，持续性一事无成</title>
+    <link href="http://example.com/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/"/>
+    <id>http://example.com/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/</id>
+    <published>2021-03-16T14:31:29.000Z</published>
+    <updated>2022-02-20T03:02:51.134Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg"></p><p>昙花一现的努力，都是伪努力。</p><p>01</p><p>工作上认识个老哥，四十多岁，有意思的人。</p><p>他在一线门户做过电商一把手，后来出来单干，又经历过两次创业。</p><p>无论职业经理人，还是创业当老板，他保持着每周工作 100 小时以上的习惯。</p><p>和他喝过了一次酒，发现个有趣的事情：在如此高强度的工作状态下，他却从来没感到过“痛苦，难受，度日如年”。</p><p>创业之路，百转千回，困难挫折如同家常便饭，但他的目光并没因此暗淡。他相信，“人生本来就是由开心和不开心串起来的”。</p><p>老哥的事业做得不小。但他有一件特质，尤其吸引我的注意：努力常态化。</p><p>这点特质，在我认识的许多大牛身上都能看见。你看他们：</p><p>大年初二的早晨，坐到桌前写方案；</p><p>年会狂欢结束后，回到办公室改合同；</p><p>高铁上、机场里，用手机写稿子，回邮件。</p><blockquote><p><strong>他们不会觉得以上这些有多了不起；</strong></p><p><strong>他们不会被自己“熬夜一次”而感动；</strong></p><p><strong>他们也不会把这些发到朋友圈里，然后在旁边写上“我也是挺拼的”。</strong></p></blockquote><p>这些努力，不需要心理建设，不需要自我说服，不需要意志力驱动。</p><p>这些努力，是潜意识中的自发行为，是肌肉记忆的习惯动作。</p><p>在我的视角里，这些点点滴滴、无人关注的努力，才是真努力。</p><p><strong>常态化的努力，才是真努力。</strong></p><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/6a2dc53523cb41a9a9590385eb7f93f7.jpeg"></p><p>02</p><p>常态化努力的对面，是间歇式努力。</p><p>你办了一张健身卡，决心重塑自己的身体和生活。 1 月 1 日开始，12 月 31 日到期，中间只去过两次。</p><p>你买了英语六级的单词书，占了图书馆的座位，雄心勃勃要大干一场。最后脑子里，除了对 abandon 滚瓜烂熟，什么也没留下。</p><p>你朝九晚五地上班，你浑浑噩噩地过活。你觉得百无聊赖，看不到生活的希望。你决定每天下班回家后，拿出两个小时充电和学习……</p><p>回家的那一瞬间，着了魔一样，懒神附体：凌云壮志滚一边去，打开电视，端上平板，舒服窝在沙发里。</p><p>你的生活特别像那本六级单词书：书的前一小段被翻看了无数次，页角都皱了；但后边的内容，崭新如初，少有触及。</p><p>这似乎是微不足道的小事，但却又关乎成败的大事。</p><p>这些细节， 折射出的是努力的属性。努力常态化是牛逼与否的分水岭，各自延伸出的，是截然不同的轨迹。</p><p>多数人只是在热血和堕落间徘徊：<strong>一段时间，猛冲猛打，自己感动哭了；一段时间，懒散放纵，行尸走肉一般。</strong></p><p>我相信，每个人都努力过：都有过热血沸腾、立誓发狠的时候，都有过奋进狂飙、强力输出的经历。</p><p>然而，平庸和杰出之所以泾渭分明，那是因为，平庸者的努力是碎片化的、不成系统的，走走停停，断断续续。</p><p>我们有时候会想，“我都努力过了，为什么还是没得到好运气”。实际上，努力不是重点，常态化才是关键。</p><p><strong>昙花一现的努力，都是伪努力。</strong></p><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/1249308917f34a6f94880524a9c02416.jpeg"></p><p>03</p><p>高中时，同桌和我的关系，类似于皇马巴萨。</p><p>他是最令我胆寒的人：下午期末考试完毕，晚上还默默去自习——我的竞对啊，连半天都不让人休息。我心都要碎了。</p><p>可怕之处在于，他风轻云淡，面沉似水。一切发生的如此自然，不需自我说服，不需心理建设……我能怎么办？我也很绝望啊。</p><p>努力常态化的人最可怕：对这些人来说，努力不是一项需要分配的工作，而是自然发生的事情。不管有喜恶高低、状态好坏，他们能随时进入角色，在过程中找到感觉和快乐。</p><p>普通人最大的问题是：干活看心情。状态不好，身体微恙，就不干活了？不存在的。这么娇贵，哪里是成事的样子。你玩王者荣耀，刷微信淘宝，需要心理建设么，需要状态好么？</p><p>当年彭德怀在左权县召集干部会议，与会者饿得连坐都不稳，彭将军只好请大家躺在炕上开会——画面虽然醉人，这才是成事的状态啊。</p><p>你当兵打仗，事情来了，你说我今天心情不好。那你不做炮灰谁做炮灰啊。</p><p>圈里有句黑话：小姐不能有了性欲才接客；作者不能有了灵感才写字。</p><p>话糙了点，但是这个理。</p><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/87d09e9dada34837996b172b1043fe17.jpeg"></p><p>04</p><p>顺丰这些年高歌猛进，气势如虹，和老板王卫的职业习惯不无关系：</p><p>创业二十年，每天工作 14 小时是太正常的事。王是很有危机感的人，三个月没有变革创新，就会觉得危机四伏。</p><p>地产大佬罗康瑞是瑞安集团的主席，也是含着金钥匙出生的富二代。</p><p>罗的崛起，可不光靠家里：大学毕业，找家里借了十万块，整整七年，每天工作十几个小时，没有一天休息……于是才崭露头角，小有名声。</p><p>朋友在广州面试了几家游戏公司，都是要求一周上六天班，每天朝九晚九，而且这是广州行业常态。</p><p>你以为你很努力了，可在别人眼中只是基本工作要求而已。广东的游戏做的那么好，奖金发那么多，有它的基础逻辑。</p><p>都说勤能补拙，更何况人家”拙”么？</p><p>大学同学就职于经纬中国。 他有绚丽的履历和出众的能力，情智双高，犀利通透。</p><p>安逸不在他的字典里：“除了吃喝拉撒，经纬是我生活的全部”…… 看了他的状态，多少能理解经纬的牛逼了。</p><p>我不是“工作玩命”的拥趸，我厌恶“要成功，先发疯”之类的毒鸡汤。</p><p>我认为，任何透支身体去工作的行为都是不明智、不值得的……</p><p>但实际情况是，对于多数创业者来说，不经历 5 至 8 年、每周 7×12 小时的创业奋斗很难有大成；一个草根，想在北京有所成就，每周 60 个小时的工作量是标准配置。</p><p>5×8 小时的时间表，远远不足以支撑你出人头地的。</p><p>你家境平平、智商普通，你只是玩玩打打、优哉游哉地做一做，就想成功，凭什么？我不认为那个运气万里挑一的人是你。</p><p>刚加了两次班，就觉好感爆棚、天下在手，这样的人注定没有出息。</p><p>工作时间是表象，它的本质是努力常态化。它保证不了你成功，它只是基本配置。</p><p>它需要你坚持不懈，需要数年一日，需要持续输出，需要你有坚如磐石的耐心。</p><p><strong>有多大耐心，才配得上多大野心。没毛病。</strong></p><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/5ce0b2f99c0a425d96ce715e95152f56.jpeg"></p><p>05</p><p>这是个浮躁的时代。在这个时代，努力无用的论调，变得非常受欢迎。</p><p>我们说，“人的命运，不光依靠个人努力，也要依赖历史进程”。话虽如此，但不能抹杀了努力的意义。</p><p>努力无用也好，阶级固化也罢，多数时候，是不努力者的借口。一个人，连力气都没有用尽，还谈什么方法、理想和人生？</p><p>在我的公式里：<strong>成就 &#x3D; 天赋 × 运气 × 努力。</strong></p><p>其中，只有努力是我们唯一能掌控的东西。</p><p>努力当然是有用的，扪心自问，你做 12 个小时是不是就比 8 个小时更有产出？如果不是，那你也太弱了，别折腾了，找个地方养老吧。</p><p>这里的努力，不是一天两天，不是一月两月，甚至可能要一两年才能看出端倪。</p><p>可惜大多数人在回报来临之前，选择了放弃。努力一两下就有回报？哪有这样的好事。生孩子都要十个月。</p><p>我们总认为付出够多，得到太少。</p><p>其实，还是付出的不够：一般的，把付出打一折，才是自己应该得到的。天地不仁以万物为刍狗，这才符合世界运行的规律。</p><p>持续而稳定的输出十分重要：拆开来看，只是一件件的小事；时间长远，便是天与地的距离。这就是努力常态的意义：</p><p><strong>当努力的因子融入你的血液，当努力对你根本不算一个要求，相信我，你会看到一个新的世界、新的自己。</strong></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;昙花一现的努力，都是伪努力。&lt;/p&gt;
+&lt;p&gt;01&lt;/p&gt;</summary>
+      
+    
+    
+    
+    <category term="生活" scheme="http://example.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="成长" scheme="http://example.com/categories/%E6%88%90%E9%95%BF/"/>
+    
+    
+    <category term="生活" scheme="http://example.com/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>php面试题</title>
+    <link href="http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/</id>
+    <published>2021-01-20T11:28:15.000Z</published>
+    <updated>2022-02-20T03:02:51.075Z</updated>
+    
+    <content type="html"><![CDATA[<p>面试题列举如下：</p><p>1.redis与memcache差别？</p><p>答：key大小、持久化、速度、线程模型、key类型、淘汰策略、集群搭建区别、底层数据结构的差异、内存利用率、碎片处理。</p><p>2.innodb的特点？</p><p>答：行锁、支持事务、不支持全文检索、读少写多的场景更有利、</p><p>3.mysql索引使用的原则？依据这些原则，如何为表加索引？</p><p>答：最左前缀原则。</p><p>4.php 变量的销毁机制？</p><p>答：php5和php7的差别比较大，php5中引用计数存在zval中，而php7中引用计数存在zend_xxx结构中。</p><p>5.php array_merge的功能？自己实现一下？</p><p>答：数组合并，数字键的value直接加在原有数据的后面，字符键的value或是替换，或是新增。</p><p>6.php 里面有哪些数组操作函数?</p><p>答：array,array_merge,array_slice,array_pop,array_push,array_diff,array_multiple_sort,array_unique,array_combine</p><p>7.isset()与empty()差别，0,’’,null,”0”,false上的差异</p><p>8.php魔术方法?魔术常量？</p><p>答：__construct,__destruct,__clone,__sleep,__wakeup,__isset,__unset,__call,__callStatic,__toString,__invoke,__get,__set,</p><p>9.魔术方法的使用场景？</p><p>10.常见的设计模式，并用php实现一下（需要使用namespace)</p><p>答：工厂模式、抽象工厂模式、单例模式、门脸模式、代理模式、装饰器模式、责任链模式、依赖注入模式、策略模式、</p><p>11.php多维数组按某一列排序？并自己实现？</p><p>答：</p><p>12.php写时复制？</p><p>13.explode的实现？</p><p>14.redis 底层用到的数据结构？</p><p>15.画一下php变量复制，应用之后再内存中的大概结构?</p><p>16.访问类里面不存在的变量、方法、静态变量、静态成员函数的情形会是怎样的？</p><p>17.php7性能提升的原因？</p><p>18.mysql事务嵌套机制？</p><p>19.echo、print、print_r的区别</p><p>20.支持会调处理的php函数有哪些？</p><p>21.php array + 操作的结果？</p><p>22.mysql事务隔离是怎么实现的</p><p>23.什么是B+树？请画出B+树的结构？</p><p>24.php有哪些语言结构？语言结构与函数有啥区别？语法糖？</p><p>25.PHP中array_merge函数与array+array的区别?</p><p>26.PHP有哪些函数接受可变个数的参数？</p><p>27.PHP框架用过哪些？最熟悉的是哪个？使用有什么问题不？</p><p>28.谈谈对PSR的认识</p><p>29.你会怎样设计一个PHP框架？</p><p>30.PHP调试工具方法？其实现机制会是怎样的呢？</p><p>31.计算两个字符串的相似度?实现php提供的similar_text方法?中文情况下能用不？</p><p>32.MySQL隐式类型转换为什么会全表扫描？</p><p>33.聚簇索引和非聚簇索引的区别?</p><p>34.Session可不可以设置失效时间，比如30分钟过期?</p><p>35.adslasses与mysql_real_escape_string&#x2F;mysqli_real_escape_string的区别</p><p>36.接口安全性校验方式？听说过jwt吗？</p><p>37.命名空间最前面的 \ 加还是不加？</p><p>38.PHP加载类的办法有哪些？</p><p>39.file_put_contents如何发一个post请求？</p><p>40.写一个pdo、mysqli的完整查询过程</p><ol start="41"><li>如何自定义流过滤器？</li></ol><p>42.composer如何指定需要库的版本号在某个范围内？</p><p>43.代码文件的文档如何做到自动化？</p><p>44.file_get_contents,fread,file,readfile几种方式可能的性能差异？</p><p>45.满减券，活动折扣券怎么设计？</p><p> </p><p> </p><p>别的地方找的面试题：</p><p>看到有很多，的总结一下，比较适合有一定经验的PHPer</p><ol><li>平时喜欢哪些php书籍及博客？CSDN、segmentfault、stackoverflow</li><li>js闭包是什么，原型链了不了解？</li><li>for与foreach哪个更快？</li><li>php鸟哥是谁？能不能讲一下php执行原理?</li><li>php加速器有哪些？apc、xcache…..能不能讲一下它的加速原理，与现在的O+有什么差别？</li><li>Node.js能彻底代替php+apache 吗？</li><li>怎样判断一个值是否存在于数组中？in_array(),array_key_exists 哪一个更好</li><li>怎样判断select语句中是否使用了索引？explain 等的使用</li><li>sphinx的中文分词词库使用第三方库还是自己建库？</li><li>mysql与mysqli的区别有哪些？</li><li>将来的发展方向？安全、还是数据挖掘、大数据处理？</li><li>php的面向对象：类的修饰符、封装、继承、多态等</li><li>php的设计模式：单例模式、工厂模式、生产者模式……等23种</li><li>服务器状态码:200、202、301、404、500……</li><li>i++与++i++与++i的区别？</li><li>项目开发:电商项目中的购物车数据持久化、考试系统的安全性考虑、</li><li>mysql设计基础：三大范式、功能-&gt;思维导图、创建表的第一字段是什么？</li><li>mysql字段char、varchar、int、smallint、tinyint、mediumint、bigint、decimal、double、float字节数及应用场景</li><li>mysql 数据类型有哪些 ? 分别占用多少存储空间 ?</li><li>mysql 索引原理及sql性能优化</li><li>memcache与mongoDB、Redis各自的使用场景是什么？</li><li>为什么mongoDB与Redis非但没有形成竞争反而是互补关系？</li><li>Redis数据类型有哪些？int、string、hash、set、list ？</li><li>安装linux软件时使用make方式还使用yum方式？</li><li>linux网络优化，如何查看进程、怎样查看最大文件打开数？</li><li>1条微薄要推送给100万个粉丝该怎么处理？</li><li>知道哪些算法？冒泡排序？快速排序？二分查找法？</li><li>yii thinkphp ci 各自优点</li><li>php 设计模式有哪些？</li><li>C语言中的虚函数是什么？</li><li>C排序算法有哪些？</li><li>php 基本结构是什么？</li><li>memcache magent 分布式设计？</li><li>php的内存回收机制是什么?</li><li>php在2011年底出现hash碰撞,hash碰撞原理为? 如何进行修复?</li><li>一个php文件的解释过程是? 一般加速php有哪些? 提高php整体性能会用到哪些技术?</li><li>redis 分布式设计，如何设计？</li><li>mongo 集群架构是怎样的？</li><li>tcp&#x2F;ip 网络协议，osi7层指是什么？</li><li>php 处理大数据业务</li><li>linux 应用，负载性能查看 ？</li><li>nginx设置缓存js、css、图片等信息,缓存的实现原理是?</li><li>nginx负载均衡有哪些? 如果其中一台服务器挂掉,报警机制如何实现?</li><li>nginx 实战优化业务功能 ？</li><li>谈一下近三年来你的得意之作?</li><li>看看简历，会问一些过去做的项目的用户量、pv、吞吐量、相关难点和解决方法等</li><li>数据库设计经验,为什么进行分表? 分库?</li><li>一般多少数据量开始分表? 分库? 分库分表的目的? 什么是数据库垂直拆分? 水平拆分? 分区等等？可以举例说明</li><li>数据库优化有哪些? 分别需要注意什么?</li><li>web开发方面会遇到哪些缓存? 分别如何优化?</li><li>给你256M的内存,对10G的文件进行排序(文件每行1个数字),如何实现？</li><li>对10G的文件进行查找如何实现？</li><li>统计10G文件每个关键字出现的次数如何实现？</li><li>假如你现在是12306火车订票的设计师,你该如何设计满足全国人民订票?</li><li>假如有1亿用户的访问量,你的服务器架构是怎样的? 用户信息的存储方案如何设计?</li><li>如果你是技术组长,所带团队任务进度无法完成你该如何解决?</li><li>如果在进度排满的前提下插入任务,你该如何保证总进度不延期?</li><li>如果有的工程师今天预定任务没有完成,你该如何解决?</li><li>从你的经验方面谈一下如何构建高性能web站点? 需要哪些环节? 步骤? 每个步骤需要注意什么如何优化等?</li><li>为什么要对数据库进行主从分离?</li><li>如何处理多服务器共享session?</li><li>一个10G的表，你用php程序统计某个字段出现的次数,思路是?</li><li>会告诉你一个nginx日志例子,用你认为最佳的编程语言统计一下http响应时间超过1秒的前10个url?</li><li>给你一个mysql配置文件,用你认为最佳的编程语言解析该文件?</li><li>给你两个路径a和b,写一个算法或思路计算a和b差距几层并显示a和b的交集?</li><li>给你一个url,在nginx配置一下rewrite指定到某个具体路径?</li><li>session和cookie生存周期区别? 存储位置区别?</li><li>require、include、require_once、include_once区别? 加载区别? 如果程序按需加载某个php文件你如何实现?</li><li>chrome号称为多线程的，那么多线程和多进程的区别为?</li><li>如何提高缓存命中率? 如何对缓存进行颗粒化?</li><li>web不安全因素有哪些? 分别如何防范?</li><li>假如两个单链表相交,写一个最优算法计算交点位置,说思路也可以?</li><li>假如你是技术组长? 如何提高团队效率?</li><li>不优化前提下,apache一般最大连接数为? nginx一般最大连接数为? mysql 每秒insert ? select ? update ? delete?</li><li>我的所有问题都问完了（当然没有这么多）,你有什么问题问我没有？</li></ol><p> </p><h1 id="面试经历中被问过的题目"><a href="#面试经历中被问过的题目" class="headerlink" title="面试经历中被问过的题目"></a>面试经历中被问过的题目</h1><p>（整理时间5月13日）</p><ol><li>工作一段时间后，为了夯实基础做过哪些努力？</li><li>lumen和workerman了解吗？介绍下workerman的原理</li><li>讲一下websocket的协议，浏览器是怎么识别websocket协议的，以及websocket的协议版本区别？</li><li>怎么压缩数据的，讲一下gzip压缩是怎么压缩处理的？gzip压缩有几个级别，6级别会压缩到什么程度？</li><li>业务开发中websocket的连接最高峰存在多少个连接？一千个连接会占用多少内存？</li><li>多少数据量时会采用分布式的部署？</li><li>多台gateway是怎么负载分流长连接的？当APP发起websocket连接时是怎样平均分配到每台gateway服务器的？</li><li>gateway进程挂了怎么处理？</li><li>websocket连接中如何保证成功率，即如何判断客户端是否收到消息、怎么处理丢包的问题？ 【建立应答与重发机制，待补充具体处理方式】</li><li>多台websocket的用户如何共享数据，例如同一聊天组的user1的websocket保存在服务器1中，user2的websocket保存在服务器2中。两台服务器的用户如何正常通讯？ 【这和http session不一样，StandardWebSocketSession一是无法序列化，二是它是在一台服务器保持TCP连接，另一台服务器拿到数据也不能通信。所以那些说存到共享的容器（memcache&#x2F;redis）中进行共享session的都是不行的。两个办法，一个是用redis作发布、订阅，所有socket都订阅一个消息。第二种方法是用消息队列，jgroups作集群组播通信，互相通知。类似的还有MQ等等。】</li><li>介绍下微服务架构原理？</li><li>介绍下平衡二叉树？</li><li>水平分表是用什么方式处理的？介绍下mysql分库分表策略，如何解决增表、减表问题？ 【按时间分表、按区间范围分表、hash分表】</li><li>说下mysql的优化方向？索引是怎么优化的？索引的原理是怎样的？</li><li>说下INNODB和MYISAM的区别？innodb是什么数据结构？说下b+树和b树的区别？innodb的主键索引和非主键索引的区别？</li></ol><hr><p>（整理时间5月22日）</p><ol><li>在上家公司主要做了哪些工作呢？有哪些是你觉得比较有意思且比较成功的项目？</li><li>对区块链的知识本身有了解吗？最近有在学什么其他技术吗？</li><li>业务开发中数据量大吗？是否遇到过mysql慢速的问题？是因为什么引起的？解决思路是怎样的？</li><li>如何实现全文检索功能？如果数据库是mysql的话怎么处理？介绍下ES的特点？ 【MYSQL的FULLTEXT索引、对内容进行分片、分词查找】</li><li>关系型数据库和非关系型数据库的区别是什么？有了解哪些非关系型数据库吗？</li><li>redis有哪几种数据类型？每个数据类型的时间复杂度分别是什么？使用场景分别是什么？介绍下redis发布订阅机制原理？说说对新的数据类型streams的了解？</li><li>介绍下tcp三次握手的过程？哪个阶段开始传输数据？如果客户端在握手过程中失败了，服务器会怎么处理？</li><li>在业务开发中，workerman与APP端进行数据交互时有做身份验证吗？怎么处理的？</li><li>php中的类是单继承的，那要有多个类继承有什么方案呢？ 【php trait的原理】</li><li>php有哪几个常用的魔术方法？介绍下构造函数和析构函数的作用，以及分别在什么时候会调用？</li><li>php的public、protected、private 三种访问控制模式有什么区别？（主要考察PHP类的封装性、继承性、多态性）</li><li>php有哪几种设计模式？介绍下你熟悉的设计模式？简单写几种设计模式看看？</li><li>介绍下php中的引用赋值？ $a&#x3D;1; $b&#x3D;&amp;$a; unset($a)后$b是什么，为什么？unset($b)后$a是什么，为什么？ 【都等于1。在php中，引用赋值不同于指针的感念，他只是将另一个变量名指向了某个内存地址。此题中:$b &#x3D; &amp;$a;只是将$b这个名字也指向了$a变量所指向的内存地址。unset时只是释放了这个名字的指向，并没有释放内存中的值。另一方面讲unset($a),其实也并未真正立刻释放内存中的值，也只是释放了这个名字的指向而已，该函数只有在变量值所占空间超过256字节长的时候才会释放内存，并且只有当指向该值的所有变量（比如有引用变量指向该值）都被销毁后，地址才会被释放。】</li><li>遇到mysql慢速时有什么排查方向呢？</li><li>mysql的存储引擎有哪几种？分别适用于什么场景？</li><li>介绍下mysql事务的四个隔离级别，以及各级别之间的区别？</li><li>innodb引擎什么情况下会产生行锁，什么情况下会变成表锁？导致索引失效的原因？ 【or 语句，like 前缀，索引字段是字符串但查询条件里没用使用引号扩起，联合索引未遵循最左原则没使用第一个索引字段而使用其他索引字段】</li><li>介绍下b+树？</li><li>更新数据时，是先删除缓存再更新DB，还是先更新DB再删除缓存？如果缓存和数据库一致性时有什么解决方案呢？ 【先更新DB再删除缓存可以降低读到脏数据的概率。方案一、采用延时双删策略+缓存过期设置，整体思路：在写库前后都进行redis.del(key)操作，并且设定合理的超时时间，确保读请求结束，写请求可以删除读请求造成的缓存脏数据；所有的写操作以数据库为准，只要到达缓存过期时间，则后面的读请求自然会从数据库中读取新值然后回填缓存，可以保证最终数据一致性。方案二、异步更新缓存(基于订阅binlog的同步机制)，整体思路：MySQL binlog增量订阅消费+消息队列+增量数据更新到redis，一旦MySQL中产生了新的写入、更新、删除等操作，就可以异步把binlog相关的消息推送至Redis，Redis再根据binlog中的记录，对Redis进行更新。（消息推送工具：canal、kafka、rabbitMQ等）】</li><li>redis是怎么解决键冲突的？</li><li>redis如何保证系统宕机数据不会丢失？【数据持久化】，介绍一些redis的持久化机制有哪几种？各自的区别是什么？</li><li>介绍下常用的redis常用集群方案？</li><li>网站访问很慢从哪些方向去排查？当发现服务器负载很高应该如何排查处理？</li><li>介绍下完全二叉树、平衡二叉树、二叉查找树？</li><li>求一万个数求前十个最大的数？ 【top K的算法问题，分组】</li><li>laravel用过哪些中间件？介绍下懒加载原理？介绍下laravel的服务容器概念？</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;面试题列举如下：&lt;/p&gt;
+&lt;p&gt;1.redis与memcache差别？&lt;/p&gt;
+&lt;p&gt;答：key大小、持久化、速度、线程模型、key类型、淘汰策略、集群搭建区别、底层数据结构的差异、内存利用率、碎片处理。&lt;/p&gt;
+&lt;p&gt;2.innodb的特点？&lt;/p&gt;
+&lt;p&gt;答：行锁、支持</summary>
+      
+    
+    
+    
+    <category term="php" scheme="http://example.com/categories/php/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>golang的一些最佳实践</title>
+    <link href="http://example.com/2021/01/20/golang%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    <id>http://example.com/2021/01/20/golang%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</id>
+    <published>2021-01-20T11:23:45.000Z</published>
+    <updated>2022-02-20T03:02:51.066Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.go里面一个goroutine panic了, 会导致进程退出, 所以go func()时第一行带上defer<br>2.go里面 []byte和string互转是会发生复制的, 开销明显, 如果代码里频繁互转, 考虑使用bytes.buffer 和 sync.Pool<br>3.在写http api时, parse body这种事情, 如果只是纯粹取body里的json数据, 没必要单独定义结构体, 在函数里定义一个匿名结构体就好<br>4.同步化的goroutine一不小心就没有退出, 如果你写一个长期运行的服务, 用logger记录每一个goroutine的清理退出, 防止goroutine泄露<br>5.select语句是会跳过nil的channels的. 因为在Go里往已经close掉的channel里发送数据是会panic的, 可以利用select语句.<br>附: channel操作导致panic的情况有: 关闭一个nil的channel, 关闭一个已经关闭的channel( j,ok:&#x3D; &lt;- ch, ok为false时代表ch已经关闭了), 往一个已经关闭的channel里发送数据(从已经关闭的channel里读数据是OK的, 如果这个channel是带缓冲的, 那么可以读到所有数据)<br>6.在go里, goroutines之间通信不要用共享内存的方式实现, 应该用channel来实现<br>7.并发不是并行<br>8.channel是编排, mutexs是串行<br>9.interface定义越多的方法, 抽象程度越低. Go提倡用接口组合的方式实现更大的接口<br>10.零值, 猜测这里说的是struct{}吧, struct{}是一个不占内存的空结构体, 在用map实现set, channel发送无额外意义的signal时能降低内存分配<br>11.提倡gofmt<br>12.一点点复制比一点点依赖好. 官方包里有时能见到一些复制的代码, 这是为了不互相依赖<br>13.简洁胜过高效<br>14.error是值 可以用值的方式去处理错误: 传递, 比较<br>15.不用仅检查错误, 要优雅地处理<br>16.多花精力设计架构, 模块命名, 写详细的文档<br>17.写良好的文档给用户<br>18.对于普通错误, 应该用多值返回错误, 而不是手动panic<br>19.make只用于slice、map以及channel的初始化（非零值）；而new用于类型的内存分配，并且内存置为零。所以在我们编写程序的时候，就可以根据自己的需要很好的选择了。<br>20.现实的编码中，new是不常用的。我们通常都是采用短语句声明以及结构体的字面量达到我们的目的，比如：i:&#x3D;0,u:&#x3D;user{} 这样更简洁方便，而且不会涉及到指针这种比麻烦的操作。make函数是无可替代的，我们在使用slice、map以及channel的时候，还是要使用make进行初始化，然后才才可以对他们进行操作。使用make的好处是可以指定len和cap，make(type,len,cap),合适的len和cap可以提升性能。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;1.go里面一个goroutine panic了, 会导致进程退出, 所以go func()时第一行带上defer&lt;br&gt;2.go里面 []byte和string互转是会发生复制的, 开销明显, 如果代码里频繁互转, 考虑使用bytes.buffer 和 sync.Pool</summary>
+      
+    
+    
+    
+    <category term="Go" scheme="http://example.com/categories/Go/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Tim Yang博客</title>
+    <link href="http://example.com/2021/01/06/tim-yang%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/tim-yang%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:47.000Z</published>
+    <updated>2022-02-20T03:02:51.090Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>徐艺洲博客</title>
+    <link href="http://example.com/2021/01/06/%E5%BE%90%E8%89%BA%E6%B4%B2%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/%E5%BE%90%E8%89%BA%E6%B4%B2%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:47.000Z</published>
+    <updated>2022-02-20T03:02:51.122Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>d0evi1博客</title>
+    <link href="http://example.com/2021/01/06/d0evi1%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/d0evi1%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.065Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>oilbeater博客</title>
+    <link href="http://example.com/2021/01/06/oilbeater%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/oilbeater%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.073Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>大熊博客</title>
+    <link href="http://example.com/2021/01/06/%E5%A4%A7%E7%86%8A%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/%E5%A4%A7%E7%86%8A%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.109Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>枕边书博客</title>
+    <link href="http://example.com/2021/01/06/%E6%9E%95%E8%BE%B9%E4%B9%A6%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/%E6%9E%95%E8%BE%B9%E4%B9%A6%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.122Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>赵亚飞博客</title>
+    <link href="http://example.com/2021/01/06/%E8%B5%B5%E4%BA%9A%E9%A3%9E%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/%E8%B5%B5%E4%BA%9A%E9%A3%9E%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.125Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>飞鸿影博客</title>
+    <link href="http://example.com/2021/01/06/%E9%A3%9E%E9%B8%BF%E5%BD%B1%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/06/%E9%A3%9E%E9%B8%BF%E5%BD%B1%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T16:03:46.000Z</published>
+    <updated>2022-02-20T03:02:51.126Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>倪朋飞博客</title>
+    <link href="http://example.com/2021/01/05/%E5%80%AA%E6%9C%8B%E9%A3%9E%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/%E5%80%AA%E6%9C%8B%E9%A3%9E%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:57:24.000Z</published>
+    <updated>2022-02-20T03:02:51.121Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>张逸博客</title>
+    <link href="http://example.com/2021/01/05/%E5%BC%A0%E9%80%B8%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/%E5%BC%A0%E9%80%B8%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:57:24.000Z</published>
+    <updated>2022-02-20T03:02:51.110Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>犀利豆博客</title>
+    <link href="http://example.com/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:57:24.000Z</published>
+    <updated>2022-02-20T03:02:51.123Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>谢乾坤博客</title>
+    <link href="http://example.com/2021/01/05/%E8%B0%A2%E4%B9%BE%E5%9D%A4%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/%E8%B0%A2%E4%B9%BE%E5%9D%A4%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:57:24.000Z</published>
+    <updated>2022-02-20T03:02:51.124Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Headback博客</title>
+    <link href="http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:53:11.000Z</published>
+    <updated>2022-02-20T03:02:51.067Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Jamin Zhang博客</title>
+    <link href="http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:53:11.000Z</published>
+    <updated>2022-02-20T03:02:51.068Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>春哥博客</title>
+    <link href="http://example.com/2021/01/05/%E6%98%A5%E5%93%A5%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/%E6%98%A5%E5%93%A5%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-01-05T15:53:11.000Z</published>
+    <updated>2022-02-20T03:02:51.111Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>LintCode</title>
+    <link href="http://example.com/2021/01/05/lintcode/"/>
+    <id>http://example.com/2021/01/05/lintcode/</id>
+    <published>2021-01-05T15:50:00.000Z</published>
+    <updated>2022-02-20T03:02:51.069Z</updated>
+    
+    
+    
+    
+    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    
+  </entry>
+  
+</feed>

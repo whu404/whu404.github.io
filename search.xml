@@ -293,6 +293,14 @@
       </categories>
   </entry>
   <entry>
+    <title>Headback博客</title>
+    <url>/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
     <title>go心得</title>
     <url>/2018/04/07/go%E5%BF%83%E5%BE%97/</url>
     <content><![CDATA[<p>先大概说下为什么用 Golang。我是一个对语言有洁癖的人，曾经是一个C+Python 的坚定呐喊者，最常说的一句话就是，只要熟练这两种，什么情况都能应付，根本不用 Java 和 C++(纯指我所在的领域）。核心代码用C，速度快，需要记的语言细节少；外围用 Python glue，灵活，简洁，任何模块都容易上手，绝配。Java 的繁琐，C++ 的无数无用的特性，都让我只在不得不用的时候才去用。Objective-C 是另一个我欣赏的语言，问题是不跨平台，过于封闭。</p>
@@ -372,14 +380,6 @@
       <tags>
         <tag>go</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Headback博客</title>
-    <url>/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
   </entry>
   <entry>
     <title>mysql树形结构数据存储方案</title>
@@ -3286,15 +3286,6 @@ $GLOBALS\['g_good'\] = 'good';
       </tags>
   </entry>
   <entry>
-    <title>redis读书笔记</title>
-    <url>/2020/09/07/redis%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>1.当字符串长度小于1MB时，扩容都是加倍现有空间，如果字符串长度超过1MB，扩容时一次只会多扩容1MB。需要注意的是，字符串的最大长度是512MB<br>2.可以对多个字符串进行批量读写，节省网络耗时的开销<br>3.redis自增是有范围的，它的范围是signed long的最大值和最小值之间，超出则会报错<br>4.redis 分布式锁setnx存在超时不是原子操作的情况，在2.8版本之后，对set命令进行了扩展，使得setnx和expire可以一起执行<br>5.redis分布式锁不能解决超时问题，因为还存在着临界区逻辑代码未执行完锁就超时了的情况，所以，redis分布式锁不要用于较长时间的任务。还有个安全点的方案是，将<br>set命令的value参数设置为一个随机数，释放锁的时候先匹配随机数是否一致，然后再删除key。这样做是为了确保当前线程占有的锁不会被其他线程释放，除非这个锁<br>是因为过期了而被服务器自动释放。但是匹配value和删除key不是一个原子操作，这样可以使用lua脚本，因为lua能保证连续的多个指令原子性执行。<br>6.redis对于只有一组消费者的消息队列，可以轻松实现，但redis消息队列不是专业消息队列，没有很多的高级特性，没有ack保证，如果对消息的可靠性要求极高，就不适用了。<br>7.redis 阻塞对在队列没有数据的时候，会立即进入休眠状态，一旦数据到来，则立刻醒过来，消息的延迟几乎为零。<br>8.上述阻塞方式有个问题就是客户端连接闲置过久，服务器一般会主动断开链接，减少资源占用，这个时候blpop,brpop就会抛出异常，所以客户端消费时得捕获异常，进行重试。<br>9.可以用set&#x2F;get来设置和获取整个位图内容，也可以使用位图操作getbit&#x2F;setbit等将byte数组看成位数组来处理。redis提供了位图统计指令bitcount,bitpos统计1的<br>个数，以及在指定范围查找首个1或0的位置。熟悉bitfield,getrange指令<br>10.HyperLogLog提供不精确的去重计数方案，标准误差是0.81%,pfadd,pfcount,pfmerge。这个结构在不采用稀疏矩阵时会需要占据12KB左右的空间，不适合统计单个用户相关的数据。<br>11.布隆过滤器可以看作不怎么精确的set,当布隆过滤器说某个值存在时它可能不存在，但它说某个值不存在时，它一定不存在(对于已经见过的元素肯定不会误判，对于未见过的可能误判) bf.add,bf.exists,bf.madd,bf.mexists<br>12.在集群环境中，单个key对应的数据量不宜超过1MB，否则会导致集群迁移出现卡顿现象，影响线上服务的正常运行。所以建议Geo数据使用单独的Redis实例部署，不实用集群环境。<br>13.scan函数中，服务器不需要为游标保存状态，游标的唯一状态就是scan返回给客户端的游标整数。返回的结果可能会有重复，需要客户端去重。遍历时候，如果有数据修改，改动后的<br>数据能不能遍历到是不确定的。单次返回的结果是空并不意味着遍历结束，而要看返回的游标值是否为零。scan limit不是限定返回结果的数量，而是限定服务器单次遍历的字典槽位数量（约等于）。scan遍历的顺序也非常特别，它不是从第一维数组的第0位一直遍历到末尾，而是采用了高位进位加法来遍历。<br>14.redis如何查大key?可以使用 –bigkeys命令，如果担心指令会导致阻塞，可以增加休眠参数 -i<br>15.redis使用了会有点费流量的文本协议，使用一个单线程对外提供服务，单个节点在跑满一个CPU的情况下，可以达到10w&#x2F;s QPS<br>16.scan返回的是有个嵌套数组，数组的第一个值表示游标的值，如果这个值为零，则说明遍历完毕。如果不为零，使用这个值作为scan命令的参数进行下一次遍历，数组的第二个值是一个数组，是遍历到的key列表<br>17.redis在收到客户端修改指令后，会先进行参数校验、逻辑处理，如果没有问题，才将指令文本存储到aof日志，也就是说先执行指令，后将日志存盘。这点不同于leveldb,hbase存储引擎，它们是先存储日志，才做逻辑处理。<br>18.通常不在redis主节点做持久化操作，而在从节点中进行<br>19.redis的事务不具备原子性，而仅仅满足了事务的隔离性中的串行话，当前执行的事物不被其它事务打断。当事务遇到指令执行失败后，还会继续执行。<br>20.操作系统以页为单位管理内存，所以回收的时候，也不是有多少回收多少，要看所在的页里面的key是否都释放<br>21.当发生故障时能自动进行主从切换，程序可以不用重启。redis采用Sentinel(哨兵)机制，可以将Sentinel看作是一个zookeeper集群。客户端连接redis的时候，会先连接Sentinel，通过Sentinel来查询主从节点的地址，然后再连接主从节点进行数据交互。<br>22.redis采用异步复制，意味着，主节点挂掉时，从节点可能没有收到全部的同步消息，这部分未同步的消息就丢失了，如果主从延迟比较大，那么丢失的数据就可能会比较多。Sentinel无法保证消息完全不丢失，但是也能尽量保证消息少丢失，可以配置选项，闲置主从延迟过大，但是会损失可用性。<br>23.单个redis的内存不宜过大，内存过大会导致rdb文件过大，进一步导致主从同步时全量同步时间过长，在实例重启恢复时也消耗很长时间加载数据到内存，其次，还体现在cpu的利用率上，单个redis实例只能利用单个核心，所以数据量大，cpu压力也会变大。<br>24.redis集群方案有开源的codis,也有官方的redis cluster系统<br>25.从节点不会进行过期扫描，从节点对过期的处理时被动的，主节点在key到期时，会在aof文件中增加一条del指令，同步到所有的从节点，从节点通过执行这条指令来对过期数据进行删除。<br>26.</p>
-]]></content>
-      <categories>
-        <category>redis</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Redis基础、高级特性与性能调优</title>
     <url>/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</url>
     <content><![CDATA[<p>本文将从Redis的基本特性入手，通过讲述Redis的数据结构和主要命令对Redis的基本能力进行直观介绍。之后概览Redis提供的高级功能，并在部署、维护、性能调优等多个方面进行更深入的介绍。<br>本文适合使用Redis的普通开发人员，以及对Redis进行选型、架构设计和性能调优的架构设计人员。</p>
@@ -3722,6 +3713,15 @@ $GLOBALS\['g_good'\] = 'good';
       </tags>
   </entry>
   <entry>
+    <title>redis读书笔记</title>
+    <url>/2020/09/07/redis%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>1.当字符串长度小于1MB时，扩容都是加倍现有空间，如果字符串长度超过1MB，扩容时一次只会多扩容1MB。需要注意的是，字符串的最大长度是512MB<br>2.可以对多个字符串进行批量读写，节省网络耗时的开销<br>3.redis自增是有范围的，它的范围是signed long的最大值和最小值之间，超出则会报错<br>4.redis 分布式锁setnx存在超时不是原子操作的情况，在2.8版本之后，对set命令进行了扩展，使得setnx和expire可以一起执行<br>5.redis分布式锁不能解决超时问题，因为还存在着临界区逻辑代码未执行完锁就超时了的情况，所以，redis分布式锁不要用于较长时间的任务。还有个安全点的方案是，将<br>set命令的value参数设置为一个随机数，释放锁的时候先匹配随机数是否一致，然后再删除key。这样做是为了确保当前线程占有的锁不会被其他线程释放，除非这个锁<br>是因为过期了而被服务器自动释放。但是匹配value和删除key不是一个原子操作，这样可以使用lua脚本，因为lua能保证连续的多个指令原子性执行。<br>6.redis对于只有一组消费者的消息队列，可以轻松实现，但redis消息队列不是专业消息队列，没有很多的高级特性，没有ack保证，如果对消息的可靠性要求极高，就不适用了。<br>7.redis 阻塞对在队列没有数据的时候，会立即进入休眠状态，一旦数据到来，则立刻醒过来，消息的延迟几乎为零。<br>8.上述阻塞方式有个问题就是客户端连接闲置过久，服务器一般会主动断开链接，减少资源占用，这个时候blpop,brpop就会抛出异常，所以客户端消费时得捕获异常，进行重试。<br>9.可以用set&#x2F;get来设置和获取整个位图内容，也可以使用位图操作getbit&#x2F;setbit等将byte数组看成位数组来处理。redis提供了位图统计指令bitcount,bitpos统计1的<br>个数，以及在指定范围查找首个1或0的位置。熟悉bitfield,getrange指令<br>10.HyperLogLog提供不精确的去重计数方案，标准误差是0.81%,pfadd,pfcount,pfmerge。这个结构在不采用稀疏矩阵时会需要占据12KB左右的空间，不适合统计单个用户相关的数据。<br>11.布隆过滤器可以看作不怎么精确的set,当布隆过滤器说某个值存在时它可能不存在，但它说某个值不存在时，它一定不存在(对于已经见过的元素肯定不会误判，对于未见过的可能误判) bf.add,bf.exists,bf.madd,bf.mexists<br>12.在集群环境中，单个key对应的数据量不宜超过1MB，否则会导致集群迁移出现卡顿现象，影响线上服务的正常运行。所以建议Geo数据使用单独的Redis实例部署，不实用集群环境。<br>13.scan函数中，服务器不需要为游标保存状态，游标的唯一状态就是scan返回给客户端的游标整数。返回的结果可能会有重复，需要客户端去重。遍历时候，如果有数据修改，改动后的<br>数据能不能遍历到是不确定的。单次返回的结果是空并不意味着遍历结束，而要看返回的游标值是否为零。scan limit不是限定返回结果的数量，而是限定服务器单次遍历的字典槽位数量（约等于）。scan遍历的顺序也非常特别，它不是从第一维数组的第0位一直遍历到末尾，而是采用了高位进位加法来遍历。<br>14.redis如何查大key?可以使用 –bigkeys命令，如果担心指令会导致阻塞，可以增加休眠参数 -i<br>15.redis使用了会有点费流量的文本协议，使用一个单线程对外提供服务，单个节点在跑满一个CPU的情况下，可以达到10w&#x2F;s QPS<br>16.scan返回的是有个嵌套数组，数组的第一个值表示游标的值，如果这个值为零，则说明遍历完毕。如果不为零，使用这个值作为scan命令的参数进行下一次遍历，数组的第二个值是一个数组，是遍历到的key列表<br>17.redis在收到客户端修改指令后，会先进行参数校验、逻辑处理，如果没有问题，才将指令文本存储到aof日志，也就是说先执行指令，后将日志存盘。这点不同于leveldb,hbase存储引擎，它们是先存储日志，才做逻辑处理。<br>18.通常不在redis主节点做持久化操作，而在从节点中进行<br>19.redis的事务不具备原子性，而仅仅满足了事务的隔离性中的串行话，当前执行的事物不被其它事务打断。当事务遇到指令执行失败后，还会继续执行。<br>20.操作系统以页为单位管理内存，所以回收的时候，也不是有多少回收多少，要看所在的页里面的key是否都释放<br>21.当发生故障时能自动进行主从切换，程序可以不用重启。redis采用Sentinel(哨兵)机制，可以将Sentinel看作是一个zookeeper集群。客户端连接redis的时候，会先连接Sentinel，通过Sentinel来查询主从节点的地址，然后再连接主从节点进行数据交互。<br>22.redis采用异步复制，意味着，主节点挂掉时，从节点可能没有收到全部的同步消息，这部分未同步的消息就丢失了，如果主从延迟比较大，那么丢失的数据就可能会比较多。Sentinel无法保证消息完全不丢失，但是也能尽量保证消息少丢失，可以配置选项，闲置主从延迟过大，但是会损失可用性。<br>23.单个redis的内存不宜过大，内存过大会导致rdb文件过大，进一步导致主从同步时全量同步时间过长，在实例重启恢复时也消耗很长时间加载数据到内存，其次，还体现在cpu的利用率上，单个redis实例只能利用单个核心，所以数据量大，cpu压力也会变大。<br>24.redis集群方案有开源的codis,也有官方的redis cluster系统<br>25.从节点不会进行过期扫描，从节点对过期的处理时被动的，主节点在key到期时，会在aof文件中增加一条del指令，同步到所有的从节点，从节点通过执行这条指令来对过期数据进行删除。<br>26.</p>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+  </entry>
+  <entry>
     <title>RPM包管理详解</title>
     <url>/2019/01/26/rpm%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<p>RPM Package Manager</p>
@@ -3940,7 +3940,7 @@ $GLOBALS\['g_good'\] = 'good';
 </blockquote>
 <blockquote>
 <p>#!&#x2F;bin&#x2F;sh</p>
-<h1 id="Begin-rc-base-x2F-init-d-x2F-sysstat"><a href="#Begin-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="Begin $rc_base&#x2F;init.d&#x2F;sysstat"></a>Begin $rc_base&#x2F;init.d&#x2F;sysstat</h1><h1 id="Based-on-sysklogd-script-from-LFS-3-1-and-earlier"><a href="#Based-on-sysklogd-script-from-LFS-3-1-and-earlier" class="headerlink" title="Based on sysklogd script from LFS-3.1 and earlier."></a>Based on sysklogd script from LFS-3.1 and earlier.</h1><h1 id="Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-64-108-105-x6e-x75-120-102-114-111-109-x73-x63-114-x61-116-99-104-x2e-111-x72-103"><a href="#Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-64-108-105-x6e-x75-120-102-114-111-109-x73-x63-114-x61-116-99-104-x2e-111-x72-103" class="headerlink" title="Rewritten by Gerard Beekmans  – &#103;&#101;&#x72;&#97;&#114;&#100;&#64;&#108;&#105;&#x6e;&#x75;&#120;&#102;&#114;&#111;&#109;&#x73;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#x72;&#103;"></a>Rewritten by Gerard Beekmans  – <a href="mailto:&#103;&#101;&#x72;&#97;&#114;&#100;&#64;&#108;&#105;&#x6e;&#x75;&#120;&#102;&#114;&#111;&#109;&#x73;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#x72;&#103;">&#103;&#101;&#x72;&#97;&#114;&#100;&#64;&#108;&#105;&#x6e;&#x75;&#120;&#102;&#114;&#111;&#109;&#x73;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#x72;&#103;</a></h1><p>. &#x2F;etc&#x2F;sysconfig&#x2F;rc<br>. $rc_functions</p>
+<h1 id="Begin-rc-base-x2F-init-d-x2F-sysstat"><a href="#Begin-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="Begin $rc_base&#x2F;init.d&#x2F;sysstat"></a>Begin $rc_base&#x2F;init.d&#x2F;sysstat</h1><h1 id="Based-on-sysklogd-script-from-LFS-3-1-and-earlier"><a href="#Based-on-sysklogd-script-from-LFS-3-1-and-earlier" class="headerlink" title="Based on sysklogd script from LFS-3.1 and earlier."></a>Based on sysklogd script from LFS-3.1 and earlier.</h1><h1 id="Rewritten-by-Gerard-Beekmans-–-103-101-x72-x61-x72-100-64-108-105-110-x75-x78-102-114-111-109-115-x63-x72-97-x74-x63-x68-x2e-x6f-x72-x67"><a href="#Rewritten-by-Gerard-Beekmans-–-103-101-x72-x61-x72-100-64-108-105-110-x75-x78-102-114-111-109-115-x63-x72-97-x74-x63-x68-x2e-x6f-x72-x67" class="headerlink" title="Rewritten by Gerard Beekmans  – &#103;&#101;&#x72;&#x61;&#x72;&#100;&#64;&#108;&#105;&#110;&#x75;&#x78;&#102;&#114;&#111;&#109;&#115;&#x63;&#x72;&#97;&#x74;&#x63;&#x68;&#x2e;&#x6f;&#x72;&#x67;"></a>Rewritten by Gerard Beekmans  – <a href="mailto:&#103;&#101;&#x72;&#x61;&#x72;&#100;&#64;&#108;&#105;&#110;&#x75;&#x78;&#102;&#114;&#111;&#109;&#115;&#x63;&#x72;&#97;&#x74;&#x63;&#x68;&#x2e;&#x6f;&#x72;&#x67;">&#103;&#101;&#x72;&#x61;&#x72;&#100;&#64;&#108;&#105;&#110;&#x75;&#x78;&#102;&#114;&#111;&#109;&#115;&#x63;&#x72;&#97;&#x74;&#x63;&#x68;&#x2e;&#x6f;&#x72;&#x67;</a></h1><p>. &#x2F;etc&#x2F;sysconfig&#x2F;rc<br>. $rc_functions</p>
 <p>case “$1” in<br>start)<br>echo “Calling the system activity data collector (sadc)…”<br>&#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc -F -L –<br>evaluate_retval<br>;;<br>*)</p>
 <p>echo “Usage: $0 start”<br>exit 1<br>;;<br>esac</p>
 <h1 id="End-rc-base-x2F-init-d-x2F-sysstat"><a href="#End-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="End $rc_base&#x2F;init.d&#x2F;sysstat"></a>End $rc_base&#x2F;init.d&#x2F;sysstat</h1></blockquote>
@@ -5526,22 +5526,6 @@ echo $output;]]></content>
       </categories>
   </entry>
   <entry>
-    <title>格物博客</title>
-    <url>/2019/02/02/%E6%A0%BC%E7%89%A9%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>池建强博客</title>
-    <url>/2021/01/05/%E6%B1%A0%E5%BB%BA%E5%BC%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
     <title>改变生活的心理学法则</title>
     <url>/2018/05/05/%E6%94%B9%E5%8F%98%E7%94%9F%E6%B4%BB%E7%9A%84%E5%BF%83%E7%90%86%E5%AD%A6%E6%B3%95%E5%88%99/</url>
     <content><![CDATA[<p>79个潜规则：改变生活的心理学法则(全文)</p>
@@ -5830,6 +5814,22 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
+    <title>格物博客</title>
+    <url>/2019/02/02/%E6%A0%BC%E7%89%A9%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>池建强博客</title>
+    <url>/2021/01/05/%E6%B1%A0%E5%BB%BA%E5%BC%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
     <title>流行的js框架对比</title>
     <url>/2018/04/07/%E6%B5%81%E8%A1%8C%E7%9A%84js%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/</url>
     <content><![CDATA[<h2 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h2><p>有些日子没有正襟危坐写博客了，互联网飞速发展的时代，技术更新迭代的速度也在加快。看着Java、Js、Swift在各领域心花路放，也是煞是羡慕。寻了寻.net的消息，也是振奋人心，.net core 1，mono，xamarin等等，但大多都还在狂吼的阶段。其实一直以来对技术的理解是技术服务于业务和产品，产品又在不同程度的推进着技术的演进。</p>
@@ -5956,93 +5956,6 @@ echo $output;]]></content>
         <tag>前端</tag>
         <tag>js</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>浅谈Redis数据库的键值设计(转)</title>
-    <url>/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/</url>
-    <content><![CDATA[<p>丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。</p>
-<p>下面举一些常见适合kv数据库的例子来谈谈键值的设计，并与关系型数据库做一个对比，发现关系型的不足之处。</p>
-<h3 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h3><p>记录用户登录信息的一个系统， 我们简化业务后只留下一张表。</p>
-<h4 id="关系型数据库的设计"><a href="#关系型数据库的设计" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>mysql&gt; select * from login;<br>+———+—————-+————-+———————+<br> user_id  name            login_times  last_login_time<br>+———+—————-+————-+———————+<br>       1  ken thompson              5  2011-01-01 00:00:00<br>       2  dennis ritchie            1  2011-02-01 00:00:00<br>       3  Joe Armstrong             2  2011-03-01 00:00:00<br>+———+—————-+————-+———————+</p>
-<p> </p>
-<p>user_id表的主键，name表示用户名，login_times表示该用户的登录次数，每次用户登录后，login_times会自增，而last_login_time更新为当前时间。</p>
-<h4 id="REDIS的设计"><a href="#REDIS的设计" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>关系型数据转化为KV数据库，我的方法如下：</p>
-<p> </p>
-<p>一般使用冒号做分割符，这是不成文的规矩。比如在php-admin for redis系统里，就是默认以冒号分割，于是user:1 user:2等key会分成一组。于是以上的关系数据转化成kv数据后记录如下：</p>
-<p>Set login:1:login_times 5<br>Set login:2:login_times 1<br>Set login:3:login_times 2</p>
-<p>Set login:1:last_login_time 2011-1-1<br>Set login:2:last_login_time 2011-2-1<br>Set login:3:last_login_time 2011-3-1</p>
-<p>set login:1:name ”ken thompson“<br>set login:2:name “dennis ritchie”<br>set login:3:name ”Joe Armstrong“</p>
-<p>这样在已知主键的情况下，通过get、set就可以获得或者修改用户的登录次数和最后登录时间和姓名。</p>
-<p>一般用户是无法知道自己的id的，只知道自己的用户名，所以还必须有一个从name到id的映射关系，这里的设计与上面的有所不同。</p>
-<p>set “login:ken thompson:id”      1<br>set “login:dennis ritchie:id”    2<br>set “login: Joe Armstrong:id”    3</p>
-<p>这样每次用户登录的时候业务逻辑如下（python版），r是redis对象，name是已经获知的用户名。</p>
-<p>#获得用户的id<br>uid &#x3D; r.get(“login:%s:id” % name)<br>#自增用户的登录次数<br>ret &#x3D; r.incr(“login:%s:login_times” % uid)<br>#更新该用户的最后登录时间<br>ret &#x3D; r.set(“login:%s:last_login_time” % uid, datetime.datetime.now())</p>
-<p>如果需求仅仅是已知id，更新或者获取某个用户的最后登录时间，登录次数，关系型和kv数据库无啥区别。一个通过btree pk，一个通过hash，效果都很好。</p>
-<p>假设有如下需求，查找最近登录的N个用户。开发人员看看，还是比较简单的，一个sql搞定。</p>
-<p>select * from login order by last_login_time desc limit N</p>
-<p>DBA了解需求后，考虑到以后表如果比较大，所以在last_login_time上建个索引。执行计划从索引leafblock 的最右边开始访问N条记录，再回表N次，效果很好。</p>
-<p>过了两天，又来一个需求，需要知道登录次数最多的人是谁。同样的关系型如何处理？DEV说简单</p>
-<p>select * from login order by login_times desc limit N</p>
-<p>DBA一看，又要在login_time上建立一个索引。有没有觉得有点问题呢，表上每个字段上都有素引。</p>
-<p>关系型数据库的数据存储的的不灵活是问题的源头，数据仅有一种储存方法，那就是按行排列的堆表。统一的数据结构意味着你必须使用索引来改变sql的访问路径来快速访问某个列的，而访问路径的增加又意味着你必须使用统计信息来辅助，于是一大堆的问题就出现了。</p>
-<p>没有索引，没有统计计划，没有执行计划，这就是kv数据库。</p>
-<p>redis里如何满足以上的需求呢？ 对于求最新的N条数据的需求，链表的后进后出的特点非常适合。我们在上面的登录代码之后添加一段代码，维护一个登录的链表，控制他的长度，使得里面永远保存的是最近的N个登录用户。</p>
-<p>#把当前登录人添加到链表里<br>ret &#x3D; r.lpush(“login:last_login_times”, uid)<br>#保持链表只有N位<br>ret &#x3D; redis.ltrim(“login:last_login_times”, 0, N-1)</p>
-<p>这样需要获得最新登录人的id，如下的代码即可</p>
-<p>last_login_list &#x3D; r.lrange(“login:last_login_times”, 0, N-1)</p>
-<p>另外，求登录次数最多的人，对于排序，积分榜这类需求，sorted set非常的适合，我们把用户和登录次数统一存储在一个sorted set里。</p>
-<p>zadd login:login_times 5 1<br>zadd login:login_times 1 2<br>zadd login:login_times 2 3</p>
-<p>这样假如某个用户登录，额外维护一个sorted set，代码如此</p>
-<p>#对该用户的登录次数自增1<br>ret &#x3D; r.zincrby(“login:login_times”, 1, uid)</p>
-<p>那么如何获得登录次数最多的用户呢，逆序排列取的排名第N的用户即可</p>
-<p>ret &#x3D; r.zrevrange(“login:login_times”, 0, N-1)</p>
-<p>可以看出，DEV需要添加2行代码，而DBA不需要考虑索引什么的。</p>
-<h3 id="TAG系统"><a href="#TAG系统" class="headerlink" title="TAG系统"></a>TAG系统</h3><p>tag在互联网应用里尤其多见，如果以传统的关系型数据库来设计有点不伦不类。我们以查找书的例子来看看redis在这方面的优势。</p>
-<h4 id="关系型数据库的设计-1"><a href="#关系型数据库的设计-1" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>两张表，一张book的明细，一张tag表，表示每本的tag，一本书存在多个tag。</p>
-<p>mysql&gt; select * from book;<br>+——+——————————-+—————-+<br> id    name                           author<br>+——+——————————-+—————-+<br>    1  The Ruby Programming Language  Mark Pilgrim<br>    1  Ruby on rail                   David Flanagan<br>    1  Programming Erlang             Joe Armstrong<br>+——+——————————-+—————-+</p>
-<p>mysql&gt; select * from tag;<br>+———+———+<br> tagname  book_id<br>+———+———+<br> ruby           1<br> ruby           2<br> web            2<br> erlang         3<br>+———+———+</p>
-<p>假如有如此需求，查找即是ruby又是web方面的书籍，如果以关系型数据库会怎么处理？</p>
-<p>select b.name, b.author  from tag t1, tag t2, book b<br>where t1.tagname &#x3D; ‘web’ and t2.tagname &#x3D; ‘ruby’ and t1.book_id &#x3D; t2.book_id and b.id &#x3D; t1.book_id</p>
-<p>tag表自关联2次再与book关联，这个sql还是比较复杂的，如果要求即ruby，但不是web方面的书籍呢？</p>
-<p>关系型数据其实并不太适合这些集合操作。</p>
-<h4 id="REDIS的设计-1"><a href="#REDIS的设计-1" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>首先book的数据肯定要存储的，和上面一样。</p>
-<p>set book:1:name    ”The Ruby Programming Language”<br>Set book:2:name     ”Ruby on rail”<br>Set book:3:name     ”Programming Erlang”</p>
-<p>set book:1:author    ”Mark Pilgrim”<br>Set book:2:author     ”David Flanagan”<br>Set book:3:author     ”Joe Armstrong”</p>
-<p>tag表我们使用集合来存储数据，因为集合擅长求交集、并集</p>
-<p>sadd tag:ruby 1<br>sadd tag:ruby 2<br>sadd tag:web 2<br>sadd tag:erlang 3</p>
-<p>那么，即属于ruby又属于web的书？</p>
-<p>inter_list &#x3D; redis.sinter(“tag.web”, “tag:ruby”)</p>
-<p>即属于ruby，但不属于web的书？</p>
-<p>inter_list &#x3D; redis.sdiff(“tag.ruby”, “tag:web”)</p>
-<p>属于ruby和属于web的书的合集？</p>
-<p>inter_list &#x3D; redis.sunion(“tag.ruby”, “tag:web”)</p>
-<p>简单到不行阿。</p>
-<p>从以上2个例子可以看出在某些场景里，关系型数据库是不太适合的，你可能能够设计出满足需求的系统，但总是感觉的怪怪的，有种生搬硬套的感觉。</p>
-<p>尤其登录系统这个例子，频繁的为业务建立索引。放在一个复杂的系统里，ddl（创建索引）有可能改变执行计划。导致其它的sql采用不同的执行计划，业务复杂的老系统，这个问题是很难预估的，sql千奇百怪。要求DBA对这个系统里所有的sql都了解，这点太难了。这个问题在oracle里尤其严重，每个DBA估计都碰到过。对于MySQL这类系统，ddl又不方便（虽然现在有online ddl的方法）。碰到大表，DBA凌晨爬起来在业务低峰期操作，这事我没少干过。而这种需求放到redis里就很好处理，DBA仅仅对容量进行预估即可。</p>
-<p>未来的OLTP系统应该是kv和关系型的紧密结合。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>淘宝中间件博客</title>
-    <url>/2019/02/01/%E6%B7%98%E5%AE%9D%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>火丁笔记</title>
-    <url>/2021/01/05/%E7%81%AB%E4%B8%81%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
   </entry>
   <entry>
     <title>智力题及答案</title>
@@ -6255,38 +6168,6 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
-    <title>牛客网</title>
-    <url>/2021/01/05/%E7%89%9B%E5%AE%A2%E7%BD%91/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>牛玉富的博客</title>
-    <url>/2019/05/09/%E7%89%9B%E7%8E%89%E5%AF%8C%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>犀利豆博客</title>
-    <url>/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>王垠博客</title>
-    <url>/2019/04/15/%E7%8E%8B%E5%9E%A0%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
     <title>成功人士必备的50个好习惯</title>
     <url>/2018/05/05/%E6%88%90%E5%8A%9F%E4%BA%BA%E5%A3%AB%E5%BF%85%E5%A4%87%E7%9A%8450%E4%B8%AA%E5%A5%BD%E4%B9%A0%E6%83%AF/</url>
     <content><![CDATA[<p>第1节：前言        </p>
@@ -6343,6 +6224,125 @@ echo $output;]]></content>
       <tags>
         <tag>成长</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>浅谈Redis数据库的键值设计(转)</title>
+    <url>/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/</url>
+    <content><![CDATA[<p>丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。</p>
+<p>下面举一些常见适合kv数据库的例子来谈谈键值的设计，并与关系型数据库做一个对比，发现关系型的不足之处。</p>
+<h3 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h3><p>记录用户登录信息的一个系统， 我们简化业务后只留下一张表。</p>
+<h4 id="关系型数据库的设计"><a href="#关系型数据库的设计" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>mysql&gt; select * from login;<br>+———+—————-+————-+———————+<br> user_id  name            login_times  last_login_time<br>+———+—————-+————-+———————+<br>       1  ken thompson              5  2011-01-01 00:00:00<br>       2  dennis ritchie            1  2011-02-01 00:00:00<br>       3  Joe Armstrong             2  2011-03-01 00:00:00<br>+———+—————-+————-+———————+</p>
+<p> </p>
+<p>user_id表的主键，name表示用户名，login_times表示该用户的登录次数，每次用户登录后，login_times会自增，而last_login_time更新为当前时间。</p>
+<h4 id="REDIS的设计"><a href="#REDIS的设计" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>关系型数据转化为KV数据库，我的方法如下：</p>
+<p> </p>
+<p>一般使用冒号做分割符，这是不成文的规矩。比如在php-admin for redis系统里，就是默认以冒号分割，于是user:1 user:2等key会分成一组。于是以上的关系数据转化成kv数据后记录如下：</p>
+<p>Set login:1:login_times 5<br>Set login:2:login_times 1<br>Set login:3:login_times 2</p>
+<p>Set login:1:last_login_time 2011-1-1<br>Set login:2:last_login_time 2011-2-1<br>Set login:3:last_login_time 2011-3-1</p>
+<p>set login:1:name ”ken thompson“<br>set login:2:name “dennis ritchie”<br>set login:3:name ”Joe Armstrong“</p>
+<p>这样在已知主键的情况下，通过get、set就可以获得或者修改用户的登录次数和最后登录时间和姓名。</p>
+<p>一般用户是无法知道自己的id的，只知道自己的用户名，所以还必须有一个从name到id的映射关系，这里的设计与上面的有所不同。</p>
+<p>set “login:ken thompson:id”      1<br>set “login:dennis ritchie:id”    2<br>set “login: Joe Armstrong:id”    3</p>
+<p>这样每次用户登录的时候业务逻辑如下（python版），r是redis对象，name是已经获知的用户名。</p>
+<p>#获得用户的id<br>uid &#x3D; r.get(“login:%s:id” % name)<br>#自增用户的登录次数<br>ret &#x3D; r.incr(“login:%s:login_times” % uid)<br>#更新该用户的最后登录时间<br>ret &#x3D; r.set(“login:%s:last_login_time” % uid, datetime.datetime.now())</p>
+<p>如果需求仅仅是已知id，更新或者获取某个用户的最后登录时间，登录次数，关系型和kv数据库无啥区别。一个通过btree pk，一个通过hash，效果都很好。</p>
+<p>假设有如下需求，查找最近登录的N个用户。开发人员看看，还是比较简单的，一个sql搞定。</p>
+<p>select * from login order by last_login_time desc limit N</p>
+<p>DBA了解需求后，考虑到以后表如果比较大，所以在last_login_time上建个索引。执行计划从索引leafblock 的最右边开始访问N条记录，再回表N次，效果很好。</p>
+<p>过了两天，又来一个需求，需要知道登录次数最多的人是谁。同样的关系型如何处理？DEV说简单</p>
+<p>select * from login order by login_times desc limit N</p>
+<p>DBA一看，又要在login_time上建立一个索引。有没有觉得有点问题呢，表上每个字段上都有素引。</p>
+<p>关系型数据库的数据存储的的不灵活是问题的源头，数据仅有一种储存方法，那就是按行排列的堆表。统一的数据结构意味着你必须使用索引来改变sql的访问路径来快速访问某个列的，而访问路径的增加又意味着你必须使用统计信息来辅助，于是一大堆的问题就出现了。</p>
+<p>没有索引，没有统计计划，没有执行计划，这就是kv数据库。</p>
+<p>redis里如何满足以上的需求呢？ 对于求最新的N条数据的需求，链表的后进后出的特点非常适合。我们在上面的登录代码之后添加一段代码，维护一个登录的链表，控制他的长度，使得里面永远保存的是最近的N个登录用户。</p>
+<p>#把当前登录人添加到链表里<br>ret &#x3D; r.lpush(“login:last_login_times”, uid)<br>#保持链表只有N位<br>ret &#x3D; redis.ltrim(“login:last_login_times”, 0, N-1)</p>
+<p>这样需要获得最新登录人的id，如下的代码即可</p>
+<p>last_login_list &#x3D; r.lrange(“login:last_login_times”, 0, N-1)</p>
+<p>另外，求登录次数最多的人，对于排序，积分榜这类需求，sorted set非常的适合，我们把用户和登录次数统一存储在一个sorted set里。</p>
+<p>zadd login:login_times 5 1<br>zadd login:login_times 1 2<br>zadd login:login_times 2 3</p>
+<p>这样假如某个用户登录，额外维护一个sorted set，代码如此</p>
+<p>#对该用户的登录次数自增1<br>ret &#x3D; r.zincrby(“login:login_times”, 1, uid)</p>
+<p>那么如何获得登录次数最多的用户呢，逆序排列取的排名第N的用户即可</p>
+<p>ret &#x3D; r.zrevrange(“login:login_times”, 0, N-1)</p>
+<p>可以看出，DEV需要添加2行代码，而DBA不需要考虑索引什么的。</p>
+<h3 id="TAG系统"><a href="#TAG系统" class="headerlink" title="TAG系统"></a>TAG系统</h3><p>tag在互联网应用里尤其多见，如果以传统的关系型数据库来设计有点不伦不类。我们以查找书的例子来看看redis在这方面的优势。</p>
+<h4 id="关系型数据库的设计-1"><a href="#关系型数据库的设计-1" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>两张表，一张book的明细，一张tag表，表示每本的tag，一本书存在多个tag。</p>
+<p>mysql&gt; select * from book;<br>+——+——————————-+—————-+<br> id    name                           author<br>+——+——————————-+—————-+<br>    1  The Ruby Programming Language  Mark Pilgrim<br>    1  Ruby on rail                   David Flanagan<br>    1  Programming Erlang             Joe Armstrong<br>+——+——————————-+—————-+</p>
+<p>mysql&gt; select * from tag;<br>+———+———+<br> tagname  book_id<br>+———+———+<br> ruby           1<br> ruby           2<br> web            2<br> erlang         3<br>+———+———+</p>
+<p>假如有如此需求，查找即是ruby又是web方面的书籍，如果以关系型数据库会怎么处理？</p>
+<p>select b.name, b.author  from tag t1, tag t2, book b<br>where t1.tagname &#x3D; ‘web’ and t2.tagname &#x3D; ‘ruby’ and t1.book_id &#x3D; t2.book_id and b.id &#x3D; t1.book_id</p>
+<p>tag表自关联2次再与book关联，这个sql还是比较复杂的，如果要求即ruby，但不是web方面的书籍呢？</p>
+<p>关系型数据其实并不太适合这些集合操作。</p>
+<h4 id="REDIS的设计-1"><a href="#REDIS的设计-1" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>首先book的数据肯定要存储的，和上面一样。</p>
+<p>set book:1:name    ”The Ruby Programming Language”<br>Set book:2:name     ”Ruby on rail”<br>Set book:3:name     ”Programming Erlang”</p>
+<p>set book:1:author    ”Mark Pilgrim”<br>Set book:2:author     ”David Flanagan”<br>Set book:3:author     ”Joe Armstrong”</p>
+<p>tag表我们使用集合来存储数据，因为集合擅长求交集、并集</p>
+<p>sadd tag:ruby 1<br>sadd tag:ruby 2<br>sadd tag:web 2<br>sadd tag:erlang 3</p>
+<p>那么，即属于ruby又属于web的书？</p>
+<p>inter_list &#x3D; redis.sinter(“tag.web”, “tag:ruby”)</p>
+<p>即属于ruby，但不属于web的书？</p>
+<p>inter_list &#x3D; redis.sdiff(“tag.ruby”, “tag:web”)</p>
+<p>属于ruby和属于web的书的合集？</p>
+<p>inter_list &#x3D; redis.sunion(“tag.ruby”, “tag:web”)</p>
+<p>简单到不行阿。</p>
+<p>从以上2个例子可以看出在某些场景里，关系型数据库是不太适合的，你可能能够设计出满足需求的系统，但总是感觉的怪怪的，有种生搬硬套的感觉。</p>
+<p>尤其登录系统这个例子，频繁的为业务建立索引。放在一个复杂的系统里，ddl（创建索引）有可能改变执行计划。导致其它的sql采用不同的执行计划，业务复杂的老系统，这个问题是很难预估的，sql千奇百怪。要求DBA对这个系统里所有的sql都了解，这点太难了。这个问题在oracle里尤其严重，每个DBA估计都碰到过。对于MySQL这类系统，ddl又不方便（虽然现在有online ddl的方法）。碰到大表，DBA凌晨爬起来在业务低峰期操作，这事我没少干过。而这种需求放到redis里就很好处理，DBA仅仅对容量进行预估即可。</p>
+<p>未来的OLTP系统应该是kv和关系型的紧密结合。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>淘宝中间件博客</title>
+    <url>/2019/02/01/%E6%B7%98%E5%AE%9D%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>火丁笔记</title>
+    <url>/2021/01/05/%E7%81%AB%E4%B8%81%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>牛客网</title>
+    <url>/2021/01/05/%E7%89%9B%E5%AE%A2%E7%BD%91/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>牛玉富的博客</title>
+    <url>/2019/05/09/%E7%89%9B%E7%8E%89%E5%AF%8C%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>犀利豆博客</title>
+    <url>/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>王垠博客</title>
+    <url>/2019/04/15/%E7%8E%8B%E5%9E%A0%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
   </entry>
   <entry>
     <title>田小波博客</title>
@@ -6714,116 +6714,6 @@ echo $output;]]></content>
       <tags>
         <tag>设计模式</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>逗哥博客</title>
-    <url>/2021/01/05/%E9%80%97%E5%93%A5%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>间歇性努力的人，持续性一事无成</title>
-    <url>/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/</url>
-    <content><![CDATA[<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg"></p>
-<p>昙花一现的努力，都是伪努力。</p>
-<p>01</p>
-<p>工作上认识个老哥，四十多岁，有意思的人。</p>
-<p>他在一线门户做过电商一把手，后来出来单干，又经历过两次创业。</p>
-<p>无论职业经理人，还是创业当老板，他保持着每周工作 100 小时以上的习惯。</p>
-<p>和他喝过了一次酒，发现个有趣的事情：在如此高强度的工作状态下，他却从来没感到过“痛苦，难受，度日如年”。</p>
-<p>创业之路，百转千回，困难挫折如同家常便饭，但他的目光并没因此暗淡。他相信，“人生本来就是由开心和不开心串起来的”。</p>
-<p>老哥的事业做得不小。但他有一件特质，尤其吸引我的注意：努力常态化。</p>
-<p>这点特质，在我认识的许多大牛身上都能看见。你看他们：</p>
-<p>大年初二的早晨，坐到桌前写方案；</p>
-<p>年会狂欢结束后，回到办公室改合同；</p>
-<p>高铁上、机场里，用手机写稿子，回邮件。</p>
-<blockquote>
-<p><strong>他们不会觉得以上这些有多了不起；</strong></p>
-<p><strong>他们不会被自己“熬夜一次”而感动；</strong></p>
-<p><strong>他们也不会把这些发到朋友圈里，然后在旁边写上“我也是挺拼的”。</strong></p>
-</blockquote>
-<p>这些努力，不需要心理建设，不需要自我说服，不需要意志力驱动。</p>
-<p>这些努力，是潜意识中的自发行为，是肌肉记忆的习惯动作。</p>
-<p>在我的视角里，这些点点滴滴、无人关注的努力，才是真努力。</p>
-<p><strong>常态化的努力，才是真努力。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/6a2dc53523cb41a9a9590385eb7f93f7.jpeg"></p>
-<p>02</p>
-<p>常态化努力的对面，是间歇式努力。</p>
-<p>你办了一张健身卡，决心重塑自己的身体和生活。 1 月 1 日开始，12 月 31 日到期，中间只去过两次。</p>
-<p>你买了英语六级的单词书，占了图书馆的座位，雄心勃勃要大干一场。最后脑子里，除了对 abandon 滚瓜烂熟，什么也没留下。</p>
-<p>你朝九晚五地上班，你浑浑噩噩地过活。你觉得百无聊赖，看不到生活的希望。你决定每天下班回家后，拿出两个小时充电和学习……</p>
-<p>回家的那一瞬间，着了魔一样，懒神附体：凌云壮志滚一边去，打开电视，端上平板，舒服窝在沙发里。</p>
-<p>你的生活特别像那本六级单词书：书的前一小段被翻看了无数次，页角都皱了；但后边的内容，崭新如初，少有触及。</p>
-<p>这似乎是微不足道的小事，但却又关乎成败的大事。</p>
-<p>这些细节， 折射出的是努力的属性。努力常态化是牛逼与否的分水岭，各自延伸出的，是截然不同的轨迹。</p>
-<p>多数人只是在热血和堕落间徘徊：<strong>一段时间，猛冲猛打，自己感动哭了；一段时间，懒散放纵，行尸走肉一般。</strong></p>
-<p>我相信，每个人都努力过：都有过热血沸腾、立誓发狠的时候，都有过奋进狂飙、强力输出的经历。</p>
-<p>然而，平庸和杰出之所以泾渭分明，那是因为，平庸者的努力是碎片化的、不成系统的，走走停停，断断续续。</p>
-<p>我们有时候会想，“我都努力过了，为什么还是没得到好运气”。实际上，努力不是重点，常态化才是关键。</p>
-<p><strong>昙花一现的努力，都是伪努力。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/1249308917f34a6f94880524a9c02416.jpeg"></p>
-<p>03</p>
-<p>高中时，同桌和我的关系，类似于皇马巴萨。</p>
-<p>他是最令我胆寒的人：下午期末考试完毕，晚上还默默去自习——我的竞对啊，连半天都不让人休息。我心都要碎了。</p>
-<p>可怕之处在于，他风轻云淡，面沉似水。一切发生的如此自然，不需自我说服，不需心理建设……我能怎么办？我也很绝望啊。</p>
-<p>努力常态化的人最可怕：对这些人来说，努力不是一项需要分配的工作，而是自然发生的事情。不管有喜恶高低、状态好坏，他们能随时进入角色，在过程中找到感觉和快乐。</p>
-<p>普通人最大的问题是：干活看心情。状态不好，身体微恙，就不干活了？不存在的。这么娇贵，哪里是成事的样子。你玩王者荣耀，刷微信淘宝，需要心理建设么，需要状态好么？</p>
-<p>当年彭德怀在左权县召集干部会议，与会者饿得连坐都不稳，彭将军只好请大家躺在炕上开会——画面虽然醉人，这才是成事的状态啊。</p>
-<p>你当兵打仗，事情来了，你说我今天心情不好。那你不做炮灰谁做炮灰啊。</p>
-<p>圈里有句黑话：小姐不能有了性欲才接客；作者不能有了灵感才写字。</p>
-<p>话糙了点，但是这个理。</p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/87d09e9dada34837996b172b1043fe17.jpeg"></p>
-<p>04</p>
-<p>顺丰这些年高歌猛进，气势如虹，和老板王卫的职业习惯不无关系：</p>
-<p>创业二十年，每天工作 14 小时是太正常的事。王是很有危机感的人，三个月没有变革创新，就会觉得危机四伏。</p>
-<p>地产大佬罗康瑞是瑞安集团的主席，也是含着金钥匙出生的富二代。</p>
-<p>罗的崛起，可不光靠家里：大学毕业，找家里借了十万块，整整七年，每天工作十几个小时，没有一天休息……于是才崭露头角，小有名声。</p>
-<p>朋友在广州面试了几家游戏公司，都是要求一周上六天班，每天朝九晚九，而且这是广州行业常态。</p>
-<p>你以为你很努力了，可在别人眼中只是基本工作要求而已。广东的游戏做的那么好，奖金发那么多，有它的基础逻辑。</p>
-<p>都说勤能补拙，更何况人家”拙”么？</p>
-<p>大学同学就职于经纬中国。 他有绚丽的履历和出众的能力，情智双高，犀利通透。</p>
-<p>安逸不在他的字典里：“除了吃喝拉撒，经纬是我生活的全部”…… 看了他的状态，多少能理解经纬的牛逼了。</p>
-<p>我不是“工作玩命”的拥趸，我厌恶“要成功，先发疯”之类的毒鸡汤。</p>
-<p>我认为，任何透支身体去工作的行为都是不明智、不值得的……</p>
-<p>但实际情况是，对于多数创业者来说，不经历 5 至 8 年、每周 7×12 小时的创业奋斗很难有大成；一个草根，想在北京有所成就，每周 60 个小时的工作量是标准配置。</p>
-<p>5×8 小时的时间表，远远不足以支撑你出人头地的。</p>
-<p>你家境平平、智商普通，你只是玩玩打打、优哉游哉地做一做，就想成功，凭什么？我不认为那个运气万里挑一的人是你。</p>
-<p>刚加了两次班，就觉好感爆棚、天下在手，这样的人注定没有出息。</p>
-<p>工作时间是表象，它的本质是努力常态化。它保证不了你成功，它只是基本配置。</p>
-<p>它需要你坚持不懈，需要数年一日，需要持续输出，需要你有坚如磐石的耐心。</p>
-<p><strong>有多大耐心，才配得上多大野心。没毛病。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/5ce0b2f99c0a425d96ce715e95152f56.jpeg"></p>
-<p>05</p>
-<p>这是个浮躁的时代。在这个时代，努力无用的论调，变得非常受欢迎。</p>
-<p>我们说，“人的命运，不光依靠个人努力，也要依赖历史进程”。话虽如此，但不能抹杀了努力的意义。</p>
-<p>努力无用也好，阶级固化也罢，多数时候，是不努力者的借口。一个人，连力气都没有用尽，还谈什么方法、理想和人生？</p>
-<p>在我的公式里：<strong>成就 &#x3D; 天赋 × 运气 × 努力。</strong></p>
-<p>其中，只有努力是我们唯一能掌控的东西。</p>
-<p>努力当然是有用的，扪心自问，你做 12 个小时是不是就比 8 个小时更有产出？如果不是，那你也太弱了，别折腾了，找个地方养老吧。</p>
-<p>这里的努力，不是一天两天，不是一月两月，甚至可能要一两年才能看出端倪。</p>
-<p>可惜大多数人在回报来临之前，选择了放弃。努力一两下就有回报？哪有这样的好事。生孩子都要十个月。</p>
-<p>我们总认为付出够多，得到太少。</p>
-<p>其实，还是付出的不够：一般的，把付出打一折，才是自己应该得到的。天地不仁以万物为刍狗，这才符合世界运行的规律。</p>
-<p>持续而稳定的输出十分重要：拆开来看，只是一件件的小事；时间长远，便是天与地的距离。这就是努力常态的意义：</p>
-<p><strong>当努力的因子融入你的血液，当努力对你根本不算一个要求，相信我，你会看到一个新的世界、新的自己。</strong></p>
-]]></content>
-      <categories>
-        <category>生活</category>
-        <category>成长</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>阮一峰网站</title>
-    <url>/2019/02/14/%E9%98%AE%E4%B8%80%E5%B3%B0%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
   </entry>
   <entry>
     <title>诗词集锦</title>
@@ -10889,8 +10779,126 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
+    <title>逗哥博客</title>
+    <url>/2021/01/05/%E9%80%97%E5%93%A5%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>间歇性努力的人，持续性一事无成</title>
+    <url>/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/</url>
+    <content><![CDATA[<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg"></p>
+<p>昙花一现的努力，都是伪努力。</p>
+<p>01</p>
+<p>工作上认识个老哥，四十多岁，有意思的人。</p>
+<p>他在一线门户做过电商一把手，后来出来单干，又经历过两次创业。</p>
+<p>无论职业经理人，还是创业当老板，他保持着每周工作 100 小时以上的习惯。</p>
+<p>和他喝过了一次酒，发现个有趣的事情：在如此高强度的工作状态下，他却从来没感到过“痛苦，难受，度日如年”。</p>
+<p>创业之路，百转千回，困难挫折如同家常便饭，但他的目光并没因此暗淡。他相信，“人生本来就是由开心和不开心串起来的”。</p>
+<p>老哥的事业做得不小。但他有一件特质，尤其吸引我的注意：努力常态化。</p>
+<p>这点特质，在我认识的许多大牛身上都能看见。你看他们：</p>
+<p>大年初二的早晨，坐到桌前写方案；</p>
+<p>年会狂欢结束后，回到办公室改合同；</p>
+<p>高铁上、机场里，用手机写稿子，回邮件。</p>
+<blockquote>
+<p><strong>他们不会觉得以上这些有多了不起；</strong></p>
+<p><strong>他们不会被自己“熬夜一次”而感动；</strong></p>
+<p><strong>他们也不会把这些发到朋友圈里，然后在旁边写上“我也是挺拼的”。</strong></p>
+</blockquote>
+<p>这些努力，不需要心理建设，不需要自我说服，不需要意志力驱动。</p>
+<p>这些努力，是潜意识中的自发行为，是肌肉记忆的习惯动作。</p>
+<p>在我的视角里，这些点点滴滴、无人关注的努力，才是真努力。</p>
+<p><strong>常态化的努力，才是真努力。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/6a2dc53523cb41a9a9590385eb7f93f7.jpeg"></p>
+<p>02</p>
+<p>常态化努力的对面，是间歇式努力。</p>
+<p>你办了一张健身卡，决心重塑自己的身体和生活。 1 月 1 日开始，12 月 31 日到期，中间只去过两次。</p>
+<p>你买了英语六级的单词书，占了图书馆的座位，雄心勃勃要大干一场。最后脑子里，除了对 abandon 滚瓜烂熟，什么也没留下。</p>
+<p>你朝九晚五地上班，你浑浑噩噩地过活。你觉得百无聊赖，看不到生活的希望。你决定每天下班回家后，拿出两个小时充电和学习……</p>
+<p>回家的那一瞬间，着了魔一样，懒神附体：凌云壮志滚一边去，打开电视，端上平板，舒服窝在沙发里。</p>
+<p>你的生活特别像那本六级单词书：书的前一小段被翻看了无数次，页角都皱了；但后边的内容，崭新如初，少有触及。</p>
+<p>这似乎是微不足道的小事，但却又关乎成败的大事。</p>
+<p>这些细节， 折射出的是努力的属性。努力常态化是牛逼与否的分水岭，各自延伸出的，是截然不同的轨迹。</p>
+<p>多数人只是在热血和堕落间徘徊：<strong>一段时间，猛冲猛打，自己感动哭了；一段时间，懒散放纵，行尸走肉一般。</strong></p>
+<p>我相信，每个人都努力过：都有过热血沸腾、立誓发狠的时候，都有过奋进狂飙、强力输出的经历。</p>
+<p>然而，平庸和杰出之所以泾渭分明，那是因为，平庸者的努力是碎片化的、不成系统的，走走停停，断断续续。</p>
+<p>我们有时候会想，“我都努力过了，为什么还是没得到好运气”。实际上，努力不是重点，常态化才是关键。</p>
+<p><strong>昙花一现的努力，都是伪努力。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/1249308917f34a6f94880524a9c02416.jpeg"></p>
+<p>03</p>
+<p>高中时，同桌和我的关系，类似于皇马巴萨。</p>
+<p>他是最令我胆寒的人：下午期末考试完毕，晚上还默默去自习——我的竞对啊，连半天都不让人休息。我心都要碎了。</p>
+<p>可怕之处在于，他风轻云淡，面沉似水。一切发生的如此自然，不需自我说服，不需心理建设……我能怎么办？我也很绝望啊。</p>
+<p>努力常态化的人最可怕：对这些人来说，努力不是一项需要分配的工作，而是自然发生的事情。不管有喜恶高低、状态好坏，他们能随时进入角色，在过程中找到感觉和快乐。</p>
+<p>普通人最大的问题是：干活看心情。状态不好，身体微恙，就不干活了？不存在的。这么娇贵，哪里是成事的样子。你玩王者荣耀，刷微信淘宝，需要心理建设么，需要状态好么？</p>
+<p>当年彭德怀在左权县召集干部会议，与会者饿得连坐都不稳，彭将军只好请大家躺在炕上开会——画面虽然醉人，这才是成事的状态啊。</p>
+<p>你当兵打仗，事情来了，你说我今天心情不好。那你不做炮灰谁做炮灰啊。</p>
+<p>圈里有句黑话：小姐不能有了性欲才接客；作者不能有了灵感才写字。</p>
+<p>话糙了点，但是这个理。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/87d09e9dada34837996b172b1043fe17.jpeg"></p>
+<p>04</p>
+<p>顺丰这些年高歌猛进，气势如虹，和老板王卫的职业习惯不无关系：</p>
+<p>创业二十年，每天工作 14 小时是太正常的事。王是很有危机感的人，三个月没有变革创新，就会觉得危机四伏。</p>
+<p>地产大佬罗康瑞是瑞安集团的主席，也是含着金钥匙出生的富二代。</p>
+<p>罗的崛起，可不光靠家里：大学毕业，找家里借了十万块，整整七年，每天工作十几个小时，没有一天休息……于是才崭露头角，小有名声。</p>
+<p>朋友在广州面试了几家游戏公司，都是要求一周上六天班，每天朝九晚九，而且这是广州行业常态。</p>
+<p>你以为你很努力了，可在别人眼中只是基本工作要求而已。广东的游戏做的那么好，奖金发那么多，有它的基础逻辑。</p>
+<p>都说勤能补拙，更何况人家”拙”么？</p>
+<p>大学同学就职于经纬中国。 他有绚丽的履历和出众的能力，情智双高，犀利通透。</p>
+<p>安逸不在他的字典里：“除了吃喝拉撒，经纬是我生活的全部”…… 看了他的状态，多少能理解经纬的牛逼了。</p>
+<p>我不是“工作玩命”的拥趸，我厌恶“要成功，先发疯”之类的毒鸡汤。</p>
+<p>我认为，任何透支身体去工作的行为都是不明智、不值得的……</p>
+<p>但实际情况是，对于多数创业者来说，不经历 5 至 8 年、每周 7×12 小时的创业奋斗很难有大成；一个草根，想在北京有所成就，每周 60 个小时的工作量是标准配置。</p>
+<p>5×8 小时的时间表，远远不足以支撑你出人头地的。</p>
+<p>你家境平平、智商普通，你只是玩玩打打、优哉游哉地做一做，就想成功，凭什么？我不认为那个运气万里挑一的人是你。</p>
+<p>刚加了两次班，就觉好感爆棚、天下在手，这样的人注定没有出息。</p>
+<p>工作时间是表象，它的本质是努力常态化。它保证不了你成功，它只是基本配置。</p>
+<p>它需要你坚持不懈，需要数年一日，需要持续输出，需要你有坚如磐石的耐心。</p>
+<p><strong>有多大耐心，才配得上多大野心。没毛病。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/5ce0b2f99c0a425d96ce715e95152f56.jpeg"></p>
+<p>05</p>
+<p>这是个浮躁的时代。在这个时代，努力无用的论调，变得非常受欢迎。</p>
+<p>我们说，“人的命运，不光依靠个人努力，也要依赖历史进程”。话虽如此，但不能抹杀了努力的意义。</p>
+<p>努力无用也好，阶级固化也罢，多数时候，是不努力者的借口。一个人，连力气都没有用尽，还谈什么方法、理想和人生？</p>
+<p>在我的公式里：<strong>成就 &#x3D; 天赋 × 运气 × 努力。</strong></p>
+<p>其中，只有努力是我们唯一能掌控的东西。</p>
+<p>努力当然是有用的，扪心自问，你做 12 个小时是不是就比 8 个小时更有产出？如果不是，那你也太弱了，别折腾了，找个地方养老吧。</p>
+<p>这里的努力，不是一天两天，不是一月两月，甚至可能要一两年才能看出端倪。</p>
+<p>可惜大多数人在回报来临之前，选择了放弃。努力一两下就有回报？哪有这样的好事。生孩子都要十个月。</p>
+<p>我们总认为付出够多，得到太少。</p>
+<p>其实，还是付出的不够：一般的，把付出打一折，才是自己应该得到的。天地不仁以万物为刍狗，这才符合世界运行的规律。</p>
+<p>持续而稳定的输出十分重要：拆开来看，只是一件件的小事；时间长远，便是天与地的距离。这就是努力常态的意义：</p>
+<p><strong>当努力的因子融入你的血液，当努力对你根本不算一个要求，相信我，你会看到一个新的世界、新的自己。</strong></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>成长</category>
+      </categories>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阮一峰网站</title>
+    <url>/2019/02/14/%E9%98%AE%E4%B8%80%E5%B3%B0%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
     <title>陈皓网站</title>
     <url>/2019/01/31/%E9%99%88%E7%9A%93%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>陶辉笔记</title>
+    <url>/2021/01/05/%E9%99%B6%E8%BE%89%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>uncategorized</category>
@@ -10908,14 +10916,6 @@ echo $output;]]></content>
       <tags>
         <tag>架构</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>陶辉笔记</title>
-    <url>/2021/01/05/%E9%99%B6%E8%BE%89%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
   </entry>
   <entry>
     <title>随笔</title>
@@ -10960,6 +10960,14 @@ echo $output;]]></content>
   <entry>
     <title>鸟哥博客</title>
     <url>/2019/01/31/%E9%B8%9F%E5%93%A5%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>鸟窝</title>
+    <url>/2021/01/05/%E9%B8%9F%E7%AA%9D/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>uncategorized</category>
@@ -11044,13 +11052,5 @@ echo $output;]]></content>
         <tag>linux</tag>
         <tag>shell</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>鸟窝</title>
-    <url>/2021/01/05/%E9%B8%9F%E7%AA%9D/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
   </entry>
 </search>
