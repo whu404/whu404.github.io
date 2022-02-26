@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="awk【功能说明】 用于文本处理的语言（取行，过滤），支持正则 NR代表行数，$n取某一列，$NF最后一列 NR&#x3D;&#x3D;20,NR&#x3D;&#x3D;30 从20行到30行 FS竖着切，列的分隔符 RS横着切，行的分隔符 【语法格式】 awk   [–F]   [“[分隔符]”]   [’{print$1，$NF}’]     [目标文件]awk ‘BEGIN{FS&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awk sed grep 详解">
+<meta property="og:url" content="http://example.com/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="awk【功能说明】 用于文本处理的语言（取行，过滤），支持正则 NR代表行数，$n取某一列，$NF最后一列 NR&#x3D;&#x3D;20,NR&#x3D;&#x3D;30 从20行到30行 FS竖着切，列的分隔符 RS横着切，行的分隔符 【语法格式】 awk   [–F]   [“[分隔符]”]   [’{print$1，$NF}’]     [目标文件]awk ‘BEGIN{FS&#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-05T08:17:45.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.063Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/","path":"2018/05/05/awk-sed-grep-详解/","title":"awk sed grep 详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>awk sed grep 详解 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sed"><span class="nav-number">2.</span> <span class="nav-text">sed</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="nav-number">2.1.</span> <span class="nav-text">增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E"><span class="nav-number">2.1.1.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0"><span class="nav-number">2.1.2.</span> <span class="nav-text">删</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9"><span class="nav-number">2.1.3.</span> <span class="nav-text">改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E8%A1%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">按行替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">文本替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">变量替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9B%BF%E6%8D%A2-%E5%92%8C-1%E7%9A%84%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">分组替换\( \)和\1的使用说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7-amp-%E4%BB%A3%E8%A1%A8%E8%A2%AB%E6%9B%BF%E6%8D%A2%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.3.5.</span> <span class="nav-text">特殊符号&amp;代表被替换的内容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5"><span class="nav-number">2.1.4.</span> <span class="nav-text">查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E8%A1%8C%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">按行查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">按字符串查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">混合查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="nav-number">2.2.</span> <span class="nav-text">其他功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-number">3.</span> <span class="nav-text">grep</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          awk sed grep 详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-05 16:17:45" itemprop="dateCreated datePublished" datetime="2018-05-05T16:17:45+08:00">2018-05-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><p>【功能说明】</p>
+<p>用于文本处理的语言（取行，过滤），支持正则</p>
+<p>NR代表行数，$n取某一列，$NF最后一列</p>
+<p>NR&#x3D;&#x3D;20,NR&#x3D;&#x3D;30 从20行到30行</p>
+<p>FS竖着切，列的分隔符</p>
+<p>RS横着切，行的分隔符</p>
+<p>【语法格式】</p>
+<p>awk   [–F]   [“[分隔符]”]   [’{print$1，$NF}’]     [目标文件]<br>awk ‘BEGIN{FS&#x3D;”[列分隔符]+”;RS&#x3D;”[行分隔符]+”;print “-GEGIN-“} NR&#x3D;&#x3D;n{动作} END{print “-END-“}’ xxx.txt</p>
+<p>【内置变量】</p>
+<p>**$n **                   当前记录的第n个字段，字段间由 FS分隔。<br>**$**<strong>0</strong>                    完整的输入记录。<br>**ARGC  **            命 令行参数的数目。<br>ARGIND         命令行中当前文件的位置(从0开始算)。<br>ARGV             包 含命令行参数的数组。<br>CONVFMT      数字转换格式(默认值为%.6g)<br>ENVIRON       环 境变量关联数组。<br>ERRNO            最后一个系统错误的描述。<br>FIELDWIDTHS         字 段宽度列表(用空格键分隔)。<br>FILENAME               当前文件名。<br>FNR                        同 NR，但相对于当前文件。<br>**FS  **                         字段分隔符(默认是任何空格)。<br>IGNORECASE         如 果为真，则进行忽略大小写的匹配。<br>**NF **                  当前记录中的字段数。<br>**NR **                  当 前记录数。<br>OFMT              数字的输出格式(默认值是%.6g)。<br>OFS                 输 出字段分隔符(默认值是一个空格)。<br>ORS                 输出记录分隔符(默认值是一个换行符)。<br>RLENGTH         由 match函数所匹配的字符串的长度。<br>**RS   **                记录分隔符(默认是一个换行符)。<br>RSTART           由 match函数所匹配的字符串的第一个位置。<br>SUBSEP           数组下标分隔符(默认值是\034)。</p>
+<p>【运算符】</p>
+<p>= +&#x3D; -&#x3D; *&#x3D; &#x2F;&#x3D; %&#x3D; ^&#x3D; **&#x3D;        赋值<br>?:                 C条件表达式<br>                 逻 辑或<br>&amp;&amp;             逻辑与<br>~ ~!             匹 配正则表达式和不匹配正则表达式<br>&lt; &lt;&#x3D; &gt; &gt;&#x3D; !&#x3D; &#x3D;&#x3D;       关 系运算符<br>空格          连接</p>
+<ul>
+<li><ul>
+<li><pre><code>       加，减
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>&#x2F; &amp;          乘，除与求余</li>
+</ul>
+<ul>
+<li><ul>
+<li>!          一元加，减和逻辑非<br>^ ***        求幂</li>
+</ul>
+</li>
+</ul>
+<p>++ –        增加或减少，作为前缀或后缀<br>$              字 段引用<br>in             数组成员</p>
+<p>【字符串函数】</p>
+<p>sub          匹配记录中最大、最靠左边的子字符串的正则表达式，并用替换字符串替换这些字符串。如果没有指定目标字符串就默认使用整个记录。替换只发生在第一次匹配的 时候<br>gsub        整个文档中进行匹配<br>index       返回子字符串第一次被匹配的位置，偏移量从位置1开始<br>substr      返回从位置1开始的子字符串，如果指定长度超过实际长度，就返回整个字符串<br>split         可按给定的分隔符把字符串分割为一个数组。如果分隔符没提供，则按当前FS值进行分割<br>length      返回记录的字符数<br>match       返回在字符串中正则表达式位置的索引，如果找不到指定的正则表达式则返回0。match函数会设置内建变量RSTART为字符串中子字符串的开始位 置，RLENGTH为到子字符串末尾的字符个数。substr可利于这些变量来截取字符串<br>toupper和tolower    可用于字符串大小间的转换，该功能只在gawk中有效</p>
+<p>【字符串函数】</p>
+<p>atan2(x,y)    y,x 范围内的余切<br>cos(x)          余弦函数<br>exp(x)         求 幂<br>int(x)           取整<br>log(x)          自然对 数<br>rand()         随机数<br>sin(x)          正弦<br>sqrt(x)        平 方根<br>srand(x)     x是rand()函数的种子<br>int(x)          取 整，过程没有舍入<br>rand()         产生一个大于等于0而小于1的随机数</p>
+<p>【使用范例】</p>
+<p>1、只查看 ett.txt 文件（共 100 行）内第 20 到第 30 行的内容</p>
+<p>awk ‘NR&gt;19&amp;&amp;NR&lt;31’ ett.txt<br>awk ‘{ if (NR&gt;19&amp;&amp;NR&lt;31) print $0}’ ett.txt</p>
+<p>2、给文件内容加行号</p>
+<p>awk ‘{print NR,$0}’ &#x2F;etc&#x2F;inittab</p>
+<p>3、输出第24行并且加行号</p>
+<p>awk ‘NR&#x3D;&#x3D;24 {print NR,$0}’ &#x2F;etc&#x2F;inittab</p>
+<p>4、标准写法</p>
+<p>awk -F ‘[ :]+’ ‘NR&#x3D;&#x3D;2{print $(NF-1)}’  &#x2F;etc&#x2F;passwd<br>相当于 awk ‘BEGIN{FS&#x3D;”[ :]+”}NR&#x3D;&#x3D;2{print $(NF-1)}’ &#x2F;etc&#x2F;passwd<br>awk ‘BEGIN{RS&#x3D;”&#x2F;“} {print $0}’ &#x2F;etc&#x2F;passwd</p>
+<p>5、以一个或多个&#x2F;为行的分割符，打印第二行的第二列，列的分隔符为默认的空格,并打印行号</p>
+<p>awk ‘BEGIN{RS&#x3D;”[&#x2F;]+”} NR&#x3D;&#x3D;2{print NR,$2}’ test</p>
+<p><strong>awk支持正则：</strong></p>
+<p>6、以：为分隔符，打印第5列以s开头的一整行</p>
+<p>awk -F “:” ‘$5~&#x2F;^s&#x2F;{print $0}’ &#x2F;etc&#x2F;passwd</p>
+<p>7、以&#x2F;为分隔符，匹配倒数第二行的s或者没有s后面是bin的整行</p>
+<p>awk -F “&#x2F;“ ‘$(NF-1)~&#x2F;(s)bin&#x2F;‘ &#x2F;etc&#x2F;passwd</p>
+<p>8、匹配第一列以ssh或者ftp或mysql开头或者结尾的行</p>
+<p>awk ‘$1~&#x2F;^(sshftpmysql)$&#x2F;{print $1,$2}’ &#x2F;etc&#x2F;services</p>
+<p>9、输出结果6 0 1 2</p>
+<p>echo “6@@@@@@@@@@@@@@@0&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;1##############2” awk -F ‘[@&#x3D;#]+’  ‘{print $1,$2,$3,$4}’</p>
+<p>10、</p>
+<p>awk ‘BEGIN{print “—BEGIN—“} NR&#x3D;&#x3D;2{print $2} END{print “—END—-“}’ xxx.conf</p>
+<p>11、awk统计百分比的问题</p>
+<p>例一：</p>
+<p> 日志样子举例如下：<br> <a href="https://link.zhihu.com/?target=http://youku.com">http://youku.com</a> 200<br> <a href="https://link.zhihu.com/?target=http://youku.com">http://youku.com</a> 302<br> <a href="https://link.zhihu.com/?target=http://youku.com">http://youku.com</a> 403<br> <a href="https://link.zhihu.com/?target=http://youku.com">http://youku.com</a> 502<br> <a href="https://link.zhihu.com/?target=http://baidu.com">http://baidu.com</a> 302<br> <a href="https://link.zhihu.com/?target=http://baidu.com">http://baidu.com</a> 404现想使用awk命令按域名统计 返回码大于等于400的百分比，假如优酷总共有4行，大于等于400的返回码有两行，那占比就为50%</p>
+<p>awk ‘{<br>        count[$1]++;<br>        if($2&gt;400)above400[$1]++<br>    }<br>    END{<br>        for(i in count){<br>            print i, count[i], above400[i]&#x2F;count[i]<br>        }<br>    }’ &lt; xxx.txt</p>
+<p>例二：</p>
+<p>统计一个文件的中所有的error的占比</p>
+<p>awk  ‘&#x2F;error&#x2F;{err++}END{print err,NR,err&#x2F;NR*100”%” }’ &lt; xxx.txt</p>
+<p>12、关联数组访问问题</p>
+<p>a.txt和b.txt两个文件相同的两个字段（idmoney）,输出a和b文件中相同id并且b文件money值大的一行</p>
+<p>cat &gt;&gt;a.txt &lt;&lt;EOF<br>11<br>33<br>55<br>77<br>99<br>EOF</p>
+<p>cat &gt;&gt;b.txt&lt;&lt;EOF<br>11<br>22<br>330<br>44<br>55<br>66<br>770<br>88<br>99<br>1010<br>EOF</p>
+<p>awk -F ‘’ ‘BEGIN{ while(getline &lt; “a.txt”) { user_map[$1] &#x3D; $2; } }<br>{<br>    if ($1 in user_map) { if (user_map[$1] &lt; $2) print $0; }<br>}’ b.txt</p>
+<p>注意：如果a.txt不存在，getline会返回-1，导致死循环_。_我以前曾经碰上过因为这个原因导致程序挂死，所以特别提出来让大家注意</p>
+<p>13、99乘法表</p>
+<p>awk ‘BEGIN{for(i&#x3D;1;i&lt;10;i++){for (j&#x3D;1;j&lt;&#x3D;i;j++)printf “%d%s%d%s%d\t”,i,”x”,j,”&#x3D;”,i*j;print}}’</p>
+<p>14、tomcat并发数</p>
+<p>netstat -angrep 10050awk ‘{count[$6]++} END{for (i in count) print(i,count[i])}’</p>
+<h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><p>【功能说明】</p>
+<p>Sed是Strem Editor(流编辑器)缩写，是操作、过滤和转换文本内容的强大工具。常用功能有增删改查，过滤，取行。</p>
+<p><strong>参数</strong></p>
+<p>-n             #取消默认输出<br>-r             #使用扩展正则<br>-i              #刷到磁盘<br>-e             #执行多条sed指令<br>-f              #指令放在文件里</p>
+<p><strong>sed-command</strong></p>
+<p>a    追加<br>i     插入<br>d    删除<br>c    替换指定的行<br>s    替换每一行匹配到的第一个字符<br>g   替换每一行的全部<br>p   输出<br>w   另存文件<br>e   执行bash命令<br>q   不继续往下读取</p>
+<p>概括流程：Sed软件从文件或管道中读取一行，处理一行，输出一行；再读取一行，再处理一行，再输出一行……</p>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><p>a 追加文本到指定行后</p>
+<p>i 插入文本到指定行前</p>
+<h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><p><strong>单行增加</strong></p>
+<p>sed ‘2a 106,dandan,CSO’ person.txt<br>sed ‘2i 106,dandan,CSO’ person.txt</p>
+<p><strong>多行增加</strong></p>
+<p>sed ‘2a 106,dandan,CSO\n107,bingbing,CCO’ person.txt</p>
+<p><strong>企业案例1<strong><strong>：优化SSH</strong></strong>配置（一键完成增加若干参数）</strong></p>
+<p>在我们学习系统优化时，有一个优化点：更改ssh服务远程登录的配置。主要的操作是在ssh的配置文件加入下面5行文本。(下面参数的具体含义见其他课程。)</p>
+<p>Port 52113<br>PermitRootLogin no<br>PermitEmptyPasswords no<br>UseDNS no<br>GSSAPIAuthentication no</p>
+<p>我们可以使用vi命令编辑这个文本，但这样就比较麻烦，现在想一条命令增加5行文本到第13行前？</p>
+<p>sed -ir ‘13 i ####Chris-sshd-2016.5.4-youhua######\nPort 52113\nPermitRootLogin no\nPermitEmptyPasswords no\nUseDNS no\nGSSAPIAuthentication no\n#####–end–#######\n’ &#x2F;etc&#x2F;ssh&#x2F;sshd_config</p>
+<p>地址用逗号分隔的，n1,n2可以用数字、正则表达式、或二者的组合表示。</p>
+<p><strong>其他使用例子</strong></p>
+<p>10{sed-commands}                          对第10行操作</p>
+<p>10,20{sed-commands}                     对10到20行操作,包括第10,20行</p>
+<p>10,+20{sed-commands}                  对10到30(10+20)行操作,包括第10,30行</p>
+<p>1~2{sed-commands}                       对1,3,5,7,……行操作</p>
+<p>10,${sed-commands}                      对10到最后一行($代表最后一行)操作,包括第10行</p>
+<p>&#x2F;oldboy&#x2F;{sed-commands}               对匹配oldboy的行操作</p>
+<p>&#x2F;oldboy&#x2F;,&#x2F;Alex&#x2F;{sed-commands}    对匹配oldboy的行到匹配Alex的行操作</p>
+<p>&#x2F;oldboy&#x2F;,${sed-commands}            对匹配oldboy的行到最后一行操作</p>
+<p>&#x2F;oldboy&#x2F;,10{sed-commands}         对匹配oldboy的行到第10行操作，注意：如果前10行没有匹配到oldboy，sed软件会显示10行以后的匹配oldboy的行，如果有。</p>
+<p>1,&#x2F;Alex&#x2F;{sed-commands}               对第1行到匹配Alex的行操作</p>
+<p>&#x2F;oldboy&#x2F;,+2{sed-commands}        对匹配oldboy的行到其后的2行操作</p>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><p><strong>d</strong> <strong>删除指定的行</strong></p>
+<p>sed ‘d’ person.txt                                       #删除全部</p>
+<p>sed ‘2d’ person.txt                                     #删除第二行</p>
+<p>sed ‘2,5d’ person.txt                                  #删除2到5行</p>
+<p>sed ‘3,$d’ person.txt                                  #删除3到结尾</p>
+<p>sed ‘1~2d’ person.txt                                #删除1,3,5行</p>
+<p>sed ‘1,+2d’ person.txt                               #删除1,2,3</p>
+<p>sed ‘&#x2F;zhangyao&#x2F;d’ person.txt                    #删除匹配的zhangyao行</p>
+<p>sed ‘&#x2F;oldboy&#x2F;,&#x2F;Alex&#x2F;d’ person.txt             #删除匹配oldboy到Alex行</p>
+<p>sed ‘&#x2F;oldboy&#x2F;,3d’ person.txt                     #删除从匹配oldboy的3行</p>
+<p><strong>企业案例2****：打印文件内容但不包含oldboy</strong></p>
+<p>sed ‘&#x2F;oldboy&#x2F;d’ person.txt                       #删除包含”oldboy”的行</p>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><h4 id="按行替换"><a href="#按行替换" class="headerlink" title="按行替换"></a>按行替换</h4><p><strong>c</strong> <strong>用新行取代旧行</strong></p>
+<p>sed ‘2c 106,dandan,CSO’ person.txt          #替换第2行的内容</p>
+<h4 id="文本替换"><a href="#文本替换" class="headerlink" title="文本替换"></a>文本替换</h4><p>s：单独使用，将每一行中<strong>第一处</strong>匹配的字符串进行替换</p>
+<p>g：每一行进行全部替换</p>
+<p>-i：修改文件内容</p>
+<p><strong>sed****软件替换模型</strong>(方框▇被替换成三角▲)</p>
+<p>sed -i ‘s&#x2F;▇&#x2F;▲&#x2F;g’ oldboy.log<br>sed -i ‘s#▇#▲#g’ oldboy.log</p>
+<p><strong>企业案例3****：指定行修改配置文件</strong></p>
+<p>指定行精确修改配置文件，这样可以防止修改多了地方。</p>
+<p>sed ‘3s#0#9#’ person.txt</p>
+<h4 id="变量替换"><a href="#变量替换" class="headerlink" title="变量替换"></a>变量替换</h4><p>x&#x3D;a<br>y&#x3D;b<br>echo $x $y<br>sed s#$x#$y#g test.txt</p>
+<h4 id="分组替换-和-1的使用说明"><a href="#分组替换-和-1的使用说明" class="headerlink" title="分组替换\( \)和\1的使用说明"></a>分组替换\( \)和\1的使用说明</h4><p>sed软件的\( \)的功能可以记住正则表达式的一部分，其中，\1为第一个记住的模式即第一个小括号中的匹配内容，\2第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</p>
+<p>例：echo I am oldboy teacher.如果想保留这一行的单词oldboy，删除剩下的部分，使用圆括号标记想保留的部分。</p>
+<p>echo I am oldboy teacher. sed ‘s#^.<em>am \([a-z].<em>\) tea.</em>$#\1#g’<br>echo I am oldboy teacher. sed -r ‘s#^.<em>am ([a-z].</em>) tea.</em>$#\1#g’<br>echo I am oldboy teacher. sed -r ‘s#I (.<em>) (.</em>) teacher.#\1\2#g’</p>
+<p><strong>命令说明</strong></p>
+<p>思路：用oldboy字符替换I am oldboy teacher.</p>
+<p>下面解释用□代替空格</p>
+<ol>
+<li>^.*am□ –&gt;这句的意思是以任意字符开头到am□为止，匹配文件中的I am□字符串;</li>
+<li>\([a-z].*\)□–&gt;这句的外壳就是括号\(\），里面的[a-z]表示匹配26个字母的任何一个，[a-z].*合起来就是匹配任意多个字符，本题来说就是匹配oldboy字符串，由于oldboy字符串是需要保留的,因此用括号括起来匹配，后面通过\1来取oldboy字符串。</li>
+<li>□tea.*$–&gt;表示以空格tea起始,任意字符结尾，实际就是匹配oldboy字符串后，紧接着的字符串□teacher.;</li>
+<li>后面被替换的内容中的\1就是取前面的括号里的内容了，也就是我们要的oldboy字符串。</li>
+<li>()是扩展正则表达式的元字符，sed软件默认识别基本正则表达式，想要使用扩展正则需要使用\转义，即\(\）。</li>
+<li>sed使用-r选项则可以识别扩展正则表达式，此时使用\(\）反而会出错。</li>
+</ol>
+<p><strong>企业案例4****：系统开机启动项优化</strong></p>
+<p>chkconfig –listgrep “3:on”grep -vE “sshdcrondnetworkrsyslogsysstat”awk ‘{print $1}’sed -r ‘s#^(.*)#chkconfig \1 off#g’bash<br>chkconfig –listgrep “3:on”</p>
+<h4 id="特殊符号-amp-代表被替换的内容"><a href="#特殊符号-amp-代表被替换的内容" class="headerlink" title="特殊符号&amp;代表被替换的内容"></a>特殊符号&amp;代表被替换的内容</h4><p>#→将1到3行的C替换为–C–</p>
+<p>sed ‘1,3s#C#–&amp;–#g’ person.txt 　　　　　　　　#→此处&amp;等于C</p>
+<p><strong>企业案例5****：批量重命名文件</strong></p>
+<p>for i in `seq 5`;do touch stu_102999_${i}_finished.jpg;done<br>ls sed -r ‘s&#x2F;(.<em>)_finished(.</em>)&#x2F;mv  &amp;  \1_finish\2&#x2F;e’</p>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><p>p 输出指定内容，但默认会输出2次匹配的结果，因此使用n取消默认输出</p>
+<h4 id="按行查询"><a href="#按行查询" class="headerlink" title="按行查询"></a>按行查询</h4><p>sed ‘2p’ person.txt<br>sed -n ‘2p’ person.txt<br>sed -n ‘2,3p’ person.txt<br>sed -n ‘1~2p’ person.txt<br>sed -n ‘p’ person.txt</p>
+<h4 id="按字符串查询"><a href="#按字符串查询" class="headerlink" title="按字符串查询"></a>按字符串查询</h4><p>sed -n ‘&#x2F;CTO&#x2F;p’ person.txt<br>sed -n ‘&#x2F;CTO&#x2F;,&#x2F;CFO&#x2F;p’ person.txt</p>
+<h4 id="混合查询"><a href="#混合查询" class="headerlink" title="混合查询"></a>混合查询</h4><p>sed -n ‘2,&#x2F;CFO&#x2F;p’ person.txt<br>sed -n ‘&#x2F;feixue&#x2F;,2p’ person.txt</p>
+<p>#特殊情况，前两行没有匹配到feixue，就向后匹配，如果匹配到feixue就打印此行。</p>
+<h2 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h2><p><strong>备份功能</strong></p>
+<p>sed -i.bak ‘$a 1111111111’ xxx.txt</p>
+<p>备份xxx.txt文件为xxx.txt.bak，修改源文件，最后一行添加111111111</p>
+<p><strong>另存功能</strong></p>
+<p>sed ‘s&#x2F;sb&#x2F;SB&#x2F;g w new.txt’ xxx.txt</p>
+<p>把sb替换成SB的整行输出到new.txt中</p>
+<p><strong>大小写转换</strong></p>
+<p>\L    #全部转换成小写</p>
+<p>\l     #单个转换成小写</p>
+<p>\U    #全部转换成大写</p>
+<p>\u    #单个转换成大写</p>
+<p>\E    #需要和\U和\L一起使用，关闭\U和\L的功能</p>
+<p>sed -r ‘s&#x2F;(.<em>),(.</em>),(.*)&#x2F;\L\3,\E\1,\U\2&#x2F;g’ xxx.txt</p>
+<p><strong>执行多条sed****指令</strong></p>
+<p>sed -e ‘3,$d’ -e ‘s#10#01#g’ xxx.txt<br>sed ‘3,$d; s#10#01#g’ xxx.txt</p>
+<p><strong>打印不可见字符l</strong></p>
+<p>sed -n ‘l’ xxx.txt</p>
+<p><strong>abc<strong><strong>替换ABC</strong></strong>（一一对应）</strong></p>
+<p>tr ‘abc’ ‘ABC’ xxx.txt<br>sed ‘y#abc#ABC#’ xxx.txt</p>
+<p><strong>可以操作多个文件</strong></p>
+<p>sed ‘y#abc#ABC#’ xxx.txt 222.txt</p>
+<p><strong>模拟其他命令</strong></p>
+<p>创建svn库的时候自动取消#号和修改路径</p>
+<p>sed -i -r ‘12,13s&#x2F;# &#x2F;&#x2F;g’ svnserve.conf<br>sed -i -r ‘20s&#x2F;^# (.<em>)&#x2F;\1&#x2F;g’ svnserve.conf<br>sed -i -r ‘27s&#x2F;^# (.</em>)&#x2F;\1&#x2F;g’ svnserve.conf<br>sed -i -r ‘12,13s&#x2F;^# (.<em>)&#x2F;\1&#x2F;g’ svnserve.conf<br>sed -i -r  ‘32s&#x2F;# (.</em>&#x3D;)(.*)&#x2F;\1 \&#x2F;usr\&#x2F;svnData\&#x2F;&#x2F;‘ svnserve.conf</p>
+<p>一条命令执行（加传参）</p>
+<p>SvnPath&#x3D;’zhangzhicheng’<br>sed -i -r -e ‘20s&#x2F;^# (.<em>)&#x2F;\1&#x2F;g’ -e ‘27s&#x2F;^# (.</em>)&#x2F;\1&#x2F;g’ -e ‘12,13s&#x2F;^# (.<em>)&#x2F;\1&#x2F;g’ -e “32s&#x2F;# (.</em>&#x3D;)(.*)&#x2F;\1 \&#x2F;usr\&#x2F;svnData\&#x2F;$SvnPath&#x2F;“ svnserve.conf</p>
+<h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><p>【功能说明】</p>
+<p>三剑客老三。搜索文本，过滤文本字符串 –v取反</p>
+<p>【选项说明】</p>
+<p><strong>参数选项</strong></p>
+<p><strong>解释说明（带※的为重点）</strong></p>
+<p>-V</p>
+<p>取反，读出指定的内容之外的内容</p>
+<p>-A</p>
+<p>打印后面n行的内容</p>
+<p>-B</p>
+<p>打印前面n行的内容</p>
+<p>-C</p>
+<p>打印前后各n行的内容</p>
+<p>-n</p>
+<p>输出行行号</p>
+<p>-E（egrep）</p>
+<p>使用扩展正则表达式</p>
+<p>-o</p>
+<p>只输出匹配到的结果</p>
+<p>-i</p>
+<p>忽略大小写</p>
+<p>-a</p>
+<p>当grep认为是二进制文件的时候加-a</p>
+<p> </p>
+<p>【基础范例】</p>
+<p>例子1：已知文件 test.txt 内容为：</p>
+<p>test</p>
+<p>liyao</p>
+<p>oldboy</p>
+<p>请给出输出 test.txt 文件内容时，不包含 oldboy 字符串的命令。</p>
+<p>grep –v oldboy test.txt</p>
+<p>例子2：过滤出&#x2F;etc&#x2F;services 文件包含 3306 或 1521 两数据库端口的行的内容</p>
+<p>grep –E “33061521” &#x2F;etc&#x2F;services</p>
+<p>例子3：</p>
+<p>【技巧例子】</p>
+<p>消除文件空行:</p>
+<p>grep -v ‘^$’ test.txt<br>egrep -o “^[^:]+” xxx.txt   　　　　　　#匹配开头以非：的行，并输出匹配的内容（-o不是整行输出）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/" rel="prev" title="MySQL中有关TIMESTAMP和DATETIME的总结">
+                  <i class="fa fa-chevron-left"></i> MySQL中有关TIMESTAMP和DATETIME的总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/05/05/%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BA%A7%E5%93%81%E5%81%9Aab%E6%B5%8B%E8%AF%95/" rel="next" title="如何对产品做AB测试">
+                  如何对产品做AB测试 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

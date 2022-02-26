@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="PHP的MySQL扩展 设计开发允许PHP应用与MySQL数据库交互的早期扩展。mysql扩展提供了一个面向过程的接口； 并且是针对MySQL4.1.3或更早版本设计的。因此，这个扩展虽然可以与MySQL4.1.3或更新的数 ； 据库服务端 进行交互，但并不支持后期MySQL服务端提供的一些特性。 PHP的mysqli扩展 mysqli扩展，我们有时称之为MySQL增强扩展，可以用于使用 MySQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php操作数据库的几种方式">
+<meta property="og:url" content="http://example.com/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP的MySQL扩展 设计开发允许PHP应用与MySQL数据库交互的早期扩展。mysql扩展提供了一个面向过程的接口； 并且是针对MySQL4.1.3或更早版本设计的。因此，这个扩展虽然可以与MySQL4.1.3或更新的数 ； 据库服务端 进行交互，但并不支持后期MySQL服务端提供的一些特性。 PHP的mysqli扩展 mysqli扩展，我们有时称之为MySQL增强扩展，可以用于使用 MySQ">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-22T08:30:16.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.079Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/","path":"2018/04/22/php操作数据库的几种方式/","title":"php操作数据库的几种方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>php操作数据库的几种方式 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php操作数据库的几种方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-22 16:30:16" itemprop="dateCreated datePublished" datetime="2018-04-22T16:30:16+08:00">2018-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong><a target="_blank" rel="noopener" href="http://lib.csdn.net/base/php" title="PHP知识库">PHP</a>的<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/mysql" title="MySQL知识库">MySQL</a>扩展</strong></p>
+<p>设计开发允许PHP应用与MySQL<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/mysql" title="MySQL知识库">数据库</a>交互的早期扩展。mysql扩展提供了一个<strong>面向过程</strong>的接口；</p>
+<p>并且是针对MySQL4.1.3或更早版本设计的。因此，这个扩展虽然可以与MySQL4.1.3或更新的数 ；</p>
+<p>据库服务端 进行交互，但并不支持后期MySQL服务端提供的一些特性。</p>
+<p><strong>PHP的mysqli扩展</strong></p>
+<p>mysqli扩展，我们有时称之为MySQL增强扩展，可以用于使用 MySQL4.1.3或更新版本中新的高级特性；</p>
+<p>mysqli扩展在PHP 5及以后版本中包含；</p>
+<p>mysqli扩展有一系列的优势，相对于mysql扩展的提升主要有：面向对象接口、 prepared语句支持、多语句执行支持、事务支持、增强的调试能力、<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/embeddeddevelopment" title="嵌入式开发知识库">嵌入式</a>服务支持。</p>
+<p>PHP数据对象(PDO)</p>
+<p>PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以，使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器。</p>
+<p> </p>
+<hr>
+<p> </p>
+<p>Mysql连接：</p>
+<?php
+$conn= @ mysql_connect("localhost", "root", "") or die("数据库连接错误");
+mysql_select_db("bbs", $conn);
+mysql_query("set names 'utf8'");
+echo
+"数据库连接成功";
+?>
+
+<p>Mysqli连接：</p>
+<?php
+$conn= mysqli_connect('localhost', 'root', '', 'bbs');
+if(!$conn){
+    die("数据库连接错误". mysqli_connect_error());
+}else{
+    echo"数据库连接成功";
+}
+?>
+
+<p>Pdo连接：</p>
+<?php
+try{
+    $pdo=new  pdo("mysql:host=localhost;dbname=bbs","root","");
+}catch(PDDException $e){
+    echo"数据库连接错误";
+}
+echo"数据库连接成功";
+?>
+
+<p>以下是我在网站看到的Mysql、Mysqli、Pdo三种方式的区别对比</p>
+<hr>
+<p><strong>PHP-MySQL</strong> 是 PHP 操作 MySQL 资料库最原始的 Extension ，<strong>PHP-MySQLi</strong> 的 i 代表 Improvement ，提更了相对进阶的功能，就 Extension 而言，本身也增加了安全性。而 <strong>PDO (PHP Data Object)</strong> 则是提供了一个 Abstraction Layer 来操作资料库</p>
+<p>1.<strong>mysql与mysqli</strong></p>
+<p>mysqli是php5提供的新函数库，(i)表示改进，其执行速度更快.当然也更安全</p>
+<p>mysql是非持继连接函数而mysqli是永远连接函数。也就是说，mysql每次链接都会打开一个连接的进程而mysqli多次运行mysqli将使用同一连接进程,从而减少了服务器的开销 有些朋友在编程的时候，使用new mysqli(‘localhost’, usenamer’, ‘password’, ‘databasename’);总是报错，Fatal error: Class ‘mysqli’ not found in d:\…</p>
+<p><strong>mysqli类不是php自带的吗？</strong></p>
+<p>不是默认开启的，win下要改php.ini,去掉php_mysqli.dll前的#;,<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux" title="Linux知识库">Linux</a>下要把mysqli编译进去。</p>
+<p>一:Mysqli.dll是一个允许以对象的方式或者过程操作数据库的，它的使用方式也很容易。这里就几个常</p>
+<?php
+mysql_connect($db_host, $db_user, $db_password);
+mysql_select_db($dn_name);
+$result= mysql_query("SELECT \`name\` FROM \`users\` WHERE \`location\` = '$location'");
+while
+($row= mysql_fetch_array($result, MYSQL_ASSOC)){
+    echo $row\['name'\];
+}
+mysql_free_result($result);
+?>
+
+<p>其实背后有些学问… 这种方式不能 Bind Column ，以前例的 SQL 叙述来说，$location 的地方容易被 SQL Injection。后来于是发展出了 mysql_escape_string() (备注：5.3.0之后弃用) 以及 mysql_real_escape_string()来解决这个问题，不过这麽一搞，整个叙述会变得複杂且丑陋，而且如果栏位多了，可以想见会是怎样的情形…</p>
+<?php
+$query = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'"; 
+mysql_real_escape_string($user);
+mysql_real_escape_string($password)); 
+mysql_query($query);
+?>
+
+<p>在 PHP-MySQLi 中有了不少进步，除了透过 Bind Column 来解决上述问题，而且也多援 Transaction, Multi Query ，并且同时提供了 Object oriented style (下面这段 PHP-MySQLi 范例的写法) 和 Procedural style</p>
+<?php 
+$mysqli = new mysqli($db_host, $db_user, $db_password, $db_name); 
+$sql = "INSERT INTO \`users\` (id, name, gender, location) VALUES (?, ?, ?, ?)"; 
+$stmt = $mysqli->prepare($sql); 
+$stmt->bind_param('dsss', $source_id, $source_name, $source_gender, $source_location); 
+$stmt->execute(); 
+$stmt->bind_result($id, $name, $gender, $location); 
+while ($stmt->fetch()){ 
+    echo $id . $name . $gender . $location; 
+} 
+$stmt->close(); 
+$mysqli->close();
+?>
+
+<p>但看到这边又发现了一些缺点，例如得 Bind Result，这个就有点多馀，不过这其实无关紧要，因为最大的问题还是在于这不是一个抽象(Abstraction)的方法，所以当后端更换资料库的时候，就是痛苦的开始… 于是 PDO 就出现了</p>
+<p>2.PDO与mysql</p>
+<p>PDO是PHP5.1之后才支持的，他为访问数据库采用了一致性的接口。但是国内众多的开源程序都是使用MySQL的extension所提供的function连接数据库，进行查询。PDO功能强大为何国内成熟的PHP系统都不使用呢？问过几个朋友为啥用PDO,答案是“快”，PDO连接数据库会快么？为什么使用PDO?他们两种方式有什么区别？首先还是比较关心的性能问题.写了1个脚本测试向MySQL插入100万条数据。</p>
+<?php 
+$link = mysql_connect("localhost", "root", "root") or die('mysql connect error');
+
+$num = 100000;
+$dsn = "mysql:host=127.0.0.1;dbname=performace_test"; 
+$db = new PDO($dsn, 'root', 'root', array(PDO::ATTR_PERSISTENT => true)); 
+mysql_query('TRUNCATE TABLE \`performace_test\`.\`myquery\`',$link);  //Truncate Table 
+$query = "INSERT INTO \`performace_test\`.\`myquery\`(\`goods_id\`,\`cat_id\`,\`click_count\`,\`goods_number\`,\`goods_weight\`,\`goods_sn\`,\`goods_name\`,\`goods_reason\`,\`brand_name\`,\`goods_thumb\`,\`brand_id\`,\`is_on_sale\`,\`wap_cod\`,\`wap_title\`,\`wap_detail\`,\`wap_flag\`,\`wap_onsale\`,\`shop_price\`,\`cost_price\`,\`channel_rate\`,\`channel_onsale\`,\`add_time\`,\`is_main\`,\`last_update\`,\`brand_logo\`) VALUES ( ’80′,’298′,’65′,’100′,’0.125′,’SMT000080′,’健康′,”,’健康120’,'images/201004 /thumb_img/80_thumb_G_1272071721054.jpg’,’1′,’0′,’0′,NULL,NULL,NULL,’0′,’2980.00′,’0.00′,’1.250000′,’1′,’1271612064′,’0′,’1297624384′,’1293649512083026412.jpg’)"; 
+$start_time = microtime(true); 
+for($i=0;$i<$num;$i++){ 
+    mysql_query($query,$link);
+}
+echo "USE MySQL extension: ". (microtime(true)-$start_time); 
+mysql_query(‘TRUNCATE TABLE \`performace_test\`.\`myquery\`’,$link);  //Truncate Table 
+$start_time = microtime(true); 
+for($i=0;$i<$num;$i++){ 
+    $db->exec($query); 
+} 
+echo "\\r\\nUSE PDO : ". (microtime(true)-$start_time);
+
+输出结果：
+
+USE MySQL extension: 95.233189106s
+USE PDO : 99.1193888187s
+
+在链接MySQL上几乎没有区别。PDO的性能损失完全可以忽略不计。
+
+但是却有非常多的操作却是MySQL扩展库所不具备的：
+
+1:PDO真正的以底层实现的统一接口数库操作接口
+
+2:PDO支持更高级的DB特性操作，如：存储过程的调度等,mysql原生库是不支持的.
+
+3:PDO是PHP官方的PECL库，兼容性稳定性必然要高于MySQL Extension,可以直接使用 pecl upgrade pdo 命令升级.
+
+PHP6默认也是使用PDO进行数据库链接，MySQL Extension会作为辅助。所以我们在日常项目中，如果环境允许，尽可能去使用PDO来进行MySQL数据库操作。
+
+ 
+
+### **名词解释:**
+
+最开始的初学者，往往搞不清mysqli,mysqlnd,pdo到底是什么，下面先直接贴出最直观的名字吧。
+
+> MYSQL:This extension is deprecated as of PHP 5.5.0, and has been removed as of PHP 7.0.0.
+> MYSQLI: MySQL Improved Extension
+> MySQLND: MySQL Native Drive
+> PDO:The PHP Data Objects。extension defines a lightweight, consistent interface for accessing databases in PHP。
+
+以上摘自 PHP官方手册: [http://php.net/manual/en/book.mysqli.php](http://php.net/manual/en/book.mysqli.php)
+
+用中文说:
+MYSQL 也叫 Original MySQL，PHP4版本的MYSQL扩展，从PHP5起已经被废弃，并别从PHP7开始已经被移除。
+
+MYSQLI 叫做 “MySQL增强扩展”。
+
+MYSQLND MYSQL NATIVE DIRVER 叫做MYSQL “官方驱动”或者更加直接点的叫做“原生驱动”
+
+PDO PHP Data Objects PHP数据对象，是PHP应用中的一个数据库抽象层规范。
+
+针对本篇文章
+
+### **再补充几个名词解释：**
+
+1 什么是API？
+
+> 一个应用程序接口（Application Programming Interface的缩写），定义了类，方法，函数，变量等等一切 你的应用程序中为了完成特定任务而需要调用的内容。在PHP应用程序需要和数据库进行交互的时候所需要的API 通常是通过PHP扩展暴露出来（给终端PHP程序员调用）。
+
+**上文所说的MYSQL 和MYSQLI扩展就提供了这样的API。**
+
+2什么是驱动？
+
+> 驱动是一段设计用来于一种特定类型的数据库服务器进行交互的软件代码。驱动可能会调用一些库，比如MySQL客户端库或者MySQL Native驱动库。 这些库实现了用于和MySQL数据库服务器进行交互的底层协议。
+
+**在PHP拓展的角度上看，MYSQL和MYSQLi还是比较上层的拓展，依赖更底层的库去连接和访问数据库。**
+**上文所说的MYSQLND 就是所说的底层的数据库驱动。当然，还有一个驱动叫做libmysqlclient。至于如何选择使用这两种驱动的哪一种，请看这里[选择哪一种底层数据库驱动](http://php.net/manual/en/mysqlinfo.library.choosing.php)。**
+
+### **总的来说:**
+
+从应用的层面上看，我们通过PHP 的MYSQL或者MYSQLi扩展提供的API去操作数据库。
+
+从底层来看，MYSQLND提供了底层和数据库交互的支持(可以简单理解为和MySQL server进行网络协议交互)。
+
+而PDO，则提供了一个统一的API接口，使得你的PHP应用不去关心具体要连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器。比如MYSQL,SQLITE任何数据库都行。
+
+即从大部分功能上看，PDO提供的API接口和MYSQLI提供的接口对于普通的增删改查效果是一致的。
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/22/php%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/" rel="prev" title="php用户输入过滤">
+                  <i class="fa fa-chevron-left"></i> php用户输入过滤
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" rel="next" title="PHP编码规范">
+                  PHP编码规范 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

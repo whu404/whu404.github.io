@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="一、MySQL中如何表示当前时间？ 其实，表达方式还是蛮多的，汇总如下： CURRENT_TIMESTAMP CURRENT_TIMESTAMP() NOW() LOCALTIME LOCALTIME() LOCALTIMESTAMP LOCALTIMESTAMP()   二、关于TIMESTAMP和DATETIME的比较 一个完整的日期格式如下：YYYY-MM-DD HH:MM:SS[.frac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中有关TIMESTAMP和DATETIME的总结">
+<meta property="og:url" content="http://example.com/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、MySQL中如何表示当前时间？ 其实，表达方式还是蛮多的，汇总如下： CURRENT_TIMESTAMP CURRENT_TIMESTAMP() NOW() LOCALTIME LOCALTIME() LOCALTIMESTAMP LOCALTIMESTAMP()   二、关于TIMESTAMP和DATETIME的比较 一个完整的日期格式如下：YYYY-MM-DD HH:MM:SS[.frac">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-26T08:26:52.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.071Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/","path":"2018/04/26/mysql中有关timestamp和datetime的总结/","title":"MySQL中有关TIMESTAMP和DATETIME的总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL中有关TIMESTAMP和DATETIME的总结 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL中有关TIMESTAMP和DATETIME的总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-26 16:26:52" itemprop="dateCreated datePublished" datetime="2018-04-26T16:26:52+08:00">2018-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>一、MySQL中如何表示当前时间？</strong></p>
+<p>其实，表达方式还是蛮多的，汇总如下：</p>
+<p>CURRENT_TIMESTAMP</p>
+<p>CURRENT_TIMESTAMP()</p>
+<p>NOW()</p>
+<p>LOCALTIME</p>
+<p>LOCALTIME()</p>
+<p>LOCALTIMESTAMP</p>
+<p>LOCALTIMESTAMP()</p>
+<p> </p>
+<p><strong>二、关于TIMESTAMP和DATETIME的比较</strong></p>
+<p>一个完整的日期格式如下：YYYY-MM-DD HH:MM:SS[.fraction]，它可分为两部分：date部分和time部分，其中，date部分对应格式中的“YYYY-MM-DD”，time部分对应格式中的“HH:MM:SS[.fraction]”。对于date字段来说，它只支持date部分，如果插入了time部分的内容，它会丢弃掉该部分的内容，并提示一个warning。</p>
+<p>如下所示：</p>
+<p>mysql&gt; create table test(id int,hiredate date);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208104400’);<br>Query OK, 1 row affected, 1 warning (0.01 sec)</p>
+<p>mysql&gt; show warning;<br>ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘warning’ at line 1<br>mysql&gt; select * from test;<br>+——+————+<br> id    hiredate<br>+——+————+<br>    1  2015-12-08<br>    1  2015-12-08<br>+——+————+<br>2 rows in set (0.00 sec)</p>
+<p>注：第一个没提示warning的原因在于它的time部分都是0</p>
+<p> </p>
+<p><strong>TIMESTAMP和DATETIME的相同点：</strong></p>
+<p>1&gt; 两者都可用来表示YYYY-MM-DD HH:MM:SS[.fraction]类型的日期。</p>
+<p> </p>
+<p><strong>TIMESTAMP和DATETIME的不同点：</strong></p>
+<p>1&gt; 两者的存储方式不一样</p>
+<p>对于TIMESTAMP，它把客户端插入的时间从当前时区转化为UTC（世界标准时间）进行存储。查询时，将其又转化为客户端当前时区进行返回。</p>
+<p>而对于DATETIME，不做任何改变，基本上是原样输入和输出。</p>
+<p> </p>
+<p>下面，我们来验证一下</p>
+<p>首先创建两种测试表，一个使用timestamp格式，一个使用datetime格式。</p>
+<p>mysql&gt; create table test(id int,hiredate timestamp);</p>
+<p>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; create table test1(id int,hiredate datetime);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test1 values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
+<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>两者输出是一样的。</p>
+<p> </p>
+<p>其次修改当前会话的时区</p>
+<p>mysql&gt; show variables like ‘%time_zone%’;<br>+——————+——–+<br> Variable_name     Value<br>+——————+——–+<br> system_time_zone  CST<br> time_zone         SYSTEM<br>+——————+——–+<br>2 rows in set (0.00 sec)</p>
+<p>mysql&gt; set time_zone&#x3D;’+0:00’;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-07 16:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
+<p>上述“CST”指的是MySQL所在主机的系统时间，是中国标准时间的缩写，China Standard Time UT+8:00</p>
+<p>通过结果可以看出，test中返回的时间提前了8个小时，而test1中时间则不变。这充分验证了两者的区别。</p>
+<p> </p>
+<p>2&gt; 两者所能存储的时间范围不一样</p>
+<p>timestamp所能存储的时间范围为：’1970-01-01 00:00:01.000000’ 到 ‘2038-01-19 03:14:07.999999’。</p>
+<p>datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 ‘9999-12-31 23:59:59.999999’。</p>
+<p> </p>
+<p>总结：TIMESTAMP和DATETIME除了存储范围和存储方式不一样，没有太大区别。当然，对于跨时区的业务，TIMESTAMP更为合适。</p>
+<p> </p>
+<p><strong>三、关于TIMESTAMP和DATETIME的自动初始化和更新</strong></p>
+<p>首先，我们先看一下下面的操作</p>
+<p>mysql&gt; create table test(id int,hiredate timestamp);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test(id) values(1);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 14:34:46<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; show create table test\G<br>*************************** 1. row ***************************<br>       Table: test<br>Create Table: CREATE TABLE `test` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p>看起来是不是有点奇怪，我并没有对hiredate字段进行插入操作，它的值自动修改为当前值，而且在创建表的时候，我也并没有定义“show create table test\G”结果中显示的“ DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP”。</p>
+<p>其实，这个特性是自动初始化和自动更新（Automatic Initialization and Updating）。</p>
+<p>自动初始化指的是如果对该字段（譬如上例中的hiredate字段）没有显性赋值，则自动设置为当前系统时间。</p>
+<p>自动更新指的是如果修改了其它字段，则该字段的值将自动更新为当前系统时间。</p>
+<p>它与“explicit_defaults_for_timestamp”参数有关。</p>
+<p>默认情况下，该参数的值为OFF，如下所示：</p>
+<p>mysql&gt; show variables like ‘%explicit_defaults_for_timestamp%’;<br>+———————————+——-+<br> Variable_name                    Value<br>+———————————+——-+<br> explicit_defaults_for_timestamp  OFF<br>+———————————+——-+<br>1 row in set (0.00 sec)</p>
+<p>下面我们看看官档的说明：</p>
+<p>By default, the first TIMESTAMP column has both DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP if neither is specified explicitly。</p>
+<p>很多时候，这并不是我们想要的，如何禁用呢？</p>
+<ol>
+<li><p>将“explicit_defaults_for_timestamp”的值设置为ON。</p>
+</li>
+<li><p>“explicit_defaults_for_timestamp”的值依旧是OFF，也有两种方法可以禁用</p>
+</li>
+</ol>
+<p>1&gt; 用DEFAULT子句该该列指定一个默认值</p>
+<p>2&gt; 为该列指定NULL属性。</p>
+<p>如下所示：</p>
+<p>mysql&gt; create table test1(id int,hiredate timestamp null);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; show create table test1\G<br>*************************** 1. row ***************************<br>       Table: test1<br>Create Table: CREATE TABLE `test1` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NULL DEFAULT NULL<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; create table test2(id int,hiredate timestamp default 0);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; show create table test2\G<br>*************************** 1. row ***************************<br>       Table: test2<br>Create Table: CREATE TABLE `test2` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT ‘0000-00-00 00:00:00’<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p> </p>
+<p>在MySQL 5.6.5版本之前，Automatic Initialization and Updating只适用于TIMESTAMP，而且一张表中，最多允许一个TIMESTAMP字段采用该特性。从MySQL 5.6.5开始，Automatic Initialization and Updating同时适用于TIMESTAMP和DATETIME，且不限制数量。</p>
+<p> </p>
+<p><strong>参考：</strong></p>
+<p>1. <a target="_blank" rel="noopener" href="http://dev.mysql.com/doc/refman/5.6/en/datetime.html">http://dev.mysql.com/doc/refman/5.6/en/datetime.html</a></p>
+<p>2. <a target="_blank" rel="noopener" href="http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html">http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html</a></p>
+<p>3. <a target="_blank" rel="noopener" href="http://www.2cto.com/database/201308/233832.html">http://www.2cto.com/database/201308/233832.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" rel="prev" title="PHP编码规范">
+                  <i class="fa fa-chevron-left"></i> PHP编码规范
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/" rel="next" title="awk sed grep 详解">
+                  awk sed grep 详解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

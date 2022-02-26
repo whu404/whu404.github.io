@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="0 前言    编码风格没有太多的好坏之分, 最重要的是风格保持一致，编码规范有助于规范我们编码的风格，使代码具有更好的可读性。编码风格百家齐放，不利于我们代码的维护和传承，根据大家平时的开发情况，制定了此PHP编码规范。 每项规范前面的(强制) 代表该规范需要强制执行, (建议)代表推荐执行但不强制。 注: 文中所有的变量名前面为了方便没有加”$”, 示意即可。 1 排版 1-1：(强制)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP编码规范">
+<meta property="og:url" content="http://example.com/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="0 前言    编码风格没有太多的好坏之分, 最重要的是风格保持一致，编码规范有助于规范我们编码的风格，使代码具有更好的可读性。编码风格百家齐放，不利于我们代码的维护和传承，根据大家平时的开发情况，制定了此PHP编码规范。 每项规范前面的(强制) 代表该规范需要强制执行, (建议)代表推荐执行但不强制。 注: 文中所有的变量名前面为了方便没有加”$”, 示意即可。 1 排版 1-1：(强制)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-22T08:44:26.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.077Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/","path":"2018/04/22/php编码规范/","title":"PHP编码规范"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PHP编码规范 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/22/php%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP编码规范
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-22 16:44:26" itemprop="dateCreated datePublished" datetime="2018-04-22T16:44:26+08:00">2018-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p> </p>
+<ol>
+<li><strong>0 前言</strong></li>
+</ol>
+<p> </p>
+<p>编码风格没有太多的好坏之分, 最重要的是风格保持一致，编码规范有助于规范我们编码的风格，使代码具有更好的可读性。编码风格百家齐放，不利于我们代码的维护和传承，根据大家平时的开发情况，制定了此PHP编码规范。</p>
+<p>每项规范前面的(强制) 代表该规范需要强制执行, (建议)代表推荐执行但不强制。</p>
+<p>注: 文中所有的变量名前面为了方便没有加”$”, 示意即可。</p>
+<p><strong>1</strong> <strong>排版</strong></p>
+<p><strong>1-1<strong><strong>：(强制)程序块要采用缩进风格编写，缩进的空格数为</strong></strong>4****个。</strong></p>
+<p>说明：不同的缩进风格对代码的可读性影响很大，以tab为缩进单位在不同的tab step   下可读性也相差很多，所以将缩进定为一个soft tab即4个空格，这样在所有环境下缩进都会保持一致。</p>
+<p><strong>1-2****：(建议)关键字与其后的左括号之间有一个空格，而函数名与左括号之间不应有任何字符包括空格。</strong></p>
+<p>说明:虽然很多情况下编辑器的highlight已经做了区分，但是从格式上区分关键字和函数适用于所有的情况。</p>
+<p>如:</p>
+<p>关键字 if (a &gt; b) 函数名  funcA()</p>
+<p><strong>1-3：(强制)开始的大括号位于一行的末尾，结束的括号位于最末一行后，且独占一行。</strong></p>
+<p>如:</p>
+<p>if (a &gt; b) {</p>
+<p>}</p>
+<p><strong>1-4**<strong>：</strong></strong>(强制)if&#x2F;while等结构体，即使只有一行，也必须加上左右花括号，不允许写成一行。**</p>
+<p>说明: 这样做可读性更好，并且方便修改。</p>
+<p>如：</p>
+<p>if (a &gt; b) {</p>
+<p> a &#x3D; 1;</p>
+<p>}</p>
+<p> </p>
+<p><strong>1-5**<strong>：</strong></strong>(建议)适当控制每行代码的长度(一般不超过80个字符)**</p>
+<p>说明: 代码更美观， 可读性更好</p>
+<p><strong>1-6**<strong>：</strong></strong>(强制)elseif语句使用elseif形式，不使用else if形式。**</p>
+<p>说明: elseif 为标准语法</p>
+<p><strong>1-7**<strong>：</strong></strong>(建议)函数名与其后的左括号之间不应有任何字符(包括空格),函数调用的左括号与其第一个参数之间不应有任何字符(包括空格)最后一个参数与右括号之间不应有任何字符(包括空格)参数列表的逗号后面应有一个空格**</p>
+<p>如:</p>
+<p>funcA(a, b, c) {</p>
+<p>}</p>
+<p><strong>1-8：(建议)避免由于对错误的条件做判断带来if的嵌套。</strong></p>
+<p>说明: 减少if&#x2F;else嵌套， 更利于代码逻辑的理解。</p>
+<p>不推荐的方式:</p>
+<p>if (a &#x3D;&#x3D;&#x3D; false) {</p>
+<p> &#x2F;&#x2F; error handle</p>
+<p>} else {</p>
+<p>if (b &#x3D;&#x3D;&#x3D; false) {</p>
+<p> &#x2F;&#x2F; handle</p>
+<p>}</p>
+<p>}</p>
+<p> </p>
+<p> 推荐的方式:</p>
+<p>if (a &#x3D;&#x3D;&#x3D; false) {</p>
+<p> &#x2F;&#x2F; error handle</p>
+<p>} </p>
+<p>if (b &#x3D;&#x3D;&#x3D; false) {</p>
+<p> &#x2F;&#x2F; handle</p>
+<p>}</p>
+<p> </p>
+<p><strong>1-9**<strong>：</strong></strong>(强制)如果过长的话需要另起一行。if 语句的条件若较多较长，应折行；新行以逻辑运算符起始，与第一行 if 左括号后的第一个字符对齐；折行后，每行条件具有独立而明确的语义。**</p>
+<p>说明: 这样做逻辑更一目了然。</p>
+<p>if (a &gt; b &amp;&amp; c &gt; d</p>
+<p>&amp;&amp; e &gt; f &amp;&amp; h &gt; j</p>
+<p>&amp;&amp; z &gt; x) {</p>
+<p>}</p>
+<p><strong>1-10：(建议)多行的”&#x3D;”可能的话尽量用空格对齐。</strong></p>
+<p>a     &#x3D; 1;</p>
+<p>ab   &#x3D; 2;</p>
+<p>abc &#x3D; 3;</p>
+<p><strong>1-11: (强制)Switch语句中每个case的break必须和case间有4个空格的缩进。</strong></p>
+<p>case ‘A’:</p>
+<p> a  &#x3D; 2;</p>
+<p> break;</p>
+<p><strong>1-12:（强制）初始化array如果采用多行结构时，数据项部分需要缩进，且最后一个数据项后面的逗号不可省略。</strong></p>
+<p>说明：这样做在修改代码增加数据项的时候不容易出现语法错误。</p>
+<p>$a &#x3D; array(</p>
+<p> ‘a’ &#x3D;&gt; ‘b’,</p>
+<p> ‘b’ &#x3D;&gt; ‘c’,</p>
+<p> ‘c’ &#x3D;&gt; ‘d’,</p>
+<p>);</p>
+<p> </p>
+<p><strong>2</strong> <strong>命名</strong></p>
+<p><strong>2-1：(强制)全局变量以g_开头。</strong></p>
+<p> 说明: 全局变量对代码影响很大，以g_开头变能在代码中一眼看出是全局变量。</p>
+<p> 如:</p>
+<p>g_count;</p>
+<p> </p>
+<p><strong>2-2**<strong>：</strong></strong>(强制)常量命名使用全部大写字符，单词之间以’_’连接。**</p>
+<p> 如:</p>
+<p>PAGE_NUM</p>
+<p> </p>
+<p><strong>2-3**<strong>：</strong></strong>(强制)对于代码中的常量，必须用常量或define表示，不允许直接写在代码中。**</p>
+<p> 如:</p>
+<p>define(‘PAGE_NUM’, 3);</p>
+<p> </p>
+<p><strong>2-4**<strong>：</strong></strong>(强制)关键字true、false、null必须小写**</p>
+<p><strong>2-5: (强制)私有函数命名需加上 ‘_’前缀。</strong></p>
+<p>private function _myPrivateFunc() {</p>
+<p>}</p>
+<p> </p>
+<p><strong>2-6:  (强制)类method命名采用驼峰命名, 普通function采用过程函数风格命名。</strong></p>
+<p>如:</p>
+<p>类method:</p>
+<p>public function getName() {</p>
+<p>}</p>
+<p>普通function:</p>
+<p>function show_me_the_money() {</p>
+<p>}</p>
+<p> </p>
+<p><strong>2-7:  (强制)文件(除了类)命名使用小写字母，单词之间以’_’连接。</strong></p>
+<p>如:</p>
+<p>show_lemma.php</p>
+<p> </p>
+<p><strong>2-8: (建议)配置文件的名称为配置文件名 + .conf.php, 不涉及类的都小写通过”_”连接。Yaf等框架要求的命名规范除外。</strong></p>
+<p>如:</p>
+<p>good_version.conf.php</p>
+<p> </p>
+<p><strong>2-9:  (建议)类名应以大写字母开头，每个单词的首字母大写。</strong></p>
+<p>如:</p>
+<p>ActionController</p>
+<ol>
+<li><p><strong>3</strong> <strong>注释</strong></p>
+</li>
+<li><p><strong>3-1：(强制)文件、函数、类以及成员变量都必须包含注释。</strong></p>
+</li>
+<li><p>类文件&#x2F;普通文件的注释, 说明该文件的主要作用。</p>
+</li>
+<li><p>例:</p>
+</li>
+<li><p>“A simple class describing employees” 说明类文件的主要作用。</p>
+</li>
+<li><p>“@package Employee” 说明namespace(如果有)</p>
+</li>
+<li><p>“@author George Schlossnagle” 说明作者信息</p>
+</li>
+</ol>
+<p>&#x2F;**</p>
+<ul>
+<li><p>A simple class describing employees</p>
+</li>
+<li></li>
+<li><p>@package Employee</p>
+</li>
+<li><p>@author George Schlossnagle</p>
+</li>
+</ul>
+<p> *&#x2F;</p>
+<ol start="2">
+<li>类注释， 说明类的主要工作。</li>
+<li>例：</li>
+<li>“An example of documenting a class” 说明类的主要作用。</li>
+<li>“The employees annual salary” 说明变量的作用。</li>
+<li>“@var number” 说明变量的类型。</li>
+<li>“The class constructor” 说明方法的作用。</li>
+<li>“@param” 说明参数类型。</li>
+<li>“@access” 说明访问权限。</li>
+<li>“@return” 说明返回值。</li>
+</ol>
+<p>&#x2F;**</p>
+<ul>
+<li>An example of documenting a class</li>
+</ul>
+<p> *&#x2F;</p>
+<p>class Employee</p>
+<p>{</p>
+<p> &#x2F;**</p>
+<ul>
+<li>@var string</li>
+</ul>
+<p> *&#x2F;</p>
+<p> var $name;</p>
+<p> &#x2F;**</p>
+<ul>
+<li><p>The employees annual salary</p>
+</li>
+<li><p>@var number</p>
+</li>
+</ul>
+<p> *&#x2F;</p>
+<p> var $salary;</p>
+<p> &#x2F;**</p>
+<ul>
+<li>@var number</li>
+</ul>
+<p> *&#x2F;</p>
+<p> var $employee_id;</p>
+<p> &#x2F;**</p>
+<ul>
+<li><p>The class constructor</p>
+</li>
+<li><p>@param number</p>
+</li>
+</ul>
+<p> *&#x2F;</p>
+<p> function Employee($employee_id &#x3D; false) {</p>
+<p> if ($employee_id) {</p>
+<p> $this-&gt;employee_id &#x3D; $employee_id;</p>
+<p> $this-&gt;_fetchInfo();</p>
+<p> }</p>
+<p> }</p>
+<p> &#x2F;**</p>
+<ul>
+<li><p>Fetches info for employee</p>
+</li>
+<li></li>
+<li><p>@access private</p>
+</li>
+</ul>
+<p> *&#x2F;</p>
+<p> function _fetchInfo() {</p>
+<p> $query &#x3D; “SELECT name,</p>
+<p> salary</p>
+<p> FROM employees</p>
+<p> WHERE employee_id &#x3D; $this-&gt;employee_id”;</p>
+<p> $result &#x3D; mysql_query($query);</p>
+<p> list($this-&gt;name, $this-&gt;department_id) &#x3D; mysql_fetch_row($result);</p>
+<p> }</p>
+<p> &#x2F;**</p>
+<ul>
+<li><p>Returns the monthly salary for the employee</p>
+</li>
+<li><p>@returns number Monthly salary in dollars</p>
+</li>
+</ul>
+<p> *&#x2F;</p>
+<p> function monthlySalary() {</p>
+<p> return $this-&gt;salary&#x2F;12;</p>
+<p> }</p>
+<p>}</p>
+<p> </p>
+<p><strong>3-2:</strong> **(强制)不能使用#作为单行注释, 多行注释&#x2F;* *   <strong>&#x2F;不能出现在同一行。</strong></p>
+<p> </p>
+<p><strong>3-3: (强制)函数必须通过param和return标记指明其参数和返回值。</strong></p>
+<p> </p>
+<p><strong>3-4:  (建议)必要的地方使用非文档性注释，提高代码易读性。</strong></p>
+<p> </p>
+<p>注释规范遵守phpDocumentor注释规范, 更多请参见: <a target="_blank" rel="noopener" href="http://manual.phpdoc.org/"><strong>http://manual.phpdoc.org/</strong></a></p>
+<p><strong>4</strong> <strong>编码原则</strong></p>
+<p><strong>4-1：(强制)整形参数，需要用intval函数处理，注意intval返回有符号的数值，若数值过大，可以考虑使用floatval。</strong></p>
+<p>如:</p>
+<p>intSalary &#x3D; intval(salary);</p>
+<p><strong>4-2**<strong>：</strong></strong>(强制)对于函数返回值的判断，特别是true&#x2F;false, 用&#x3D;&#x3D;&#x3D;&#x2F;!&#x3D;&#x3D; 而不是&#x3D;&#x3D;&#x2F;!&#x3D;。**</p>
+<p><strong>4-3:</strong> <strong>(强制)生成一个对象时，必须使用new Classname()的方式，不能用new Classname的方式。</strong></p>
+<p><strong>4-4:</strong> <strong>(强制)所有的文件路径都需要利用框架提供的宏写成绝对路径。</strong></p>
+<p><strong>4-5: (强制)对于长时间运行的脚本并且含有占用内存较大的变量，使用完后必须unset掉，避免内存占用过多。</strong></p>
+<p><strong>4-6: (强制)对于一些系统操作，使用php内置的函数例如rename、touch等即可。尽量避免使用exec调用shell命令。</strong></p>
+<p><strong>4-7: (强制)除非特殊情况，否则不允许使用require和include,而使用对应的require_once&#x2F;include_once。</strong></p>
+<p><strong>4-8: (强制)预定义变量一律使用短格式，即：$_POST、$_GET、$_SERVER、$_ENV、$GLOBALS、$_COOKIE、$_SESSION、$_REQUEST、$_FILES等，不再使用长格式：$_HTTP_POST_VARS、$_HTTP_GET_VARS。</strong></p>
+<p><strong>4-9: (建议)每个类单独为一个文件, 文件名为 原类名 + .class.php。文件中的类名由文件夹结构 + “_” + 原类名的形式组成。Yaf&#x2F;Thinkphp等框架****要求的类和类文件命名规范除外。</strong></p>
+<p>说明: 利于管理，逻辑清楚，方便autoload等。</p>
+<p>例如: 文件名: baidu&#x2F;acl&#x2F;Filter.class.php</p>
+<p> 原类名: Filter </p>
+<p> 文件中的class的名称: class Baidu_Acl_Filter</p>
+<p> 文件夹结构相当于package的名称，这样不会存在多产品命名冲突。</p>
+<p><strong>4-11:  (建议)尽量不要在php代码中出现html标签，将模板和代码分离。</strong></p>
+<p><strong>4-12:   (建议)能用foreach的就不要用for,能用for的就不要用while。</strong></p>
+<p>说明: foreach比for容易理解，for比while容易理解。</p>
+<p><strong>4-13:</strong> <strong>(强制)前端访问必须有日志记录，记录条数应与访问一一对应。</strong></p>
+<p><strong>4-14:(建议)数据库写操作必须有日志记录；记录条数应与操作一一对应。</strong></p>
+<p><strong>4-15:(强制)对于文件更新操作，必须先写到一个临时文件中，然后用rename&#x2F;mv操作。切忌直接在原文件上做更新。</strong></p>
+<p><strong>4-16:(建议)字符串尽量用’ ‘而不是” “进行引用，一个是效率问题，一个是安全问题。</strong></p>
+<p><strong>4-17: (强制)所有的define语句，常量必须用’’包括起来。</strong></p>
+<p>define(‘PAGE_NUM’, 3);</p>
+<p><strong>4-18: (强制)require后面需要带上括号。</strong></p>
+<p>require_once(“a.php”);</p>
+<p><strong>4-19: (强制)函数允许使用默认参数,但是默认参数需要放到参数列表最后面。</strong></p>
+<p><strong>4-20: (强制)所有的全局变量应该写在函数的最开头，并且和后面的代码以空行隔开。</strong></p>
+<p>function a() {</p>
+<p> global g_count;</p>
+<p> global g_time;</p>
+<p> a &#x3D; 1; </p>
+<p>}</p>
+<p> </p>
+<p>**4-21: (强制)**在头文件中定义全局变量必须用$GLOBALS的形式，这样可以避免在函数中include导致的作用域问题。</p>
+<?php
+
+function func() {
+
+ require_once('a.conf.php');
+
+ // do something
+
+}
+
+func();
+
+require_once('a.conf.php');
+
+echo "bad: $g_bad\\ngood: $g_good\\n";
+
+?>
+
+<ol>
+<li>conf.php</li>
+</ol>
+<?php
+
+// bad
+
+$g_bad = 'bad';
+
+// good
+
+$GLOBALS\['g_good'\] = 'good';
+
+?>
+
+<p> </p>
+<p> <strong>5.安全编码</strong></p>
+<p> </p>
+<p>**5-1: (强制)所有的用户输入都是有害的,**<strong>对所有从客户端传入的数据都不信任, 需要做判断和过滤,否则可能会受到SQL Injection、XSS等攻击。</strong></p>
+<p>  例如: $_GET, $_POST, $_COOKIE, $_FILES, $REQUEST等。</p>
+<p> 直接使用将可能存在被注入的危险。</p>
+<p> </p>
+<p><strong>5-2： (强制)用户的相关输入涉及数据库操作、文件操作等敏感操作时需要对输入做专门的转换。</strong></p>
+<p> 例如: 数据库操作中数字型的需要做intval转换，字符串类型的需要通过mysql_real_escape_string过滤。</p>
+<p> 文件操作中类似 include_once(“$userInput”)等操作。</p>
+<p> </p>
+<p>**5-3:  (强制)**<strong>用户上传的文件的文件名必须重新命名，并限制其后缀。</strong></p>
+<p> </p>
+<p><strong>5-4:  (强制)将php配置中的 register_globals 设置为 Off。</strong></p>
+<p>  register_globals允许php将$_GET，$_POST，$_COOKIE等变量里的内容自动注册为全局变量，如果程序里的某些变量没有经过初始化而直接使用将导致安全问题。</p>
+<p> </p>
+<p><strong>5-5：</strong> <strong>(强制)将php配置中的expose_php设置为Off。</strong></p>
+<p>  避免PHP版本信息暴露。</p>
+<p><strong>5-6: (强制)php配置中error_reporting应该设置为输出 E_NOTICE级别的日志。</strong></p>
+<p> E_NOTICE级别的日志虽然算不上错误日志，但是却告诉了我们哪些地方存在安全隐患，例如：变量未初始化等等， 打开E_NOTICE有助于我们减少bug, 提前发现安全漏洞。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/22/php%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="prev" title="php操作数据库的几种方式">
+                  <i class="fa fa-chevron-left"></i> php操作数据库的几种方式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/" rel="next" title="MySQL中有关TIMESTAMP和DATETIME的总结">
+                  MySQL中有关TIMESTAMP和DATETIME的总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="一、PHP5.2以前(2006前)顺便介绍一下 PHP5.2 已经出现但值得介绍的特征。autoload大家可能都知道 __autoload() 函数，如果定义了该函数，那么当在代码中使用一个未定义的类的时候，该函数就会被调用，你可以在该函数中加载相应的类实现文件，如： 复制代码 代码如下: function __autoload($classname){require_once(“{$class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP各版本主要ChangeList">
+<meta property="og:url" content="http://example.com/2018/04/07/php%E4%B8%AA%E7%89%88%E6%9C%AC%E4%B8%BB%E8%A6%81changelist/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、PHP5.2以前(2006前)顺便介绍一下 PHP5.2 已经出现但值得介绍的特征。autoload大家可能都知道 __autoload() 函数，如果定义了该函数，那么当在代码中使用一个未定义的类的时候，该函数就会被调用，你可以在该函数中加载相应的类实现文件，如： 复制代码 代码如下: function __autoload($classname){require_once(“{$class">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-07T04:39:14.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.078Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/04/07/php%E4%B8%AA%E7%89%88%E6%9C%AC%E4%B8%BB%E8%A6%81changelist/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/07/php%E4%B8%AA%E7%89%88%E6%9C%AC%E4%B8%BB%E8%A6%81changelist/","path":"2018/04/07/php个版本主要changelist/","title":"PHP各版本主要ChangeList"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PHP各版本主要ChangeList | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-Fatal-error-Uncaught-TypeError-Return-value-of-foo-must-be-of-the-type-integer-float-returned-in-test-php-6"><span class="nav-number">1.</span> <span class="nav-text">PHP Fatal error:  Uncaught TypeError: Return value of foo() must be of the type integer, float returned in test.php:6</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/php%E4%B8%AA%E7%89%88%E6%9C%AC%E4%B8%BB%E8%A6%81changelist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP各版本主要ChangeList
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-07 12:39:14" itemprop="dateCreated datePublished" datetime="2018-04-07T12:39:14+08:00">2018-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>一、PHP5.2以前(2006前)<br>顺便介绍一下 PHP5.2 已经出现但值得介绍的特征。<br>autoload<br>大家可能都知道 __autoload() 函数，如果定义了该函数，那么当在代码中使用一个未定义的类的时候，该函数就会被调用，你可以在该函数中加载相应的类实现文件，如：</p>
+<p>复制代码 代码如下:</p>
+<p>function __autoload($classname)<br>{<br>require_once(“{$classname}.php”)<br>}</p>
+<p>但该函数已经不被建议使用，原因是一个项目中仅能有一个这样的 __autoload() 函数，因为 PHP 不允许函数重名。但当你使用一些类库的时候，难免会出现多个 autoload 函数的需要，于是 spl_autoload_register() 取而代之：</p>
+<p>复制代码 代码如下:</p>
+<p>spl_autoload_register(function($classname)<br>{<br>require_once(“{$classname}.php”)<br>});</p>
+<p>spl_autoload_register() 会将一个函数注册到 autoload 函数列表中，当出现未定义的类的时候，SPL [注] 会按照注册的倒序逐个调用被注册的 autoload 函数，这意味着你可以使用 spl_autoload_register() 注册多个 autoload 函数.<br>注：SPL: Standard PHP Library, 标准 PHP 库, 被设计用来解决一些经典问题(如数据结构).</p>
+<p>PDO 和 MySQLi<br>即 PHP Data Object, PHP 数据对象，这是 PHP 的新式数据库访问接口。<br>按照传统的风格，访问 MySQL 数据库应该是这样子：</p>
+<p>复制代码 代码如下:</p>
+<p>&#x2F;&#x2F; 连接到服务器，选择数据库<br>$conn &#x3D; mysql_connect(“localhost”, “user”, “password”);<br>mysql_select_db(“database”);&#x2F;&#x2F; 执行 SQL 查询<br>$type &#x3D; $_POST[‘type’];<br>$sql &#x3D; “SELECT * FROM `table` WHERE `type` &#x3D; {$type}”;<br>$result &#x3D; mysql_query($sql);</p>
+<p>&#x2F;&#x2F; 打印结果<br>while($row &#x3D; mysql_fetch_array($result, MYSQL_ASSOC))<br>{<br>foreach($row as $k &#x3D;&gt; $v)<br>print “{$k}: {$v}\n”;<br>}</p>
+<p>&#x2F;&#x2F; 释放结果集，关闭连接<br>mysql_free_result($result);<br>mysql_close($conn);</p>
+<p>为了能够让代码实现数据库无关，即一段代码同时适用于多种数据库(例如以上代码仅仅适用于MySQL)，PHP 官方设计了 PDO.<br>除此之外，PDO 还提供了更多功能，比如：</p>
+<p>1.面向对象风格的接口<br>2.SQL预编译(prepare), 占位符语法<br>3.更高的执行效率，作为官方推荐，有特别的性能优化<br>4.支持大部分SQL数据库，更换数据库无需改动代码</p>
+<p>上面的代码用 PDO 实现将会是这样：</p>
+<p>复制代码 代码如下:</p>
+<p>&#x2F;&#x2F; 连接到数据库<br>$conn &#x3D; new PDO(“mysql:host&#x3D;localhost;dbname&#x3D;database”, “user”, “password”);&#x2F;&#x2F; 预编译SQL, 绑定参数<br>$query &#x3D; $conn-&gt;prepare(“SELECT * FROM `table` WHERE `type` &#x3D; :type”);<br>$query-&gt;bindParam(“type”, $_POST[‘type’]);</p>
+<p>&#x2F;&#x2F; 执行查询并打印结果<br>foreach($query-&gt;execute() as $row)<br>{<br>foreach($row as $k &#x3D;&gt; $v)<br>print “{$k}: {$v}\n”;<br>}</p>
+<p>PDO 是官方推荐的，更为通用的数据库访问方式，如果你没有特殊需求，那么你最好学习和使用 PDO.<br>但如果你需要使用 MySQL 所特有的高级功能，那么你可能需要尝试一下 MySQLi, 因为 PDO 为了能够同时在多种数据库上使用，不会包含那些 MySQL 独有的功能。</p>
+<p>MySQLi 是 MySQL 的增强接口，同时提供<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">面向过程</a>和面向对象接口，也是目前推荐的 MySQL 驱动，旧的C风格 MySQL 接口将会在今后被默认关闭。<br>MySQLi 的用法和以上两段代码相比，没有太多新概念，在此不再给出示例，可以参见 PHP 官网文档 [注]。</p>
+<p>注：<a target="_blank" rel="noopener" href="http://www.php.net/manual/en/mysqli.quickstart.php">http://www.php.net/manual/en/mysqli.quickstart.php</a></p>
+<p>类型约束<br>通过类型约束可以限制参数的类型，不过这一机制并不完善，目前仅适用于类和 callable(可执行类型) 以及 array(数组), 不适用于 string 和 int.</p>
+<p>复制代码 代码如下:</p>
+<p>&#x2F;&#x2F; 限制第一个参数为 MyClass, 第二个参数为可执行类型，第三个参数为数组<br>function MyFunction(MyClass $a, callable $b, array $c)<br>{<br>&#x2F;&#x2F; …<br>}</p>
+<p> </p>
+<p>PHP5.2(2006-2011)：JSON 支持</p>
+<p>包括 json_encode(), json_decode() 等函数，JSON 算是在 Web 领域非常常用的数据交换格式，可以被 JS 直接支持，JSON 实际上是 JS 语法的一部分。<br>JSON 系列函数，可以将 PHP 中的数组结构与 JSON 字符串进行转换：</p>
+<p>复制代码 代码如下:</p>
+<p>$array &#x3D; [“key” &#x3D;&gt; “value”, “array” &#x3D;&gt; [1, 2, 3, 4]];<br>$json &#x3D; json_encode($array);<br>echo “{$json}\n”;$object &#x3D; json_decode($json);<br>print_r($object);</p>
+<p>输出：</p>
+<p>复制代码 代码如下:</p>
+<p>{“key”:”value”,”array”:[1,2,3,4]}<br>stdClass Object<br>(<br>[key] &#x3D;&gt; value<br>[array] &#x3D;&gt; Array<br>(<br>[0] &#x3D;&gt; 1<br>[1] &#x3D;&gt; 2<br>[2] &#x3D;&gt; 3<br>[3] &#x3D;&gt; 4<br>)<br>)</p>
+<p>值得注意的是 json_decode() 默认会返回一个对象而非数组，如果需要返回数组需要将第二个参数设置为 true.</p>
+<p>PHP5.3(2009-2012)<br>PHP5.3 算是一个非常大的更新，新增了大量新特征，同时也做了一些不向下兼容的修改。<br>【PHP5.3弃用的功能】：以下几个功能被弃用，若在配置文件中启用，则 PHP 会在运行时发出警告。</p>
+<p>Register Globals<br>这是 php.ini 中的一个选项(register_globals), 开启后会将所有表单变量($_GET和$_POST)注册为全局变量.<br>看下面的例子：</p>
+<p>复制代码 代码如下:</p>
+<p>if(isAuth())<br>$authorized &#x3D; true;<br>if($authorized)<br>include(“page.php”);</p>
+<p>这段代码在通过验证时，将 $authorized 设置为 true. 然后根据 $authorized 的值来决定是否显示页面.<br>但由于并没有事先把 $authorized 初始化为 false, 当 register_globals 打开时，可能访问 &#x2F;auth.php?authorized&#x3D;1 来定义该变量值，绕过身份验证。<br>该特征属于历史遗留问题，在 PHP4.2 中被默认关闭，在 PHP5.4 中被移除。</p>
+<p>Magic Quotes</p>
+<p>对应 php.ini 中的选项 magic_quotes_gpc, 这个特征同样属于历史遗留问题，已经在 PHP5.4 中移除。<br>该特征会将所有用户输入进行转义，这看上去不错，在第一章我们提到过要对用户输入进行转义。<br>但是 PHP 并不知道哪些输入会进入 SQL , 哪些输入会进入 Shell, 哪些输入会被显示为 HTML, 所以很多时候这种转义会引起混乱。</p>
+<p>Safe Mode<br>很多虚拟主机提供商使用 Safe Mode 来隔离多个用户，但 Safe Mode 存在诸多问题，例如某些扩展并不按照 Safe Mode 来进行权限控制。<br>PHP官方推荐使用操作系统的机制来进行权限隔离，让Web服务器以不同的用户权限来运行PHP解释器，请参见第一章中的最小权限原则.</p>
+<p>【PHP5.3的新增、改进】</p>
+<p>匿名函数<br>也叫闭包(Closures), 经常被用来临时性地创建一个无名函数，用于回调函数等用途。</p>
+<p>复制代码 代码如下:</p>
+<p>$func &#x3D; function($arg)<br>{<br>print $arg;<br>};$func(“Hello World”);</p>
+<p>以上代码定义了一个匿名函数，并赋值给了 $func.<br>可以看到定义匿名函数依旧使用 function 关键字，只不过省略了函数名，直接是参数列表。<br>然后我们又调用了 $func 所储存的匿名函数。<br>匿名函数还可以用 use 关键字来捕捉外部变量：</p>
+<p>复制代码 代码如下:</p>
+<p>function arrayPlus($array, $num)<br>{<br>array_walk($array, function(&amp;$v) use($num){<br>$v +&#x3D; $num;<br>});<br>}</p>
+<p>上面的代码定义了一个 arrayPlus() 函数(这不是匿名函数), 它会将一个数组($array)中的每一项，加上一个指定的数字($num).<br>在 arrayPlus() 的实现中，我们使用了 array_walk() 函数，它会为一个数组的每一项执行一个回调函数，即我们定义的匿名函数。<br>在匿名函数的参数列表后，我们用 use 关键字将匿名函数外的 $num 捕捉到了函数内，以便知道到底应该加上多少。</p>
+<p>魔术方法：__invoke(), __callStatic()<br>PHP 的面向对象体系中，提供了若干“魔术方法”，用于实现类似其他语言中的“重载”，如在访问不存在的属性、方法时触发某个魔术方法。<br>随着匿名函数的加入，PHP 引入了一个新的魔术方法 __invoke().<br>该魔术方法会在将一个对象作为函数调用时被调用：</p>
+<p>复制代码 代码如下:</p>
+<p>class A<br>{<br>public function __invoke($str)<br>{<br>print “A::__invoke(): {$str}”;<br>}<br>}$a &#x3D; new A;<br>$a(“Hello World”);</p>
+<p>输出毫无疑问是：</p>
+<p>复制代码 代码如下:</p>
+<p>A::__invoke(): Hello World</p>
+<p>__callStatic() 则会在调用一个不存在的静态方法时被调用。</p>
+<p>命名空间<br>PHP的命名空间有着<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%89%8D%E6%97%A0%E5%8F%A4%E4%BA%BA&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd">前无古人</a>后无来者的无比蛋疼的语法：</p>
+<p>复制代码 代码如下:</p>
+<?php
+// 命名空间的分隔符是反斜杠，该声明语句必须在文件第一行。
+// 命名空间中可以包含任意代码，但只有 **类, 函数, 常量** 受命名空间影响。
+namespace XXOO\\Test;// 该类的完整限定名是 \\XXOO\\Test\\A , 其中第一个反斜杠表示全局命名空间。
+class A{}
+
+// 你还可以在已经文件中定义第二个命名空间，接下来的代码将都位于 \\Other\\Test2 .
+namespace Other\\Test2;
+
+// 实例化来自其他命名空间的对象：
+$a = new \\XXOO\\Test\\A;
+class B{}
+
+// 你还可以用花括号定义第三个命名空间
+namespace Other {
+// 实例化来自子命名空间的对象：
+$b = new Test2\\B;
+
+// 导入来自其他命名空间的名称，并重命名，
+// 注意只能导入类，不能用于函数和常量。
+use \\XXOO\\Test\\A as ClassA
+}
+
+更多有关命名空间的语法介绍请参见官网 \[注\].
+命名空间时常和 autoload 一同使用，用于自动加载类实现文件：
+
+spl_autoload_register(
+function ($class) {
+spl_autoload(str_replace("\\\\", "/", $class));
+}
+);
+当你实例化一个类 \\XXOO\\Test\\A 的时候，这个类的完整限定名会被传递给 autoload 函数，autoload 函数将类名中的命名空间分隔符(反斜杠)替换为斜杠，并包含对应文件。
+这样可以实现类定义文件分级储存，按需自动加载。
+注：http://www.php.net/manual/zh/language.namespaces.php
+
+后期静态绑定
+PHP 的 OPP 机制，具有继承和类似虚函数的功能，例如如下的代码：
+
+复制代码 代码如下:
+
+class A
+{
+public function callFuncXXOO()
+{
+print $this->funcXXOO();
+}    public function funcXXOO()
+{
+return "A::funcXXOO()";
+}
+}
+
+class B extends A
+{
+public function funcXXOO()
+{
+return "B::funcXXOO";
+}
+}
+
+$b = new B;
+$b->callFuncXXOO();
+
+输出是：
+
+复制代码 代码如下:
+
+B::funcXXOO
+
+可以看到，当在 A 中使用 $this->funcXXOO() 时，体现了“虚函数”的机制，实际调用的是 B::funcXXOO().
+然而如果将所有函数都改为静态函数：
+
+复制代码 代码如下:
+
+class A
+{
+static public function callFuncXXOO()
+{
+print self::funcXXOO();
+}    static public function funcXXOO()
+{
+return "A::funcXXOO()";
+}
+}
+
+class B extends A
+{
+static public function funcXXOO()
+{
+return "B::funcXXOO";
+}
+}
+
+$b = new B;
+$b->callFuncXXOO();
+
+情况就没这么乐观了，输出是：
+
+复制代码 代码如下:
+
+A::funcXXOO()
+
+这是因为 self 的语义本来就是“当前类”，所以 PHP5.3 给 static 关键字赋予了一个新功能：后期静态绑定：
+
+复制代码 代码如下:
+
+class A
+{
+static public function callFuncXXOO()
+{
+print static::funcXXOO();
+}    // ...
+}
+
+// ...
+
+这样就会像预期一样输出了：
+
+复制代码 代码如下:
+
+B::funcXXOO
+
+Heredoc 和 Nowdoc
+
+PHP5.3 对 Heredoc 以及 Nowdoc 进行了一些改进，它们都用于在 PHP 代码中嵌入大段字符串。
+Heredoc 的行为类似于一个双引号字符串：
+
+复制代码 代码如下:
+
+$name = "MyName";
+echo <<< TEXT
+My name is "{$name}".
+TEXT;
+
+Heredoc 以三个左尖括号开始，后面跟一个标识符(TEXT), 直到一个同样的顶格的标识符(不能缩进)结束。
+就像双引号字符串一样，其中可以嵌入变量。
+
+Heredoc 还可以用于函数参数，以及类成员初始化：
+
+复制代码 代码如下:
+
+var_dump(<<<EOD
+Hello World
+EOD
+);class A
+{
+const xx = <<< EOD
+Hello World
+EOD;
+
+public $oo = <<< EOD
+Hello World
+EOD;
+}
+
+Nowdoc 的行为像一个单引号字符串，不能在其中嵌入变量，和 Heredoc 唯一的区别就是，三个左尖括号后的标识符要以单引号括起来：
+
+复制代码 代码如下:
+
+$name = "MyName";
+echo <<< 'TEXT'
+My name is "{$name}".
+TEXT;
+
+输出：
+
+复制代码 代码如下:
+
+My name is "{$name}".
+
+用 const 定义常量
+
+PHP5.3 起同时支持在全局命名空间和类中使用 const 定义常量。
+旧式风格：
+
+复制代码 代码如下:
+
+define("XOOO", "Value");
+
+新式风格：
+const XXOO = "Value";
+const 形式仅适用于常量，不适用于运行时才能求值的表达式：
+
+复制代码 代码如下:
+
+// 正确
+const XXOO = 1234;
+// 错误
+const XXOO = 2 * 617;
+
+三元运算符简写形式
+旧式风格：
+
+复制代码 代码如下:
+
+echo $a ? $a : "No Value";
+
+可简写成：
+
+复制代码 代码如下:
+
+echo $a ?: "No Value";
+
+即如果省略三元运算符的第二个部分，会默认用第一个部分代替。
+
+Phar
+
+Phar即PHP Archive, 起初只是Pear中的一个库而已，后来在PHP5.3被重新编写成C扩展并内置到 PHP 中。
+Phar用来将多个 .php 脚本打包(也可以打包其他文件)成一个 .phar 的压缩文件(通常是ZIP格式)。
+目的在于模仿 Java 的 .jar, 不对，目的是为了让发布PHP应用程序更加方便。同时还提供了数字签名验证等功能。
+.phar 文件可以像 .php 文件一样，被PHP[引擎](https://www.baidu.com/s?wd=%E5%BC%95%E6%93%8E&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd)解释执行，同时你还可以写出这样的代码来包含(require) .phar 中的代码：
+
+复制代码 代码如下:
+
+require("xxoo.phar");
+require("phar://xxoo.phar/xo/ox.php");
+
+更多信息请参见官网 \[注\].
+注：http://www.php.net/manual/zh/phar.using.intro.php
+
+PHP5.4(2012-2013)
+
+Short Open Tag
+Short Open Tag 自 PHP5.4 起总是可用。
+在这里集中讲一下有关 PHP 起止标签的问题。即：
+
+复制代码 代码如下:
+
+<?php
+// Code...
+?>
+
+<p>通常就是上面的形式，除此之外还有一种简写形式：</p>
+<p>复制代码 代码如下:</p>
+<? /* Code... */ ?>
+
+<p>还可以把</p>
+<p>复制代码 代码如下:</p>
+<?php echo $xxoo;?>
+
+<p>简写成：</p>
+<p>复制代码 代码如下:</p>
+<?= $xxoo;?>
+
+<p>这种简写形式被称为 Short Open Tag, 在 PHP5.3 起被默认开启，在 PHP5.4 起总是可用。<br>使用这种简写形式在 HTML 中嵌入 PHP 变量将会非常方便。</p>
+<p>对于纯 PHP 文件(如类实现文件), PHP 官方建议顶格写起始标记，同时 省略 结束标记。<br>这样可以确保整个 PHP 文件都是 PHP 代码，没有任何输出，否则当你包含该文件后，设置 Header 和 Cookie 时会遇到一些麻烦 [注].</p>
+<p>注：Header 和 Cookie 必须在输出任何内容之前被发送。</p>
+<p>数组简写形式<br>这是非常方便的一项特征！</p>
+<p>复制代码 代码如下:</p>
+<p>&#x2F;&#x2F; 原来的数组写法<br>$arr &#x3D; array(“key” &#x3D;&gt; “value”, “key2” &#x3D;&gt; “value2”);<br>&#x2F;&#x2F; 简写形式<br>$arr &#x3D; [“key” &#x3D;&gt; “value”, “key2” &#x3D;&gt; “value2”];</p>
+<p>Traits<br>所谓Traits就是“构件”，是用来替代继承的一种机制。PHP中无法进行多重继承，但一个类可以包含多个Traits.</p>
+<p>复制代码 代码如下:</p>
+<p>&#x2F;&#x2F; Traits不能被单独实例化，只能被类所包含<br>trait SayWorld<br>{<br>public function sayHello()<br>{<br>echo ‘World!’;<br>}<br>}class MyHelloWorld<br>{<br>&#x2F;&#x2F; 将SayWorld中的成员包含进来<br>use SayWorld;<br>}</p>
+<p>$xxoo &#x3D; new MyHelloWorld();<br>&#x2F;&#x2F; sayHello() 函数是来自 SayWorld 构件的<br>$xxoo-&gt;sayHello();</p>
+<p>Traits还有很多神奇的功能，比如包含多个Traits, 解决冲突，修改访问权限，为函数设置别名等等。<br>Traits中也同样可以包含Traits. 篇幅有限不能逐个举例，详情参见官网 [注].<br>注：<a target="_blank" rel="noopener" href="http://www.php.net/manual/zh/language.oop5.traits.php">http://www.php.net/manual/zh/language.oop5.traits.php</a></p>
+<p>内置 Web 服务器<br>PHP从5.4开始内置一个轻量级的Web服务器，不支持并发，定位是用于开发和调试环境。<br>在开发环境使用它的确非常方便。</p>
+<p>复制代码 代码如下:</p>
+<p>php -S localhost:8000</p>
+<p>这样就在当前目录建立起了一个Web服务器，你可以通过 <a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000/</a> 来访问。<br>其中localhost是监听的ip，8000是监听的端口，可以自行修改。</p>
+<p>很多应用中，都会进行URL重写，所以PHP提供了一个设置路由脚本的功能:</p>
+<p>复制代码 代码如下:</p>
+<p>php -S localhost:8000 index.php</p>
+<p>这样一来，所有的请求都会由index.php来处理。<br>你还可以使用 XDebug 来进行断点调试。</p>
+<p>细节修改<br>PHP5.4 新增了动态访问静态方法的方式：</p>
+<p>复制代码 代码如下:</p>
+<p>$func &#x3D; “funcXXOO”;<br>A::{$func}();</p>
+<p>新增在实例化时访问类成员的特征：</p>
+<p>复制代码 代码如下:</p>
+<p>(new MyClass)-&gt;xxoo();</p>
+<p>新增支持对函数返回数组的成员访问解析(这种写法在之前版本是会报错的)：</p>
+<p>复制代码 代码如下:</p>
+<p>print func()[0];</p>
+<p>PHP5.5(2013起)</p>
+<p>yield<br>yield关键字用于当函数需要返回一个迭代器的时候, 逐个返回值。</p>
+<p>复制代码 代码如下:</p>
+<p>function number10()<br>{<br>for($i &#x3D; 1; $i &lt;&#x3D; 10; $i +&#x3D; 1)<br>yield $i;<br>}</p>
+<p>该函数的返回值是一个数组：</p>
+<p>复制代码 代码如下:</p>
+<p>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</p>
+<p>list() 用于 foreach<br>可以用 list() 在 foreach 中解析嵌套的数组：</p>
+<p>复制代码 代码如下:</p>
+<p>$array &#x3D; [<br>[1, 2, 3],<br>[4, 5, 6],<br>];foreach ($array as list($a, $b, $c))<br>echo “{$a} {$b} {$c}\n”;</p>
+<p>结果：</p>
+<p>复制代码 代码如下:</p>
+<p>1 2 3<br>4 5 6</p>
+<p>细节修改<br>不推荐使用 mysql 函数，推荐使用 PDO 或 MySQLi, 参见前文。<br>不再支持Windows XP.<br>可用 MyClass::class 取到一个类的完整限定名(包括命名空间)。<br>empty() 支持表达式作为参数。<br>try-catch 结构新增 finally 块。</p>
+<p>PHP5.6</p>
+<p>更好的常量<br>定义常量时允许使用之前定义的常量进行计算：</p>
+<p>复制代码 代码如下:</p>
+<p>const A &#x3D; 2;<br>const B &#x3D; A + 1;class C<br>{<br>const STR &#x3D; “hello”;<br>const STR2 &#x3D; self::STR + “, world”;<br>}</p>
+<p>允许常量作为函数参数默认值：</p>
+<p>复制代码 代码如下:</p>
+<p>function func($arg &#x3D; C::STR2)</p>
+<p>更好的可变函数参数<br>用于代替 func_get_args()</p>
+<p>复制代码 代码如下:</p>
+<p>function add(…$args)<br>{<br>$result &#x3D; 0;<br>foreach($args as $arg)<br>$result +&#x3D; $arg;<br>return $result;<br>}</p>
+<p>同时可以在调用函数时，把数组展开为函数参数：</p>
+<p>复制代码 代码如下:</p>
+<p>$arr &#x3D; [2, 3];<br>add(1, …$arr);</p>
+<p>&#x2F;&#x2F; 结果为 6<br>命名空间<br>命名空间支持常量和函数：</p>
+<p>复制代码 代码如下:</p>
+<p>namespace Name\Space {<br>const FOO &#x3D; 42;<br>function f() { echo <strong>FUNCTION</strong>.”\n”; }<br>}namespace {<br>use const Name\Space\FOO;<br>use function Name\Space\f;</p>
+<p>echo FOO.”\n”;<br>f();<br>}</p>
+<p>ＰＨＰ　７</p>
+<ol>
+<li>运算符（NULL 合并运算符）</li>
+</ol>
+<p>把这个放在第一个说是因为我觉得它很有用。用法：</p>
+<p>$a &#x3D; $_GET[‘a’] ?? 1;</p>
+<p>它相当于：</p>
+<p>&lt;php<br>$a &#x3D; isset($_GET[‘a’]) ? $_GET[‘a’] : 1;</p>
+<p>我们知道三元运算符是可以这样用的：</p>
+<p>$a ?: 1</p>
+<p>但是这是建立在 $a 已经定义了的前提上。新增的 ?? 运算符可以简化判断。</p>
+<p><code>//&lt;=&gt; - 比较两个数的大小【-1：前者小于后者，0：前者等于后者，1：前者大于后者】</code></p>
+<p><code>echo</code> <code>1 &lt;=&gt; 2;``//-1</code></p>
+<p><code>echo</code> <code>1 &lt;=&gt; 1;``//0</code></p>
+<p><code>echo</code> <code>1 &lt;=&gt; 0;``//1</code></p>
+<p><code>// ** - 【a的b次方】</code></p>
+<p><code>echo</code> <code>2 ** 3;``//8</code></p>
+<p><code>//?? - 三元运算符的改进</code></p>
+<p><code>//php5</code></p>
+<p><code>$_GET``[``&#39;name&#39;``] ?``$_GET``[``&#39;name&#39;``] :``&#39;&#39;``;``//Notice: Undefined index: …</code></p>
+<p><code>//php7</code></p>
+<p><code>$_GET``[``&#39;name&#39;``] ??``&#39;&#39;</code> <code>-&gt;</code> <code>&#39;&#39;``;</code></p>
+<p><code>//\u&#123;xxxx&#125; - Unicode字符的解析</code></p>
+<p><code>echo</code> <code>&quot;\u&#123;4f60&#125;&quot;``;``//你</code></p>
+<p><code>echo</code> <code>&quot;\u&#123;65b0&#125;&quot;``;``//新</code></p>
+<ol start="2">
+<li>函数返回值类型声明</li>
+</ol>
+<p>官方文档提供的例子（注意 … 的边长参数语法在 PHP 5.6 以上的版本中才有）：</p>
+<ol>
+<li><p>&lt;php</p>
+</li>
+<li><p>function arraysSum(array …$arrays): array</p>
+</li>
+<li><p>{</p>
+</li>
+<li><p>    return array_map(function(array $array): int {</p>
+</li>
+<li><p>        return array_sum($array);</p>
+</li>
+<li><p>    }, $arrays);</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>print_r(arraysSum([1,2,3], [4,5,6], [7,8,9]));</p>
+</li>
+</ol>
+<p>从这个例子中可以看出现在函数（包括匿名函数）都可以指定返回值的类型。</p>
+<p>这种声明的写法有些类似于 swift：</p>
+<ol>
+<li>func sayHello(personName: String) -&gt; String {</li>
+<li>    let greeting &#x3D; “Hello, “ + personName + “!”</li>
+<li>    return greeting</li>
+<li>}</li>
+</ol>
+<p>这个特性可以帮助我们避免一些 PHP 的隐式类型转换带来的问题。在定义一个函数之前就想好预期的结果可以避免一些不必要的错误。</p>
+<p>不过这里也有一个特点需要注意。PHP 7 增加了一个 declare 指令：strict_types，既使用严格模式。</p>
+<p>使用返回值类型声明时，如果没有声明为严格模式，如果返回值不是预期的类型，PHP 还是会对其进行强制类型转换。但是如果是严格模式， 则会出发一个 TypeError 的 Fatal error。</p>
+<p>强制模式：</p>
+<ol>
+<li><p>&lt;php</p>
+</li>
+<li><p>function foo($a) : int</p>
+</li>
+<li><p>{</p>
+</li>
+<li><p>    return $a;</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>foo(1.0);</p>
+</li>
+</ol>
+<p>以上代码可以正常执行，foo 函数返回 int 1，没有任何错误。</p>
+<p>严格模式：</p>
+<ol>
+<li><p>&lt;php</p>
+</li>
+<li><p>declare(strict_types&#x3D;1);</p>
+</li>
+<li><p>function foo($a) : int</p>
+</li>
+<li><p>{</p>
+</li>
+<li><p>    return $a;</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>foo(1.0);</p>
+</li>
+<li><h1 id="PHP-Fatal-error-Uncaught-TypeError-Return-value-of-foo-must-be-of-the-type-integer-float-returned-in-test-php-6"><a href="#PHP-Fatal-error-Uncaught-TypeError-Return-value-of-foo-must-be-of-the-type-integer-float-returned-in-test-php-6" class="headerlink" title="PHP Fatal error:  Uncaught TypeError: Return value of foo() must be of the type integer, float returned in test.php:6"></a>PHP Fatal error:  Uncaught TypeError: Return value of foo() must be of the type integer, float returned in test.php:6</h1></li>
+</ol>
+<p>在声明之后，就会触发致命错误。</p>
+<p>是不是有点类似与 js 的 strict mode？</p>
+<ol start="3">
+<li>标量类型声明</li>
+</ol>
+<p>PHP 7 中的函数的形参类型声明可以是标量了。在 PHP 5 中只能是类名、接口、array 或者 callable (PHP 5.4，即可以是函数，包括匿名函数)，现在也可以使用 string、int、float和 bool 了。</p>
+<p>官方示例：</p>
+<ol>
+<li><p>&lt;php</p>
+</li>
+<li><p>&#x2F;&#x2F; Coercive mode</p>
+</li>
+<li><p>function sumOfInts(int …$ints)</p>
+</li>
+<li><p>{</p>
+</li>
+<li><p>    return array_sum($ints);</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>var_dump(sumOfInts(2, ‘3’, 4.1));</p>
+</li>
+</ol>
+<p>需要注意的是上文提到的严格模式的问题在这里同样适用：强制模式（默认，既强制类型转换）下还是会对不符合预期的参数进行强制类型转换，严格模式下则触发 TypeError 的致命错误。</p>
+<ol start="4">
+<li>use 批量声明</li>
+</ol>
+<p>PHP 7 中 use 可以在一句话中声明多个类或函数或 const 了：</p>
+<ol>
+<li>&lt;php</li>
+<li>use some&#x2F;namespace&#x2F;{ClassA, ClassB, ClassC as C};</li>
+<li>use function some&#x2F;namespace&#x2F;{fn_a, fn_b, fn_c};</li>
+<li>use const some&#x2F;namespace&#x2F;{ConstA, ConstB, ConstC};</li>
+</ol>
+<p>但还是要写出每个类或函数或 const 的名称（并没有像 python 一样的 from some import * 的方法）。</p>
+<p>需要留意的问题是：如果你使用的是基于 composer 和 PSR-4 的框架，这种写法是否能成功的加载类文件？其实是可以的，composer 注册的自动加载方法是在类被调用的时候根据类的命名空间去查找位置，这种写法对其没有影响。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/07/php%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/" rel="prev" title="php框架选型">
+                  <i class="fa fa-chevron-left"></i> php框架选型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/07/php%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" rel="next" title="PHP命名空间">
+                  PHP命名空间 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

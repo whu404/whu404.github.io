@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="ABtest一个总的目的和意图是，判断哪种种UI或rerank策略更优，通过事实的依据（ CTR或下单率）判断哪种策略更符合用户的习惯和需求。 一、需求驱使我们经常会面临多个设计方案的选择，比如app或pc端某个界面的某个按钮是用红色还是用蓝色，是放左边还是放右边。传统的解决方法通常是集体讨论表决，或者由某位专 家或领导或文青来拍板，实在决定不了时也有随机选一个上线的。虽然传统解决办法多数情况下也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何对产品做AB测试">
+<meta property="og:url" content="http://example.com/2018/05/05/%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BA%A7%E5%93%81%E5%81%9Aab%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ABtest一个总的目的和意图是，判断哪种种UI或rerank策略更优，通过事实的依据（ CTR或下单率）判断哪种策略更符合用户的习惯和需求。 一、需求驱使我们经常会面临多个设计方案的选择，比如app或pc端某个界面的某个按钮是用红色还是用蓝色，是放左边还是放右边。传统的解决方法通常是集体讨论表决，或者由某位专 家或领导或文青来拍板，实在决定不了时也有随机选一个上线的。虽然传统解决办法多数情况下也">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017131302207">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017131317404">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017131425597">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017155116793?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017160330452">
+<meta property="og:image" content="https://blog.csdn.net/weiguang_123/article/details/49203239">
+<meta property="og:image" content="https://img-blog.csdn.net/20151017170334553?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="article:published_time" content="2018-05-05T08:32:10.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.129Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20151017131302207">
+
+
+<link rel="canonical" href="http://example.com/2018/05/05/%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BA%A7%E5%93%81%E5%81%9Aab%E6%B5%8B%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/05/05/%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BA%A7%E5%93%81%E5%81%9Aab%E6%B5%8B%E8%AF%95/","path":"2018/05/05/如何对产品做ab测试/","title":"如何对产品做AB测试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何对产品做AB测试 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%9C%80%E6%B1%82%E9%A9%B1%E4%BD%BF"><span class="nav-number">1.</span> <span class="nav-text">一、需求驱使</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AE%9E%E9%AA%8C%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">（1）客户端实验：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%881"><span class="nav-number">2.1.1.</span> <span class="nav-text">方案1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="nav-number">2.1.2.</span> <span class="nav-text">方案二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%E5%92%8C%E6%96%B9%E6%A1%88%E4%BA%8C%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">方案一和方案二的比较：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E9%AA%8C%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">（2）服务端实验：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/05/%E5%A6%82%E4%BD%95%E5%AF%B9%E4%BA%A7%E5%93%81%E5%81%9Aab%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何对产品做AB测试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-05 16:32:10" itemprop="dateCreated datePublished" datetime="2018-05-05T16:32:10+08:00">2018-05-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">软件工程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ABtest一个总的目的和意图是，判断哪种种UI或rerank策略更优，通过事实的依据（ CTR或下单率）判断哪种策略更符合用户的习惯和需求。</p>
+<h1 id="一、需求驱使"><a href="#一、需求驱使" class="headerlink" title="一、需求驱使"></a>一、需求驱使</h1><p>我们经常会面临多个设计方案的选择，比如app或pc端某个界面的某个按钮是用红色还是用蓝色，是放左边还是放右边。传统的解决方法通常是集体讨论表决，或者由某位专</p>
+<p>家或领导或文青来拍板，实在决定不了时也有随机选一个上线的。虽然传统解决办法多数情况下也是有效的，但A&#x2F;B 测试（A&#x2F;B Testing）可能是解决这类问题的一个更好的方法。</p>
+<p>所谓 A&#x2F;B 测试，简单来说，就是为同一个目标制定两个方案（比如两个页面），让一部分用户使用 A 方案，另一部分用户使用 B 方案，记录下用户的使用情况，看哪个方案更符</p>
+<p>合设计目标。</p>
+<p>下面看一个例子：</p>
+<p>在展示“格林秀上午酒店”这个poi时有客户端两种UI：</p>
+<p>方案A：如左图，评分展示星状图片，消费人数再右边；</p>
+<p>方案B：如右图，只展示评分分数，后边添加消费人数；</p>
+<p><img src="https://img-blog.csdn.net/20151017131302207"><img src="https://img-blog.csdn.net/20151017131317404"></p>
+<p>我们很难知道那种方案比较好，那我们可以做个实验，把a和B方案同时放到线上的生产环境，让一部分用户使用 A 方案，另一部分用户使用 B 方案，记录下用户的使用报表如下图，通过大自然的优胜劣汰法则，我们可以通过CTR或下单率等指标看哪个方案更符合设计目标。</p>
+<p><img src="https://img-blog.csdn.net/20151017131425597"></p>
+<h1 id="二、系统模型"><a href="#二、系统模型" class="headerlink" title="二、系统模型"></a>二、系统模型</h1><p>abtest实验可以分成两种，客户端client实验和服务端server实验，客户端实验一般来说只是UI上的实验，比如上面的例子，纯粹是展示端的策略；而服务端的实验是返回给client数据的内容做实验，比如推荐的策略，订单列表rerank策略等。下面通过client和服务端的实验分别做介绍。</p>
+<h2 id="（1）客户端实验："><a href="#（1）客户端实验：" class="headerlink" title="（1）客户端实验："></a>（1）客户端实验：</h2><h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1:"></a>方案1:</h3><p><img src="https://img-blog.csdn.net/20151017155116793?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"></p>
+<p>ABTest业务流程描述：</p>
+<p>（1）客户端在需要获取ABTest策略的地方，通过RPC接口获取uuid在ABTest1这个实验下的规则：</p>
+<ol>
+<li>{</li>
+<li>    “data”: [</li>
+<li>        {</li>
+<li>            “name”: “test1”,&#x2F;&#x2F;实验key</li>
+<li>            “strategy”: “strategy1”,      &#x2F;&#x2F;策略key，客户端根据策略key选择策略方案</li>
+<li>            “flow”: “flow1”,      &#x2F;&#x2F;流量组，用于上报。每个流量组只属于一个策略。</li>
+<li>            “finished”: false     &#x2F;&#x2F;标识实验是否终止，如果已经终止，则不再向utm_compaign参数的F字段append该规则，但是不影响规则，原规则依然生效。</li>
+<li>        }</li>
+<li>    ]</li>
+<li>}</li>
+</ol>
+<p>其中testkey参数可以是多个ABTest实验的key：abtest1,abtest2。</p>
+<p>（2）之后客户端向server发起的全部请求，URL的utm_compaign参数中的F位添加字符串：Fabtest1__strategy1__flow1，Nginx将utm_compaign打印到access日志。</p>
+<p>（3）客户端在另一个需要获取ABTest策略的地方，通过http接口&#x2F;get&#x2F;abtest&#x2F;{testkey}&#x2F;{uuid} 获取uuid在ABTest2这个实验下的规则：</p>
+<ol>
+<li>{</li>
+<li>    “data”: [</li>
+<li>        {</li>
+<li>            “name”: “abtest2”,&#x2F;&#x2F;实验key，</li>
+<li>            “strategy”: “strategy2”,      &#x2F;&#x2F;策略key，客户端根据策略key选择策略方案</li>
+<li>            “flow”: “flow2”,      &#x2F;&#x2F;流量组，用于上报。每个流量组只属于一个策略。</li>
+<li>            “finished”: false     &#x2F;&#x2F;标识实验是否终止，如果已经终止，则不再向utm_compaign参数的F字段append该规则，但是不影响规则，原规则依然生效。</li>
+<li>        }</li>
+<li>    ]</li>
+<li>}</li>
+</ol>
+<p>（4）之后客户端向server发起的全部请求，URL的utm_compaign参数中的F位添加字符串：Fabtest1_strategy1__flow1___abtest2__strategy2__flow2，实验&amp;策略&amp;流量组采用两个下划线分隔，多个实验间采用三个下划线分隔。</p>
+<p>（5）Nginx将URL中的utm_compaign打印到access日志，flume收集Nginx access 日志，同步到Hadoop，最后导入Hive。</p>
+<p>（6）PM在报表系统，通过规则维度查询点击、转化报表。</p>
+<p>这样导致的问题是url中utm_compaign的F字段过长，当实验到达一定数量的时候会出现，url过长，抓包会发现。实际上，客户端只关心我在某个界面中这次请求（uuid＋ci＋platform）命中的实验及策略，连utm_campaign都懒得拼接。</p>
+<p>如URL中有utm_campaign&#x3D;Fab_homepagewebview0717__b__d___ab_b_food_57_purepoilist_extinfo__a__a___ab_b_selectlist_paidui__a__leftflow___ab_i550poi_ktv__d__leftflow___ab_i_5_9_travelpoidetail__b__a___ab_i550poi_xxyl__d__d___ab_mingdiangexinghua0707__j__j___ab_waimaiwending__b__b___ab_b_travelsearchhot__a__a___ab_ifoodadvert__b__b___ab_pindaoqugexinghua0708__e__e___ab_itriphotpoi__b__leftflow___ab_i_6_0_webview__a__a___ab_b_travelpoilistrank__b__b2___ab_i_group_5_7_search_chunpoi__b__b1___ab_i_group_5_8_spdy__b__b___ab_ihotelqianzhi__b__b___i_group_5_2_deallist_poitype__d__d___ab_i550poi_shfw__d__leftflow___ab_ihotelpoilist__b__b___ab_itravelsearch0814__b__leftflow___ab_i_group_6_0_search_hotword__b__leftflow___ab_sieve_multiple_staticscore__base__base___ab_h_hotel_search_hot__b__b___ab_i_group_5_9_onsite__a__leftflow___ab_i_group_pingjiapush__a__a___ab_b_catesearchreplace__b__b___ab_b_deal_sieve_migrate__b__b___ab_i_group_travelhomepage0630__a__a___ab_i550poi_lr__d__leftflow___ab_b_searchmaiton__c__c___ab_groupcontext__a__a___ab_maidan_distance_first__smartfirst__smartfirst___ab_i_group_5_9notificationtest__a__a___ab_dealzhanshi__a__a1___ab_i_group_5_8_dns__a__leftflow___ab_ihotelbkdetail__a__a___ab_v1_po1_sieve_migrate__search__search</p>
+<p>基于这个痛点，我们采用另一种上报方式；</p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p><img src="https://img-blog.csdn.net/20151017160330452"></p>
+<p>流程：</p>
+<ol>
+<li>（1）（客户端的工作）：app启动或切换城市，会请求abtest服务后台，获得所有的实验的以及命中的策略缓存在app中。</li>
+<li>（2）(abtest后台的工作)：abtest接收一个uuid＋ci＋pt的请求，返回给app所有的实验的以及命中的策略，同时将这次请求和结果通过flume_agent收集日志，同步到Hadoop，最后导入Hive。</li>
+<li>（3）（客户端的工作）：在第1步的请求中的获得的所有的实验的以及命中的策略缓存在app中。</li>
+<li>（4）(客户端的工作)  : 进入到一个做ab实验的界面，按照第3步命中的实验的策略＋展示的业务数据处理展示逻辑。</li>
+<li>（5）（客户端的工作：）：会把第4步这个界面的信息和埋点信息上传到数据中心的原始日志，异步步少重试的方式上报埋点，</li>
+</ol>
+<p>按<a target="_blank" rel="noopener" href="http://wiki.sankuai.com/pages/viewpage.action?pageId=141831180">HTTP GET&#x2F;POST 日志收集</a>方式，MGE，MGP，MPT的信息定义可以。移动页面流跟踪事件，这些事件封装为MPT事件，具体格式如下：</p>
+<ol>
+<li><p></pre>&lt;pre name&#x3D;”code” class=“javascript”&gt;“nm”:”MPT”,&#x2F;&#x2F;页面流跟踪事件(PageTrack)</p>
+</li>
+<li><p>“val”:{</p>
+</li>
+<li><p>    “root”:    &#x2F;&#x2F;层级前缀</p>
+</li>
+<li><p>    “name”:    &#x2F;&#x2F;页面名&#x2F;组件名&#x2F;弹窗名</p>
+</li>
+<li><p>    “content”: &#x2F;&#x2F;数据请求URL内容&#x2F;弹窗内容</p>
+</li>
+<li><p>    “type”:    &#x2F;&#x2F;page&#x2F;alert</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>“nm”:”MGE”,&#x2F;&#x2F;Event跟踪，需要客户端手工埋点，用于解决临时统计需求</p>
+</li>
+<li><p>“val”:{</p>
+</li>
+<li><p>    “cid”:    &#x2F;&#x2F;页面名 类别 category id</p>
+</li>
+<li><p>    “act”:    &#x2F;&#x2F;动作名 动作 action</p>
+</li>
+<li><p>    “lab”:    &#x2F;&#x2F;动作描述 注释 label</p>
+</li>
+<li><p>    “val”:    &#x2F;&#x2F;页面描述 权值 value</p>
+</li>
+<li><p>}</p>
+</li>
+<li><p>“nm”:”MGP”,&#x2F;&#x2F;页面跟踪，需要客户端手工埋点，用于解决临时统计需求</p>
+</li>
+<li><p>“val”:{</p>
+</li>
+<li><p>    “root”:    &#x2F;&#x2F;层级前缀（非必需）</p>
+</li>
+<li><p>    “name”:    &#x2F;&#x2F;页面名&#x2F;组件名&#x2F;弹窗名（必须）</p>
+</li>
+<li><p>    “content”: &#x2F;&#x2F;数据请求URL内容&#x2F;弹窗内容（必须）</p>
+</li>
+<li><p>    “type”:    &#x2F;&#x2F;page&#x2F;alert</p>
+</li>
+<li><p>}</p>
+</li>
+</ol>
+<p>（6）（数据组的工作）：应用系统可以通过flume，将原始日志同步到Hadoop，最后导入Hive表，通过关联的条件将两个hive表关联，同时关联一些点击下单等数据，清洗数据成报表。</p>
+<h3 id="方案一和方案二的比较："><a href="#方案一和方案二的比较：" class="headerlink" title="方案一和方案二的比较："></a>方案一和方案二的比较：</h3><p>（1）方案一的缺点是会添加客户端RD的URL拼接工作，致命的是实验到达一定个数，访问页面过深URL过长导致被截断（sa控制http的url的长度和header大小）</p>
+<p>（2）方案一的有点是，数据组RD清洗数据比较方便，只需收集ngixn日志，对url进行清洗即可产生报表，只需要关联点单点击等报表。</p>
+<p>（3）方案二的优点是，通过各自打埋点成原始日志到hadoop平台方式，客户端只关心自己命中的策略以及处理的业务逻辑，与业务无关的事情切入较少。</p>
+<p>（4）方案二的缺点是，客户打的埋点需要跟abtest后台的表进行关联，关联的逻辑不固定，添加了清洗数据的复杂度。</p>
+<p>最后基于系统长期的发展，采取了方案二，前期使用的方案一将在app的新版本中废弃。</p>
+<h2 id="（2）服务端实验："><a href="#（2）服务端实验：" class="headerlink" title="（2）服务端实验："></a>（2）服务端实验：</h2><p><img src="https://blog.csdn.net/weiguang_123/article/details/49203239"><img src="https://img-blog.csdn.net/20151017170334553?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"></p>
+<p>其实服务端的实验跟客户端的实验的是类似的，只需要添加额外的工作：在服务端请求abtest后台，需要知道本次请求以及实验命中的策略，并将结果返回给客户端。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/05/awk-sed-grep-%E8%AF%A6%E8%A7%A3/" rel="prev" title="awk sed grep 详解">
+                  <i class="fa fa-chevron-left"></i> awk sed grep 详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/05/05/%E6%94%B9%E5%8F%98%E7%94%9F%E6%B4%BB%E7%9A%84%E5%BF%83%E7%90%86%E5%AD%A6%E6%B3%95%E5%88%99/" rel="next" title="改变生活的心理学法则">
+                  改变生活的心理学法则 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

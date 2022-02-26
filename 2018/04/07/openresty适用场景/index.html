@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="1、引言本文不是学术性文章，也不是某些标准化理论的阐述，而是根据所从事J2EE应用软件架构设计工作的经验，谈谈自己对软件架构设计过程的理解，希望能让一些徘徊于门口的同学能对企业应用软件架构设计的目标、价值与方法有个大致概念。文中所举例子及分析方法受个人经验背景约束，可能在一定程度上会存在误导性，软件架构设计过程大同小异，例子主要还是用于辅助说明设计过程。 　　对于架构设计，如果用建筑来比拟的话，有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业应用软件架构设计过程">
+<meta property="og:url" content="http://example.com/2018/04/07/openresty%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、引言本文不是学术性文章，也不是某些标准化理论的阐述，而是根据所从事J2EE应用软件架构设计工作的经验，谈谈自己对软件架构设计过程的理解，希望能让一些徘徊于门口的同学能对企业应用软件架构设计的目标、价值与方法有个大致概念。文中所举例子及分析方法受个人经验背景约束，可能在一定程度上会存在误导性，软件架构设计过程大同小异，例子主要还是用于辅助说明设计过程。 　　对于架构设计，如果用建筑来比拟的话，有">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20150127170443342?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGRoOTEx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20150127170543885">
+<meta property="og:image" content="https://img-blog.csdn.net/20150127170738811">
+<meta property="og:image" content="https://img-blog.csdn.net/20150127170747375">
+<meta property="article:published_time" content="2018-04-07T05:59:54.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.073Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="架构">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20150127170443342?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGRoOTEx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+
+
+<link rel="canonical" href="http://example.com/2018/04/07/openresty%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/07/openresty%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/","path":"2018/04/07/openresty适用场景/","title":"企业应用软件架构设计过程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>企业应用软件架构设计过程 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1、引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81%E6%A6%82%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">2、概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%E3%80%81%E5%90%84%E9%98%B6%E6%AE%B5%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">3、各阶段介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1%E3%80%81%E5%BB%BA%E8%AE%BE%E5%86%85%E5%AE%B9%E6%98%8E%E7%A1%AE"><span class="nav-number">3.1.</span> <span class="nav-text">3.1、建设内容明确</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2%E3%80%81%E5%85%B3%E9%94%AE%E7%94%A8%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">3.2、关键用例分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3%E3%80%81%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E9%A2%84%E7%A0%94"><span class="nav-number">3.3.</span> <span class="nav-text">3.3、关键技术预研</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1%E3%80%81%E9%A3%8E%E9%99%A9%E5%AF%B9%E7%AD%96%E5%88%B6%E5%AE%9A"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1、风险对策制定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2%E3%80%81%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E9%A2%84%E7%A0%94"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2、关键技术预研</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3%E3%80%81%E5%85%B3%E9%94%AE%E7%94%A8%E4%BE%8B%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3、关键用例设计与开发框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4%E3%80%81%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.4.</span> <span class="nav-text">3.4、系统架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5%E3%80%81%E6%9E%B6%E6%9E%84%E5%8E%9F%E5%9E%8B%E5%BC%80%E5%8F%91"><span class="nav-number">3.5.</span> <span class="nav-text">3.5、架构原型开发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%E3%80%81%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">4、结束语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5%E3%80%81Q-amp-A"><span class="nav-number">5.</span> <span class="nav-text">5、Q&amp;A</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/openresty%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          企业应用软件架构设计过程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-07 13:59:54" itemprop="dateCreated datePublished" datetime="2018-04-07T13:59:54+08:00">2018-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9E%B6%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1、引言"><a href="#1、引言" class="headerlink" title="1、引言"></a>1、引言</h1><p>本文不是学术性文章，也不是某些标准化理论的阐述，而是根据所从事J2EE应用软件架构设计工作的经验，谈谈自己对软件架构设计过程的理解，希望能让一些徘徊于门口的同学能对企业应用软件架构设计的目标、价值与方法有个大致概念。文中所举例子及分析方法受个人经验背景约束，可能在一定程度上会存在误导性，软件架构设计过程大同小异，例子主要还是用于辅助说明设计过程。</p>
+<p>　　对于架构设计，如果用建筑来比拟的话，有点类似这样：这是我们将修建一座大教堂，甲方有这样的一些特殊要求，比如大堂要能容纳5000人，中间不能有柱子，祷告时不能出现回响，透光度好白天可以无需照明,等等。那么为了满足上述要求，经架构师的设计论证：教堂的主体框架结构是这样的，相互之间的承重关系结构是这样的，配套支撑的地基必须这样打；那么同学们要注意这里、这里还有这里的柱子&#x2F;承重墙&#x2F;横梁是关键，另外这几处的配重平衡结构必须保持；教堂期望用100年，所以在这的几部分区域是预留用于扩建天台&#x2F;地下室&#x2F;副楼等，扩建时必须要按照前述这样以及那样的约束与规范来实施，从而避免影响地基稳固性和整体结构。</p>
+<p> </p>
+<h1 id="2、概览"><a href="#2、概览" class="headerlink" title="2、概览"></a>2、概览</h1><p>软件架构设计这项工作的主要成果，应该是确保开发人员能够高效高质量的开展开发工作，且只要开发人员遵从架构设计文档就能确保所开发系统的稳定性和性能不会有致命问题，否则后续如果发现要进行设计层面的返工或重构，代价往往是高昂的。当然重构也有不同级别：代码级、模块级、子系统级、架构级；不同级别影响层面不同，适当的代码级甚至模块级重构，是可接受甚至推荐的。</p>
+<p>首先抛出一张软件架构设计工作路径，该图是根据个人经验和对工作的理解总结而成的，也用于指导本人所在公司的架构设计过程，但其并不是教科书上的那种标准套路，还请注意。题外话，用幻灯片工具来画图还是很方便的啊。</p>
+<p><img src="https://img-blog.csdn.net/20150127170443342?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGRoOTEx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"></p>
+<p>图：软件架构设计的工作路径示意图</p>
+<p>　　总体过程可以分为五部分：明确建设内容、分析关键用例、预研关键技术、设计系统架构和开发架构原型。其上的百分比意味着每个过程所占用的时间周期，而不是工作量或人月规模；各阶段投入的人力往往是越来越多的，但计划排定上的时间周期分配大致如图中所示。</p>
+<p>关于是否要产出文档、产出多少文档之类的问题，往往是技术管理者经常会纠结的问题。但很可惜没有绝对意义的标准，应该说要看项目类型（产品&#x2F;实施）、项目规模以及对应文档的类型：大部分中间文档是用来提升沟通效率的，在确保避免二义性的前提下进行简化是没有问题的，甚至简化到只剩概念图加说明文字；但是最终概要设计文档、关键组件设计以及开发指南，这三类文档是不能简化的，因为这些文档将会贯穿整个项目的生命周期，缺失或不够详实会给后续的二次开发和运维工作带来严重隐患，项目成果随着人员流动而遗失，越往后接手的人在泥潭里陷得越深。</p>
+<p> </p>
+<h1 id="3、各阶段介绍"><a href="#3、各阶段介绍" class="headerlink" title="3、各阶段介绍"></a>3、各阶段介绍</h1><h2 id="3-1、建设内容明确"><a href="#3-1、建设内容明确" class="headerlink" title="3.1、建设内容明确"></a>3.1、建设内容明确</h2><p>该阶段需要设计人员与需求人员共同完成。首先应由需求人员对设计人员进行总体需求培训，然后共同梳理项目业务内容和潜在需求。而最终目标就是明确项目关键技术目标是哪些，这些关键技术目标将会贯穿到整个架构设计过程中，在设计过程中不断充当技术决策时的评判依据。这里尝试用个例子来说明。</p>
+<p>业务部门提出新的业务规划，简称：秒杀系统。大致要求如下：</p>
+<p>◎ 商家为聚集人气，可发布某项商品为“秒杀商品”；</p>
+<p>◎ 此类商品往往为超低价商品且在特定时段开放购买；</p>
+<p>◎ 该商品预计可能会有海量用户并发争抢；</p>
+<p>◎ 以最终付款为结果，必须确保不发生超卖问题；</p>
+<p>◎ Balabalabala……</p>
+<p> </p>
+<p>技术部门在得到上业务需求后，需要首先对需求内容进行充分掌握，那么什么才算得上是充分掌握或者深刻理解？这就要求设计人员要将业务场景以系统流程的方式来进行完整通览，这个过程应与需求人员一起，大多数情况下会直接发生在白板上，并会伴随着不少问题的提出和明确，比如（以下例子在实际情况中业务部门一般都应当已明确了）：</p>
+<p>◎ 是否允许一个帐号开多个浏览器抢？</p>
+<p>——呃……如果是人在操作应该允许吧。</p>
+<p>——那么还得设计识别不允许宠物，呃，我的意思是，机器人操作。</p>
+<p>◎ 秒杀中途，卖家把库存调低或者取消咋办？</p>
+<p>——啥？扣他信用等级。等下，这不是关键。</p>
+<p>——首先不允许调低库存。</p>
+<p>——其次应该还是允许暂停秒杀，已经下单的由商家自行沟通退款。</p>
+<p>◎ 如果1万个人同时抢了10件商品，算谁的？</p>
+<p>——嗯……先下单的，呃，我是说先付款的那10个人吧。</p>
+<p>——如果根据银行转账结果来判断谁抢到，可能将面临大量冲正操作！</p>
+<p>——啊……也许先让部分人作为递补，比如100%规模排队等补漏，嗯。</p>
+<p>——万一拍到了，迟迟不付款怎么办？</p>
+<p>——这个……我们可以限制下付款期限，比如5分钟或者10分钟。</p>
+<p>——我觉得应该让他们提前转账到钱包里面，拍了就自动扣款！</p>
+<p>——这个跟我们商店的一般性购买流程不符，这个不妥，会被投诉的。</p>
+<p>——本来就是个特殊业务！要抢超低价，当然要有点准备。</p>
+<p>——不妥不妥，1万个人到时候9990个人要重新把钱转走，太可怕了！</p>
+<p>——Balabalabala……</p>
+<p>◎ 我建议增加个业务限制，同一时段内秒杀商品同时只能有比如10款？</p>
+<p>——嘿……小伙子建议不错，有前途。</p>
+<p> </p>
+<p>经过大量的这类讨论，技术部门和业务部门将得到更为清晰需求内容，并会在一些关键问题和非主流程上取得充分考虑。某些非常难以进行抉择的问题，可能会需要引入更多的关联用户部门（如市场、营销等）参与，最终也许要由业务架构师（或称领域架构师）报请决策层（Business Decision Maker）进行裁决。</p>
+<p>与业务人员完成探讨后形成经过整理的业务流程，简化的业务流程大致如下图所示（之所以说简化，是因为仍然有很多情况图中未表现，比如商家撤销商品、调整库存或修改秒杀时间等）：</p>
+<p><img src="https://img-blog.csdn.net/20150127170543885"></p>
+<p>图：秒杀业务的流程示意</p>
+<p>　　而后技术部门要基于上述成果进行关键技术目标的梳理，也即架构设计中，最需要解决的问题是哪些。在“秒杀”这个例子里面，最终问题可能将聚焦于：</p>
+<p>◎ 如何解决分布式海量并发对单一竞争资源的更新？</p>
+<p>◎ 如何应对分布式海量并发对服务器的冲击？</p>
+<p>◎ 如何控制分布式用户的竞拍准入时点（秒杀时点）？</p>
+<p> </p>
+<h2 id="3-2、关键用例分析"><a href="#3-2、关键用例分析" class="headerlink" title="3.2、关键用例分析"></a>3.2、关键用例分析</h2><p>该阶段同样需要设计人员与业务人员共同完成，首先是在上一环节的基础上要共同梳理出项目内具有代表性的关键用例（关键功能），是否具有代表性主要是看其是否能涵盖关键技术目标、涉众（用户类型）和技术风险点。</p>
+<p>关键用例分析主要基于两个内容：1、对项目需求的掌握；2、技术风险的梳理。其中对项目需求掌握来源于上一环节，实际上在业务流程掌握的过程中基本会同步得出一些候选的关键用例，比如基于你的技术敏感性可能就会觉得：查看商品介绍、确认下单、超时撤单之类较为复杂。</p>
+<p>技术风险点指本项目可能会引入的新技术或必须面对的技术难题，比如项目中要求与某遗留系统进行集成，这就需要将其作为技术风险点处理，提前着手研究该遗留系统的可行集成方式。技术风险点大多会由关键技术目标引出，但不代表所有关键技术目标都一定会引出新的技术风险点。如果某一关键技术目标在分析设计过程判断可以使用成熟技术应对，则不会将其作为技术风险点（但需要在架构原型开发过程中进行验证，这是后话了）。</p>
+<p>最终，结合业务需求和技术风险点，所梳理出的关键用例可能会包括：</p>
+<p>◎ 查看商品介绍：可能在秒杀时点前被凶猛的刷新等；此外还涉及到需要显示最新余量的问题。</p>
+<p>◎ 确认下单：分布式海量请求，竞争资源一致性保证，包括快速生成订单、实时更新库存、避免超卖等问题。</p>
+<p>◎ 暂停或取消商品的秒杀活动：重大干预类操作对主流程的各种影像处理。</p>
+<p>◎ 等等……</p>
+<p> </p>
+<p>所梳理的关键用例，应包含该关键用例完整逻辑流（比如分支判定依据、异常情况处理、冲正操作的影响）的分析，以及该关键用例中所应包含被验证的关键点（涉众、关键技术目标和技术风险点）。在梳理关键用例过程中会细化业务流程，从而可能会发现新的技术风险，从而形成一个迭代过程。</p>
+<p>以“确认下单”用例为例，该用例所面临的场景也需要依据业务需求来进行预估，以作为该关键用例的设计目标。再次强调这些场景不能仅仅是技术人员自己拍脑袋想出来，应该是需求人员经过调研评估得出。不同的商业模式对秒杀的要求是不一样的，比如12306的秒杀，跟超低价抢眼球的秒杀截然不同。</p>
+<p>这里为举例方便设定如下：</p>
+<p>◎  秒杀商品以广告效应为主，数量太多优惠不足则会丧失眼球效应，因而规模从1～1000；典型数量设定为100；</p>
+<p>◎  参与秒杀用户规模从0～100W；典型数量设定为10W；</p>
+<p>还需要确定该用例所需验证关键点（往往也即需解决的风险点）包括：</p>
+<p>◎  分布式海量请求排序，以决定下单先后顺序；</p>
+<p>◎  竞争资源的分布式海量更新，并保证其实时一致性；</p>
+<p>◎  超量下单（150%）的排队机制；</p>
+<p> </p>
+<h2 id="3-3、关键技术预研"><a href="#3-3、关键技术预研" class="headerlink" title="3.3、关键技术预研"></a>3.3、关键技术预研</h2><p>关键技术预研阶段，是整个架构设计过程的重心环节，其对各技术风险点的预研结果直接影响整体架构最终的效果，其影响面直接包括：用户满意度、设备成本、人力成本、运维成本。在预研过程中，往往需要根据预研结果调整策略与方案，权衡时间、收益与代价问题。这要求架构主管对项目的核心业务目标、公司已有积累与投入、技术发展成熟度等问题有清晰的把控，否则权衡取舍就无从下手，最终难以得到最优或近优设计方案。</p>
+<h3 id="3-3-1、风险对策制定"><a href="#3-3-1、风险对策制定" class="headerlink" title="3.3.1、风险对策制定"></a>3.3.1、风险对策制定</h3><p>根据风险复杂度，风险对策的制定过程可能是由多个人商讨确定；不同的策略往往有不同的实施代价和业务牺牲，所以多种策略的取舍选择是技术预研的重点，且取舍过程往往也需要有需求人员参与。</p>
+<p>以“竞争资源的分布式海量更新，并保证其实时一致性”来说，这里用拍脑袋的方式随意列举几个策略：</p>
+<p>◎ 策略1：针对秒杀商品，提供多个分中心支撑，被竞争资源由中央节点均匀分配到各分中心节点，中央节点再定期调配各分中心节点的余量（热门秒杀商品基本没有调配的需要）；</p>
+<p>—— 这种策略下多中心的资源调配复杂度会增大实施代价，此外也意味着不同分中心所支撑的用户群之间的竞争是隔离的，后者则可能是一种业务上的牺牲（高考录取分数线为啥不同区域差异很大）；但这种业务牺牲因其对最终用户而言基本是透明，所以经常也是可接受。</p>
+<p>◎ 策略2：针对秒杀商品，只提供一个集中式群集服务，所有下单请求统一由该集群提供服务，竞争资源修改用数据库事务保证；</p>
+<p>—— 这种策略下集中式群集服务意味着其最终容量规模可能受限，且不同地域的最终用户会因为网络接入差异存在竞争不对等，这两者都是业务上的牺牲；这种牺牲则很可能是显性（可感受）的，所以要谨慎考虑。</p>
+<p>◎ 策略3：针对秒杀商品，前端提供多个分站点来接收下单请求，后端使用单一服务器进行下单命中和竞争资源管理；</p>
+<p>—— 这种策略因其复杂度也存在实施代价的增加；此外单一服务器计算规模存在限制，还存在单点故障风险，因此也存在业务上的牺牲；业务牺牲或者被接受，或者有补偿机制进行处理以降低其影响面。</p>
+<p> </p>
+<p>得到了比较宏观的策略后，还需要在这次策略的基础上进行略细化一级的分析工作，从而可以进行关键技术的预研工作。在此环节中细化分析的目标是得到一个理论上可以实现的方案且基本识别出该方案的总体风险和代价，主要用于为下一步是否对该策略进行具体预研工作提供可行性判断。这里以策略3为例，细化设计可以是大致如下的一个逻辑示意图（实际设计过程中一般直接使用系统时序图或协作图即可，不需要使用花哨的图形）：</p>
+<p><img src="https://img-blog.csdn.net/20150127170738811"></p>
+<p>图：秒杀交易处理的逻辑示意图</p>
+<p>　　策略3的关键其实就在于：业务需求中的商品总量并不多。因此只要分站点把海量请求中大量的无效请求（明显轮不上的、晚到的请求）给排除掉就行了，以图中为例，典型商品规模为100的情况下，超过200（这里预留一些替补队员）以后抵达的请求实际上都可以直接被拒绝了。这样最终抵达中心机房秒杀服务器的请求数量也就在 2000 笔左右，稍微有经验的同学大概都能估计到就算是2W笔请求，单CPU处理起来也就是百把毫秒的事情了。</p>
+<p>细化设计的过程，会自然而然的形成一些需要被预研的关键技术点，这些技术点的研究成果就会构成各个策略之间最终取舍的决定性因素，当然也要继续多嘴说一句：必须包括业务因素。</p>
+<p> </p>
+<h3 id="3-3-2、关键技术预研"><a href="#3-3-2、关键技术预研" class="headerlink" title="3.3.2、关键技术预研"></a>3.3.2、关键技术预研</h3><p>关键技术预研要针对上一环节中每个策略先进行细化性设计，也就是需要得到一个该策略可行的技术实现方案，一般而言以系统流的方式体现。这里如下图所示（除分站点系统外，其它均为类模块）：</p>
+<p><img src="https://img-blog.csdn.net/20150127170747375"></p>
+<p>图：策略3中秒杀的关键技术预研</p>
+<p>　　图中红色虚框部分，是设计过程中识别出来的关键点，接下来就需要对这些关键技术点进行分析、测试、对比等，从而得到更为准确的代价估算、容量能力估算、业务牺牲程度等，直到能最终选定某种策略来解决该问题，这个过程就是技术预研。除非之前已经有经验数据支撑，否则每个技术点都需要进行预研，并最终拿出实际测试结论，用数字说话。</p>
+<p>这里以上图中红色虚框来作为例子：单一服务器究竟能处理多大规模的秒杀业务？实际上图中大致也看出，红色虚框中存在两个问题：1、分站点与秒杀服务器之间网络开销问题；2、担负着并发竞争的计数器和超量判断。</p>
+<p>那么接下来以单一服务器（其实就是俺可怜的笔记本了），多线程来进行一些数据测试，测试内容比较简单就是自增运算了（简单起见直接用了AtomicInteger，具体程序略）：</p>
+<p>◎ 程序自身进行并发计算（这个相当于无网络开销下的性能评估，基准）</p>
+<p>—— 50并发，各10W次自增：488ms；</p>
+<p>◎ 做成REST服务被调用（也即标准HTTP协议开销下的性能评估）</p>
+<p>—— 50并发，各10W次自增：39428ms；（协议开销好可怕）</p>
+<p>◎ 同上但是用KeepAlive（也即消除了TCP连接握手建立的开销）</p>
+<p>—— 50并发，各10W次自增：3923ms；（所以是TCP握手开销很可怕）</p>
+<p>◎ 直接以私有协议方式提供服务被调用（继续消除HTTP协议解析开销）</p>
+<p>—— 50并发，各10W次自增：1014ms；</p>
+<p>以上是各种评测情况，从测试数据可以发现，即便是一种策略也有很多实现细节问题，很多假设光靠猜是不靠谱的，一定要有数据支撑。在这个例子中，如果以私有协议的话，单机每秒中可以同时处理来自于50个分站点发起共500W次商品库存数量计算，那么最终很可能就会选择使用私有协议。</p>
+<p>另外需要特别强调的是：以上测试用自增运算只是为示范简单，实际做评测应该关注于技术点上的瓶颈发现与验证。此外在测试数据搜集方面，应使用多组并发规模来进行测试，以得到其性能曲线，从而更好估算其性能拐点。</p>
+<p> </p>
+<h3 id="3-3-3、关键用例设计与开发框架"><a href="#3-3-3、关键用例设计与开发框架" class="headerlink" title="3.3.3、关键用例设计与开发框架"></a>3.3.3、关键用例设计与开发框架</h3><p>在技术预研完成后，根据最终决定选用的策略（其实往往是在技术预研过程中又不断调整了策略最终形成一个迭代优化的结果），进行关键用例的设计工作。其过程基本类似于详细设计，但因为关键用例除了自身存在设计关键性外，也往往承担着指导开发人员进行规模化开发和运维人员进行二次开发等作用，有着类似于样板或最佳实践类的作用，所以一般来说要比详细设计要多一些技术预研所形成的分析性结论。</p>
+<p>关键用例设计其实相当于把之前策略制定和技术预研的最终成果书面化下来，既是项目的设计成果也是项目的需求分析成果，因为这其中往往会引发一些业务上的变化，有时候是微调、有时候是牺牲、有时候是改进。关键用例设计成果应包括逻辑视图、流程视图、模块视图，和少量核心伪代码。一般来说，文档侧重使用图形能够更充分实现沟通效果，避免误解和偏差，而细节性文字说明也可以考虑直接落入对应模块的头注释中。</p>
+<p>最后是开发框架的搭建，在关键用例设计工作开展过程中，如果公共性或基础性关键用例已经设计完毕，就可以同步启动开发框架的搭建工作。目标是为后续的开发过程提供一个基础开发平台，一般来说企业内部均有不同成熟度的开发框架，并不需要另起炉灶，且工作内容也基本大同小异，这里不做赘述。</p>
+<p> </p>
+<h2 id="3-4、系统架构设计"><a href="#3-4、系统架构设计" class="headerlink" title="3.4、系统架构设计"></a>3.4、系统架构设计</h2><p>系统架构设计阶段，包括总体逻辑架构的设计和各种维度对系统架构的描述，所以也称为架构视图，包括：集成架构视图、部署架构视图、数据架构视图、运行架构视图、开发架构视图。意指在集成关系角度、部署结构角度、数据模型角度是如何看待或阐述该系统的。</p>
+<p>系统总体逻辑架构一方面用于指导各架构视图的总体原则，另一方面各架构视图在细化过程中可能需要对总体逻辑架构进行微调。总体逻辑架构的规划，主要基于以下几点：</p>
+<p>◎ 关键技术预研的考虑：关键技术研究成果中，对于系统逻辑架构有无一定约束性要求，比如通讯机制要求、接口方式要求等；</p>
+<p>◎ 分层结构方面的考虑：从此类系统一般性开发的角度或者研发部门所积累的开发框架构成角度，系统会分为哪些层，每个层负责什么职能，比如：展现层、应用层、服务层、资源层等；</p>
+<p>◎ 部署与安全层面的考虑：依据本系统信息安全方面的需要，比如对于系统在数据流转、管理、存储方面需要注意哪些设计划分；</p>
+<p>◎ 业务领域划分的考虑：不同业务领域的拆分关系及之间的依赖关系，领域之内高度内聚、领域之间降低耦合，比如资讯类业务、交易类业务、通知类业务就可进行拆分。</p>
+<p> </p>
+<p>系统架构设计的各种视图模型，各类设计类书籍介绍均比较规范和详细，这里就不班门弄斧了。这里想特别要强调的是，部署设计是这一阶段的重要环节。因为大部分设计内容如集成架构、数据架构、运行架构，基于两个积累基本上都能很快定型：1、研发部门以往所积累的开发框架、公共构件和开发规范；2、历史产品所形成的业务积累和数据模型设计。此外主要的技术疑难问题也都在之前的关键技术预研中得到解决方案和实现约束。</p>
+<p>而部署架构则会比较麻烦，因为其关系到现存资源的合理利用及新投资预算问题。不能说新开发的业务或子系统就来一套全新设备，甚至某些基础设备不是随意就可以增配的。比如原西南分站点到总部的链路带宽只有100Mbps，不是说随时就可以升级到1000Mbps的。因此部署架构方面的问题往往在这一环节凸显，但实际上应该是从关键用例分析阶段就要开始纳入考虑的，因为不同的设计策略本身就会有不同的设备分布和配置等要求。架构设计者入门阶段比较容易发生的问题之一就是前期忽视了对部署方面的考虑。</p>
+<p> </p>
+<h2 id="3-5、架构原型开发"><a href="#3-5、架构原型开发" class="headerlink" title="3.5、架构原型开发"></a>3.5、架构原型开发</h2><p>最后阶段是架构原型开发。就我个人理解来说，其实这个阶段非必选，如果是大型软件项目，那么这个阶段是需要的，尤其系统规模和复杂度越高其必要性越强；而如果是50人月以内的项目，其实没有太大架构原型开发的必要性，因为不太存在规模化复制开发的需要。尤其是很多互联网软件，3个月就要上线了，基本上可以直接在开发框架基础上就开始开发工作，上线后则通过短期快速的产品升级迭代来不断完善。</p>
+<p>对于架构原型开发过程来说，主要包括：关键用例实现、公共组件抽取、用例整理、开发指南及培训。这里面每一项工作复杂度都不太高，但是要求细致。以关键用例实现来说，这其实就是最佳实践，用来实打实指导代码工程师进行批量开发。而公共组件抽取的效果则直接决定批量开发的效率，用一个常见的例子来说：如果我们开发一个报表系统，包含600张不同类型的查询和统计报表，如果有一个比较完备的报表引擎可以配置，跟直接让代码工程师用JSP去堆，两者显然有很大的实施成本差异。</p>
+<p> </p>
+<h1 id="4、结束语"><a href="#4、结束语" class="headerlink" title="4、结束语"></a>4、结束语</h1><p>最后还想简单说一个非技术性问题：架构师都有领域问题，电商领域、操作系统领域、视频游戏领域、金融领域、ERP领域等等；想真的成为合格的架构师，必须热爱自己的领域和深入领域知识，对领域背景知识的掌握其实往往决定了是否能真正成为架构师或者说架构师的高度。如果想成为“通用IT架构师”，那恐怕真是对不起，估计是误解了对通用的理解，如果认真想想就会知道真的没有绝对意义的通用概念。可能实际上你是想成为一名“主流领域架构师”，比如电商领域目前就比操作系统领域的就业或发展空间大，如果基于这种考虑确实是比较合理的，但这就决定了你是否还应该在你目前的领域上继续发展下去。至于是做小池子里面的大鱼好，还是做大池子里面的小鱼好，那就是另一种话题了。</p>
+<p> </p>
+<h1 id="5、Q-amp-A"><a href="#5、Q-amp-A" class="headerlink" title="5、Q&amp;A"></a>5、Q&amp;A</h1><p>Q：软件架构设计过程都这么复杂么？感觉平时开发没这么多事情啊？</p>
+<p>A：所列举的例子是一个企业应用软件或产品“从无到有”的过程，而日常开发往往是基于某个产品做二次开发，或基于某个系统进行功能扩展，又或是在以前的V1.0版本上升级V2.0，必然很多过程都是直接被裁剪掉了。此外软件规模对于设计过程的要求也有很大差异，简单来说开发个记事本跟开发个MMORPG显然对规划设计的要求差距是巨大的。</p>
+<p> </p>
+<p>Q：这个例子的适应性不强啊，如果是全国网民秒杀1000万库存商品能用么？</p>
+<p>A：当然不能。业务内涵很重要，有很多业务听名字看起来像，但内涵差距很大，背后就需要使用不同的设计模型来解决。比如咋一听似乎秒杀火车票跟秒杀小米手机差不多，但实际复杂度的话秒杀火车票恐怕要甩秒杀小米手机几条街，比如同一车次上座位可以重复利用的问题，就够喝一大壶了。</p>
+<p> </p>
+<p>Q：这就是个瀑布模型嘛，显然不适合现在随需应变的业务了，原型法才是王道。</p>
+<p>A：不同软件规模和领域积累程度也对设计过程有决定性作用，如果团队中有个具有此类系统丰富经验的架构师（或主程），那么往往可以基于一个半成熟甚至近成熟的原型系统进行快速迭代，因为实际这就是基于某个架构来做演进而不是“从无到有”。此外，还跟商机时间与业务规模有关，比如市场要求快速抢占商机，且可预计的今年内业务规模不会井喷式，那么完全可以用一个快速设计的半成熟系统先应对，一方面搜集实际业务的关键点与变化性要求，另一方面用赢得的市场时间窗口来开始再进行V2.0的设计。</p>
+<p> </p>
+<p>Q：你的例子是不是泄露商业秘密了啊？</p>
+<p>A：不可能啊。我从事行业并不提供秒杀类功能服务，也没有咨询过此类业务的实际设计实现方式。如果意外发现雷同，那可真是纯属巧合。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9E%B6%E6%9E%84/" rel="tag"># 架构</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/07/nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" rel="prev" title="nginx配置详解">
+                  <i class="fa fa-chevron-left"></i> nginx配置详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/07/web-server%E5%AF%B9%E6%AF%94/" rel="next" title="Web Server对比">
+                  Web Server对比 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的 linux系统中，我们称之为traceroute,在MS Windows中为tracert。 traceroute通过发送小的数据包到目的设备直到其返回，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux traceroute命令详解和使用例子">
+<meta property="og:url" content="http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的 linux系统中，我们称之为traceroute,在MS Windows中为tracert。 traceroute通过发送小的数据包到目的设备直到其返回，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-01T01:27:24.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.070Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/","path":"2018/06/01/linux-traceroute命令详解和使用例子/","title":"Linux traceroute命令详解和使用例子"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux traceroute命令详解和使用例子 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux traceroute命令详解和使用例子
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-01 09:27:24" itemprop="dateCreated datePublished" datetime="2018-06-01T09:27:24+08:00">2018-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的</p>
+<p>linux系统中，我们称之为traceroute,在MS Windows中为tracert。 traceroute通过发送小的数据包到目的设备直到其返回，来测量其需要多长时间。一条路径上的每个设备traceroute要测3次。输出结果中包括每次测试的时间(ms)和设备的名称（如有的话）及其IP地址。</p>
+<p>在大多数情况下，我们会在linux主机系统下，直接执行命令行：traceroute hostname</p>
+<p>而在Windows系统下是执行tracert的命令： tracert hostname</p>
+<p><strong>1.命令格式：</strong></p>
+<p>traceroute[参数][主机]</p>
+<p><strong>2.命令功能：</strong></p>
+<p>traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p>
+<p>具体参数格式：traceroute [-dFlnrvx][-f&lt;存活数值&gt;][-g&lt;网关&gt;…][-i&lt;网络界面&gt;][-m&lt;存活数值&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-t&lt;服务类型&gt;][-w&lt;超时秒数&gt;][主机名称或IP地址][数据包大小]</p>
+<p><strong>3.命令参数：</strong></p>
+<p>-d 使用Socket层级的排错功能。</p>
+<p>-f 设置第一个检测数据包的存活数值TTL的大小。</p>
+<p>-F 设置勿离断位。</p>
+<p>-g 设置来源路由网关，最多可设置8个。</p>
+<p>-i 使用指定的网络界面送出数据包。</p>
+<p>-I 使用ICMP回应取代UDP资料信息。</p>
+<p>-m 设置检测数据包的最大存活数值TTL的大小。</p>
+<p>-n 直接使用IP地址而非主机名称。</p>
+<p>-p 设置UDP传输协议的通信端口。</p>
+<p>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。</p>
+<p>-s 设置本地主机送出数据包的IP地址。</p>
+<p>-t 设置检测数据包的TOS数值。</p>
+<p>-v 详细显示指令的执行过程。</p>
+<p>-w 设置等待远端主机回报的时间。</p>
+<p>-x 开启或关闭数据包的正确性检验。</p>
+<p><strong>4.使用实例：</strong></p>
+<p><strong>实例1：traceroute 用法简单、最常用的用法</strong></p>
+<p>命令：traceroute <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 192.168.74.2 (192.168.74.2) 2.606 ms 2.771 ms 2.950 ms<br>2 211.151.56.57 (211.151.56.57) 0.596 ms 0.598 ms 0.591 ms<br>3 211.151.227.206 (211.151.227.206) 0.546 ms 0.544 ms 0.538 ms<br>4 210.77.139.145 (210.77.139.145) 0.710 ms 0.748 ms 0.801 ms<br>5 202.106.42.101 (202.106.42.101) 6.759 ms 6.945 ms 7.107 ms<br>6 61.148.154.97 (61.148.154.97) 718.908 ms * bt-228-025.bta.net.cn (202.106.228.25) 5.177 ms<br>7 124.65.58.213 (124.65.58.213) 4.343 ms 4.336 ms 4.367 ms<br>8 202.106.35.190 (202.106.35.190) 1.795 ms 61.148.156.138 (61.148.156.138) 1.899 ms 1.951 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p>
+<p>说明：</p>
+<p>记录按序列号从1开始，每个纪录就是一跳 ，每跳表示一个网关，我们看到每行有三个时间，单位是 ms，其实就是-q的默认参数。探测数据包向每个网关发送三个数据包后，网关响应后返回的时间；如果您用 traceroute -q 4 <a target="_blank" rel="noopener" href="http://www.58.com/">www.58.com</a> ，表示向每个网关发送4个数据包。</p>
+<p>有时我们traceroute 一台主机时，会看到有一些行是以星号表示的。出现这样的情况，可能是防火墙封掉了ICMP的返回信息，所以我们得不到什么相关的数据包返回数据。</p>
+<p>有时我们在某一网关处延时比较长，有可能是某台网关比较阻塞，也可能是物理设备本身的原因。当然如果某台DNS出现问题时，不能解析主机名、域名时，也会 有延时长的现象；您可以加-n 参数来避免DNS解析，以IP格式输出数据。</p>
+<p>如果在局域网中的不同网段之间，我们可以通过traceroute 来排查问题所在，是主机的问题还是网关的问题。如果我们通过远程来访问某台服务器遇到问题时，我们用到traceroute 追踪数据包所经过的网关，提交IDC服务商，也有助于解决问题；但目前看来在国内解决这样的问题是比较困难的，就是我们发现问题所在，IDC服务商也不可能帮助我们解决。</p>
+<p><strong>实例2：跳数设置</strong></p>
+<p>命令：traceroute -m 10 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -m 10 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.105), 10 hops max, 40 byte packets<br>1 192.168.74.2 (192.168.74.2) 1.534 ms 1.775 ms 1.961 ms<br>2 211.151.56.1 (211.151.56.1) 0.508 ms 0.514 ms 0.507 ms<br>3 211.151.227.206 (211.151.227.206) 0.571 ms 0.558 ms 0.550 ms<br>4 210.77.139.145 (210.77.139.145) 0.708 ms 0.729 ms 0.785 ms<br>5 202.106.42.101 (202.106.42.101) 7.978 ms 8.155 ms 8.311 ms<br>6 bt-228-037.bta.net.cn (202.106.228.37) 772.460 ms bt-228-025.bta.net.cn (202.106.228.25) 2.152 ms 61.148.154.97 (61.148.154.97) 772.107 ms<br>7 124.65.58.221 (124.65.58.221) 4.875 ms 61.148.146.29 (61.148.146.29) 2.124 ms 124.65.58.221 (124.65.58.221) 4.854 ms<br>8 123.126.6.198 (123.126.6.198) 2.944 ms 61.148.156.6 (61.148.156.6) 3.505 ms 123.126.6.198 (123.126.6.198) 2.885 ms<br>9 * * *<br>10 * * *<br>[root@localhost ~]#</p>
+<p> </p>
+<p><strong>实例3：显示IP地址，不查主机名</strong></p>
+<p>命令：traceroute -n <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -n <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 5.430 ms 5.636 ms 5.802 ms<br>2 211.151.56.57 0.627 ms 0.625 ms 0.617 ms<br>3 211.151.227.206 0.575 ms 0.584 ms 0.576 ms<br>4 210.77.139.145 0.703 ms 0.754 ms 0.806 ms<br>5 202.106.42.101 23.683 ms 23.869 ms 23.998 ms<br>6 202.106.228.37 247.101 ms * *<br>7 61.148.146.29 5.256 ms 124.65.58.213 4.386 ms 4.373 ms<br>8 202.106.35.190 1.610 ms 61.148.156.138 1.786 ms 61.148.3.34 2.089 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]# traceroute <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 4.671 ms 4.865 ms 5.055 ms<br>2 211.151.56.57 (211.151.56.57) 0.619 ms 0.618 ms 0.612 ms<br>3 211.151.227.206 (211.151.227.206) 0.620 ms 0.642 ms 0.636 ms<br>4 210.77.139.145 (210.77.139.145) 0.720 ms 0.772 ms 0.816 ms<br>5 202.106.42.101 (202.106.42.101) 7.667 ms 7.910 ms 8.012 ms<br>6 bt-228-025.bta.net.cn (202.106.228.25) 2.965 ms 2.440 ms 61.148.154.97 (61.148.154.97) 431.337 ms<br>7 124.65.58.213 (124.65.58.213) 5.134 ms 5.124 ms 5.044 ms<br>8 202.106.35.190 (202.106.35.190) 1.917 ms 2.052 ms 2.059 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p>
+<p><strong>实例4：探测包使用的基本UDP端口设置6888</strong></p>
+<p>命令：traceroute -p 6888 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -p 6888 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (220.181.111.147), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 4.927 ms 5.121 ms 5.298 ms<br>2 211.151.56.1 (211.151.56.1) 0.500 ms 0.499 ms 0.509 ms<br>3 211.151.224.90 (211.151.224.90) 0.637 ms 0.631 ms 0.641 ms<br>4 * * *<br>5 220.181.70.98 (220.181.70.98) 5.050 ms 5.313 ms 5.596 ms<br>6 220.181.17.94 (220.181.17.94) 1.665 ms !X * *<br>[root@localhost ~]#</p>
+<p><strong>实例5：把探测包的个数设置为值4</strong></p>
+<p>命令：traceroute -q 4 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -q 4 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 40.633 ms 40.819 ms 41.004 ms 41.188 ms<br>2 211.151.56.57 (211.151.56.57) 0.637 ms 0.633 ms 0.627 ms 0.619 ms<br>3 211.151.227.206 (211.151.227.206) 0.505 ms 0.580 ms 0.571 ms 0.569 ms<br>4 210.77.139.145 (210.77.139.145) 0.753 ms 0.800 ms 0.853 ms 0.904 ms<br>5 202.106.42.101 (202.106.42.101) 7.449 ms 7.543 ms 7.738 ms 7.893 ms<br>6 61.148.154.97 (61.148.154.97) 316.817 ms bt-228-025.bta.net.cn (202.106.228.25) 3.695 ms 3.672 ms *<br>7 124.65.58.213 (124.65.58.213) 3.056 ms 2.993 ms 2.960 ms 61.148.146.29 (61.148.146.29) 2.837 ms<br>8 61.148.3.34 (61.148.3.34) 2.179 ms 2.295 ms 2.442 ms 202.106.35.190 (202.106.35.190) 7.136 ms<br>9 * * * *<br>30 * * * *<br>[root@localhost ~]#</p>
+<p><strong>实例6：绕过正常的路由表，直接发送到网络相连的主机</strong></p>
+<p>命令：traceroute -r <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -r <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>connect: 网络不可达<br>[root@localhost ~]#</p>
+<p>实例7：把对外发探测包的等待响应时间设置为3秒</p>
+<p>命令：traceroute -w 3 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>输出：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>[root@localhost ~]# traceroute -w 3 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.105), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 2.306 ms 2.469 ms 2.650 ms<br>2 211.151.56.1 (211.151.56.1) 0.621 ms 0.613 ms 0.603 ms<br>3 211.151.227.206 (211.151.227.206) 0.557 ms 0.560 ms 0.552 ms<br>4 210.77.139.145 (210.77.139.145) 0.708 ms 0.761 ms 0.817 ms<br>5 202.106.42.101 (202.106.42.101) 7.520 ms 7.774 ms 7.902 ms<br>6 bt-228-025.bta.net.cn (202.106.228.25) 2.890 ms 2.369 ms 61.148.154.97 (61.148.154.97) 471.961 ms<br>7 124.65.58.221 (124.65.58.221) 4.490 ms 4.483 ms 4.472 ms<br>8 123.126.6.198 (123.126.6.198) 2.948 ms 61.148.156.6 (61.148.156.6) 7.688 ms 7.756 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p>
+<p><strong>Traceroute的工作原理：</strong></p>
+<p>Traceroute最简单的基本用法是：traceroute hostname</p>
+<p>Traceroute程序的设计是利用ICMP及IP header的TTL（Time To Live）栏位（field）。首先，traceroute送出一个TTL是1的IP datagram（其实，每次送出的为3个40字节的包，包括源地址，目的地址和包发出的时间标签）到目的地，当路径上的第一个路由器（router）收到这个datagram时，它将TTL减1。此时，TTL变为0了，所以该路由器会将此datagram丢掉，并送回一个「ICMP time exceeded」消息（包括发IP包的源地址，IP包的所有内容及路由器的IP地址），traceroute 收到这个消息后，便知道这个路由器存在于这个路径上，接着traceroute 再送出另一个TTL是2 的datagram，发现第2 个路由器…… traceroute 每次将送出的datagram的TTL 加1来发现另一个路由器，这个重复的动作一直持续到某个datagram 抵达目的地。当datagram到达目的地后，该主机并不会送回ICMP time exceeded消息，因为它已是目的地了，那么traceroute如何得知目的地到达了呢？</p>
+<p>Traceroute在送出UDP datagrams到目的地时，它所选择送达的port number 是一个一般应用程序都不会用的号码（30000 以上），所以当此UDP datagram 到达目的地后该主机会送回一个「ICMP port unreachable」的消息，而当traceroute 收到这个消息时，便知道目的地已经到达了。所以traceroute 在Server端也是没有所谓的Daemon 程式。</p>
+<p>Traceroute提取发 ICMP TTL到期消息设备的IP地址并作域名解析。每次 ，Traceroute都打印出一系列数据,包括所经过的路由设备的域名及 IP地址,三个包每次来回所花时间。</p>
+<p><strong>windows之tracert:</strong></p>
+<p>格式：</p>
+<p>tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout] target_name</p>
+<p>参数说明：</p>
+<p>tracert [-d] [-h maximum_hops] [-j computer-list] [-w timeout] target_name</p>
+<p>该诊断实用程序通过向目的地发送具有不同生存时间 (TL) 的 Internet 控制信息协议 (CMP) 回应报文，以确定至目的地的路由。路径上的每个路由器都要在转发该 ICMP 回应报文之前将其 TTL 值至少减 1，因此 TTL 是有效的跳转计数。当报文的 TTL 值减少到 0 时，路由器向源系统发回 ICMP 超时信息。通过发送 TTL 为 1 的第一个回应报文并且在随后的发送中每次将 TTL 值加 1，直到目标响应或达到最大 TTL 值，Tracert 可以确定路由。通过检查中间路由器发发回的 ICMP 超时 (ime Exceeded) 信息，可以确定路由器。注意，有些路由器“安静”地丢弃生存时间 (TLS) 过期的报文并且对 tracert 无效。</p>
+<p>参数：</p>
+<p>-d 指定不对计算机名解析地址。</p>
+<p>-h maximum_hops 指定查找目标的跳转的最大数目。</p>
+<p>-jcomputer-list 指定在 computer-list 中松散源路由。</p>
+<p>-w timeout 等待由 timeout 对每个应答指定的毫秒数。</p>
+<p>target_name 目标计算机的名称。</p>
+<p>实例：</p>
+<p>复制代码</p>
+<p>代码如下:</p>
+<p>C:\Users\Administrator&gt;tracert <a target="_blank" rel="noopener" href="http://www.58.com/">www.58.com</a><br>Tracing route to <a target="_blank" rel="noopener" href="http://www.58.com/">www.58.com</a> [221.187.111.30]<br>over a maximum of 30 hops:<br>1 1 ms 1 ms 1 ms 10.58.156.1<br>2 1 ms &lt;1 ms &lt;1 ms 10.10.10.1<br>3 1 ms 1 ms 1 ms 211.103.193.129<br>4 2 ms 2 ms 2 ms 10.255.109.129<br>5 1 ms 1 ms 3 ms 124.205.98.205<br>6 2 ms 2 ms 2 ms 124.205.98.253<br>7 2 ms 6 ms 1 ms 202.99.1.125<br>8 5 ms 6 ms 5 ms 118.186.0.113<br>9 207 ms * * 118.186.0.106<br>10 8 ms 6 ms 11 ms 124.238.226.201<br>11 6 ms 7 ms 6 ms 219.148.19.177<br>12 12 ms 12 ms 16 ms 219.148.18.117<br>13 14 ms 17 ms 16 ms 219.148.19.125<br>14 13 ms 13 ms 12 ms 202.97.80.113<br>15 * * * Request timed out.<br>16 12 ms 12 ms 17 ms bj141-147-82.bjtelecom.net [219.141.147.82]<br>17 13 ms 13 ms 12 ms 202.97.48.2<br>18 * * * Request timed out.<br>19 14 ms 14 ms 12 ms 221.187.224.85<br>20 15 ms 13 ms 12 ms 221.187.104.2<br>21 * * * Request timed out.<br>22 15 ms 17 ms 18 ms 221.187.111.30<br>Trace complete.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/" rel="prev" title="浅谈Redis数据库的键值设计(转)">
+                  <i class="fa fa-chevron-left"></i> 浅谈Redis数据库的键值设计(转)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/16/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0-consul-%E7%9A%84%E4%BB%8B%E7%BB%8D%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E4%BD%BF%E7%94%A8/" rel="next" title="服务发现 - consul 的介绍、部署和使用">
+                  服务发现 - consul 的介绍、部署和使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

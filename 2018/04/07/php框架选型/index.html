@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="为何使用框架使用框架主要是在团队协作开发过程中统一开发规范、程序设计模式，遵循开发框架的各种约定，无论在编码还是以后的维护过程中都是易于管理的。另外就是框架会集成丰富的类库、函数库，也避免你的重复劳动，可以“随地取材”，提升开发的效率。作为新人，我们是不提倡学习框架的，尽量还是从PHP本身先学起，例如很多框架中都提供了ORM、CURD这类东西，但刚刚接触PHP的同学连PHP+MySQL都没有搞太清">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php框架选型">
+<meta property="og:url" content="http://example.com/2018/04/07/php%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为何使用框架使用框架主要是在团队协作开发过程中统一开发规范、程序设计模式，遵循开发框架的各种约定，无论在编码还是以后的维护过程中都是易于管理的。另外就是框架会集成丰富的类库、函数库，也避免你的重复劳动，可以“随地取材”，提升开发的效率。作为新人，我们是不提倡学习框架的，尽量还是从PHP本身先学起，例如很多框架中都提供了ORM、CURD这类东西，但刚刚接触PHP的同学连PHP+MySQL都没有搞太清">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.laruence.com/manual/images/ap.jpg">
+<meta property="og:image" content="http://files.jb51.net/file_images/article/201412/2014122511133722.jpg">
+<meta property="og:image" content="http://files.jb51.net/file_images/article/201412/2014122511133723.jpg">
+<meta property="og:image" content="http://files.jb51.net/file_images/article/201412/2014122511133724.jpg">
+<meta property="og:image" content="http://files.jb51.net/file_images/article/201412/2014122511133725.jpg">
+<meta property="article:published_time" content="2018-04-07T04:34:51.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.076Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.laruence.com/manual/images/ap.jpg">
+
+
+<link rel="canonical" href="http://example.com/2018/04/07/php%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/07/php%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/","path":"2018/04/07/php框架选型/","title":"php框架选型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>php框架选型 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">为何使用框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">选择什么样的框架</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/07/php%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php框架选型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-07 12:34:51" itemprop="dateCreated datePublished" datetime="2018-04-07T12:34:51+08:00">2018-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="为何使用框架"><a href="#为何使用框架" class="headerlink" title="为何使用框架"></a>为何使用框架</h2><p>使用框架主要是在团队协作开发过程中统一开发规范、程序设计模式，遵循开发框架的各种约定，无论在编码还是以后的维护过程中都是易于管理的。另外就是框架会集成丰富的类库、函数库，也避免你的重复劳动，可以“随地取材”，提升开发的效率。作为新人，我们是不提倡学习框架的，尽量还是从PHP本身先学起，例如很多框架中都提供了ORM、CURD这类东西，但刚刚接触PHP的同学连PHP+MySQL都没有搞太清楚，直接选择框架式不可取的。<br>另外一些简单的应用也不必选择框架，例如一些小的工具或者功能，本身编写就不是很复杂，选择一套框架反而让你的程序变得臃肿。个人开发的时候也是根据情况而定，如果一些程序员本身就有一套开发思路，也无需选择框架，毕竟要熟悉框架也是需要时间成本的。<br>综上所述，我们得知选择框架是有范围的，只有合适的时候才需要去选择开发框架。</p>
+<h2 id="选择什么样的框架"><a href="#选择什么样的框架" class="headerlink" title="选择什么样的框架"></a>选择什么样的框架</h2><p>选择一个开发框架主要看几点：</p>
+<ol>
+<li>易配置、易部署；</li>
+<li>库、函数；</li>
+<li>文档；</li>
+<li>丰富的应用；</li>
+<li>成熟的社区；</li>
+<li>性能；</li>
+</ol>
+<p>不同层次的技术员选择框架所看重的点也是不一样的，如果是初学者，主要是看重1、3、5，中级的技术员则看重2、4，如果是高级别的技术员会更加看重6，所以不同阶段会选择不同的开发框架。当然，成熟的开发框架应该能够包罗方方面面，但能够做到这些是不可能的。</p>
+<p>PHP是一种在国内外都比较流行的开源服务器端脚本开发语言。能够适应大中小型项目的开发需求。我将在这篇文章中向大家介绍几款主流PHP框架及其相关优缺点评比，作为一个参考分享给朋友们。</p>
+<p>主要参考的PHP框架包括：Yaf、ThinkPHP、Yii、Laravel、Phalcon、CodeIgniter、CakePHP、ZendFramework、Symfony、Slim。我对很多框架也没有认真使用，只是简单试用了一下，可能很多看法不成熟或者是错误的，请大家指正，一起成长。</p>
+<p><a target="_blank" rel="noopener" href="http://www.laruence.com/manual/">Yaf</a></p>
+<p><img src="http://www.laruence.com/manual/images/ap.jpg"></p>
+<p>极简主义框架。</p>
+<p>Thinkphp</p>
+<p> </p>
+<p> <a target="_blank" rel="noopener" href="http://codeigniter.com/"><strong>CodeIgniter</strong></a></p>
+<p><img src="http://files.jb51.net/file_images/article/201412/2014122511133722.jpg"></p>
+<p>优点：</p>
+<ol>
+<li><p>配置简单，全部的配置使用PHP脚本来配置，执行效率高；具有基本的路由功能，能够进行一定程度的路由；具有初步的Layout功能，能够制作一定程度的界面外观；数据库层封装的不错，具有基本的MVC功能</p>
+</li>
+<li><p>快速简洁，代码不多，执行性能高，PHP框架简单，容易上手，学习成本低，文档详细；自带了很多简单好用的library，框架适合小型应用</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>把Model层简单的理解为数据库操作</p>
+</li>
+<li><p>PHP框架略显简单，只能够满足小型应用，略微不太能够满足中型应用需要</p>
+</li>
+</ol>
+<p>评价：</p>
+<p>总体来说，拿CodeIgniter来完成简单快速的应用还是值得，同时能够构造一定程度的layout，便于模板的复用，数据操作层来说封装的不错，并且CodeIgniter没有使用很多太复杂的设计模式，执行性能和代码可读性上都不错。至于附加的 library 也还不错，简洁高效。</p>
+<p> <a target="_blank" rel="noopener" href="http://cakephp.org/"><strong>CakePHP</strong></a></p>
+<p><img src="http://files.jb51.net/file_images/article/201412/2014122511133723.jpg"></p>
+<p>优点：</p>
+<ol>
+<li><p>CakePHP是最类似于RoR的PHP框架，包括设计方式，数据库操作的Active Record方式；设计层面很优雅，没有自带多余的 library，所有的功能都是纯粹的框架，执行效率还不错；数据库层的 hasOne, hasMany 功能很强大，对于复杂业务处理比较合适；路由功能，配置功能还不错；自动构建脚手架（scaffold）很强大；适合中型应用；基本实现过了MVC每一层；具有自动操作命令行脚本功能；</p>
+</li>
+<li><p>文档比较全，在国内推广的比较成功，大部分都知道CakePHP，学习成本中等</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>CakePHP非常严重的问题是把Model理解为数据库层操作，严重影响了除了数据库之外的操作能力</p>
+</li>
+<li><p>CakePHP的cache功能略显薄弱，配置功能稍嫌弱；CakePHP不适合大型应用，只适合中型应用，小型应用来说略微的学习成本高了点</p>
+</li>
+</ol>
+<p>评价：</p>
+<p>总体来说CakePHP框架代表了PHP框架很重要的一个时代和代表，并且目前发挥着很重要的作用，不少自己写的框架都模仿了CakePHP的方式，是个里程碑式的产品；CakePHP透露着RoR的敏捷开发方式和把数据库操作认为是唯一Model的设计思想，作为开发快速应用和原型是绝好的工具；同样，用来做Web2.0网站的开发框架，也是值得选择的。</p>
+<p> <a target="_blank" rel="noopener" href="http://framework.zend.com/"><strong>Zend Framework</strong></a></p>
+<p><img src="http://files.jb51.net/file_images/article/201412/2014122511133724.jpg"></p>
+<p>优点：</p>
+<ol>
+<li><p>官方出品，自带了非常多的 library，框架本身使用了很多设计模式来编写，架构上很优雅，执行效率中等；MVC设计中，比较简洁，具有路由功能，配置文件比较强大（能够处理XML和php INI），各种 library 很强大，是所有PHP框架中各种功能最全面的，包括它不仅是一个PHP框架，更是一个大类库（取代PEAR），这是它的主要特色；能够直观的支持除数据库操作之外的Model层（比 CodeIgniter 和 CakePHP 强），并且能够很轻易的使用Loader功能加载其他新增加的Class；Cache功能很强大，从前端Cache到后端Cache都支持，后端Cache支持Memcache、APC、SQLite、文件等等方式；数据库操作功能很强大，支持各种驱动（适配器）</p>
+</li>
+<li><p>文档很全，在国内社区很成熟，并且目前不少Web 2.0网站在使用，学习成本中等</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>MVC功能完成比较弱，View层简单实现（跟没实现一样），无法很强大的控制前端页面</p>
+</li>
+<li><p>没有自动化脚本，创建一个应用，包括入口文件，全部必须自己手工构建，入门成本高</p>
+</li>
+<li><p>Zend Framework 作为一个中型应用框架问题不大，也能够勉强作为大型应用的PHP框架，但是作为一个很成熟的大型PHP框架来说，还需要一些努力</p>
+</li>
+</ol>
+<p>评价：</p>
+<p>作为官方出品的框架，Zend Framework的野心是可以预见的，想把其他框架挤走，同时封装很多强大的类库，能够提供一站式的框架服务，并且他们的开发团队很强大，完全足够有能力开发很强大的产品出来，所以基本可以确定的是Zend Framework前途无量，如果花费更多的时间去完善框架。同样的，Zend Framework架构本身也是比较优雅的，说明Zend官方是有很多高手的，设计理念上比较先进，虽然有一些功能实现的不够完善，比如View层，自动化脚本等等，这些都有赖于未来的升级。总体来说Zend Framework是最值得期待的PHP框架，当然，你目前要投入你的项目中使用也是完全没问题的。</p>
+<p> <a target="_blank" rel="noopener" href="http://www.symfony-project.org/"><strong>Symfony</strong></a></p>
+<p><img src="http://files.jb51.net/file_images/article/201412/2014122511133725.jpg"></p>
+<p>优点</p>
+<ol>
+<li><p>Symfony 是我了解的PHP框架中功能最强大的，而且我使用时间比较长，但是很多功能还是没有挖掘出来；它完整实现了MVC三层，封装了所有东西，包括 $_POST，$_GET 数据，异常处理，调试功能，数据检测；包含强大的缓存功能，自动加载Class（这个功能很爽），强大的i18n国家化支持；具有很强大的view层操作，能够零碎的包含单个多个文件；非常强大的配置功能，使用yml配置能够控制所有框架和程序运行行为，强大到让人无语；能够很随意的定义各种自己的class，并且symfony能够自动加载（auto load）这些class，能够在程序中随意调用；包含强大的多层级项目和应用管理：Project –&gt; Application –&gt; Module –&gt; Action，能够满足一个项目下多个应用的需要，并且每层可以定义自己的类库，配置文件，layout；非常强大的命令行操作功能，包括建立项目、建立应用、建立模块、刷新缓存等等；</p>
+</li>
+<li><p>Symfony绝对是开发大型复杂项目的首选，因为使用了Symfony，将大大节约开发成本，并且多人协作的时候，不会出现问题，在Project级别定义好基础Class以后，任何模块都能够重用，大大复用代码</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>数据库操作model采用了重量级的propel和creole，不过在我测试的版本中已经把他们移到了addon里，可用可不用</p>
+</li>
+<li><p>缓存功能无法控制，每次开发调试总是缓存，需要执行 symfony cc, symfony rc 来清除和重建缓存；</p>
+</li>
+<li><p>效率不是很高，特别是解析模板和读取配置文件的过程，花费时间不少；</p>
+</li>
+<li><p>学习成本很高，并且国内没有成熟的社区和文档，连中文手册都没有，相应的要掌握所有功能，需要花费比较多的时间</p>
+</li>
+</ol>
+<p>评价：</p>
+<p>Symfony绝对是企业级的PHP框架，唯一能够貌似能够跟Java领域哪些强悍框架抗衡的东西；强悍的东西，自然学习复杂，但是相应的对项目开发也比较有帮助，自然是推荐复杂的项目使用Symfony来处理，觉得是值得，后期的维护成本比较低，复用性很强。相应的如果使用Symfony的应该都是比较复杂的互联网项目，那么相应的就要考虑关于数据库分布的问题，那么就需要抛弃Symfony自带的数据库操作层，需要自己定义，当然了，Symfony支持随意的构造model层。</p>
+<p> <strong>总结</strong></p>
+<p>以上数款PHP框架，各有特色，而且都是开源项目，不过框架针对的项目不一样，一般来说 CodeIngiter 比较适合小型项目，CakePHP 和 Zend Framework 比较适合中型项目，Symfony 比较适合大型重量级项目，在项目选型的时候，要充分考虑框架的可以定制性、扩展性，因为每个项目都无法确定你是否会随着需求的变化进行改变。</p>
+<p>相对来说，Zend Framework 和 Symfony 应对变化的能力比较强，特别是能够随意定制 model 层的Class，能够非常方便增加自己业务或者数据处理类，我是个人比较推荐在中大型项目中使用的PHP框架。</p>
+<p>CodeIngiter 和 CakePHP 在中小型项目中同样能够发挥重大作用，快速开发和原型构建，非常适合目标不清晰的原型项目的开发。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/07/%E9%A6%96%E9%A1%B5/" rel="prev" title="首页">
+                  <i class="fa fa-chevron-left"></i> 首页
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/07/php%E4%B8%AA%E7%89%88%E6%9C%AC%E4%B8%BB%E8%A6%81changelist/" rel="next" title="PHP各版本主要ChangeList">
+                  PHP各版本主要ChangeList <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

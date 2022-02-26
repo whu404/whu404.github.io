@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="面试题列举如下： 1.redis与memcache差别？ 答：key大小、持久化、速度、线程模型、key类型、淘汰策略、集群搭建区别、底层数据结构的差异、内存利用率、碎片处理。 2.innodb的特点？ 答：行锁、支持事务、不支持全文检索、读少写多的场景更有利、 3.mysql索引使用的原则？依据这些原则，如何为表加索引？ 答：最左前缀原则。 4.php 变量的销毁机制？ 答：php5和php7的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php面试题">
+<meta property="og:url" content="http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="面试题列举如下： 1.redis与memcache差别？ 答：key大小、持久化、速度、线程模型、key类型、淘汰策略、集群搭建区别、底层数据结构的差异、内存利用率、碎片处理。 2.innodb的特点？ 答：行锁、支持事务、不支持全文检索、读少写多的场景更有利、 3.mysql索引使用的原则？依据这些原则，如何为表加索引？ 答：最左前缀原则。 4.php 变量的销毁机制？ 答：php5和php7的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-20T11:28:15.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.075Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/","path":"2021/01/20/php面试题/","title":"php面试题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>php面试题 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86%E4%B8%AD%E8%A2%AB%E9%97%AE%E8%BF%87%E7%9A%84%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">面试经历中被问过的题目</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/20/php%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php面试题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-20 19:28:15" itemprop="dateCreated datePublished" datetime="2021-01-20T19:28:15+08:00">2021-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>面试题列举如下：</p>
+<p>1.redis与memcache差别？</p>
+<p>答：key大小、持久化、速度、线程模型、key类型、淘汰策略、集群搭建区别、底层数据结构的差异、内存利用率、碎片处理。</p>
+<p>2.innodb的特点？</p>
+<p>答：行锁、支持事务、不支持全文检索、读少写多的场景更有利、</p>
+<p>3.mysql索引使用的原则？依据这些原则，如何为表加索引？</p>
+<p>答：最左前缀原则。</p>
+<p>4.php 变量的销毁机制？</p>
+<p>答：php5和php7的差别比较大，php5中引用计数存在zval中，而php7中引用计数存在zend_xxx结构中。</p>
+<p>5.php array_merge的功能？自己实现一下？</p>
+<p>答：数组合并，数字键的value直接加在原有数据的后面，字符键的value或是替换，或是新增。</p>
+<p>6.php 里面有哪些数组操作函数?</p>
+<p>答：array,array_merge,array_slice,array_pop,array_push,array_diff,array_multiple_sort,array_unique,array_combine</p>
+<p>7.isset()与empty()差别，0,’’,null,”0”,false上的差异</p>
+<p>8.php魔术方法?魔术常量？</p>
+<p>答：__construct,__destruct,__clone,__sleep,__wakeup,__isset,__unset,__call,__callStatic,__toString,__invoke,__get,__set,</p>
+<p>9.魔术方法的使用场景？</p>
+<p>10.常见的设计模式，并用php实现一下（需要使用namespace)</p>
+<p>答：工厂模式、抽象工厂模式、单例模式、门脸模式、代理模式、装饰器模式、责任链模式、依赖注入模式、策略模式、</p>
+<p>11.php多维数组按某一列排序？并自己实现？</p>
+<p>答：</p>
+<p>12.php写时复制？</p>
+<p>13.explode的实现？</p>
+<p>14.redis 底层用到的数据结构？</p>
+<p>15.画一下php变量复制，应用之后再内存中的大概结构?</p>
+<p>16.访问类里面不存在的变量、方法、静态变量、静态成员函数的情形会是怎样的？</p>
+<p>17.php7性能提升的原因？</p>
+<p>18.mysql事务嵌套机制？</p>
+<p>19.echo、print、print_r的区别</p>
+<p>20.支持会调处理的php函数有哪些？</p>
+<p>21.php array + 操作的结果？</p>
+<p>22.mysql事务隔离是怎么实现的</p>
+<p>23.什么是B+树？请画出B+树的结构？</p>
+<p>24.php有哪些语言结构？语言结构与函数有啥区别？语法糖？</p>
+<p>25.PHP中array_merge函数与array+array的区别?</p>
+<p>26.PHP有哪些函数接受可变个数的参数？</p>
+<p>27.PHP框架用过哪些？最熟悉的是哪个？使用有什么问题不？</p>
+<p>28.谈谈对PSR的认识</p>
+<p>29.你会怎样设计一个PHP框架？</p>
+<p>30.PHP调试工具方法？其实现机制会是怎样的呢？</p>
+<p>31.计算两个字符串的相似度?实现php提供的similar_text方法?中文情况下能用不？</p>
+<p>32.MySQL隐式类型转换为什么会全表扫描？</p>
+<p>33.聚簇索引和非聚簇索引的区别?</p>
+<p>34.Session可不可以设置失效时间，比如30分钟过期?</p>
+<p>35.adslasses与mysql_real_escape_string&#x2F;mysqli_real_escape_string的区别</p>
+<p>36.接口安全性校验方式？听说过jwt吗？</p>
+<p>37.命名空间最前面的 \ 加还是不加？</p>
+<p>38.PHP加载类的办法有哪些？</p>
+<p>39.file_put_contents如何发一个post请求？</p>
+<p>40.写一个pdo、mysqli的完整查询过程</p>
+<ol start="41">
+<li>如何自定义流过滤器？</li>
+</ol>
+<p>42.composer如何指定需要库的版本号在某个范围内？</p>
+<p>43.代码文件的文档如何做到自动化？</p>
+<p>44.file_get_contents,fread,file,readfile几种方式可能的性能差异？</p>
+<p>45.满减券，活动折扣券怎么设计？</p>
+<p> </p>
+<p> </p>
+<p>别的地方找的面试题：</p>
+<p>看到有很多，的总结一下，比较适合有一定经验的PHPer</p>
+<ol>
+<li>平时喜欢哪些php书籍及博客？CSDN、segmentfault、stackoverflow</li>
+<li>js闭包是什么，原型链了不了解？</li>
+<li>for与foreach哪个更快？</li>
+<li>php鸟哥是谁？能不能讲一下php执行原理?</li>
+<li>php加速器有哪些？apc、xcache…..能不能讲一下它的加速原理，与现在的O+有什么差别？</li>
+<li>Node.js能彻底代替php+apache 吗？</li>
+<li>怎样判断一个值是否存在于数组中？in_array(),array_key_exists 哪一个更好</li>
+<li>怎样判断select语句中是否使用了索引？explain 等的使用</li>
+<li>sphinx的中文分词词库使用第三方库还是自己建库？</li>
+<li>mysql与mysqli的区别有哪些？</li>
+<li>将来的发展方向？安全、还是数据挖掘、大数据处理？</li>
+<li>php的面向对象：类的修饰符、封装、继承、多态等</li>
+<li>php的设计模式：单例模式、工厂模式、生产者模式……等23种</li>
+<li>服务器状态码:200、202、301、404、500……</li>
+<li>i++与++i++与++i的区别？</li>
+<li>项目开发:电商项目中的购物车数据持久化、考试系统的安全性考虑、</li>
+<li>mysql设计基础：三大范式、功能-&gt;思维导图、创建表的第一字段是什么？</li>
+<li>mysql字段char、varchar、int、smallint、tinyint、mediumint、bigint、decimal、double、float字节数及应用场景</li>
+<li>mysql 数据类型有哪些 ? 分别占用多少存储空间 ?</li>
+<li>mysql 索引原理及sql性能优化</li>
+<li>memcache与mongoDB、Redis各自的使用场景是什么？</li>
+<li>为什么mongoDB与Redis非但没有形成竞争反而是互补关系？</li>
+<li>Redis数据类型有哪些？int、string、hash、set、list ？</li>
+<li>安装linux软件时使用make方式还使用yum方式？</li>
+<li>linux网络优化，如何查看进程、怎样查看最大文件打开数？</li>
+<li>1条微薄要推送给100万个粉丝该怎么处理？</li>
+<li>知道哪些算法？冒泡排序？快速排序？二分查找法？</li>
+<li>yii thinkphp ci 各自优点</li>
+<li>php 设计模式有哪些？</li>
+<li>C语言中的虚函数是什么？</li>
+<li>C排序算法有哪些？</li>
+<li>php 基本结构是什么？</li>
+<li>memcache magent 分布式设计？</li>
+<li>php的内存回收机制是什么?</li>
+<li>php在2011年底出现hash碰撞,hash碰撞原理为? 如何进行修复?</li>
+<li>一个php文件的解释过程是? 一般加速php有哪些? 提高php整体性能会用到哪些技术?</li>
+<li>redis 分布式设计，如何设计？</li>
+<li>mongo 集群架构是怎样的？</li>
+<li>tcp&#x2F;ip 网络协议，osi7层指是什么？</li>
+<li>php 处理大数据业务</li>
+<li>linux 应用，负载性能查看 ？</li>
+<li>nginx设置缓存js、css、图片等信息,缓存的实现原理是?</li>
+<li>nginx负载均衡有哪些? 如果其中一台服务器挂掉,报警机制如何实现?</li>
+<li>nginx 实战优化业务功能 ？</li>
+<li>谈一下近三年来你的得意之作?</li>
+<li>看看简历，会问一些过去做的项目的用户量、pv、吞吐量、相关难点和解决方法等</li>
+<li>数据库设计经验,为什么进行分表? 分库?</li>
+<li>一般多少数据量开始分表? 分库? 分库分表的目的? 什么是数据库垂直拆分? 水平拆分? 分区等等？可以举例说明</li>
+<li>数据库优化有哪些? 分别需要注意什么?</li>
+<li>web开发方面会遇到哪些缓存? 分别如何优化?</li>
+<li>给你256M的内存,对10G的文件进行排序(文件每行1个数字),如何实现？</li>
+<li>对10G的文件进行查找如何实现？</li>
+<li>统计10G文件每个关键字出现的次数如何实现？</li>
+<li>假如你现在是12306火车订票的设计师,你该如何设计满足全国人民订票?</li>
+<li>假如有1亿用户的访问量,你的服务器架构是怎样的? 用户信息的存储方案如何设计?</li>
+<li>如果你是技术组长,所带团队任务进度无法完成你该如何解决?</li>
+<li>如果在进度排满的前提下插入任务,你该如何保证总进度不延期?</li>
+<li>如果有的工程师今天预定任务没有完成,你该如何解决?</li>
+<li>从你的经验方面谈一下如何构建高性能web站点? 需要哪些环节? 步骤? 每个步骤需要注意什么如何优化等?</li>
+<li>为什么要对数据库进行主从分离?</li>
+<li>如何处理多服务器共享session?</li>
+<li>一个10G的表，你用php程序统计某个字段出现的次数,思路是?</li>
+<li>会告诉你一个nginx日志例子,用你认为最佳的编程语言统计一下http响应时间超过1秒的前10个url?</li>
+<li>给你一个mysql配置文件,用你认为最佳的编程语言解析该文件?</li>
+<li>给你两个路径a和b,写一个算法或思路计算a和b差距几层并显示a和b的交集?</li>
+<li>给你一个url,在nginx配置一下rewrite指定到某个具体路径?</li>
+<li>session和cookie生存周期区别? 存储位置区别?</li>
+<li>require、include、require_once、include_once区别? 加载区别? 如果程序按需加载某个php文件你如何实现?</li>
+<li>chrome号称为多线程的，那么多线程和多进程的区别为?</li>
+<li>如何提高缓存命中率? 如何对缓存进行颗粒化?</li>
+<li>web不安全因素有哪些? 分别如何防范?</li>
+<li>假如两个单链表相交,写一个最优算法计算交点位置,说思路也可以?</li>
+<li>假如你是技术组长? 如何提高团队效率?</li>
+<li>不优化前提下,apache一般最大连接数为? nginx一般最大连接数为? mysql 每秒insert ? select ? update ? delete?</li>
+<li>我的所有问题都问完了（当然没有这么多）,你有什么问题问我没有？</li>
+</ol>
+<p> </p>
+<h1 id="面试经历中被问过的题目"><a href="#面试经历中被问过的题目" class="headerlink" title="面试经历中被问过的题目"></a>面试经历中被问过的题目</h1><p>（整理时间5月13日）</p>
+<ol>
+<li>工作一段时间后，为了夯实基础做过哪些努力？</li>
+<li>lumen和workerman了解吗？介绍下workerman的原理</li>
+<li>讲一下websocket的协议，浏览器是怎么识别websocket协议的，以及websocket的协议版本区别？</li>
+<li>怎么压缩数据的，讲一下gzip压缩是怎么压缩处理的？gzip压缩有几个级别，6级别会压缩到什么程度？</li>
+<li>业务开发中websocket的连接最高峰存在多少个连接？一千个连接会占用多少内存？</li>
+<li>多少数据量时会采用分布式的部署？</li>
+<li>多台gateway是怎么负载分流长连接的？当APP发起websocket连接时是怎样平均分配到每台gateway服务器的？</li>
+<li>gateway进程挂了怎么处理？</li>
+<li>websocket连接中如何保证成功率，即如何判断客户端是否收到消息、怎么处理丢包的问题？ 【建立应答与重发机制，待补充具体处理方式】</li>
+<li>多台websocket的用户如何共享数据，例如同一聊天组的user1的websocket保存在服务器1中，user2的websocket保存在服务器2中。两台服务器的用户如何正常通讯？ 【这和http session不一样，StandardWebSocketSession一是无法序列化，二是它是在一台服务器保持TCP连接，另一台服务器拿到数据也不能通信。所以那些说存到共享的容器（memcache&#x2F;redis）中进行共享session的都是不行的。两个办法，一个是用redis作发布、订阅，所有socket都订阅一个消息。第二种方法是用消息队列，jgroups作集群组播通信，互相通知。类似的还有MQ等等。】</li>
+<li>介绍下微服务架构原理？</li>
+<li>介绍下平衡二叉树？</li>
+<li>水平分表是用什么方式处理的？介绍下mysql分库分表策略，如何解决增表、减表问题？ 【按时间分表、按区间范围分表、hash分表】</li>
+<li>说下mysql的优化方向？索引是怎么优化的？索引的原理是怎样的？</li>
+<li>说下INNODB和MYISAM的区别？innodb是什么数据结构？说下b+树和b树的区别？innodb的主键索引和非主键索引的区别？</li>
+</ol>
+<hr>
+<p>（整理时间5月22日）</p>
+<ol>
+<li>在上家公司主要做了哪些工作呢？有哪些是你觉得比较有意思且比较成功的项目？</li>
+<li>对区块链的知识本身有了解吗？最近有在学什么其他技术吗？</li>
+<li>业务开发中数据量大吗？是否遇到过mysql慢速的问题？是因为什么引起的？解决思路是怎样的？</li>
+<li>如何实现全文检索功能？如果数据库是mysql的话怎么处理？介绍下ES的特点？ 【MYSQL的FULLTEXT索引、对内容进行分片、分词查找】</li>
+<li>关系型数据库和非关系型数据库的区别是什么？有了解哪些非关系型数据库吗？</li>
+<li>redis有哪几种数据类型？每个数据类型的时间复杂度分别是什么？使用场景分别是什么？介绍下redis发布订阅机制原理？说说对新的数据类型streams的了解？</li>
+<li>介绍下tcp三次握手的过程？哪个阶段开始传输数据？如果客户端在握手过程中失败了，服务器会怎么处理？</li>
+<li>在业务开发中，workerman与APP端进行数据交互时有做身份验证吗？怎么处理的？</li>
+<li>php中的类是单继承的，那要有多个类继承有什么方案呢？ 【php trait的原理】</li>
+<li>php有哪几个常用的魔术方法？介绍下构造函数和析构函数的作用，以及分别在什么时候会调用？</li>
+<li>php的public、protected、private 三种访问控制模式有什么区别？（主要考察PHP类的封装性、继承性、多态性）</li>
+<li>php有哪几种设计模式？介绍下你熟悉的设计模式？简单写几种设计模式看看？</li>
+<li>介绍下php中的引用赋值？ $a&#x3D;1; $b&#x3D;&amp;$a; unset($a)后$b是什么，为什么？unset($b)后$a是什么，为什么？ 【都等于1。在php中，引用赋值不同于指针的感念，他只是将另一个变量名指向了某个内存地址。此题中:$b &#x3D; &amp;$a;只是将$b这个名字也指向了$a变量所指向的内存地址。unset时只是释放了这个名字的指向，并没有释放内存中的值。另一方面讲unset($a),其实也并未真正立刻释放内存中的值，也只是释放了这个名字的指向而已，该函数只有在变量值所占空间超过256字节长的时候才会释放内存，并且只有当指向该值的所有变量（比如有引用变量指向该值）都被销毁后，地址才会被释放。】</li>
+<li>遇到mysql慢速时有什么排查方向呢？</li>
+<li>mysql的存储引擎有哪几种？分别适用于什么场景？</li>
+<li>介绍下mysql事务的四个隔离级别，以及各级别之间的区别？</li>
+<li>innodb引擎什么情况下会产生行锁，什么情况下会变成表锁？导致索引失效的原因？ 【or 语句，like 前缀，索引字段是字符串但查询条件里没用使用引号扩起，联合索引未遵循最左原则没使用第一个索引字段而使用其他索引字段】</li>
+<li>介绍下b+树？</li>
+<li>更新数据时，是先删除缓存再更新DB，还是先更新DB再删除缓存？如果缓存和数据库一致性时有什么解决方案呢？ 【先更新DB再删除缓存可以降低读到脏数据的概率。方案一、采用延时双删策略+缓存过期设置，整体思路：在写库前后都进行redis.del(key)操作，并且设定合理的超时时间，确保读请求结束，写请求可以删除读请求造成的缓存脏数据；所有的写操作以数据库为准，只要到达缓存过期时间，则后面的读请求自然会从数据库中读取新值然后回填缓存，可以保证最终数据一致性。方案二、异步更新缓存(基于订阅binlog的同步机制)，整体思路：MySQL binlog增量订阅消费+消息队列+增量数据更新到redis，一旦MySQL中产生了新的写入、更新、删除等操作，就可以异步把binlog相关的消息推送至Redis，Redis再根据binlog中的记录，对Redis进行更新。（消息推送工具：canal、kafka、rabbitMQ等）】</li>
+<li>redis是怎么解决键冲突的？</li>
+<li>redis如何保证系统宕机数据不会丢失？【数据持久化】，介绍一些redis的持久化机制有哪几种？各自的区别是什么？</li>
+<li>介绍下常用的redis常用集群方案？</li>
+<li>网站访问很慢从哪些方向去排查？当发现服务器负载很高应该如何排查处理？</li>
+<li>介绍下完全二叉树、平衡二叉树、二叉查找树？</li>
+<li>求一万个数求前十个最大的数？ 【top K的算法问题，分组】</li>
+<li>laravel用过哪些中间件？介绍下懒加载原理？介绍下laravel的服务容器概念？</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/20/golang%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="prev" title="golang的一些最佳实践">
+                  <i class="fa fa-chevron-left"></i> golang的一些最佳实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/" rel="next" title="间歇性努力的人，持续性一事无成">
+                  间歇性努力的人，持续性一事无成 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

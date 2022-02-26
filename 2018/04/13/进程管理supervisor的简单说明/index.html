@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="背景：项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里Supervisor。关于supervisor的介绍在网上大致搜索总结如下： Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程管理supervisor的简单说明">
+<meta property="og:url" content="http://example.com/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="背景：项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里Supervisor。关于supervisor的介绍在网上大致搜索总结如下： Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/163084/201611/163084-20161118021632920-889244058.png">
+<meta property="article:published_time" content="2018-04-13T09:40:47.000Z">
+<meta property="article:modified_time" content="2022-02-20T03:02:51.120Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">
+
+
+<link rel="canonical" href="http://example.com/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/","path":"2018/04/13/进程管理supervisor的简单说明/","title":"进程管理supervisor的简单说明"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>进程管理supervisor的简单说明 | Hexo</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">背景：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">说明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#supervisorctl-start-zhoujy"><span class="nav-number"></span> <span class="nav-text">supervisorctl start zhoujy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#supervisorctl-start-all"><span class="nav-number"></span> <span class="nav-text">supervisorctl start all</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">参考文档：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          进程管理supervisor的简单说明
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-13 17:40:47" itemprop="dateCreated datePublished" datetime="2018-04-13T17:40:47+08:00">2018-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-02-20 11:02:51" itemprop="dateModified" datetime="2022-02-20T11:02:51+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h2><p>项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里<a target="_blank" rel="noopener" href="http://supervisord.org/">Supervisor</a>。关于<a target="_blank" rel="noopener" href="http://supervisord.org/introduction.html">supervisor的介绍</a>在网上大致搜索总结如下：</p>
+<p>Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行进程变为后台daemon，并监控进程状态，异常退出时能自动重启。它是通过fork&#x2F;exec的方式把这些被管理的进程当作supervisor的子进程来启动，这样只要在supervisor的配置文件中，把要管理的进程的可执行文件的路径写进去即可。也实现当子进程挂掉的时候，父进程可以准确获取子进程挂掉的信息的，可以选择是否自己启动和报警。supervisor还提供了一个功能，可以为supervisord或者每个子进程，设置一个非root的user，这个user就可以管理它对应的进程。</p>
+<h2 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h2><p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/installing.html">1，安装</a></strong></p>
+<p>1：easy_install 安装：<br>easy_install supervisor</p>
+<p>2：pip 安装：<br>pip install supervisor</p>
+<p>3：Debian &#x2F; Ubuntu可以直接通过apt安装：<br>apt-get install supervisor</p>
+<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/configuration.html">2，配置文件</a></strong></p>
+<p><strong>1）</strong>通过apt-get install安装后，supervisor的配置文件在：</p>
+<p>&#x2F;etc&#x2F;supervisor&#x2F;supervisord.conf </p>
+<p>supervisor的配置文件默认是不全的，不过在大部分默认的情况下，上面说的基本功能已经满足。而其管理的<a target="_blank" rel="noopener" href="http://supervisord.org/subprocess.html">子进程配置</a>文件在：</p>
+<p>&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;*.conf</p>
+<p>然后，开始给自己需要的脚本程序编写一个子进程配置文件，让supervisor来管理它，放在&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;目录下，以.conf作为扩展名（每个进程的配置文件都可以单独分拆也可以把相关的脚本放一起）。如任意定义一个和脚本相关的项目名称的选项组（&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;test.conf）：</p>
+<p><strong>#项目名</strong><br>[program:blog]<br>#脚本目录<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>#脚本执行命令<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;test.py<br>#supervisor启动的时候是否随着同时启动，默认True<br>autostart&#x3D;true<br>#当程序exit的时候，这个program不会自动重启,默认unexpected<br>#设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected和true。如果为false的时候，无论什么情况下，都不会被重新启动，如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的<br>autorestart&#x3D;false<br>#这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启动成功了。默认值为1<br>startsecs&#x3D;1<br>#日志输出<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;blog_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;blog_stdout.log<br>#脚本运行的用户身份<br>user &#x3D; zhoujy<br>#把 stderr 重定向到 stdout，默认 false<br>redirect_stderr &#x3D; true<br>#stdout 日志文件大小，默认 50MB<br>stdout_logfile_maxbytes &#x3D; 20M<br>#stdout 日志文件备份数<br>stdout_logfile_backups &#x3D; 20</p>
+<p>[program:zhoujy] #说明同上<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;zhoujy.py<br>autostart&#x3D;true<br>autorestart&#x3D;false<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stdout.log<br>#user &#x3D; zhoujy</p>
+<p><strong>2）</strong>通过easy_install安装后，配置文件不存在，需要自己导入。</p>
+<p>①：运行<a target="_blank" rel="noopener" href="http://supervisord.org/installing.html">echo_supervisord_conf</a>打印出一个配置文件的样本，样本说明可以看<a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的详细说明，要是设置样本为一个配置文件则：</p>
+<p>1：运行 echo_supervisord_conf，查看配置样本：<br>echo_supervisord_conf</p>
+<p>2：创建配置文件：<br>echo_supervisord_conf &gt; &#x2F;etc&#x2F;supervisord.conf</p>
+<p>②：配置子进程配置文件，可以直接在supervisor中的**;[program:theprogramname]**里设置。</p>
+<p>详细的<a target="_blank" rel="noopener" href="http://supervisord.org/subprocess.html">子进程配置</a>文件：</p>
+<p>样本：</p>
+<p><img src="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">;[program:theprogramname]</p>
+<p>;command&#x3D;&#x2F;bin&#x2F;cat              ; the program (relative uses PATH, can take args)<br>;process_name&#x3D;%(program_name)s ; process_name expr (default %(program_name)s)<br>;numprocs&#x3D;1                    ; number of processes copies to start (def 1)<br>;directory&#x3D;&#x2F;tmp                ; directory to cwd to before exec (def no cwd)<br>;umask&#x3D;022                     ; umask for process (default None)<br>;priority&#x3D;999                  ; the relative start priority (default 999)<br>;autostart&#x3D;true                ; start at supervisord start (default: true)<br>;startsecs&#x3D;1                   ; # of secs prog must stay up to be running (def. 1)<br>;startretries&#x3D;3                ; max # of serial start failures when starting (default 3)<br>;autorestart&#x3D;unexpected        ; when to restart if exited after running (def: unexpected)<br>;exitcodes&#x3D;0,2                 ; ‘expected’ exit codes used with autorestart (default 0,2)<br>;stopsignal&#x3D;QUIT               ; signal used to kill process (default TERM)<br>;stopwaitsecs&#x3D;10               ; max num secs to wait b4 SIGKILL (default 10)<br>;stopasgroup&#x3D;false             ; send stop signal to the UNIX process group (default false)<br>;killasgroup&#x3D;false             ; SIGKILL the UNIX process group (def false)<br>;user&#x3D;chrism                   ; setuid to this UNIX account to run the program<br>;redirect_stderr&#x3D;true          ; redirect proc stderr to stdout (default false)<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; stdout log path, NONE for none; default AUTO<br>;stdout_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stdout_logfile_backups&#x3D;10     ; # of stdout logfile backups (default 10)<br>;stdout_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stdout_events_enabled&#x3D;false   ; emit events on stdout writes (default false)<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; stderr log path, NONE for none; default AUTO<br>;stderr_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stderr_logfile_backups&#x3D;10     ; # of stderr logfile backups (default 10)<br>;stderr_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stderr_events_enabled&#x3D;false   ; emit events on stderr writes (default false)<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; process environment additions (def no adds)<br>;serverurl&#x3D;AUTO                ; override serverurl computation (childutils)</p>
+<p>说明：</p>
+<p>;[program:theprogramname]      ;这个就是咱们要管理的子进程了，”:”后面的是名字，最好别乱写和实际进程<br>                                有点关联最好。这样的program我们可以设置一个或多个，一个program就是<br>                                要被管理的一个进程<br>;command&#x3D;&#x2F;bin&#x2F;cat              ; 这个就是我们的要启动进程的命令路径了，可以带参数<br>                                例子：&#x2F;home&#x2F;test.py -a ‘hehe’<br>                                有一点需要注意的是，我们的command只能是那种在终端运行的进程，不能是<br>                                守护进程。这个想想也知道了，比如说command&#x3D;service httpd start。<br>                                httpd这个进程被linux的service管理了，我们的supervisor再去启动这个命令<br>                                这已经不是严格意义的子进程了。<br>                                这个是个必须设置的项<br>;process_name&#x3D;%(program_name)s ; 这个是进程名，如果我们下面的numprocs参数为1的话，就不用管这个参数<br>                                 了，它默认值%(program_name)s也就是上面的那个program冒号后面的名字，<br>                                 但是如果numprocs为多个的话，那就不能这么干了。想想也知道，不可能每个<br>                                 进程都用同一个进程名吧。</p>
+<p>;numprocs&#x3D;1                    ; 启动进程的数目。当不为1时，就是进程池的概念，注意process_name的设置<br>                                 默认为1    。。非必须设置<br>;directory&#x3D;&#x2F;tmp                ; 进程运行前，会前切换到这个目录<br>                                 默认不设置。。。非必须设置<br>;umask&#x3D;022                     ; 进程掩码，默认none，非必须<br>;priority&#x3D;999                  ; 子进程启动关闭优先级，优先级低的，最先启动，关闭的时候最后关闭<br>                                 默认值为999 。。非必须设置<br>;autostart&#x3D;true                ; 如果是true的话，子进程将在supervisord启动后被自动启动<br>                                 默认就是true   。。非必须设置<br>;autorestart&#x3D;unexpected        ; 这个是设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected<br>                                 和true。如果为false的时候，无论什么情况下，都不会被重新启动，<br>                                 如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的退<br>                                 出码的时候，才会被自动重启。当为true的时候，只要子进程挂掉，将会被无<br>                                 条件的重启<br>;startsecs&#x3D;1                   ; 这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启<br>                                 动成功了<br>                                 默认值为1 。。非必须设置<br>;startretries&#x3D;3                ; 当进程启动失败后，最大尝试启动的次数。。当超过3次后，supervisor将把<br>                                 此进程的状态置为FAIL<br>                                 默认值为3 。。非必须设置<br>;exitcodes&#x3D;0,2                 ; 注意和上面的的autorestart&#x3D;unexpected对应。。exitcodes里面的定义的<br>                                 退出码是expected的。<br>;stopsignal&#x3D;QUIT               ; 进程停止信号，可以为TERM, HUP, INT, QUIT, KILL, USR1, or USR2等信号<br>                                  默认为TERM 。。当用设定的信号去干掉进程，退出码会被认为是expected<br>                                  非必须设置<br>;stopwaitsecs&#x3D;10               ; 这个是当我们向子进程发送stopsignal信号后，到系统返回信息<br>                                 给supervisord，所等待的最大时间。 超过这个时间，supervisord会向该<br>                                 子进程发送一个强制kill的信号。<br>                                 默认为10秒。。非必须设置<br>;stopasgroup&#x3D;false             ; 这个东西主要用于，supervisord管理的子进程，这个子进程本身还有<br>                                 子进程。那么我们如果仅仅干掉supervisord的子进程的话，子进程的子进程<br>                                 有可能会变成孤儿进程。所以咱们可以设置可个选项，把整个该子进程的<br>                                 整个进程组都干掉。 设置为true的话，一般killasgroup也会被设置为true。<br>                                 需要注意的是，该选项发送的是stop信号<br>                                 默认为false。。非必须设置。。<br>;killasgroup&#x3D;false             ; 这个和上面的stopasgroup类似，不过发送的是kill信号<br>;user&#x3D;chrism                   ; 如果supervisord是root启动，我们在这里设置这个非root用户，可以用来<br>                                 管理该program<br>                                 默认不设置。。。非必须设置项<br>;redirect_stderr&#x3D;true          ; 如果为true，则stderr的日志会被写入stdout日志文件中<br>                                 默认为false，非必须设置<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; 子进程的stdout的日志路径，可以指定路径，AUTO，none等三个选项。<br>                                 设置为none的话，将没有日志产生。设置为AUTO的话，将随机找一个地方<br>                                 生成日志文件，而且当supervisord重新启动的时候，以前的日志文件会被<br>                                 清空。当 redirect_stderr&#x3D;true的时候，sterr也会写进这个日志文件<br>;stdout_logfile_maxbytes&#x3D;1MB   ; 日志文件最大大小，和[supervisord]中定义的一样。默认为50<br>;stdout_logfile_backups&#x3D;10     ; 和[supervisord]定义的一样。默认10<br>;stdout_capture_maxbytes&#x3D;1MB   ; 这个东西是设定capture管道的大小，当值不为0的时候，子进程可以从stdout<br>                                 发送信息，而supervisor可以根据信息，发送相应的event。<br>                                 默认为0，为0的时候表达关闭管道。。。非必须项<br>;stdout_events_enabled&#x3D;false   ; 当设置为ture的时候，当子进程由stdout向文件描述符中写日志的时候，将<br>                                 触发supervisord发送PROCESS_LOG_STDOUT类型的event<br>                                 默认为false。。。非必须设置<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; 这个东西是设置stderr写的日志路径，当redirect_stderr&#x3D;true。这个就不用<br>                                 设置了，设置了也是白搭。因为它会被写入stdout_logfile的同一个文件中<br>                                 默认为AUTO，也就是随便找个地存，supervisord重启被清空。。非必须设置<br>;stderr_logfile_maxbytes&#x3D;1MB   ; 这个出现好几次了，就不重复了<br>;stderr_logfile_backups&#x3D;10     ; 这个也是<br>;stderr_capture_maxbytes&#x3D;1MB   ; 这个一样，和stdout_capture一样。 默认为0，关闭状态<br>;stderr_events_enabled&#x3D;false   ; 这个也是一样，默认为false<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; 这个是该子进程的环境变量，和别的子进程是不共享的<br>;serverurl&#x3D;AUTO                ;</p>
+<p> </p>
+<p>改成自己实际的配置文件：和①上面一样。</p>
+<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/running.html">3：运行</a></strong></p>
+<p>1）apt-get install 安装的supervisor直接可以通过 &#x2F;etc&#x2F;init.d&#x2F;supervisor 运行：</p>
+<p>&#x2F;etc&#x2F;init.d&#x2F;supervisor start</p>
+<p>2）通过easy_install 安装的supervisor运行supervisord 运行：</p>
+<p>supervisord</p>
+<p><strong>4：web界面操作</strong></p>
+<p>需要在supervisor的配置文件里添加[inet_http_server]选项组：之后可以通过<a href="http://10.211.55.11:9001来访问控制子线程的管理。">http://10.211.55.11:9001来访问控制子线程的管理。</a></p>
+<p>[inet_http_server]<br>port&#x3D;10.211.55.11:9001<br>username&#x3D;user<br>password&#x3D;123</p>
+<p>效果：</p>
+<p><img src="https://images2015.cnblogs.com/blog/163084/201611/163084-20161118021632920-889244058.png"></p>
+<p><strong><a target="_blank" rel="noopener" href="http://supervisord.org/running.html#running-supervisorctl">5：子进程管理</a>(supervisorctl)</strong> </p>
+<ol>
+<li>查看所有子进程的状态：</li>
+</ol>
+<p># <strong>supervisorctl status</strong><br>blog                             RUNNING    pid 2395, uptime 0:08:41<br>zhoujy                           RUNNING    pid 2396, uptime 0:08:41</p>
+<p>2）关闭、开启指定的子进程：</p>
+<p># <strong>supervisorctl stop zhoujy</strong><br>zhoujy: stopped</p>
+<h1 id="supervisorctl-start-zhoujy"><a href="#supervisorctl-start-zhoujy" class="headerlink" title="supervisorctl start zhoujy"></a><strong>supervisorctl start zhoujy</strong></h1><p>zhoujy: started</p>
+<p>3）关闭、开启所有的子进程：</p>
+<p># <strong>supervisorctl stop all</strong><br>blog: stopped<br>zhoujy: stopped</p>
+<h1 id="supervisorctl-start-all"><a href="#supervisorctl-start-all" class="headerlink" title="supervisorctl start all"></a><strong>supervisorctl start all</strong></h1><p>blog: started<br>zhoujy: started</p>
+<p>4）：其他参数：supervisor开启后子进程自动开启（<strong>autostart&#x3D;true</strong>）和子进程退出后自动启动（<strong>autorestart&#x3D;ture</strong>）</p>
+<p>更多的参数可以看<a target="_blank" rel="noopener" href="http://supervisord.org/configuration.html">官方文档</a>和<a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的说明。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>我们需要的功能在上面介绍的supervisor的基本功能中已经实现，supervisor还有其他的一些功能：如进程组、web页面管理子进程、监控子线程情况等等，更多的信息可以去<a target="_blank" rel="noopener" href="http://supervisord.org/">官网</a>上查看。</p>
+<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a target="_blank" rel="noopener" href="http://supervisord.org/">Supervisor官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1539136">Supervisor(一)基础篇</a></p>
+<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1540169" title="supervisor(二)event">Supervisor(二)event</a></p>
+<p><a target="_blank" rel="noopener" href="http://lixcto.blog.51cto.com/4834175/1540795" title="supervisor(三)xml_rpc">Supervisor(三)xml_rpc</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag"># 运维</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/08/%E4%B8%80%E9%81%93php%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9A%84%E6%80%9D%E8%80%83/" rel="prev" title="一道PHP面试题的思考">
+                  <i class="fa fa-chevron-left"></i> 一道PHP面试题的思考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="next" title="Redis基础、高级特性与性能调优">
+                  Redis基础、高级特性与性能调优 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
