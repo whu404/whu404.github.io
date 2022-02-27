@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>whu404</name>
     
   </author>
   
@@ -293,11 +293,11 @@
   </entry>
   
   <entry>
-    <title>Headback博客</title>
-    <link href="http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</id>
+    <title>Jamin Zhang博客</title>
+    <link href="http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/</id>
     <published>2021-01-05T15:53:11.000Z</published>
-    <updated>2022-02-20T03:02:51.067Z</updated>
+    <updated>2022-02-20T03:02:51.068Z</updated>
     
     
     
@@ -308,11 +308,11 @@
   </entry>
   
   <entry>
-    <title>Jamin Zhang博客</title>
-    <link href="http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/</id>
+    <title>Headback博客</title>
+    <link href="http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</id>
     <published>2021-01-05T15:53:11.000Z</published>
-    <updated>2022-02-20T03:02:51.068Z</updated>
+    <updated>2022-02-20T03:02:51.067Z</updated>
     
     
     
