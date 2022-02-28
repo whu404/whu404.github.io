@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-02-20T03:02:51.068Z</updated>
+  <updated>2022-02-20T03:02:51.134Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,26 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2022/02/20/hello-world/"/>
-    <id>http://example.com/2022/02/20/hello-world/</id>
-    <published>2022-02-20T03:02:51.068Z</published>
-    <updated>2022-02-20T03:02:51.068Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>间歇性努力的人，持续性一事无成</title>
@@ -55,9 +35,9 @@
     
     
     
-    <category term="生活" scheme="http://example.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
     <category term="成长" scheme="http://example.com/categories/%E6%88%90%E9%95%BF/"/>
+    
+    <category term="生活" scheme="http://example.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
     <category term="生活" scheme="http://example.com/tags/%E7%94%9F%E6%B4%BB/"/>
@@ -113,242 +93,443 @@
   </entry>
   
   <entry>
-    <title>Tim Yang博客</title>
-    <link href="http://example.com/2021/01/06/tim-yang%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/tim-yang%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:47.000Z</published>
-    <updated>2022-02-20T03:02:51.090Z</updated>
+    <title>redis读书笔记</title>
+    <link href="http://example.com/2020/09/07/redis%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://example.com/2020/09/07/redis%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
+    <published>2020-09-07T14:44:38.000Z</published>
+    <updated>2022-02-20T03:02:51.082Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.当字符串长度小于1MB时，扩容都是加倍现有空间，如果字符串长度超过1MB，扩容时一次只会多扩容1MB。需要注意的是，字符串的最大长度是512MB<br>2.可以对多个字符串进行批量读写，节省网络耗时的开销<br>3.redis自增是有范围的，它的范围是signed long的最大值和最小值之间，超出则会报错<br>4.redis 分布式锁setnx存在超时不是原子操作的情况，在2.8版本之后，对set命令进行了扩展，使得setnx和expire可以一起执行<br>5.redis分布式锁不能解决超时问题，因为还存在着临界区逻辑代码未执行完锁就超时了的情况，所以，redis分布式锁不要用于较长时间的任务。还有个安全点的方案是，将<br>set命令的value参数设置为一个随机数，释放锁的时候先匹配随机数是否一致，然后再删除key。这样做是为了确保当前线程占有的锁不会被其他线程释放，除非这个锁<br>是因为过期了而被服务器自动释放。但是匹配value和删除key不是一个原子操作，这样可以使用lua脚本，因为lua能保证连续的多个指令原子性执行。<br>6.redis对于只有一组消费者的消息队列，可以轻松实现，但redis消息队列不是专业消息队列，没有很多的高级特性，没有ack保证，如果对消息的可靠性要求极高，就不适用了。<br>7.redis 阻塞对在队列没有数据的时候，会立即进入休眠状态，一旦数据到来，则立刻醒过来，消息的延迟几乎为零。<br>8.上述阻塞方式有个问题就是客户端连接闲置过久，服务器一般会主动断开链接，减少资源占用，这个时候blpop,brpop就会抛出异常，所以客户端消费时得捕获异常，进行重试。<br>9.可以用set&#x2F;get来设置和获取整个位图内容，也可以使用位图操作getbit&#x2F;setbit等将byte数组看成位数组来处理。redis提供了位图统计指令bitcount,bitpos统计1的<br>个数，以及在指定范围查找首个1或0的位置。熟悉bitfield,getrange指令<br>10.HyperLogLog提供不精确的去重计数方案，标准误差是0.81%,pfadd,pfcount,pfmerge。这个结构在不采用稀疏矩阵时会需要占据12KB左右的空间，不适合统计单个用户相关的数据。<br>11.布隆过滤器可以看作不怎么精确的set,当布隆过滤器说某个值存在时它可能不存在，但它说某个值不存在时，它一定不存在(对于已经见过的元素肯定不会误判，对于未见过的可能误判) bf.add,bf.exists,bf.madd,bf.mexists<br>12.在集群环境中，单个key对应的数据量不宜超过1MB，否则会导致集群迁移出现卡顿现象，影响线上服务的正常运行。所以建议Geo数据使用单独的Redis实例部署，不实用集群环境。<br>13.scan函数中，服务器不需要为游标保存状态，游标的唯一状态就是scan返回给客户端的游标整数。返回的结果可能会有重复，需要客户端去重。遍历时候，如果有数据修改，改动后的<br>数据能不能遍历到是不确定的。单次返回的结果是空并不意味着遍历结束，而要看返回的游标值是否为零。scan limit不是限定返回结果的数量，而是限定服务器单次遍历的字典槽位数量（约等于）。scan遍历的顺序也非常特别，它不是从第一维数组的第0位一直遍历到末尾，而是采用了高位进位加法来遍历。<br>14.redis如何查大key?可以使用 –bigkeys命令，如果担心指令会导致阻塞，可以增加休眠参数 -i<br>15.redis使用了会有点费流量的文本协议，使用一个单线程对外提供服务，单个节点在跑满一个CPU的情况下，可以达到10w&#x2F;s QPS<br>16.scan返回的是有个嵌套数组，数组的第一个值表示游标的值，如果这个值为零，则说明遍历完毕。如果不为零，使用这个值作为scan命令的参数进行下一次遍历，数组的第二个值是一个数组，是遍历到的key列表<br>17.redis在收到客户端修改指令后，会先进行参数校验、逻辑处理，如果没有问题，才将指令文本存储到aof日志，也就是说先执行指令，后将日志存盘。这点不同于leveldb,hbase存储引擎，它们是先存储日志，才做逻辑处理。<br>18.通常不在redis主节点做持久化操作，而在从节点中进行<br>19.redis的事务不具备原子性，而仅仅满足了事务的隔离性中的串行话，当前执行的事物不被其它事务打断。当事务遇到指令执行失败后，还会继续执行。<br>20.操作系统以页为单位管理内存，所以回收的时候，也不是有多少回收多少，要看所在的页里面的key是否都释放<br>21.当发生故障时能自动进行主从切换，程序可以不用重启。redis采用Sentinel(哨兵)机制，可以将Sentinel看作是一个zookeeper集群。客户端连接redis的时候，会先连接Sentinel，通过Sentinel来查询主从节点的地址，然后再连接主从节点进行数据交互。<br>22.redis采用异步复制，意味着，主节点挂掉时，从节点可能没有收到全部的同步消息，这部分未同步的消息就丢失了，如果主从延迟比较大，那么丢失的数据就可能会比较多。Sentinel无法保证消息完全不丢失，但是也能尽量保证消息少丢失，可以配置选项，闲置主从延迟过大，但是会损失可用性。<br>23.单个redis的内存不宜过大，内存过大会导致rdb文件过大，进一步导致主从同步时全量同步时间过长，在实例重启恢复时也消耗很长时间加载数据到内存，其次，还体现在cpu的利用率上，单个redis实例只能利用单个核心，所以数据量大，cpu压力也会变大。<br>24.redis集群方案有开源的codis,也有官方的redis cluster系统<br>25.从节点不会进行过期扫描，从节点对过期的处理时被动的，主节点在key到期时，会在aof文件中增加一条del指令，同步到所有的从节点，从节点通过执行这条指令来对过期数据进行删除。<br>26.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;1.当字符串长度小于1MB时，扩容都是加倍现有空间，如果字符串长度超过1MB，扩容时一次只会多扩容1MB。需要注意的是，字符串的最大长度是512MB&lt;br&gt;2.可以对多个字符串进行批量读写，节省网络耗时的开销&lt;br&gt;3.redis自增是有范围的，它的范围是signed lo</summary>
+      
     
     
     
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>徐艺洲博客</title>
-    <link href="http://example.com/2021/01/06/%E5%BE%90%E8%89%BA%E6%B4%B2%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/%E5%BE%90%E8%89%BA%E6%B4%B2%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:47.000Z</published>
-    <updated>2022-02-20T03:02:51.122Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    <category term="redis" scheme="http://example.com/categories/redis/"/>
     
     
   </entry>
   
   <entry>
-    <title>d0evi1博客</title>
-    <link href="http://example.com/2021/01/06/d0evi1%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/d0evi1%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.065Z</updated>
+    <title>追MM与设计模式（23种设计模式巧妙解析，趣味理解）</title>
+    <link href="http://example.com/2019/07/16/%E8%BF%BDmm%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8823%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%B7%A7%E5%A6%99%E8%A7%A3%E6%9E%90%EF%BC%8C%E8%B6%A3%E5%91%B3%E7%90%86%E8%A7%A3/"/>
+    <id>http://example.com/2019/07/16/%E8%BF%BDmm%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8823%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%B7%A7%E5%A6%99%E8%A7%A3%E6%9E%90%EF%BC%8C%E8%B6%A3%E5%91%B3%E7%90%86%E8%A7%A3/</id>
+    <published>2019-07-16T09:01:43.000Z</published>
+    <updated>2022-02-20T03:02:51.095Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>创建型模式</strong></p><p>1、FACTORY—追MM少不了请吃饭了，麦当劳的鸡翅和肯德基的鸡翅都是MM爱吃的东西，虽然口味有所不同，但不管你带MM去麦当劳或肯德基，只管向服务员说“来四个鸡翅”就行了。麦当劳和肯德基就是生产鸡翅的Factory</p><p><strong>工厂模式：</strong>客户类和工厂类分开。消费者任何时候需要某种产品，只需向工厂请求即可。消费者无须修改就可以接纳新产品。缺点是当产品修改时，工厂类也要做相应的修改。如：如何创建及如何向客户端提供。</p><p>2、BUILDER—MM最爱听的就是“我爱你”这句话了，见到不同地方的MM,要能够用她们的方言跟她说这句话哦，我有一个多种语言翻译机，上面每种语言都有一个按键，见到MM我只要按对应的键，它就能够用相应的语言说出“我爱你”这句话了，国外的MM也可以轻松搞掂，这就是我的“我爱你”builder。（这一定比美军在伊拉克用的翻译机好卖）</p><p><strong>建造模式：</strong>将产品的内部表象和产品的生成过程分割开来，从而使一个建造过程生成具有不同的内部表象的产品对象。建造模式使得产品内部表象可以独立的变化，客户不必知道产品内部组成的细节。建造模式可以强制实行一种分步骤进行的建造过程。</p><p>3、FACTORY METHOD—请MM去麦当劳吃汉堡，不同的MM有不同的口味，要每个都记住是一件烦人的事情，我一般采用Factory Method模式，带着MM到服务员那儿，说“要一个汉堡”，具体要什么样的汉堡呢，让MM直接跟服务员说就行了。</p><p><strong>工厂方法模式：</strong>核心工厂类不再负责所有产品的创建，而是将具体创建的工作交给子类去做，成为一个抽象工厂角色，仅负责给出具体工厂类必须实现的接口，而不接触哪一个产品类应当被实例化这种细节。</p><p>4、PROTOTYPE—跟MM用QQ聊天，一定要说些深情的话语了，我搜集了好多肉麻的情话，需要时只要copy出来放到QQ里面就行了，这就是我的情话prototype了。（100块钱一份，你要不要）</p><p><strong>原始模型模式：</strong>通过给出一个原型对象来指明所要创建的对象的类型，然后用复制这个原型对象的方法创建出更多同类型的对象。原始模型模式允许动态的增加或减少产品类，产品类不需要非得有任何事先确定的等级结构，原始模型模式适用于任何的等级结构。缺点是每一个类都必须配备一个克隆方法。</p><p>5、SINGLETON—俺有6个漂亮的老婆，她们的老公都是我，我就是我们家里的老公Sigleton，她们只要说道“老公”，都是指的同一个人，那就是我(刚才做了个梦啦，哪有这么好的事)</p><p><strong>单例模式：</strong>单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例单例模式。单例模式只应在有真正的“单一实例”的需求时才可使用。</p><p><strong>结构型模式</strong></p><p>6、ADAPTER—在朋友聚会上碰到了一个美女Sarah，从香港来的，可我不会说粤语，她不会说普通话，只好求助于我的朋友kent了，他作为我和Sarah之间的Adapter，让我和Sarah可以相互交谈了(也不知道他会不会耍我)</p><p><strong>适配器（变压器）模式：</strong>把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口原因不匹配而无法一起工作的两个类能够一起工作。适配类可以根据参数返还一个合适的实例给客户端。</p><p>7、BRIDGE—早上碰到MM，要说早上好，晚上碰到MM，要说晚上好；碰到MM穿了件新衣服，要说你的衣服好漂亮哦，碰到MM新做的发型，要说你的头发好漂亮哦。不要问我“早上碰到MM新做了个发型怎么说”这种问题，自己用BRIDGE组合一下不就行了</p><p><strong>桥梁模式：</strong>将抽象化与实现化脱耦，使得二者可以独立的变化，也就是说将他们之间的强关联变成弱关联，也就是指在一个软件系统的抽象化和实现化之间使用组合&#x2F;聚合关系而不是继承关系，从而使两者可以独立的变化。</p><p>8、COMPOSITE—Mary今天过生日。“我过生日，你要送我一件礼物。”“嗯，好吧，去商店，你自己挑。”“这件T恤挺漂亮，买，这条裙子好看，买，这个包也不错，买。”“喂，买了三件了呀，我只答应送一件礼物的哦。”“什么呀，T恤加裙子加包包，正好配成一套呀，小姐，麻烦你包起来。”“……”，MM都会用Composite模式了，你会了没有？</p><p><strong>合成模式：</strong>合成模式将对象组织到树结构中，可以用来描述整体与部分的关系。合成模式就是一个处理对象的树结构的模式。合成模式把部分与整体的关系用树结构表示出来。合成模式使得客户端把一个个单独的成分对象和由他们复合而成的合成对象同等看待。</p><p>9、DECORATOR—Mary过完轮到Sarly过生日，还是不要叫她自己挑了，不然这个月伙食费肯定玩完，拿出我去年在华山顶上照的照片，在背面写上“最好的的礼物，就是爱你的Fita”，再到街上礼品店买了个像框（卖礼品的MM也很漂亮哦），再找隔壁搞美术设计的Mike设计了一个漂亮的盒子装起来……，我们都是Decorator，最终都在修饰我这个人呀，怎么样，看懂了吗？</p><p><strong>装饰模式：</strong>装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案，提供比继承更多的灵活性。动态给一个对象增加功能，这些功能可以再动态的撤消。增加由一些基本功能的排列组合而产生的非常大量的功能。</p><p>10、FACADE—我有一个专业的Nikon相机，我就喜欢自己手动调光圈、快门，这样照出来的照片才专业，但MM可不懂这些，教了半天也不会。幸好相机有Facade设计模式，把相机调整到自动档，只要对准目标按快门就行了，一切由相机自动调整，这样MM也可以用这个相机给我拍张照片了。</p><p><strong>门面模式：</strong>外部与一个子系统的通信必须通过一个统一的门面对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。每一个子系统只有一个门面类，而且此门面类只有一个实例，也就是说它是一个单例模式。但整个系统可以有多个门面类。</p><p>11、FLYWEIGHT—每天跟MM发短信，手指都累死了，最近买了个新手机，可以把一些常用的句子存在手机里，要用的时候，直接拿出来，在前面加上MM的名字就可以发送了，再不用一个字一个字敲了。共享的句子就是Flyweight，MM的名字就是提取出来的外部特征，根据上下文情况使用。</p><p><strong>享元模式：</strong>FLYWEIGHT在拳击比赛中指最轻量级。享元模式以共享的方式高效的支持大量的细粒度对象。享元模式能做到共享的关键是区分内蕴状态和外蕴状态。内蕴状态存储在享元内部，不会随环境的改变而有所不同。外蕴状态是随环境的改变而改变的。外蕴状态不能影响内蕴状态，它们是相互独立的。将可以共享的状态和不可以共享的状态从常规类中区分开来，将不可以共享的状态从类里剔除出去。客户端不可以直接创建被共享的对象，而应当使用一个工厂对象负责创建被共享的对象。享元模式大幅度的降低内存中对象的数量。</p><p>12、PROXY—跟MM在网上聊天，一开头总是“hi,你好”,“你从哪儿来呀？”“你多大了？”“身高多少呀？”这些话，真烦人，写个程序做为我的Proxy吧，凡是接收到这些话都设置好了自动的回答，接收到其他的话时再通知我回答，怎么样，酷吧。</p><p><strong>代理模式：</strong>代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用。代理就是一个人或一个机构代表另一个人或者一个机构采取行动。某些情况下，客户不想或者不能够直接引用一个对象，代理对象可以在客户和目标对象直接起到中介的作用。客户端分辨不出代理主题对象与真实主题对象。代理模式可以并不知道真正的被代理对象，而仅仅持有一个被代理对象的接口，这时候代理对象不能够创建被代理对象，被代理对象必须有系统的其他角色代为创建并传入。</p><p><strong>行为模式</strong></p><p>13、CHAIN OF RESPONSIBLEITY—晚上去上英语课，为了好开溜坐到了最后一排，哇，前面坐了好几个漂亮的MM哎，找张纸条，写上“Hi,可以做我的女朋友吗？如果不愿意请向前传”，纸条就一个接一个的传上去了，糟糕，传到第一排的MM把纸条传给老师了，听说是个老处女呀，快跑!</p><p><strong>责任链模式：</strong>在责任链模式中，很多对象由每一个对象对其下家的引用而接</p><p>起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。客户并不知道链上的哪一个对象最终处理这个请求，系统可以在不影响客户端的情况下动态的重新组织链和分配责任。处理者有两个选择：承担责任或者把责任推给下家。一个请求可以最终不被任何接收端对象所接受。</p><p>14、COMMAND—俺有一个MM家里管得特别严，没法见面，只好借助于她弟弟在我们俩之间传送信息，她对我有什么指示，就写一张纸条让她弟弟带给我。这不，她弟弟又传送过来一个COMMAND，为了感谢他，我请他吃了碗杂酱面，哪知道他说：“我同时给我姐姐三个男朋友送COMMAND，就数你最小气，才请我吃面。”，:-(</p><p><strong>命令模式：</strong>命令模式把一个请求或者操作封装到一个对象中。命令模式把发出命令的责任和执行命令的责任分割开，委派给不同的对象。命令模式允许请求的一方和发送的一方独立开来，使得请求的一方不必知道接收请求的一方的接口，更不必知道请求是怎么被接收，以及操作是否执行，何时被执行以及是怎么被执行的。系统支持命令的撤消。</p><p>15、INTERPRETER—俺有一个《泡MM真经》，上面有各种泡MM的攻略，比如说去吃西餐的步骤、去看电影的方法等等，跟MM约会时，只要做一个Interpreter，照着上面的脚本执行就可以了。</p><p><strong>解释器模式：</strong>给定一个语言后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。客户端可以使用这个解释器来解释这个语言中的句子。解释器模式将描述怎样在有了一个简单的文法后，使用模式设计解释这些语句。在解释器模式里面提到的语言是指任何解释器对象能够解释的任何组合。在解释器模式中需要定义一个代表文法的命令类的等级结构，也就是一系列的组合规则。每一个命令对象都有一个解释方法，代表对命令对象的解释。命令对象的等级结构中的对象的任何排列组合都是一个语言。</p><p>16、ITERATOR—我爱上了Mary，不顾一切的向她求婚。</p><p>Mary：“想要我跟你结婚，得答应我的条件”</p><p>我：“什么条件我都答应，你说吧”</p><p>Mary：“我看上了那个一克拉的钻石”</p><p>我：“我买，我买，还有吗？”</p><p>Mary：“我看上了湖边的那栋别墅”</p><p>我：“我买，我买，还有吗？”</p><p>Mary：“你的小弟弟必须要有50cm长”</p><p>我脑袋嗡的一声，坐在椅子上，一咬牙：“我剪，我剪，还有吗？”</p><p>……</p><p><strong>迭代子模式：</strong>迭代子模式可以顺序访问一个聚集中的元素而不必暴露聚集的内部表象。多个对象聚在一起形成的总体称之为聚集，聚集对象是能够包容一组对象的容器对象。迭代子模式将迭代逻辑封装到一个独立的子对象中，从而与聚集本身隔开。迭代子模式简化了聚集的界面。每一个聚集对象都可以有一个或一个以上的迭代子对象，每一个迭代子的迭代状态可以是彼此独立的。迭代算法可以独立于聚集角色变化。</p><p>17、MEDIATOR—四个MM打麻将，相互之间谁应该给谁多少钱算不清楚了，幸亏当时我在旁边，按照各自的筹码数算钱，赚了钱的从我这里拿，赔了钱的也付给我，一切就OK啦，俺得到了四个MM的电话。</p><p><strong>调停者模式：</strong>调停者模式包装了一系列对象相互作用的方式，使得这些对象不必相互明显作用。从而使他们可以松散偶合。当某些对象之间的作用发生改变时，不会立即影响其他的一些对象之间的作用。保证这些作用可以彼此独立的变化。调停者模式将多对多的相互作用转化为一对多的相互作用。调停者模式将对象的行为和协作抽象化，把对象在小尺度的行为上与其他对象的相互作用分开处理。</p><p>18、MEMENTO—同时跟几个MM聊天时，一定要记清楚刚才跟MM说了些什么话，不然MM发现了会不高兴的哦，幸亏我有个备忘录，刚才与哪个MM说了什么话我都拷贝一份放到备忘录里面保存，这样可以随时察看以前的记录啦。</p><p><strong>备忘录模式：</strong>备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捉住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。</p><p>19、OBSERVER—想知道咱们公司最新MM情报吗？加入公司的MM情报邮件组就行了，tom负责搜集情报，他发现的新情报不用一个一个通知我们，直接发布给邮件组，我们作为订阅者（观察者）就可以及时收到情报啦</p><p><strong>观察者模式：</strong>观察者模式定义了一种一队多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使他们能够自动更新自己。</p><p>20、STATE—跟MM交往时，一定要注意她的状态哦，在不同的状态时她的行为会有不同，比如你约她今天晚上去看电影，对你没兴趣的MM就会说“有事情啦”，对你不讨厌但还没喜欢上的MM就会说“好啊，不过可以带上我同事么？”，已经喜欢上你的MM就会说“几点钟？看完电影再去泡吧怎么样？”，当然你看电影过程中表现良好的话，也可以把MM的状态从不讨厌不喜欢变成喜欢哦。</p><p><strong>状态模式：</strong>状态模式允许一个对象在其内部状态改变的时候改变行为。这个对象看上去象是改变了它的类一样。状态模式把所研究的对象的行为包装在不同的状态对象里，每一个状态对象都属于一个抽象状态类的一个子类。状态模式的意图是让一个对象在其内部状态改变的时候，其行为也随之改变。状态模式需要对每一个系统可能取得的状态创立一个状态类的子类。当系统的状态变化时，系统便改变所选的子类。</p><p>21、STRATEGY—跟不同类型的MM约会，要用不同的策略，有的请电影比较好，有的则去吃小吃效果不错，有的去海边浪漫最合适，单目的都是为了得到MM的芳心，我的追MM锦囊中有好多Strategy哦。</p><p><strong>策略模式：</strong>策略模式针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。策略模式把行为和环境分开。环境类负责维持和查询行为类，各种算法在具体的策略类中提供。由于算法和环境独立开来，算法的增减，修改都不会影响到环境和客户端。</p><p>22、TEMPLATE METHOD——看过《如何说服女生上床》这部经典文章吗？女生从认识到上床的不变的步骤分为巧遇、打破僵局、展开追求、接吻、前戏、动手、爱抚、进去八大步骤(Template method)，但每个步骤针对不同的情况，都有不一样的做法，这就要看你随机应变啦(具体实现)；</p><p><strong>模板方法模式：</strong>模板方法模式准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先制定一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p><p>23、VISITOR—情人节到了，要给每个MM送一束鲜花和一张卡片，可是每个MM送的花都要针对她个人的特点，每张卡片也要根据个人的特点来挑，我一个人哪搞得清楚，还是找花店老板和礼品店老板做一下Visitor，让花店老板根据MM的特点选一束花，让礼品店老板也根据每个人特点选一张卡，这样就轻松多了；</p><p><strong>访问者模式：</strong>访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构可以保持不变。访问者模式适用于数据结构相对未定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由的演化。访问者模式使得增加新的操作变的很容易，就是增加一个新的访问者类。访问者模式将有关的行为集中到一个访问者对象中，而不是分散到一个个的节点类中。当使用访问者模式时，要将尽可能多的对象浏览逻辑放在访问者类中，而不是放到它的子类中。访问者模式可以跨过几个类的等级结构访问属于不同的等级结构的成员类。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;创建型模式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、FACTORY—追MM少不了请吃饭了，麦当劳的鸡翅和肯德基的鸡翅都是MM爱吃的东西，虽然口味有所不同，但不管你带MM去麦当劳或肯德基，只管向服务员说“来四个鸡翅”就行了。麦当劳和肯德基就是生产鸡翅的Factor</summary>
+      
     
     
     
+    <category term="软件工程" scheme="http://example.com/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    
+    <category term="设计模式" scheme="http://example.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记 -《架构修炼之道》</title>
+    <link href="http://example.com/2019/06/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E6%9E%B6%E6%9E%84%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B/"/>
+    <id>http://example.com/2019/06/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E6%9E%B6%E6%9E%84%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B/</id>
+    <published>2019-06-09T01:57:33.000Z</published>
+    <updated>2022-02-20T03:02:51.108Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一-网关之道"><a href="#一-网关之道" class="headerlink" title="一.网关之道"></a>一.网关之道</h1><ol><li>API网关：将所有API的调用统一接入API网关层，由网关负责输入和输出。有了API网关之后，各个API服务提供团队可以专注于自己的业务逻辑处理，而API网关专注于安全、流量、路由等问题。</li><li>代理与API网关的区别：代理是纯粹的数据透传，协议不会发生变化，而网关在数据透传的背景下，还会涉及协议的转换。</li><li>API网关的基本功能包括统一接入、协议适配、流量管控与容错，以及安全防护。</li><li>设计API的时候常用的工具有RAML、Swagger，这两个工具都可以辅助我们设计API和生成API文档。</li><li>API网关的基石：泛化调用。泛化调用与普通RPC调用的区别在于不需要接口提供者的客户端JAR包了。</li><li>在API网关中引入管道的概念。将参数校验、黑白名单、限流控制、接口调用等封装成一个个管道，并且按顺序组织起来。管道技术是责任链模式的一种思维演化。</li><li>管道技术与责任链模式的区别在于管道技术更加灵活，它是由我们自定义的一种方式，责任链的使用方式则相对受限。</li><li>网关分为同步网关、半同步网关、全异步网关。同步网关是指，从接收请求到调用API接口提供方的过程都是同步调用；半同步是指将I&#x2F;O请求线程和业务处理线程分开，但业务线程还是同步调用API接口。</li><li>API网关有两大特点：访问量大、依赖系统多。所以建议网关系统进行脱库操作，直接使用缓存。</li><li>同步和异步怎么区分呢？使用一个线程干完的事情都是同步的，有线程切换才能完成的事情都是异步的。</li><li>一般RPC异步模式都是使用队列或Map来实现，然后用一个事件循环线程不停地轮询队列事件。</li><li>热更新：凡是不需要应用服务器就能改变程序对象的属性值的行为。热更新是一种思想，常用的热更新的方法有MQ方式、RPC方式和ZooKeeper方式。</li><li>网关有七种武器：降级、限流、熔断、线程池隔离、管道技术、配置热更新、异步。</li></ol><h1 id="二-分布式之道"><a href="#二-分布式之道" class="headerlink" title="二. 分布式之道"></a>二. 分布式之道</h1><ol><li>分布式事务：ACID，A(Atomicity)原子性,C(Consistency)一致性,I(Isolation)隔离性,D(Durability)持续性。CAP C(Consistency)一致性，A(Availability)可用性，P(Tolerance of network Partition)分区容错性。CAP不能同时满足的主要原因是存在网路故障。人们在研究CAP定理的时候，演化出了BASE理论。BASE是指基本可用(Basically Available)、软状态(Soft State)和最终一致性(Eventual Consistency)。</li><li>基本可用：分布式系统出现故障的时候，允许损失一部分可用性，拿响应时间和功能上的损失来换取可用性。比如大促的时候，访问量非常大，可以对于一些不重要的功能做降级处理，同时在响应时间上做放宽现在来保证可用。</li><li>软状态：也叫弱状态或柔性状态，比如订单系统，在下单完进行支付的过程中，我们可以让页面显示”支付中“，等待支付系统彻底同步数据，订单系统才显示<br>支付完成。允许系统存在中间状态，这个中间状态又不会影响系统整体可用性。在比如，数据库读写分离，写库同步到读库，会有一个延时，这个也是一种柔性状态。</li><li>最终一致性：在允许出现中间状态的情况下，经过一段时间之后，各项数据状态才最终达到一致。</li><li>互联网系统最核心的需求是高可用性，所以对于分布式事务，一般不按照老的两段式提交来实现，而会采用BASE理论的方式实现分布式事务来保证系统的性能和业务数据的最终一致性。</li></ol><h1 id="三-MQ之道"><a href="#三-MQ之道" class="headerlink" title="三.MQ之道"></a>三.MQ之道</h1><ol><li>数据异构：把数据按需(数据结构、存取方式、存取形式)进行异地构建存储。把数据异构到Elasticsearch、Solr中要解决的问题跟按照多维度来查询的需求差不多，这些存储天然都有聚合的功能。同时还可以提高查询性能，以应对大访问量的请求。</li><li>数据异构的常用方法：完整克隆、标记同步、binlog方式、MQ方式。</li></ol><h1 id="四-微服务之道"><a href="#四-微服务之道" class="headerlink" title="四.微服务之道"></a>四.微服务之道</h1><ol><li>分布式与微服务的区别：分布式侧重于分摊压力，而微服务侧重于业务架构的解耦。或者说，分布式侧重于分散压力，微服务侧重于分散能力。集群是物理形态，分布式是工作方式，微服务是一种架构风格。</li><li>从早先单体应用的代码依赖，到微服务的通信依赖，我们不得不考虑以下问题：网路延迟、分布式事务、异步消息等。研发一个系统不是最困难的，治理一个系统才是最复杂的工作。</li></ol><h1 id="五-容错之道"><a href="#五-容错之道" class="headerlink" title="五.容错之道"></a>五.容错之道</h1><ol><li>熔断器(breaker)工作原理：系统在运行过程中定时向对应的熔断器报告成功、失败、超时和拒绝的状态，熔断器维护计算统计的数据，根据这些统计的信息来确定熔断器是否打开。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;一-网关之道&quot;&gt;&lt;a href=&quot;#一-网关之道&quot; class=&quot;headerlink&quot; title=&quot;一.网关之道&quot;&gt;&lt;/a&gt;一.网关之道&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;API网关：将所有API的调用统一接入API网关层，由网关负责输入和输出。有了API网关之后，各</summary>
+      
+    
+    
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
   </entry>
   
   <entry>
-    <title>oilbeater博客</title>
-    <link href="http://example.com/2021/01/06/oilbeater%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/oilbeater%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.073Z</updated>
+    <title>关于锁的知识的总结</title>
+    <link href="http://example.com/2019/05/20/%E5%85%B3%E4%BA%8E%E9%94%81%E7%9A%84%E7%9F%A5%E8%AF%86%E7%9A%84%E6%80%BB%E7%BB%93/"/>
+    <id>http://example.com/2019/05/20/%E5%85%B3%E4%BA%8E%E9%94%81%E7%9A%84%E7%9F%A5%E8%AF%86%E7%9A%84%E6%80%BB%E7%BB%93/</id>
+    <published>2019-05-20T03:09:46.000Z</published>
+    <updated>2022-02-20T03:02:51.131Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>乐观锁和悲观锁是两种思想，用于解决并发场景下的数据竞争问题。</p><ul><li>乐观锁：乐观锁在操作数据时非常乐观，认为别人不会同时修改数据。因此乐观锁不会上锁，只是在执行更新的时候判断一下在此期间别人是否修改了数据：如果别人修改了数据则放弃操作，否则执行操作。</li><li>悲观锁：悲观锁在操作数据时比较悲观，认为别人会同时修改数据。因此操作数据时直接把数据锁住，直到操作完成后才会释放锁；上锁期间其他人不能修改数据。</li></ul><p>在说明实现方式之前，需要明确：<strong>乐观锁和悲观锁是两种思想，它们的使用是非常广泛的，不局限于某种编程语言或数据库。</strong></p><p>悲观锁的实现方式是加锁，加锁既可以是对代码块加锁（如Java的synchronized关键字），也可以是对数据加锁（如MySQL中的排它锁）。</p><p>乐观锁的实现方式主要有两种：CAS机制和版本号机制。</p><p>CAS包含了Compare和Swap两个操作，它又如何保证原子性呢？答案是：CAS是由CPU支持的原子操作，其原子性是在硬件层面进行保证的。</p><h2 id="功能限制"><a href="#功能限制" class="headerlink" title="功能限制"></a>功能限制</h2><p>与悲观锁相比，乐观锁适用的场景受到了更多的限制，无论是CAS还是版本号机制。</p><p>例如，CAS只能保证单个变量操作的原子性，当涉及到多个变量时，CAS是无能为力的，而synchronized则可以通过对整个代码块加锁来处理。再比如版本号机制，如果query的时候是针对表1，而update的时候是针对表2，也很难通过简单的版本号来实现乐观锁。</p><p>CAS问题：ABA问题、高竞争下的开销问题、功能限制</p><h2 id="2、竞争激烈程度"><a href="#2、竞争激烈程度" class="headerlink" title="2、竞争激烈程度"></a>2、竞争激烈程度</h2><p>如果悲观锁和乐观锁都可以使用，那么选择就要考虑竞争的激烈程度：</p><ul><li>当竞争不激烈 (出现并发冲突的概率小)时，乐观锁更有优势，因为悲观锁会锁住代码块或数据，其他线程无法同时访问，影响并发，而且加锁和释放锁都需要消耗额外的资源。</li><li>当竞争激烈(出现并发冲突的概率大)时，悲观锁更有优势，因为乐观锁在执行更新时频繁失败，需要不断重试，浪费CPU资源。</li></ul><p>1.数据库中的行锁，表锁，读锁，写锁以及syncronized实现的锁，都是悲观锁<br>2.innodb默认使用行锁，而行锁是基于索引的，因此要想加上行锁，在加锁时必须命中索引，否则将使用标锁。<br>3.乐观锁通过在表中增加一个版本号或时间戳来实现，其中，版本最常见。<br>4.乐观锁的原理：事务在从数据库取数据是，会将该数据的版本也取出来(v1)，当事务对数据变动完毕，想要将其更新到表中时，会将之前取出的版本号v1与数据中最新的版本号v2进行比较，如果v1&#x3D;v2，那么说明在此事务期间，没有其他事务对数据进行修改，此时，就允许事务对表中的数据进行修改，并且修改时版本号会加1，以此表明数据已被改动。如果v1!&#x3D;v2，那么说明事务操作过程中，有其它事务对数据进行了修改，此时，一般的处理办法是通知用户，让用户重新操作。所以，乐观锁需要人为控制，而悲观锁不需要。</p><p>比较：<br>悲观锁：一个事务用悲观锁对数据加锁之后，其它事务将不能对加锁的数据进行除查询之外的任何操作，影响了系统的吞吐量。适合写多的场景。<br>乐观锁：不在数据库上加锁，任何事务都可以对数据进行操作，在更新时才进行校验，提高吞吐量。适合读多的场景。</p><p>重量级锁：拿不到该锁后，里面进入阻塞模式的锁。（线程进入阻塞状态是比较耗时的，需要，保存线程执行状态，上下文等数据，还涉及到用户态到内核态的转换，同时，线程从阻塞态唤醒也是比较耗时的）</p><p>自旋锁：如果拿不到锁，不会马上进入阻塞状态，而是等待一段时间(类似于线程在那里做空循环)，如果循环一定的次数，还是拿不到锁，那么它立即进入阻塞状态。</p><p>自适应自旋锁：普通的自旋锁每个线程循环等待的时间是一样的，由用户指定。而自适应自旋锁本身能够判断需要循环的次数，而且不同线程可能的循环次数也可能不一样。其原理是：如果一个线程在前不久拿到过这个锁，或者它之前经常拿到这个锁，那么我们可以认为，它再次拿到这个锁的概率非常大，所以循环次数会多一些。反之，则循环次数少一些。</p><p>上面这三种锁，都是悲观锁</p><p>轻量级锁<br>进入的时候，不加锁，只需要做一个状态标记就好。如果未被其它线程标记，则进入执行。采用CAS来改变状态比加锁花销小很多。如果遇到有竞争，则将轻量级锁升级为重量级锁。</p><p>偏向锁<br>如果这个方法没人进来过，那么一个线程首次进入某个方法时，会采用CAS机制加标记，并会把线程ID也记录进去。让后线程退出时，不改变这个标记（它认为除了自己外，其它线程不会执行这个方法）。然后，线程下次进入这个方法的时候，如果，标记的线程ID是自己的，那么它就直接进入这个方法执行。如果线程ID不是自己的，则将偏向锁升级为轻量级锁。</p><p>上面这两种锁是乐观锁</p><p>共享锁：也称读锁，允许多个连接在同一时刻并发的读取同一资源，互不干扰。<br>排它锁：也称写锁。一个写锁会阻塞其它写锁或读锁，防止其它用户对该数据的读写。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;乐观锁和悲观锁是两种思想，用于解决并发场景下的数据竞争问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;乐观锁：乐观锁在操作数据时非常乐观，认为别人不会同时</summary>
+      
     
     
     
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>大熊博客</title>
-    <link href="http://example.com/2021/01/06/%E5%A4%A7%E7%86%8A%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/%E5%A4%A7%E7%86%8A%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.109Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    <category term="软件工程" scheme="http://example.com/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
     
   </entry>
   
   <entry>
-    <title>枕边书博客</title>
-    <link href="http://example.com/2021/01/06/%E6%9E%95%E8%BE%B9%E4%B9%A6%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/%E6%9E%95%E8%BE%B9%E4%B9%A6%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.122Z</updated>
+    <title>硬件&amp;系统性能</title>
+    <link href="http://example.com/2019/01/31/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD/"/>
+    <id>http://example.com/2019/01/31/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD/</id>
+    <published>2019-01-31T12:27:46.000Z</published>
+    <updated>2022-02-20T03:02:51.114Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先看一下系统性能良好时的指标范围：</p><p>控类别</p><p>指标名称</p><p>指标范围(通过)</p><p>应用服务器(jvm和配置)</p><p>JVM</p><p>jvm内存占用率&lt;&#x3D;70%</p><p>线程池连接数</p><p>线程池连接数&lt;&#x3D;80%，没有出现线程阻塞、死锁现象</p><p>数据库活动连接数</p><p>数据库活动连接数&lt;&#x3D;85%</p><p>full gc频率</p><p>大于平均半小时1次GC</p><p>是否有异常日志</p><p>日志信息中，无错误信息如：OOM、及其他代码提示的错误</p><p>是否有OOM</p><p>没有年老代、持久代堆异常、栈异常及内存不够造成的异常</p><p>内存泄露</p><p>多次GC后，内存没有呈线性增长</p><p>数据库(mysql5.5)</p><p>系统负载</p><p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p><p>CPU占用率</p><p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%或%sy&lt;&#x3D;50%，%wa&lt;&#x3D;20%，无热点CPU现象</p><p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p><p>内存使用率</p><p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p><p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p><p>磁盘</p><p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;30%</p><p>数据库连接数</p><p>关注：(Max_used_connections&#x2F;max_connections)*100&#x2F;%&lt;&#x3D;85%</p><p>是否有慢查询SQL</p><p>没有出现执行较长时间的SQL语句，从慢查询日志获取</p><p>死锁</p><p>没有出现SQL死锁</p><p>操作系统(linux3.1)</p><p>系统负载</p><p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p><p>CPU占用率</p><p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%，%sy&lt;&#x3D;20%，%id&lt;&#x3D;30%，无热点CPU现象</p><p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p><p>内存使用率</p><p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p><p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p><p>磁盘</p><p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;20%</p><p>带宽</p><p>网络使用率</p><p>&lt;&#x3D;系统带宽的30%，无丢包，无延迟，无阻塞</p><h2 id="时间单位换算关系"><a href="#时间单位换算关系" class="headerlink" title="时间单位换算关系"></a><strong>时间单位换算关系</strong></h2><p>换算关系<br>1 s &#x3D; 10^3 ms &#x3D; 10^6 us &#x3D; 10^9 ns &#x3D; 10^12 μs</p><p>秒     毫秒       微秒     纳秒        皮秒</p><h2 id="周期概念"><a href="#周期概念" class="headerlink" title="周期概念"></a><strong>周期概念</strong></h2><p>　　总结一下，它们之间的关系就是，指令周期由若干个机器周期组成，总线周期一般由4个时钟周期组成。 </p><p>　　机器周期和总线周期……机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。</p><p> 　  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令（ARM、DSP）均采用单指令执行周期。</p><p>　　机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。</p><p>　　CPU周期:又称机器周期，机器内部各种操作大致可归属为对CPU内部的操作和对主存的操作两大类，由于CPU内部操作速度较快，CPU访问一次内存所花的时间较长，因此用从内存读取一条指令字的最短时间来定义，这个基准时间就是CPU周期（机器周期）。一个指令周期常由若干CPU周期构成。</p><p>　　总线周期（BUS Cycle）：也就是一个访存储器或I&#x2F;O端口操作所用的时间。</p><p>　　时钟周期：CPU的晶振的工作频率的倒数。(fantaxy:晶振一次需要的时间)，例如12M的晶振，它的时间周期就是1&#x2F;12 μs，若采用了1MHZ的时钟频率，则时钟周期为1μs；若采用4MHZ的时钟频率，则时钟周期为250ns。</p><p>　　例子：22.1184MHZ的晶振,它的晶振周期、时钟周期和机器周期分别是多少？</p><p>　　以51为例,晶振22.1184M，时钟周期(晶振周期)就是(1&#x2F;22.1184)μs，一个机器周期包含12个时钟周期，一个机器周期就是 0.5425μs。一个机器周期一般是一条指令花费的时间，也有些是2个机器周期的指令，DJNZ，是双周期指令。</p><p>　　周期：就是时间，完成一次任务的时间</p><p>　　时钟周期：这个名字的英文clock cycle; clock period；时钟是用来计时的，是一个基本单位；在计算机中，cpu的晶振时间就是一个最最基本的单位，因此时钟周期很基本，别的周期都用它来参考！</p><p>      上下文切换：上下文切换真正的开销随平台变化而不同，不过有个经验法则:大多数通用的处理器中，上下文切换的时间是5000到10000个时钟周期，或者是几微秒 </p><h2 id="内存频率"><a href="#内存频率" class="headerlink" title="内存频率"></a><strong>内存频率</strong></h2><p>        内存主频和CPU主频一样，习惯上被用来表示内存的速度，它代表着该内存所能达到的最高工作频率。内存主频是以MHz（兆赫）为单位来计量的。内存主频越高在一定程度上代表着内存所能达到的速度越快。内存主频决定着该内存最高能在什么样的频率正常工作。目前较为主流的内存频率是333MHz和400MHz的DDR内存，667MHz、800MHz和1066MHz的DDR2内存，1066MHz、1333MHz、1600MHz的DDR3内存。</p><p>        内存本身并不具备晶体振荡器，因此内存工作时的时钟信号是由主板芯片组的北桥或直接由主板的时钟发生器提供的，也就是说内存无法决定自身的工作频率，其实际工作频率是由主板来决定的。</p><h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a><strong>磁盘</strong></h2><h3 id="磁盘性能指标"><a href="#磁盘性能指标" class="headerlink" title="磁盘性能指标"></a><strong>磁盘性能指标</strong></h3><p><strong>IOPS (Input&#x2F;Output Operations Per Second)</strong></p><p>即每秒进行读写（I&#x2F;O）操作的次数，多用于数据库等场合，衡量随机访问的性能。存储端的IOPS性能和主机端的IO是不同的，IOPS是指存储每秒可接受多少次主机发出的访问，主机的一次IO需要多次访问存储才可以完成。例如，主机写入一个最小的数据块，也要经过“发送写入请求、写入数据、收到写入确认”等三个步骤，也就是3个存储端访问。</p><p>决定IOPS的主要取决与阵列的算法，cache命中率，以及磁盘个数。</p><p>如果一个阵列有120块15K rpm的光纤硬盘，那么，它能撑的最大IOPS为120*150&#x3D;18000，这个为硬件限制的理论值，如果超过这个值，硬盘的响应可能会变的非常缓慢而不能正常提供业务。</p><p><strong>数据吞吐量</strong>(Throughput)</p><p>指单位时间内可以成功传输的数据数量。对于大量顺序读写的应用，如VOD(Video On Demand)，则更关注吞吐量指标。</p><h3 id="磁盘服务时间"><a href="#磁盘服务时间" class="headerlink" title="磁盘服务时间"></a><strong>磁盘服务时间</strong></h3><p>传统磁盘本质上一种机械装置，如FC, SAS, SATA磁盘，转速通常为5400&#x2F;7200&#x2F;10K&#x2F;15K rpm不等。影响磁盘的关键因素是磁盘服务时间，即磁盘完成一个I&#x2F;O请求所花费的时间，它由寻道时间、旋转延迟和数据传输时间三部分构成。</p><p><strong>寻道时间</strong>Tseek是指将读写磁头移动至正确的磁道上所需要的时间。寻道时间越短，I&#x2F;O操作越快，目前磁盘的平均寻道时间一般在3－15ms。<br><strong>旋转延迟</strong>Trotation是指盘片旋转将请求数据所在扇区移至读写磁头下方所需要的时间。旋转延迟取决于磁盘转速，通常使用磁盘旋转一周所需时间的1&#x2F;2表示。比如，7200 rpm的磁盘平均旋转延迟大约为60*1000&#x2F;7200&#x2F;2 &#x3D; 4.17ms，而转速为15000 rpm的磁盘其平均旋转延迟约为2ms。<br><strong>数据传输时间</strong>Ttransfer是指完成传输所请求的数据所需要的时间，它取决于数据传输率，其值等于数据大小除以数据传输率。目前IDE&#x2F;ATA能达到133MB&#x2F;s，SATA II可达到300MB&#x2F;s的接口数据传输率，数据传输时间通常远小于前两部分时间。</p><h3 id="最大IOPS的理论计算"><a href="#最大IOPS的理论计算" class="headerlink" title="最大IOPS的理论计算"></a><strong>最大IOPS的理论计算</strong></h3><p>IOPS &#x3D; 1000 ms&#x2F; (Tseek + Troatation)，忽略数据传输时间。假设磁盘平均物理寻道时间为3ms, 磁盘转速为7200,10K,15K rpm，则磁盘IOPS理论最大值分别为，<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;7200&#x2F;2)  &#x3D; 140<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;10000&#x2F;2) &#x3D; 167<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;15000&#x2F;2) &#x3D; 200</p><p>固态硬盘SSD是一种电子装置， 避免了传统磁盘在寻道和旋转上的时间花费，存储单元寻址开销大大降低，因此IOPS可以非常高，能够达到数万甚至数十万。</p><h3 id="IOPS的指标"><a href="#IOPS的指标" class="headerlink" title="IOPS的指标"></a><strong>IOPS的指标</strong></h3><p>通常情况下，IOPS可细分为如下几个指标：<br>Toatal IOPS，混合读写和顺序随机I&#x2F;O负载情况下的磁盘IOPS，这个与实际I&#x2F;O情况最为相符，大多数应用关注此指标。<br>Random Read IOPS，100%随机读负载情况下的IOPS。<br>Random Write IOPS，100%随机写负载情况下的IOPS。<br>Sequential Read IOPS，100%顺序负载读情况下的IOPS。<br>Sequential Write IOPS，100%顺序写负载情况下的IOPS。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;首先看一下系统性能良好时的指标范围：&lt;/p&gt;
+&lt;p&gt;控类别&lt;/p&gt;
+&lt;p&gt;指标名称&lt;/p&gt;
+&lt;p&gt;指标范围(通过)&lt;/p&gt;
+&lt;p&gt;应用服务器(jvm和配置)&lt;/p&gt;
+&lt;p&gt;JVM&lt;/p&gt;
+&lt;p&gt;jvm内存占用率&amp;lt;&amp;#x3D;70%&lt;/p&gt;
+&lt;p&gt;线程池连接数&lt;/p&gt;
+</summary>
+      
     
     
     
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>赵亚飞博客</title>
-    <link href="http://example.com/2021/01/06/%E8%B5%B5%E4%BA%9A%E9%A3%9E%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/%E8%B5%B5%E4%BA%9A%E9%A3%9E%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.125Z</updated>
+    <category term="软件工程" scheme="http://example.com/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
     
     
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
     
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>飞鸿影博客</title>
-    <link href="http://example.com/2021/01/06/%E9%A3%9E%E9%B8%BF%E5%BD%B1%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/06/%E9%A3%9E%E9%B8%BF%E5%BD%B1%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T16:03:46.000Z</published>
-    <updated>2022-02-20T03:02:51.126Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
+    <category term="性能" scheme="http://example.com/tags/%E6%80%A7%E8%83%BD/"/>
     
   </entry>
   
   <entry>
-    <title>倪朋飞博客</title>
-    <link href="http://example.com/2021/01/05/%E5%80%AA%E6%9C%8B%E9%A3%9E%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/%E5%80%AA%E6%9C%8B%E9%A3%9E%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:57:24.000Z</published>
+    <title>php程序的调试</title>
+    <link href="http://example.com/2019/01/31/php%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%B0%83%E8%AF%95/"/>
+    <id>http://example.com/2019/01/31/php%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%B0%83%E8%AF%95/</id>
+    <published>2019-01-31T08:26:31.000Z</published>
+    <updated>2022-02-20T03:02:51.077Z</updated>
+    
+    <content type="html"><![CDATA[<p>php 调试最常用的代码中添加 echo、var_dump、print_r 和 exit，以及打日志自不必说了，大概会点php的人都知道这两条。</p><p>下面说说需要更深入的调试方法：</p><p>1.使用xdebug进行调试</p><p>XDebug 是 C&#x2F;S 结构，其中 Client 是 PHP 中安装的 Xdebug，Server 是 IDE 中安装的插件，使用 DBGP 协议通信。PHP 运行脚本时，通过 Xdebug 插件向 IDE 发送调试信息，并接收 IDE 发过来的控制信号。需要为 PHP 安装并开启 Xdebug，然后设置 IDE 的 Xdebug 插件，使二者可以通信。</p><p>优缺点：<br>支持单步调试和任意变量值的获取<br>配置复杂，需要 IDE 安装插件<br>支持跟浏览器的配合，需要请求中携带 XDEBUG_SESSION_START 参数</p><p>2. Web App 调试</p><p>可以将要调试输出的变量set 到session或cookie中，然后在通过浏览器的调试模式去查看session或cookie变量的值，达到调试跟踪的目的。</p><p>3.通过 console 终端进行调试（CLI 方式）</p><p>摘取小部分代码进行cli调试，前提是对部分代码不确定。有点像单元测试，可以对对函数或类进行调试。</p><p>下面有两份很漂亮的文档，可以进行详细的阅读:</p><p>找到一个很详细的文档：<a href="http://blog.xiayf.cn/assets/uploads/files/PHP-Debug-Manual-public.pdf">点击查看</a></p><p>另有一篇文档可以看看：<a href="https://www.ibm.com/developerworks/cn/opensource/os-debug/">点击查看</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;php 调试最常用的代码中添加 echo、var_dump、print_r 和 exit，以及打日志自不必说了，大概会点php的人都知道这两条。&lt;/p&gt;
+&lt;p&gt;下面说说需要更深入的调试方法：&lt;/p&gt;
+&lt;p&gt;1.使用xdebug进行调试&lt;/p&gt;
+&lt;p&gt;XDebug 是 C&amp;#</summary>
+      
+    
+    
+    
+    <category term="php" scheme="http://example.com/categories/php/"/>
+    
+    
+    <category term="php" scheme="http://example.com/tags/php/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RPM包管理详解</title>
+    <link href="http://example.com/2019/01/26/rpm%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://example.com/2019/01/26/rpm%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</id>
+    <published>2019-01-26T14:28:06.000Z</published>
+    <updated>2022-02-20T03:02:51.084Z</updated>
+    
+    <content type="html"><![CDATA[<p>RPM Package Manager</p><p>由Red Hat公司提出，被众多Linux发行版所采用；</p><p>建立统一的数据库文件，详细记录软件包安装、卸载等变化信息，能够自动分析软件包依赖关系。</p><p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607182741934-1192282493.png"></p><p><strong>一、rpm命令</strong></p><p>1、查询已经安装的RPM软件信息</p><blockquote><p>rpm  -q[子选项]  [软件名]</p></blockquote><p>1、q  –query查询</p><p>2、query-options查询子选项</p><p>[-i,–info]：查看指定软件的详细信息</p><p>[-a,–all]：查看系统中已安装的所有RPM软件包列表</p><p>[-l,–list]：查询指定软件包所安装的目录、文件列表</p><p>[-c,–configfiles]：仅显示指定软件包安装的配置文件</p><p>[-d,–docfiles]：仅显示指定软件包安装的文档文件</p><p>3、查询文件&#x2F;目录属于哪个RPM软件：rpm  -qf  文件或目录名</p><p>2、查询未安装的RPM包文件</p><blockquote><p>rpm  -qp[子选项]  RPM包文件</p></blockquote><p>1、-qpi：通过.rpm包文件查看该软件的详细信息</p><p>2、-qpl：查看.rpm安装包内所包含的目录、文件列表</p><p>3、-qpc：查看.rpm安装包内包含的配置文件列表</p><p>4、-qpd：查看.rpm安装包内包含的文档文件列表</p><p>3、安装或升级RPM软件</p><blockquote><p>rpm  [选项]  RPM包文件…</p></blockquote><p>1、-i：安装一个新的rpm软件包</p><p>2、-U：升级某个rpm软件，若原本未装，则进行安装  {-U–upgrade}</p><p>3、-F：更新某个rpm软件，若原本未装，则放弃安装  {-F–freshen}</p><p>4、卸载指定的RPM软件</p><blockquote><p>rpm  -e  软件名　　#{-e–erase}</p></blockquote><p>5、辅助选项</p><p>1、–force：强制安装所指定的rpm软件包（不要轻易使用）</p><p>2、–nodeps：安装、升级或卸载软件时，忽略依赖关系（no dependencies）</p><p>但是：可能会导致软件异常，有些软件被强行替换安装，并没有真正解决依赖关系。</p><p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607183517590-1106499087.png"></p><p>所以：无论是在安装还是卸载，都是先处理被依赖的软件包。</p><p>3、-h：以“#”号显示安装的进度</p><p>4、-v：显示安装过程中的详细信息</p><p> </p><p><strong>二、安装软件和卸载软件注意事项</strong></p><p>1、使用完整名字或者短名字。</p><p>2、不要混血（redhat和centos之间安装软件）。</p><p>3、主要软件的版本要匹配–已经安装了高版本的软件，再安装低版本的软件会报错。</p><p>4、同时接很多软件包，先后顺序没有很大关系，只要有就可以，系统会自己先安装最需要的软件包。</p><p>5、注意系统是32位的还是64位，不要在64位的系统上强制安装某些32位的软件，会导致系统出问题，而且安装的软件也不能使用。</p><p> </p><p><strong>三、RPM仓库</strong></p><p>1、位置：&#x2F;var&#x2F;lib&#x2F;rpm目录下（备份好）</p><p>2、RPM数据库故障原因</p><p>1、非正常关机、误删除运行中的程序文件</p><p>2、RPM数据文件被误写或删除</p><p>3、RPM的缺点</p><p>1、安装的环境必须与打包时的环境需求一致或相当；</p><p>2、需要满足套件的相依属性需求；</p><p>3、卸载时需要特别小心，最底层的套件不可先移除，否则可能造成整个系统的问题！</p><p> </p><p><strong>四、rpm安装软件实例</strong></p><p>1、检查系统的版本</p><p>[root@localhost ~]# cat &#x2F;etc&#x2F;issue</p><p>Red Hat Enterprise Linux Server release 6.5 (Santiago)</p><p>Kernel \r on an \m</p><p>2、将对应系统的镜像文件放入虚拟机的光驱里</p><p>3、挂载镜像文件到&#x2F;mnt</p><p>[root@localhost ~]# mount   &#x2F;dev&#x2F;cdrom    &#x2F;mnt<br>mount: block device &#x2F;dev&#x2F;sr0 is write-protected, mounting read-only<br>mount: &#x2F;dev&#x2F;sr0 already mounted or &#x2F;mnt busy<br>mount: according to mtab, &#x2F;dev&#x2F;sr0 is already mounted on &#x2F;mnt</p><p>[root@localhost ~]# ll &#x2F;dev&#x2F;cdrom<br>lrwxrwxrwx. 1 root root 3 Oct 22 21:46 &#x2F;dev&#x2F;cdrom -&gt; sr0</p><p>4、进入&#x2F;mnt挂载点目录</p><p>[root@localhost ~]# cd  &#x2F;mnt&#x2F;Packages</p><p>5、进行安装</p><p>1、安装ftp</p><p>[root@localhost Packages]# rpm -ivh ftp-0.17-54.el6.x86_64.rpm</p><p>……</p><p>2、安装lftp（推荐）</p><p>[root@localhost Packages]# rpm -ivh lftp-4.0.9-1.el6.x86_64.rpm</p><p>3、安装tree</p><p>[root@localhost Packages]# rpm -ivh tree-1.5.3-2.el6.x86_64.rpm<br>warning: tree-1.5.3-2.el6.x86_64.rpm: Header V3 RSA&#x2F;SHA256 Signature, key ID fd431d51: NOKEY<br>Preparing…                ########################################### [100%]<br>   1:tree                   ########################################### [100%]</p><p>需要安装的软件包的名字一般都可能会比较长比较复杂，常用tab键补齐名字</p><p> </p><p><strong>五、SRPM</strong></p><p>rpm包的“老祖先”</p><p>源码类型的source rpm包—&gt;半成品—&gt;制作成rpm包</p><p>1、简介</p><p>1、SRPM 文件里面含有源代码( Source Code )</p><p>2、SRPM 的文件名是以 ***.src.rpm 这种格式来命名</p><p>3、需要编译生成RPM包后才能进行安装</p><p>2、rpmbuild命令：安装SRPM包</p><p>1、–rebuild 编译—&gt;打包—&gt;未安装</p><p>最后通常会发现一行字体：Wrote: &#x2F;usr&#x2F;src&#x2F;redhat&#x2F;RPMS&#x2F;i386&#x2F;pkgname.i386.rpm</p><p>2、–recompile 编译—&gt;打包—&gt;安装</p><p>命令范例：rpmbuild –rebuild rp-pppoe-3.5-32.1.src.rpm</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;RPM Package Manager&lt;/p&gt;
+&lt;p&gt;由Red Hat公司提出，被众多Linux发行版所采用；&lt;/p&gt;
+&lt;p&gt;建立统一的数据库文件，详细记录软件包安装、卸载等变化信息，能够自动分析软件包依赖关系。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://image</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP程序员职业发展路线</title>
+    <link href="http://example.com/2019/01/16/php%E7%A8%8B%E5%BA%8F%E5%91%98%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF/"/>
+    <id>http://example.com/2019/01/16/php%E7%A8%8B%E5%BA%8F%E5%91%98%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF/</id>
+    <published>2019-01-16T06:41:03.000Z</published>
+    <updated>2022-02-20T03:02:51.079Z</updated>
+    
+    <content type="html"><![CDATA[<p>根据了解的很多PHP&#x2F;LNMP程序员的发展轨迹，结合个人经验体会，针对很多程序员对未来的迷茫，特别对技术学习的盲目和慌乱，简单梳理了每个阶段PHP程序员的技术要求，来帮助PHP程序猿们做对照设定学习成长目标。</p><p>本文按照目前主流技术做了一个基本的梳理，整个假设是基于PHP程序员的基础比较扎实的情况下进行的设定，并且所有设定都非常具体明确清晰，可能会让人觉得不适，请理解仅代表一家之言。（未来技术变化不在讨论范围）。</p><p>第一阶段：基础阶段（基础PHP程序员）</p><p><strong>重点：</strong>把LNMP搞熟练（核心是安装配置基本操作）</p><p><strong>目标：</strong>能够完成基本的LNMP系统安装，简单配置维护；能够做基本的简单系统的PHP开发；能够在PHP中型系统中支持某个PHP功能模块的开发。</p><p><strong>时间：</strong>完成本阶段的时间因人而异，有的成长快半年一年就过了，成长慢的两三年也有。</p><p><strong>1.Linux：</strong></p><hr><ul><li>基本命令、操作、启动、基本服务配置（包括rpm安装文件，各种服务配置等，rpm的介绍见：<a href="http://blog.91shouzhuan.com/?p=303&preview=true">rpm详解</a>）；</li><li>会写简单的shell脚本和awk&#x2F;sed 脚本命令等。</li></ul><p><strong>2.Nginx：</strong></p><hr><p>做到能够安装配置nginx+php-fpm，知道基本的nginx核心配置选项，知道 server&#x2F;fastcgi_pass&#x2F;access_log 等基础配置，目标是能够让nginx+php-fpm顺利工作。</p><p><strong>3.MySQL：</strong></p><hr><ul><li>会自己搭建mysql，知道基本的mysql配置选项；</li><li>知道innodb和myisam的区别，知道针对InnoDB和MyISAM两个引擎的不同配置选项；</li><li>知道基本的两个引擎的差异和选择上面的区别；</li><li>能够纯手工编译搭建一个MySQL数据库并且配置好编码等正常稳定运行；</li><li>核心主旨是能够搭建一个可运行的MySQL数据库。</li></ul><p><strong>4.PHP：</strong></p><hr><ul><li>基本语法数组、字符串、数据库、curl、XML、Socket、GD&#x2F;ImageMgk图片处理等等；</li><li>熟悉各种跟MySQL操作链接的api（mysql &#x2F;mysqli&#x2F;PDO)，知道各种编码问题的解决；</li><li>知道常规熟练使用的PHP框架（ThinkPHP、Zendframework、Yii、Yaf 、Laravel、CI等）；</li><li>了解基本MVC的运行机制和为什么这么做，稍微知道不同的PHP框架之间的区别；</li><li>能够快速学习一个MVC框架。</li><li>能够知道开发工程中的文件目录组织，有基本的良好的代码结构和风格，能够完成小系统的开发和中型系统中某个模块的开发工作。</li></ul><p><strong>5.前端：</strong></p><hr><ul><li>如果条件时间允许，可以适当学习下 HTML&#x2F;CSS&#x2F;JS 等相关知识，知道什么web标准，div+css的web&#x2F;wap页面模式，知道 HTML5和HTML4的区别；</li><li>了解一些基本的前端只是和JS框架（jQuery之类的）；</li><li>了解一些基本的JavaScript编程知识；（本项不是必须项，如果有时间，稍微了解一下是可以的，不过不建议作为重点，除非个人有强烈兴趣）</li></ul><p><strong>6.系统设计：</strong></p><hr><ul><li>能够完成小型系统的基本设计，包括简单的数据库设计，能够完成基本的：浏览器 -&gt; Nginx+PHP -&gt; 数据库架构的设计开发工作；</li><li>能够支撑每天几十万到数百万流量网站的开发维护工作；</li></ul><p>第二阶段：提高阶段 （中级PHP程序员）</p><p><strong>重点：</strong>提高针对LNMP的技能，能够更全面的对LNMP有熟练的应用。</p><p><strong>目标：</strong>能够随时随地搭建好LNMP环境，快速完成常规配置；能够追查解决大部分遇到的开发和线上环境的问题；能够独立承担中型系统的构架和开发工作；能够在大型系统中承担某个中型模块的开发工作；</p><p><strong>1.Linux:</strong> </p><hr><ul><li>在第一阶段的基础上面，能够流畅的使用Shell脚本来完成很多自动化的工作；</li><li>awk&#x2F;sed&#x2F;perl 也操作的不错，能够完成很多文本处理和数据统计等工作；</li><li>基本能够安装大部分非特殊的Linux程序（包括各种库、包、第三方依赖等等，比如MongoDB&#x2F;Redis&#x2F;Sphinx &#x2F;Luncene&#x2F;SVN之类的）；</li><li>了解基本的Linux服务，知道如何查看Linux的性能指标数据，知道基本的Linux下面的问题跟踪等。</li></ul><p><strong>2. Nginx:</strong> </p><hr><ul><li>在第一阶段的基础上面，了解复杂一些的Nginx配置：包括多核配置、events、proxy_pass，sendfile&#x2F;tcp_*配置， 知道超时等相关配置和性能影响；</li><li>知道nginx除了web server，还能够承担代理服务器、反向静态服务器等配置；知道基本的nginx配置调优；</li><li>知道如何配置权限、编译一个nginx扩展到nginx；知道基本的nginx运行原理（master&#x2F;worker机制，epoll），知道为什么 nginx性能比apache性能好等知识；</li></ul><p><strong>3. MySQL&#x2F;MongoDB：</strong></p><hr><ul><li>在第一阶段的基础上面，在MySQL开发方面，掌握很多小技巧，包括常规SQL优化（group by&#x2F;order by&#x2F;rand优化等）；</li><li>除了 能够搭建MySQL，还能够冷热备份MySQL数据，还知道影响innodb&#x2F;myisam性能的配置选项（比如key_buffer &#x2F;query_cache&#x2F;sort_buffer&#x2F;innodb_buffer_pool_size &#x2F;innodb_flush_log_at_trx_commit等），也知道这些选项配置成为多少值合适；</li><li>另外也了解一些特殊的配置选项，比如知道如何搭建mysql主从同步的环境，知道各个binlog_format的区别；</li><li>知道MySQL的性能追查，包括slow_log&#x2F;explain等，还能够知道基本的索引建立处理等知识；</li><li>原理方面了解基本的MySQL的架构（Server+存储引擎），知道基本的InnoDB&#x2F;MyISAM索引存储结构 和不同（聚簇索引，B树）；</li><li>知道基本的InnoDB事务处理机制；</li><li>了解大部分MySQL异常情况的处理方案（或者知道哪儿找到处理方案）。</li><li>条件允许的情况，建议了解一下NoSQL的代表MongoDB数据库，顺便对比跟MySQL的差别，同事能够在合适的应用场景安全谨慎的使用MongoDB，知道基本 的PHP与MongoDB的结合开发。</li></ul><p><strong>4. Redis&#x2F;Memcached：</strong></p><hr><ul><li>在大部分中型系统里面一定会涉及到缓存处理，所以一定要了解基本的缓存；</li><li>知道Memcached和Redis的异同和应用场景，能够独立安 装 Redis&#x2F;Memcached，了解Memcahed的一些基本特性和限制，比如最大的value值，知道PHP跟他们的使用结合；</li><li>Redis了解 基本工作原理和使用，了解常规的数据类型，知道什么场景应用什么类型，了解Redis的事务等等。</li><li>原理部分，能够大概了解Memcached的内存结构 （slab机制），redis就了解常用数据类型底层实现存储结构（SDS&#x2F;链表&#x2F;SkipList&#x2F;HashTable）等等，顺便了解一下Redis 的事务、RDB、AOF等机制更好</li></ul><p><strong>5. PHP：</strong></p><hr><ul><li>除了第一阶段的能力，安装配置方面能够随意安装PHP和各种第三方扩展的编译安装配置；</li><li>了解php-fpm的大部分配置选项和含义（如 max_requests&#x2F;max_children&#x2F;request_terminate_timeout之类的影响性能的配置），知道mod_php &#x2F;fastcgi的区别；</li><li>在PHP方面已经能够熟练各种基础技术，还包括各种深入些的PHP，包括对PHP面向对象的深入理解&#x2F;SPL&#x2F;语法层面的特殊特 性比如反射之类的；</li><li>在框架方面已经阅读过最少一个以上常规PHP MVC框架的代码了，知道基本PHP框架内部实现机制和设计思想；</li><li>在PHP开发中已经能 够熟练使用常规的设计模式来 应用开发（抽象工厂&#x2F;单例&#x2F;观察者&#x2F;命令链&#x2F;策略&#x2F;适配器 等模式）；</li><li>建议开发自己的PHP MVC框架来充分让开发自由化，让自己深入理解MVC模式， 也让自己能够在业务项目开发里快速升级；</li><li>熟悉PHP的各种代码优化方法，熟悉大部分PHP安全方面问题的解决处理；</li><li>熟悉基本的PHP执行的机制原理 （Zend引擎&#x2F;扩展基本工作机制）；</li></ul><p><strong>6. C&#x2F;C++：</strong> </p><hr><ul><li>开始涉猎一定的C&#x2F;C++语言，能够写基本的C&#x2F;C++代码，对基本的C&#x2F;C++语法熟悉（指针、数组操作、字符串、常规标准API）和数据结构 （链表、树、哈希、队列）有一定的熟悉下；</li><li>对Linux下面的C语言开发有基本的了解概念，会简单的makefile文件编写，能够使用简单的 GCC&#x2F;GDB的程序编译简单调试工作；</li><li>对基本的网络编程有大概了解。（本项是为了向更高层次打下基础）</li></ul><p><strong>7. 前端：</strong></p><hr><ul><li>在第一阶段的基础上面，熟悉基本的HTTP协议（协议代码200&#x2F;300&#x2F;400&#x2F;500，基本的HTTP交互头）；</li><li>条件允许，可以在深入写出稍微 优雅的HTML+CSS+JavaScript，或者能够大致简单使用某些前端框架（jQuery&#x2F;YUI&#x2F;ExtJS&#x2F;RequireJS&#x2F;Bootstrap之类）；</li><li>如果条件允许，可以深入学习JavaScript编程，比如闭包机制、DOM处理；</li><li>再深入些可以读读jQuery源码做深入学习。（本项不做重点学习，除非对前端有兴趣）</li></ul><p><strong>8. 系统设计：</strong></p><hr><ul><li>能够设计大部分中型系统的网站架构、数据库、基本PHP框架选型；性能测试排查处理等；能够完成类似：浏览 器 -&gt; CDN(Squid) -&gt; Nginx+PHP -&gt; 缓存 -&gt; 数据库 结构网站的基本设计开发维护；</li><li>能够支撑 每天数百万到千万流量基本网站的开发维护工作；</li></ul><p>第三阶段：高级阶段 （高级PHP程序员）</p><p><strong>重点：</strong>除了基本的LNMP程序，还能够在某个方向或领域有深入学习。（纵深维度发展）</p><p><strong>目标：</strong>除了能够完成基本的PHP业务开发，还能够解决大部分深入复杂的技术问题，并且可以独立设计完成中大型的系统设计和开发工作；自己能够独立hold深入某个技术方向，在这块比较专业。（比如在MySQL、Nginx、PHP、Redis等等任一方向深入研究）</p><p><strong>1.Linux：</strong></p><hr><ul><li>除了第二阶段的能力，在Linux下面除了常规的操作和性能监控跟踪，还能够使用很多高级复杂的命令完成工作（watch&#x2F;tcpdump &#x2F;starce&#x2F;ldd&#x2F;ar等)；</li><li>在shell脚本方面，已经能够编写比较复杂的shell脚本（超过500行）来协助完成很多包括备份、自动化处理、 监控等工作的shell；</li><li>对awk&#x2F;sed&#x2F;perl 等应用已经如火纯青，能够随意操作控制处理文本统计分析各种复杂格式的数据；</li><li>对Linux内部机制 有一些了解，对内核模块加载，启动错误处理等等有个基本的处理；</li><li>同时对一些其他相关的东西也了解，比如NFS、磁盘管理等等；</li></ul><p><strong>2. Nginx:</strong> </p><hr><ul><li>在第二阶段的基础上面，已经能够把Nginx操作的很熟练，能够对Nginx进行更深入的运维工作，比如监控、性能优化，复杂问题处理等等；</li><li>看个人 兴趣，更多方面可以考虑侧重在关于Nginx工作原理部分的深入学习，主要表现在阅读源码开始，比如具体的master&#x2F;worker工作机 制，Nginx内部的事件处理，内存管理等等；</li><li>同时可以学习Nginx扩展的开发，可以定制一些自己私有的扩展；</li><li>同时可以对Nginx+Lua有一定程度 的了解，看看是否可以结合应用出更好模式；</li><li>这个阶段的要求是对Nginx原理的深入理解，可以考虑成为Nginx方向的深入专业者。</li></ul><p><strong>3. MySQL&#x2F;MongoDB：</strong></p><hr><ul><li>在第二阶段的基础上面，在MySQL应用方面，除了之前的基本SQL优化，还能够在完成一些复杂操作，比如大批量数据的导入导出，线上大批量数据的 更改表结构或者增删索引字段等等高危操作；</li><li>除了安装配置，已经能够处理更多复杂的MySQL的问题，比如各种问题的追查，主从同步延迟问题的解决、跨机房 同步数据方案、MySQL高可用架构等都有涉及了解；</li><li>对MySQL应用层面，对MySQL的核心关键技术比较熟悉，比如事务机制（隔离级别、锁等）、对触 发器、分区等技术有一定了解和应用；</li><li>对MySQL性能方面，有包括磁盘优化（SAS迁移到SSD）、服务器优化（内存、服务器本身配置）、除了二阶段的其 他核心性能优化选项（innodb_log_buffer_size&#x2F;back_log&#x2F;table_open_cache &#x2F;thread_cache_size&#x2F;innodb_lock_wait_timeout等）、连接池软件选择应用，对show * （show status&#x2F;show profile）类的操作语句有深入了解，能够完成大部分的性能问题追查；</li><li>MySQL备份技术的深入熟悉，包括灾备 还原、对Binlog的深入理解，冷热备份，多IDC备份等；</li><li>在MySQL原理方面，有更多了解，比如对MySQL的工作机制开始阅读部分源码，比如对主 从同步（复制）技术的源码学习，或者对某个存储引擎（MyISAM&#x2F;Innodb&#x2F;TokuDB）等等的源码学习理解，如果条件允许，可以参考CSV引擎 开发自己简单的存储引擎来保存一些数据，增强对MySQL的理解；</li><li>在这个过程，如果自己有兴趣，也可以考虑往DBA方向发展。</li><li>MongoDB层面，可以考 虑比如说在写少读多的情况开始在线上应用MongoDB，或者是做一些线上的数据分析处理的操作，具体场景可以按照工作来，不过核心是要更好的深入理解 RMDBS和NoSQL的不同场景下面的应用，如果条件或者兴趣允许，可以开始深入学习一下MongoDB的工作机制。</li></ul><p><strong>4. Redis&#x2F;Memcached：</strong></p><hr><ul><li>在第二阶段的基础上面，能够更深入的应用和学习。因为Memcached不是特别复杂，建议可以把源码进行阅读，特别是内存管理部分，方便深入理 解；</li><li>Redis部分，可以多做一些复杂的数据结构的应用（zset来做排行榜排序操作&#x2F;事务处理用来保证原子性在秒杀类场景应用之类的使用操作）；</li><li>多涉及 aof等同步机制的学习应用，设计一个高可用的Redis应用架构和集群；</li><li>建议可以深入的学习一下Redis的源码，把在第二阶段积累的知识都可以应用 上，特别可以阅读一下包括核心事件管理、内存管理、内部核心数据结构等充分学习了解一下。</li><li>如果兴趣允许，可以成为一个Redis方面非常专业的使用者。</li></ul><p><strong>5. PHP：</strong></p><hr><ul><li>作为基础核心技能，我们在第二阶段的基础上面，需要有更深入的学习和应用。从基本代码应用上面来说，能够解决在PHP开发中遇到95%的问题，了解 大部分PHP的技巧；</li><li>对大部分的PHP框架能够迅速在一天内上手使用，并且了解各个主流PHP框架的优缺点，能够迅速方便项目开发中做技术选型；</li><li>在配置方 面，除了常规第二阶段会的知识，会了解一些比较偏门的配置选项（php auto_prepend_file&#x2F;auto_append_file），包括 扩展中的一些复杂高级配置和原理（比如memcached扩展配置中的memcache.hash_strategy、apc扩展配置中的 apc.mmap_file_mask&#x2F;apc.slam_defense&#x2F;apc.file_update_protection之类的）；</li><li>对php的 工作机制比较了解，包括php-fpm工作机制（比如php-fpm在不同配置机器下面开启进程数量计算以及原理），对zend引擎有基本熟悉 （vm&#x2F;gc&#x2F;stream处理），阅读过基本的PHP内核源码（或者阅读过相关文章），对PHP内部机制的大部分核心数据结构（基础类型&#x2F;Array &#x2F;Object）实现有了解，对于核心基础结构（zval&#x2F;hashtable&#x2F;gc）有深入学习了解；</li><li>能够进行基本的PHP扩展开发，了解一些扩展开发 的中高级知识（minit&#x2F;rinit等），熟悉php跟apache&#x2F;nginx不同的通信交互方式细节（mod_php&#x2F;fastcgi）；</li><li>除了开发 PHP扩展，可以考虑学习开发Zend扩展，从更底层去了解PHP。</li></ul><p><strong>6. C&#x2F;C++：</strong></p><hr><ul><li>在第二阶段基础上面，能够在C&#x2F;C++语言方面有更深入的学习了解，能够完成中小型C&#x2F;C++系统的开发工作；</li><li>除了基本第二阶段的基础C&#x2F;C++语 法和数据结构，也能够学习一些特殊数据结构（b-tree&#x2F;rb-tree&#x2F;skiplist&#x2F;lsm-tree&#x2F;trie-tree等）方便在特殊工作 中需求；</li><li>在系统编程方面，熟悉多进程、多线程编程；多进程情况下面了解大部分多进程之间的通信方式，能够灵活选择通信方式（共享内存&#x2F;信号量&#x2F;管道等）；</li><li>多线程编程能够良好的解决锁冲突问题，并且能够进行多线程程序的开发调试工作；</li><li>同时对网络编程比较熟悉，了解多进程模型&#x2F;多线程模型&#x2F;异步网络IO模型的 差别和选型，熟悉不同异步网络IO模型的原理和差异（select&#x2F;poll&#x2F;epoll&#x2F;iocp等），并且熟悉常见的异步框架（ACE&#x2F;ICE &#x2F;libev&#x2F;libevent&#x2F;libuv&#x2F;Boost.ASIO等）和使用，如果闲暇也可以看看一些国产自己开发的库（比如muduo）；</li><li>同时能够设 计好的高并发程序架构（leader-follow&#x2F;master-worker等）；</li><li>了解大部分C&#x2F;C++后端Server开发中的问题（内存管理、日 志打印、高并发、前后端通信协议、服务监控），知道各个后端服务RPC通信问题（struct&#x2F;http&#x2F;thirft&#x2F;protobuf等）；</li><li>能够更熟 络的使用GCC和GDB来开发编译调试程序，在线上程序core掉后能够迅速追查跟踪解决问题；</li><li>通用模块开发方面，可以积累或者开发一些通用的工具或库 （比如异步网络框架、日志库、内存池、线程池等），不过开发后是否应用要谨慎，省的埋坑去追bug；</li></ul><p><strong>7. 前端：</strong></p><hr><ul><li>深入了解HTTP协议（包括各个细致协议特殊协议代码和背后原因，比如302静态文件缓存了，502是nginx后面php挂了之类的）；</li><li>除了之前 的前端方面的各种框架应用整合能力，前端方面的学习如果有兴趣可以更深入，表现形式是，可以自己开发一些类似jQuery的前端框架，或者开发一个富文本 编辑器之类的比较琐碎考验JavaScript功力；</li></ul><p><strong>8. 其他领域语言学习：</strong></p><hr><ul><li>在基础的PHP&#x2F;C&#x2F;C++语言方面有基本积累，建议在当前阶段可以尝试学习不同的编程语言，看个人兴趣爱好，脚本类语言可以学学 Python &#x2F;Ruby 之类的，函数式编程语言可以试试 Lisp&#x2F;Haskell&#x2F;Scala&#x2F;Erlang 之类的，静态语言可以试试 Java &#x2F;Golang，数据统计分析可以了解了解R语言，如果想换个视角做后端业务，可以试试 Node.js还有前面提到的跟Nginx结合的 Nginx_Lua等。</li><li>学习不同的语言主要是提升自己的视野和解决问题手段的差异，比如会了解除了进程&#x2F;线程，还有轻量级协程；比如在跨机器通信场景下 面，Erlang的解决方案简单的惊人；</li><li>比如在不想选择C&#x2F;C++的情况下，还有类似高效的Erlang&#x2F;Golang可用等等；</li><li>主要是提升视野。</li></ul><p><strong>9. 其他专业方向学习：</strong></p><hr><ul><li>在本阶段里面，会除了基本的LNMP技能之外，会考虑一些其他领域知识的学习，这些都是可以的，看个人兴趣和长期的目标方向。</li><li>目前情况能够选择的领 域比较多，比如、云计算（分布式存储、分布式计算、虚拟机等），机器学习（数据挖掘、模式识别等，应用到统计、个性化推荐），自然语言处理（中文分词 等），搜索引擎技术、图形图像、语音识别等等。</li><li>除了这些高大上的，也有很多偏工程方面可以学习的地方，比如高性能系统、移动开发 （Android&#x2F;IOS）、计算机安全、嵌入式系统、硬件等方向。</li></ul><p><strong>10. 系统设计：</strong></p><hr><ul><li><ul><li>系统设计在第二阶段的基础之上，能够应用掌握的经验技能，设计出比较复杂的中大型系统，能够解决大部分线上的各种复杂系统的问题，完成类似 浏览器 -&gt; CDN -&gt; 负载均衡 -&gt; 接入层 -&gt; Nginx+PHP -&gt; 业务缓存 -&gt; 数据库 -&gt; 各路复杂后端RPC交互（存储后端、逻辑后端、反作弊 后端、外部服务） -&gt; 更多后端 酱紫的复杂业务；</li><li>能够支撑每天数千万到数亿流量网站的正常开发维护工作。</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;根据了解的很多PHP&amp;#x2F;LNMP程序员的发展轨迹，结合个人经验体会，针对很多程序员对未来的迷茫，特别对技术学习的盲目和慌乱，简单梳理了每个阶段PHP程序员的技术要求，来帮助PHP程序猿们做对照设定学习成长目标。&lt;/p&gt;
+&lt;p&gt;本文按照目前主流技术做了一个基本的梳理，</summary>
+      
+    
+    
+    
+    <category term="php" scheme="http://example.com/categories/php/"/>
+    
+    
+    <category term="php" scheme="http://example.com/tags/php/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell变量</title>
+    <link href="http://example.com/2018/12/18/shell%E5%8F%98%E9%87%8F/"/>
+    <id>http://example.com/2018/12/18/shell%E5%8F%98%E9%87%8F/</id>
+    <published>2018-12-18T01:59:18.000Z</published>
+    <updated>2022-02-20T03:02:51.085Z</updated>
+    
+    <content type="html"><![CDATA[<p>将某一个变量的值，作为另一个变量的变量名的方法：</p><p>#!&#x2F;bin&#x2F;bash<br>name&#x3D;yushuang<br>var&#x3D;name<br>res&#x3D;`eval echo ‘$’”$var”`<br>echo $res</p><p> </p><p>说明：第一步: “$var”  –&gt;name</p><p>第二步: echo ‘$’”$var” –&gt;$name</p><p>第三步: `eval $name` –&gt;yushuang</p><p>一.基础</p><p>我们定义一个变量（等号两边不能有空格）</p><p>FILEPATH&#x3D;&#x2F;var&#x2F;home&#x2F;sss<br>FILEFILENAME&#x3D;test001</p><p>在引用这个变量是我们可以直接使用$后面跟上变量的名字</p><p>比如：       $FILEPATH<br>还可以 ：  ${FILEPATH}</p><p>使用${}这种方式的好处是可以方便的实现两个变量的连接，同时看着也比较清楚。</p><p>${FILEPATH}&#x2F;${FILEFILENAME}</p><p>这样便可以表示这个文件的全路径了</p><hr><p>二. 此外有时我们会看到</p><p>$1,$2这种形式，这代表执行shell时，传递进来的参数</p><hr><p>三. 此外我们还会看到下面的这些形式</p><p>1.如果变量米有赋值或为空，使用value的值</p><p>${variable:-value}</p><p>2.如果变量米有赋值或为空，使用value的值，并把变量赋值为value</p><p>${variable:&#x3D;value}</p><p>3.检验变量是否为空</p><p>${variable:?}</p><hr><p>以下是一些不常用的</p><hr><p>$0  shell的命令本身(包括完整路径)<br>$1到$9 数字表示shell 的第几个参数<br>$# 传递到脚本的参数个数<br>$* 以一个单字符串显示所有向脚本传递的参数<br>$$ 脚本运行的ID号<br>$! 后台运行的最后一个进程的ID号<br>$@ 与$*相同。<br>$- 显示shell使用的当前选项。<br>$? 显示最后命令的执行状况。0表示没有错误。</p><dl><dt>高级变量包含三个部分<br><strong>1、变量扩展<br>2、命令替换<br>3、算术扩展</strong><br>在Bash Shell中，$算符会触发到上述三种扩展，基本形式如下：<br> <strong>基本型             扩展种类            例子<br>${变量名称}            变量扩展        ${filename}<br>$(命令)                命令替换        $(ls &#x2F;)<br>$((算术式))            算术扩展        $((5+3))</strong><br><strong>变量存在表示变量有值(包含空)</strong><br><strong>一、 变量扩展：测试存在性及空值</strong><br><strong>测试变量“存在与否”的基本用法</strong><br><strong>${待测变量-默认值}</strong><br><strong>如果待测变量有定义（包括为空），则传回待测变量默认值，如果无定义，则传回-后的默认值。</strong><br>a&#x3D;yang                     a&#x3D;<br>b&#x3D;${a-‘hello’}<br>echo $b<br>因为变量a有存在，所以$b值为yang，如果a存在，但为空，那么$b值为空。如果a不存在，$b为hello<br>变量分为两种状态，1 存在(包括为空) 2 不存在<br><strong>${待测变量:-默认值}</strong><br><strong>如果待测变量存在，则传回待测变量默认值，如果不存在或为空，则传回:-后的默认值。</strong><br>a&#x3D;yang                     a&#x3D;<br>b&#x3D;${a:-‘hello’}<br>echo $b<br>因为变量a存在，所以$b值为yang，如果a为空或不存在，$b的值就为:-后的hello<br><strong>总结：</strong><br><strong>如果变量扩展条件式只有-  则只做变量存在性的判断。<br>使用:- 则除了做变量是否存在，还会判断变量是否为空<br>一句话：多了个“:”，就要同时测试存在性及空值两种情况。</strong><br>[ -n ${A:-} ] &amp;&amp; set -v<br>[]是测试条件的语法，-n测试其后接的变量为空，若非空，传回真值(长度不为0为真，-z长度为0为真)。<br><strong>${待测变量:&#x3D;默认值}</strong><br><strong>如果待测变量不存在或为空，就把待测变量值设为:&#x3D;后的默认值。若存在，则设为待测变量值。</strong><br>a&#x3D;yang<br>b&#x3D;${a:&#x3D;’hello’}<br>echo $b<br>因为变量a存在，所以$b值为yang，如果a为空或不存在，$b的值就为:&#x3D;后的hello<br><strong>b&#x3D;${a:-‘hello’}和b&#x3D;${a:&#x3D;’hello’}看上去好像是一样的，但是:-是当变量a为空或者不存在的时候，其后的值hello为变量b的值,a依旧是空或不存在。:&#x3D;是当变量a为空或不存在的时候，其后的值hello为变量b的值，并且默认为变量a的值(相当于给a赋了一个值)。</strong><br><strong>${待测变量:？提示信息}</strong><br><strong>若变量不存在或为空值，则显示变量名称和:?后的提示信息，并立即停止执行脚本。</strong><br><strong>目的：确保变量值一定存在，否则不执行脚本。</strong><br>#!&#x2F;bin&#x2F;bash<br>fn&#x3D;${1:?’错误，请提供要删除目录的名称’}                      对传入的第一个参数做检查，若未空，显示提示信息，并停止脚本。<br>echo ‘你要删除的目录指令是:’<br>echo “rm -rf ~&#x2F;$fn”<br><strong>测试变量的”存在性”</strong><br><strong>{待测变量:+真值}</strong><br><strong>若变量存在，且不为空，则传回“真值”，否则传回空值。</strong><br>a&#x3D;123<br>b&#x3D;${a:+’true’}<br>echo $b<br>因为a存在，且值非空，所以$b为true，如果a不存在或a为空，那么$b值为空。<br><strong>小结：</dt><dd>空          测空值<br>-        负向        测不存在<br>&#x3D;        设值        给空值变量设一个默认值<br>?        有问题      检查条件是否完备再来执行吧<br>+        正向        测试存在</strong><br><strong>二、变量扩展：取字符串切片、字符串长度</strong><br><strong>字符串的第一个字符，编号为0，右邻的字符编号，依次增加1.接下来介绍如如何字符串的某一部分以及如何取得字符串长度</strong><br><strong>取字符串切片</strong><br><strong>${变量:位置起点}            位置起点等同于下边的编号。</strong><br>a&#x3D;”hello,world”<br>b&#x3D;${a:3}<br>echo $b<br>由第4个字符开始，到结束。$b值为lo，world<br> <strong>${变量:位置起点:长度}</strong><br>a&#x3D;”hello,world”<br>b&#x3D;${a:3:5}<br>echo $b<br>由第4个字符开始，共5个字符。$b的值为lo，wo<br><strong>取部分位置参数</strong><br><strong>${@:n} n为正整数，为位置起点到最后</strong><br>!&#x2F;bin&#x2F;bash<br>echo $0<br>echo ${@:2}  除了命令本身，从第2个字符(命令本身为0，编号为3)到最后<br>.&#x2F;script.sh 12 23 34 45 返回值为23 34 45<br><strong>${@:n:m} n、m为正整数,n是起始字符，m是长度</strong><br>!&#x2F;bin&#x2F;bash<br>echo $0<br>echo ${@:2:4}      长度为4<br>.&#x2F;script.sh 12 23 34 45 56 67 78 返回值为23 34 45 56<br><strong>计算字符串长度</strong><br>**$</dd></dl>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;将某一个变量的值，作为另一个变量的变量名的方法：&lt;/p&gt;
+&lt;p&gt;#!&amp;#x2F;bin&amp;#x2F;bash&lt;br&gt;name&amp;#x3D;yushuang&lt;br&gt;var&amp;#x3D;name&lt;br&gt;res&amp;#x3D;`eval echo ‘$’”$var”`&lt;br&gt;echo $r</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    
+    <category term="shell" scheme="http://example.com/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>有趣的锁</title>
+    <link href="http://example.com/2018/11/27/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%94%81-2/"/>
+    <id>http://example.com/2018/11/27/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%94%81-2/</id>
+    <published>2018-11-27T03:54:17.000Z</published>
+    <updated>2022-02-20T03:02:51.106Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用<a href="http://lib.csdn.net/base/redis" title="Redis知识库">Redis</a>的 SETNX 命令可以实现分布式锁，下文介绍其实现方法。</p><h1 id="SETNX命令简介"><a href="#SETNX命令简介" class="headerlink" title="SETNX命令简介"></a>SETNX命令简介</h1><h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><blockquote><p>SETNX key value</p></blockquote><p>将 key 的值设为 value，当且仅当 key 不存在。<br>若给定的 key 已经存在，则 SETNX 不做任何动作。<br>SETNX 是SET if Not eXists的简写。</p><h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p>返回整数，具体为</p><ul><li>1，当 key 的值被设置</li><li>0，当 key 的值没被设置</li></ul><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><blockquote><p><a href="http://lib.csdn.net/base/redis" title="Redis知识库">redis</a>&gt; SETNX mykey “hello”<br>(integer) 1<br>redis&gt; SETNX mykey “hello”<br>(integer) 0<br>redis&gt; GET mykey<br>“hello”<br>redis&gt;</p></blockquote><h1 id="使用SETNX实现分布式锁"><a href="#使用SETNX实现分布式锁" class="headerlink" title="使用SETNX实现分布式锁"></a>使用SETNX实现分布式锁</h1><p>多个进程执行以下Redis命令：</p><p><code>SETNX lock.foo &lt;current Unix time + lock timeout + 1&gt;</code></p><p>如果 SETNX 返回1，说明该进程获得锁，SETNX将键 lock.foo 的值设置为锁的超时时间（当前时间 + 锁的有效时间）。<br>如果 SETNX 返回0，说明其他进程已经获得了锁，进程不能进入临界区。进程可以在一个循环中不断地尝试 SETNX 操作，以获得锁。</p><h2 id="解决死锁"><a href="#解决死锁" class="headerlink" title="解决死锁"></a>解决死锁</h2><p>考虑一种情况，如果进程获得锁后，断开了与 Redis 的连接（可能是进程挂掉，或者网络中断），如果没有有效的释放锁的机制，那么其他进程都会处于一直等待的状态，即出现“死锁”。</p><p>上面在使用 SETNX 获得锁时，我们将键 lock.foo 的值设置为锁的有效时间，进程获得锁后，其他进程还会不断的检测锁是否已超时，如果超时，那么等待的进程也将有机会获得锁。</p><p>然而，锁超时时，我们不能简单地使用 DEL 命令删除键 lock.foo 以释放锁。考虑以下情况，进程P1已经首先获得了锁 lock.foo，然后进程P1挂掉了。进程P2，P3正在不断地检测锁是否已释放或者已超时，执行流程如下：</p><ul><li>P2和P3进程读取键 lock.foo 的值，检测锁是否已超时（通过比较当前时间和键 lock.foo 的值来判断是否超时）</li><li>P2和P3进程发现锁 lock.foo 已超时</li><li>P2执行 DEL lock.foo命令</li><li>P2执行 SETNX lock.foo命令，并返回1，即P2获得锁</li><li>P3执行 DEL lock.foo命令将P2刚刚设置的键 lock.foo 删除（这步是由于P3刚才已检测到锁已超时）</li><li>P3执行 SETNX lock.foo命令，并返回1，即P3获得锁</li><li>P2和P3同时获得了锁</li></ul><p>从上面的情况可以得知，在检测到锁超时后，进程不能直接简单地执行 DEL 删除键的操作以获得锁。</p><p>为了解决上述<a href="http://lib.csdn.net/base/datastructure" title="算法与数据结构知识库">算法</a>可能出现的多个进程同时获得锁的问题，我们再来看以下的算法。<br>我们同样假设进程P1已经首先获得了锁 lock.foo，然后进程P1挂掉了。接下来的情况：</p><ul><li>进程P4执行 SETNX lock.foo 以尝试获取锁</li><li>由于进程P1已获得了锁，所以P4执行 SETNX lock.foo 返回0，即获取锁失败</li><li>P4执行 GET lock.foo 来检测锁是否已超时，如果没超时，则等待一段时间，再次检测</li><li>如果P4检测到锁已超时，即当前的时间大于键 lock.foo 的值，P4会执行以下操作<br><code>GETSET lock.foo &lt;current Unix timestamp + lock timeout + 1&gt;</code></li><li>由于 GETSET 操作在设置键的值的同时，还会返回键的旧值，通过比较键 lock.foo 的旧值是否小于当前时间，可以判断进程是否已获得锁</li><li>假如另一个进程P5也检测到锁已超时，并在P4之前执行了 GETSET 操作，那么P4的 GETSET 操作返回的是一个大于当前时间的时间戳，这样P4就不会获得锁而继续等待。注意到，即使P4接下来将键 lock.foo 的值设置了比P5设置的更大的值也没影响。</li></ul><p>另外，值得注意的是，在进程释放锁，即执行 DEL lock.foo 操作前，需要先判断锁是否已超时。如果锁已超时，那么锁可能已由其他进程获得，这时直接执行 DEL lock.foo 操作会导致把其他进程已获得的锁释放掉。</p><h1 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h1><p>用以下<a href="http://lib.csdn.net/base/python" title="Python知识库">Python</a>代码来实现上述的使用 SETNX 命令作分布式锁的算法。</p><ol><li><p>LOCK_TIMEOUT &#x3D; 3</p></li><li><p>lock &#x3D; 0</p></li><li><p>lock_timeout &#x3D; 0</p></li><li><p>lock_key &#x3D; ‘lock.foo’</p></li><li><p># 获取锁</p></li><li><p>while lock !&#x3D; 1:</p></li><li><p>now &#x3D; int(time.time())</p></li><li><p>lock_timeout &#x3D; now + LOCK_TIMEOUT + 1</p></li><li><p>lock &#x3D; redis_client.setnx(lock_key, lock_timeout)</p></li><li><p>if lock &#x3D;&#x3D; 1 or (now &gt; int(redis_client.get(lock_key))) and now &gt; int(redis_client.getset(lock_key, lock_timeout)):</p></li><li><p>break</p></li><li><p>else:</p></li><li><p>time.sleep(0.001)</p></li><li><p># 已获得锁</p></li><li><p>do_job()</p></li><li><p># 释放锁</p></li><li><p>now &#x3D; int(time.time())</p></li><li><p>if now &lt; lock_timeout:</p></li><li><p>redis_client.delete(lock_key)</p></li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;使用&lt;a href=&quot;http://lib.csdn.net/base/redis&quot; title=&quot;Redis知识库&quot;&gt;Redis&lt;/a&gt;的 SETNX 命令可以实现分布式锁，下文介绍其实现方法。&lt;/p&gt;
+&lt;h1 id=&quot;SETNX命令简介&quot;&gt;&lt;a href=&quot;#SETNX</summary>
+      
+    
+    
+    
+    <category term="数据库" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="redis" scheme="http://example.com/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux系统维护监控工具集sysstat详解</title>
+    <link href="http://example.com/2018/08/16/sysstat/"/>
+    <id>http://example.com/2018/08/16/sysstat/</id>
+    <published>2018-08-16T03:42:41.000Z</published>
+    <updated>2022-02-20T03:02:51.088Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>1、关于 Sysstat；</strong> </p><p>Sysstat 是一个软件包，包含监测系统性能及效率的一组工具，这些工具对于我们收集系统性能数据，比如CPU使用率、硬盘和网络吞吐数据，这些数据的收集和分析，有 利于我们判断系统是否正常运行，是提高系统运行效率、安全运行服务器的得力助手；</p><p> <strong>Sysstat 软件包集成如下工具：</strong> </p><blockquote><ul><li>iostat 工具提供CPU使用率及硬盘吞吐效率的数据；</li><li>mpstat 工具提供单个处理器或多个处理器相关数据；</li><li>sar 工具负责收集、报告并存储系统活跃的信息；</li><li>sa1 工具负责收集并存储每天系统动态信息到一个二进制的文件中。它是通过计划任务工具cron来运行，<br>是为sadc所设计的程序前端程序；</li><li>sa2 工具负责把每天的系统活跃性息写入总结性的报告中。它是为sar所设计的前端 ，要通过cron来调用</li><li>sadc 是系统动态数据收集工具，收集的数据被写一个二进制的文件中，它被用作sar工具的后端；</li><li>sadf 显示被sar通过多种格式收集的数据；</li></ul></blockquote><p> <strong>2、安装 Sysstat和运行；</strong> </p><p>对于大多数系统，都有这个软件包，软件名以sysstat开头。我们可以通过网络安装它；</p><p> <strong>2.1 对于Debian或deb软件包为基础的系统；</strong> </p><blockquote><p>[root@localhost ~]# apt-get install sysstat</p></blockquote><p> <strong>2.2 Fedora 系统或以RPM包管理的系统；</strong> </p><blockquote><p>[root@localhost ~]# yum   install sysstat</p></blockquote><p>如果是RPM包，请用下面的命令来安装；</p><blockquote><p>[root@localhost ~]#rpm -ivh sysstat*.rpm</p></blockquote><p>如果您想了解yum 和rpm 软件包管理工具，请参考：<a href="http://www.linuxsir.org/main/?q=node/63">《Fedora &#x2F; Redhat 软件包管理指南》</a></p><p> <strong>2.3 Slackware 系统，对于Slackware系统；</strong> </p><blockquote><p>[root@localhost ~]# installpkg sysstat*.pkg</p></blockquote><p> <strong>2.4 通过源码包编译安装；</strong> </p><p>如果您是通过源码包安装，请到官方下源源码包 <a href="http://perso.wanadoo.fr/sebastien.godard/download.html">http://perso.wanadoo.fr/sebastien.godard</a>，目前最新版本是 sysstat-6.1.2；</p><p>如果您想了想一下什么是源码包，请参考：<a href="http://www.linuxsir.org/main/?q=node/51">《如 何编译安装源码包软件》</a></p><blockquote><p>[root@localhost ~]# tar zxvf sysstat-6.1.2.tar.gz<br>[beinan@localhost ~]$ cd sysstat-6.1.2<br>[beinan@localhost sysstat-6.1.2]#<br>[beinan@localhost sysstat-6.1.2]# make config<br>[beinan@localhost sysstat-6.1.2]# make<br>[beinan@localhost sysstat-6.1.2]# make install</p></blockquote><p> <strong>2.5 关于 Sysstat 计划任务；</strong> </p><p>如果您想得到Sysstat工具集所收集的系统信息自动存为某个文件中，你必须通过cron 为 sa1 和sa2 做计划任务。我们可以通过修改用户的crontab。在默认的情况下，Sysstat历史信息将被存放在&#x2F;var&#x2F;log&#x2F;sa文件中。如果想定义自己的 计划任务，请参考：<a href="http://www.linuxsir.org/main/?q=node/209">《计划任务工具 cron 的配置和说明》</a></p><p>在root用户，通过 crontab -e 来添加下面的一段；</p><blockquote><p># 8am-7pm activity reports every 10 minutes during weekdays<br>0 8-18 * * 1-5 &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa1 600 6 &amp;</p><h1 id="7pm-8am-activity-reports-every-hour-during-weekdays"><a href="#7pm-8am-activity-reports-every-hour-during-weekdays" class="headerlink" title="7pm-8am activity reports every hour during weekdays"></a>7pm-8am activity reports every hour during weekdays</h1><p>0 19-7 * * 1-5 &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa1 &amp;</p><h1 id="Activity-reports-every-hour-on-Saturday-and-Sunday"><a href="#Activity-reports-every-hour-on-Saturday-and-Sunday" class="headerlink" title="Activity reports every hour on Saturday and Sunday"></a>Activity reports every hour on Saturday and Sunday</h1><p>0 * * * 0,6 &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa1 &amp;</p><h1 id="Daily-summary-prepared-at-19-05-5-19-x2F-usr-x2F-lib-x2F-sa-x2F-sa2-A-amp"><a href="#Daily-summary-prepared-at-19-05-5-19-x2F-usr-x2F-lib-x2F-sa-x2F-sa2-A-amp" class="headerlink" title="Daily summary prepared at 19:05 5 19 * * * &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa2 -A &amp;"></a>Daily summary prepared at 19:05 5 19 * * * &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa2 -A &amp;</h1></blockquote><p><strong>创建Sysstat的启动脚本；</strong></p><blockquote><p>[root@localhost ~]# touch  &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;sysstat<br>[root@localhost ~]# vi &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;sysstat</p></blockquote><blockquote><p>#!&#x2F;bin&#x2F;sh</p><h1 id="Begin-rc-base-x2F-init-d-x2F-sysstat"><a href="#Begin-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="Begin $rc_base&#x2F;init.d&#x2F;sysstat"></a>Begin $rc_base&#x2F;init.d&#x2F;sysstat</h1><h1 id="Based-on-sysklogd-script-from-LFS-3-1-and-earlier"><a href="#Based-on-sysklogd-script-from-LFS-3-1-and-earlier" class="headerlink" title="Based on sysklogd script from LFS-3.1 and earlier."></a>Based on sysklogd script from LFS-3.1 and earlier.</h1><h1 id="Rewritten-by-Gerard-Beekmans-–-x67-101-x72-97-114-x64-x40-x6c-x69-110-117-120-102-114-111-109-115-99-114-x61-116-x63-x68-46-x6f-114-103"><a href="#Rewritten-by-Gerard-Beekmans-–-x67-101-x72-97-114-x64-x40-x6c-x69-110-117-120-102-114-111-109-115-99-114-x61-116-x63-x68-46-x6f-114-103" class="headerlink" title="Rewritten by Gerard Beekmans  – &#x67;&#101;&#x72;&#97;&#114;&#x64;&#x40;&#x6c;&#x69;&#110;&#117;&#120;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#x61;&#116;&#x63;&#x68;&#46;&#x6f;&#114;&#103;"></a>Rewritten by Gerard Beekmans  – <a href="mailto:&#x67;&#101;&#x72;&#97;&#114;&#x64;&#x40;&#x6c;&#x69;&#110;&#117;&#120;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#x61;&#116;&#x63;&#x68;&#46;&#x6f;&#114;&#103;">&#x67;&#101;&#x72;&#97;&#114;&#x64;&#x40;&#x6c;&#x69;&#110;&#117;&#120;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#x61;&#116;&#x63;&#x68;&#46;&#x6f;&#114;&#103;</a></h1><p>. &#x2F;etc&#x2F;sysconfig&#x2F;rc<br>. $rc_functions</p><p>case “$1” in<br>start)<br>echo “Calling the system activity data collector (sadc)…”<br>&#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc -F -L –<br>evaluate_retval<br>;;<br>*)</p><p>echo “Usage: $0 start”<br>exit 1<br>;;<br>esac</p><h1 id="End-rc-base-x2F-init-d-x2F-sysstat"><a href="#End-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="End $rc_base&#x2F;init.d&#x2F;sysstat"></a>End $rc_base&#x2F;init.d&#x2F;sysstat</h1></blockquote><blockquote><p>[root@localhost ~]# chmod 755 &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;sysstat<br>[root@localhost ~]# ln -sf &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;sysstat &#x2F;etc&#x2F;init.d&#x2F;sysstat</p></blockquote><p>有了Sysstat的守护进程，这样我们开机后，Sysstat的守护进程，就时时刻刻的为我们服务了。sa 、sa1或sa2自动把信息存在 &#x2F;var&#x2F;log&#x2F;sa目录的二进制文件中，我们可以通过sar工具来提取这些系统信息的历史；</p><p>当然我们也可以通过手动的方法来打开Sysstat的守护程序，也就是我们前面所制作的sysstat；</p><blockquote><p>[root@localhost ~]# &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;sysstat start</p></blockquote><p>下面的方法也行；</p><p>[root@localhost ~]# &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa1<br>[root@localhost ~]# &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sa2</p><p> <strong>3.Sysstat 工具集介绍；</strong> </p><p> <strong>3.1 sadc 工具，</strong> </p><p>sadc 位于 &#x2F;usr&#x2F;lib&#x2F;sa目录中，如果你没有设置可执行路径，要用绝对路径来运行比较方便 ，&#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc；sadc 是把数据写在一个二进制的文件中，如果想查看数据内容，需要用sadf工具来显示；</p><p> <strong>sadc 的用法；</strong> </p><blockquote><p>&#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc [ -d ] [ -F ] [ -I ] [ -L ] [ -V ] [ interval [ count ] ] [ outfile ]</p></blockquote><p><strong>参数说明：</strong></p><blockquote><p>-d  报告硬盘设置的相关统计；<br>-F  强制把数据写入文件；<br>-I  报告所有系统中断数据；</p></blockquote><p>interval 表示时间间隔，单位是秒，比如3 ；<br>count 统计数据的次数，也是一个数字；<br>outfile 输出统计到outfile文件；</p><p><strong>注意：</strong>此工具中的参数都是可选的，如果没有指定任何参数，比如 &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc – ，则会输出数据到 &#x2F;var&#x2F;log&#x2F;sa&#x2F; 目录下的一个文件中。我们要通过sadf 或sar工具来查看；</p><blockquote><p>[root@localhost beinan]# &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc  –<br>[root@localhost beinan]# ls &#x2F;var&#x2F;log&#x2F;sa   注：列出所有sa目录下的文件，根据文件的时间来判断哪个文件是最新的；<br>[root@localhost beinan]# sar  -f  &#x2F;var&#x2F;log&#x2F;sa&#x2F;sa12</p></blockquote><p>或</p><p>[root@localhost beinan]# sadf  &#x2F;var&#x2F;log&#x2F;sa&#x2F;sa12</p><p><strong>举例：</strong>我们想把sadc收集到的数据写到一个指定的文件中；</p><p>[root@localhost ~]# &#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc  1 10 sa000<br>[root@localhost ~]# sar -f sa000</p><p>Linux 2.6.15-1.2054_FC5 (localhost.localdomain)         2006年05月12日</p><p>09时15分30秒       CPU     %user     %nice   %system   %iowait     %idle<br>09时15分31秒       all      3.00      0.00      0.00      1.00     96.00<br>09时15分32秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分33秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分34秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分35秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分36秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分37秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分38秒       all      0.00      0.00      0.00      0.00    100.00<br>09时15分39秒       all      0.00      0.00      0.00      0.00    100.00<br>Average:          all      0.33      0.00      0.00      0.11     99.56</p><p>注解：我们用sadc 收集系统动态数据，让它收集1秒之内的10次动态信息； 然后通过sar 工具来查看系统的状态。也可以用 sadf 来查看所收集的数据，但不是太直观。您自己尝试一下看看。查看sa000文件，用 sadf sa000 ;</p><p> <strong>3.2 sar 工具；</strong> </p><p>sar 工具比较强大，既能收集系统CPU、硬盘、动态数据，也能显示动态显示，更能查看二进制数据文件；sar 的应用比较多，而且也比较复杂，数据更为精确。我们只了解一下常用的内容就行，大多数内容我们了解就行；</p><p><strong>用法：</strong></p><blockquote><p>sar  ［参数选项]</p></blockquote><p><strong>参数说明：</strong></p><blockquote><p>-A  显示所有历史数据，通过读取&#x2F;var&#x2F;log&#x2F;sar 目录下的所有文件，并把它们分门别类的显示出来；<br>-b  通过设备的I&#x2F;O中断读取设置的吞吐率；<br>-B 报告内存或虚拟内存交换统计；<br>-c 报告每秒创建的进程数；<br>-d 报告物理块设备（存储设备）的写入、读取之类的信息，如果直观一点，可以和p参数共同使用，-dp<br>-f 从一个二进制的数据文件中读取内容，比如 sar -f filename<br>-i interval  指定数据收集的时间，时间单位是秒；<br>-n 分析网络设备状态的统计，后面可以接的参数有 DEV、EDEV、NFS、NFSD、SOCK等。比如-n DEV<br>-o 把统计信息写入一个文件，比如  -o filename ；<br>-P 报告每个处理器应用统计，用于多处理器机器，并且启用SMP内核才有效；<br>-p 显示友好设备名字，以方便查看，也可以和-d 和-n 参数结合使用，比如 -dp 或-np<br>-r 内存和交换区占用统计；<br>-R<br>-t 这个选项对从文件读取数据有用，如果没有这个参数，会以本地时间为标准 读出；<br>-u 报告CPU利用率的参数；<br>-v 报告inode, 文件或其它内核表的资源占用信息；<br>-w 报告系统交换活动的信息； 每少交换数据的个数；<br>-W 报告系统交换活动吞吐信息；<br>-x 用于监视进程的，在其后要指定进程的PID值；<br>-X 用于监视进程的，但指定的应该是一个子进程ID；</p></blockquote><p><strong>sar 应用举例；</strong></p><p><strong>实例一：</strong> 如果只用sar 命令，sar就是读取 &#x2F;var&#x2F;log&#x2F;sa目录下最近系统状态文件。</p><blockquote><p>[root@localhost ~]# sar</p></blockquote><p>[root@localhost ~]# sar -A  注：读取&#x2F;var&#x2F;log&#x2F;sa目录下所有文件数据；</p><p>如果我们想知道CPU的利用率；动态更新；下面的例子是每秒更新一次数据，总共更新五次；</p><p>[root@localhost ~]# sar -u  1 5<br>Linux 2.6.15-1.2054_FC5 (localhost.localdomain)         2006年05月12日</p><p><strong>时间              CPU    利用率    nice值    系统占用    IO占用  空闲</strong><br>11时19分34秒       CPU     %user     %nice   %system   %iowait     %idle<br>11时19分35秒       all      2.97      0.00      0.00      0.00     97.03<br>11时19分36秒       all     11.11      0.00      9.09      0.00     79.80<br>11时19分37秒       all     21.78      0.00      6.93      0.00     71.29<br>11时19分38秒       all     15.00      0.00      0.00      0.00     85.00<br>11时19分39秒       all      8.00      0.00      0.00      0.00     92.00<br>Average:          all     11.78      0.00      3.19      0.00     85.03</p><p><strong>注解：</strong></p><p>CPU：表示机器内所有的CPU；<br>%user 表示CPU的利用率；<br>%nice 表示CPU在用户层优先级的百分比，0表示正常；<br>%system 表示当系统运行时，在用户应用层上所占用的CPU百分比；<br>%iowait 表示请求硬盘I&#x2F;0数据流出时，所占用CPU的百分比；<br>%idle 表示空闲CPU百分比，值越大系统负载越低；</p><p>您可以CPU利用率的动态信息输出到一个文本文件中，然后通过more 来查看。</p><blockquote><p>[root@localhost ~]# sar -u  1 5 &gt; sar000.txt<br>[root@localhost ~]# more sar000.txt</p></blockquote><p>也可以输出到一个二进制的文件中，然后通过sar来查看；</p><blockquote><p>[root@localhost ~]# sar -u  1 5 -o sar002<br>[root@localhost ~]# sar -f sar002</p></blockquote><p><strong>注：</strong>如果您把数据通过-o filename 输出到一个二进制的文件中，是不能用文件内容查看工具more 、less或cat来查看的，应该用sar工具来查看，要加-f参数；</p><p><strong>实例二：</strong>查看网络设备的吞吐情况；</p><p>比如我们让数据每秒更新一次，总共更新十次；</p><blockquote><p>[root@localhost ~]# sar -n DEV  2 5<br>时 间     IFACE   rxpck&#x2F;s   txpck&#x2F;s   rxbyt&#x2F;s   txbyt&#x2F;s   rxcmp&#x2F;s   txcmp&#x2F;s  rxmcst&#x2F;s</p></blockquote><p><strong>第一字段：</strong>时间；<br><strong>IFACE：</strong>设备名；<br>**rxpck&#x2F;s:**每秒收到的包；<br><strong>rxbyt&#x2F;s：</strong>每秒收到的所有包的体积；<br><strong>txbyt&#x2F;s：</strong>每秒传输的所有包的体积；<br><strong>rxcmp&#x2F;s：</strong>每秒收到数据切割压缩的包总数；<br>**txcmp&#x2F;s :**每秒传输的数据切割压缩的包的总数；<br><strong>rxmcst&#x2F;s:</strong> 每秒收到的多点传送的包；</p><p>如果我们从事提取eth0设备（也就是网卡eth0)的信息；我们应该用grep 来过滤。然后再显示出来；</p><blockquote><p>[root@localhost ~]# sar -n DEV  2  5  grep eth0<br>11时52分37秒      eth0  1.00  1.00   97.51   97.51   0.00    0.00      0.00<br>11时52分39秒      eth0  1.01  1.01   98.49   98.49   0.00    0.00      0.00<br>11时52分41秒      eth0  1.00  1.00   98.00   98.00   0.00    0.00      0.00<br>11时52分43秒      eth0  1.00  1.00   98.00   98.00   0.00    0.00      0.00<br>11时52分45秒      eth0  1.00  1.00   98.00   98.00   0.00    0.00      0.00<br>Average：   eth0   1.00  1.00  98.00   98.00   0.00    0.00      0.00</p></blockquote><p>如果想知道网络设备错误报告，也就就是用来查看设备故障的。应该用EDEV；比如下面的例子；</p><blockquote><p>[root@localhost ~]# sar -n EDEV  2 5</p></blockquote><p> <strong>3.3 iostat</strong> </p><p>iostat 是用来显示 系统即时系统，比如CPU使用率，硬盘设备的吞吐率；</p><p>[root@localhost ~]# iostat<br>Linux 2.6.15-1.2054_FC5 (localhost.localdomain)   2006年05月12日</p><p>avg-cpu:  %user   %nice %system %iowait   %idle<br>           7.24    0.00    0.99    0.35   91.43</p><p>Device:   tps   Blk_read&#x2F;s   Blk_wrtn&#x2F;s   Blk_read   Blk_wrtn<br>hda      1.46        28.43        21.43     710589     535680</p><p> <strong>3.4 mpstat</strong> </p><p>mpstat 提供多处理器系统中的CPU的利用率的统计；mpstat 也可以加参数，用-P来指定哪个 CPU，处理器的ID是从0开始的。下面的例子是查看两个处理器，每二秒数据更新一次，总共要显示10次数据；</p><blockquote><p>[root@localhost ~]# mpstat -P 0 2 10  注：查看第一个CPU<br>[root@localhost ~]# mpstat -p 1 2 10  注：查看第二个CPU<br>[root@localhost ~]# mpstat 2 10  注：查看所有CPU；</p></blockquote><p> <strong>3.5 sdaf</strong> </p><p>sdaf 能从二进制文件中提取sar所收集的数据；这个大家知道就行了。显示的并不是友好的格式；</p><blockquote><p>[root@localhost ~]# sar -u 2 5 -o sar003<br>[root@localhost ~]# sadf  sar003</p></blockquote><p>相对来说，用sar来读取输出文件的内容更好；比如下面的；</p><blockquote><p>[root@localhost ~]# sar -f sar003</p></blockquote><p> <strong>4、 与Sysstat相似工具；</strong> </p><p> <strong>4.1 进程管理工具；</strong> </p><p>进程管理工具，包括ps 、pgrep、top、kill 、killall、pkill 等，请参考 <a href="http://www.linuxsir.org/main/?q=node/210">《 Linux 进程管理》</a></p><p> <strong>4.2 内存使用率查看工具；</strong> </p><p><strong>内存使用量 free</strong></p><p>free 工具既能查看物理内存，也能查看虚拟内存的用量；</p><blockquote><p>[root@localhost ~]# free</p></blockquote><p>如果显示以单位M，则加-m参数；</p><blockquote><p>[root@localhost ~]# free -m<br>total       used       free     shared    buffers     cached<br>Mem:           724        713         11          0         24        290<br>-&#x2F;+ buffers&#x2F;cache:        398        326<br>Swap:          800          0        800</p></blockquote><p> <strong>vmstat 即时显示内存工具；</strong> </p><p>vmstat 是一个即时显示内存使用情况的工具；</p><p><strong>vmstat 使用方法：</strong></p><blockquote><p>vmstat [-V] [-n] [delay [count]]<br>-V 显示vmstat的版本；<br>-n causes the headers not to be reprinted regularly.<br>-a 显示所有激活和未激活内存的状态；print inactive&#x2F;active page stats.<br>-d 显示硬盘统计信息；prints disk statistics<br>-D 显示硬盘分区表；prints disk table<br>-p 显示硬盘分区读写状态等；prints disk partition statistics<br>-s 显示内存使用情况；prints vm table<br>-m prints slabinfo<br>-S 定义单位，k K<br>delay 是两次刷新时间间隔；<br>单位体积： k:1000 K:1024 m:1000000 M:1048576 (默认是 K)<br>count 刷新次数；</p></blockquote><p> <strong>5、 关于本文；</strong> </p><p>本文并不是大而全的man ，有些参数怎么理解，还得依靠我们自己。我认为掌握一些常用的参数就行，没有必要把一个命令研究的多透彻。有些东西，如果我们用不着，学了也没有什么用， 这就是学为所用吧。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;1、关于 Sysstat；&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;Sysstat 是一个软件包，包含监测系统性能及效率的一组工具，这些工具对于我们收集系统性能数据，比如CPU使用率、硬盘和网络吞吐数据，这些数据的收集和分析，有 利于我们判断系统是否正常运行，是提</summary>
+      
+    
+    
+    
+    <category term="工具" scheme="http://example.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    
+    <category term="运维" scheme="http://example.com/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="工具" scheme="http://example.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>服务发现 - consul 的介绍、部署和使用</title>
+    <link href="http://example.com/2018/08/16/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0-consul-%E7%9A%84%E4%BB%8B%E7%BB%8D%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E4%BD%BF%E7%94%A8/"/>
+    <id>http://example.com/2018/08/16/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0-consul-%E7%9A%84%E4%BB%8B%E7%BB%8D%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E4%BD%BF%E7%94%A8/</id>
+    <published>2018-08-16T02:44:49.000Z</published>
+    <updated>2022-02-20T03:02:51.107Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是服务发现"><a href="#什么是服务发现" class="headerlink" title="什么是服务发现"></a>什么是服务发现</h2><blockquote><p>相关源码： <a href="http://git.oschina.net/buxiaoxia/spring-demo/tree/master/spring-cloud-consul?dir=1&filepath=spring-cloud-consul&oid=ec6893c23f6f2d7dd03f7edfabbf552d606b96ee&sha=34a52893b38f5ce595a9f29c18d93e881bd1a64e" title="样例">spring cloud demo</a></p></blockquote><p>微服务的框架体系中，服务发现是不能不提的一个模块。我相信了解或者熟悉微服务的童鞋应该都知道它的重要性。这里我只是简单的提一下，毕竟这不是我们的重点。我们看下面的一幅图片：</p><p><img src="https://upload-images.jianshu.io/upload_images/4742055-873b31b3280ccd57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Image.png"></p><p>图中，客户端的一个接口，需要调用服务A-N。客户端必须要知道所有服务的网络位置的，以往的做法是配置是配置文件中，或者有些配置在数据库中。这里就带出几个问题：</p><ul><li>需要配置N个服务的网络位置，加大配置的复杂性</li><li>服务的网络位置变化，都需要改变每个调用者的配置</li><li>集群的情况下，难以做负载（反向代理的方式除外）</li></ul><p><strong>总结起来一句话：服务多了，配置很麻烦，问题多多</strong></p><p>既然有这些问题，那么服务发现就是解决这些问题的。话说，怎么解决呢？我们再看一张图</p><p><img src="https://upload-images.jianshu.io/upload_images/4742055-b5c590e819912447.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Image.png"></p><p>与之前一张不同的是，加了个服务发现模块。图比较简单，这边文字描述下。服务A-N把当前自己的网络位置注册到服务发现模块（这里注册的意思就是告诉），服务发现就以K-V的方式记录下，K一般是服务名，V就是IP:PORT。服务发现模块定时的轮询查看这些服务能不能访问的了（这就是健康检查）。客户端在调用服务A-N的时候，就跑去服务发现模块问下它们的网络位置，然后再调用它们的服务。这样的方式是不是就可以解决上面的问题了呢？客户端完全不需要记录这些服务网络位置，客户端和服务端完全解耦！</p><blockquote><p>这个过程大体是这样，当然服务发现模块没这么简单。里面包含的东西还很多。这样表述只是方便理解。</p></blockquote><p>图中的服务发现模块基本上就是微服务架构中服务发现的作用了。</p><h2 id="consul-简介"><a href="#consul-简介" class="headerlink" title="consul 简介"></a>consul 简介</h2><p>做服务发现的框架常用的有</p><ul><li>zookeeper</li><li>eureka</li><li>etcd</li><li>consul</li></ul><p>这里就不比较哪个好哪个差了，需要的童鞋自己谷歌百度。</p><p>那么consul是啥？consul就是提供服务发现的工具。然后下面是简单的介绍：</p><p>consul是分布式的、高可用、横向扩展的。consul提供的一些关键特性：</p><ul><li>service discovery：consul通过DNS或者HTTP接口使服务注册和服务发现变的很容易，一些外部服务，例如saas提供的也可以一样注册。</li><li>health checking：健康检测使consul可以快速的告警在集群中的操作。和服务发现的集成，可以防止服务转发到故障的服务上面。</li><li>key&#x2F;value storage：一个用来存储动态配置的系统。提供简单的HTTP接口，可以在任何地方操作。</li><li>multi-datacenter：无需复杂的配置，即可支持任意数量的区域。</li></ul><p>我们这里会介绍服务发现，健康检查，还有一些基本KV存储。多数据中心有机会另一篇文章再说。</p><p><strong>总结：只要知道它是解决我上一部分提出的问题就行，其它的东西慢慢理解</strong></p><h3 id="consul的几个概念"><a href="#consul的几个概念" class="headerlink" title="consul的几个概念"></a>consul的几个概念</h3><p><img src="https://www.consul.io/assets/images/consul-arch-420ce04a.png" alt="Image.png"></p><p>上图是我从<a href="https://www.consul.io/docs/internals/architecture.html" title="文档">consul官方文档</a>抠出来的。</p><p>我们只看数据中心1，可以看出consul的集群是由N个SERVER，加上M个CLIENT组成的。而不管是SERVER还是CLIENT，都是consul的一个<strong>节点</strong>，所有的服务都可以注册到这些节点上，正是通过这些节点实现服务注册信息的共享。除了这两个，还有一些小细节，一一简单介绍。</p><ul><li>CLIENT</li></ul><p>CLIENT表示consul的client模式，就是客户端模式。是consul节点的一种模式，这种模式下，所有注册到当前节点的服务会被转发到SERVER，本身是<strong>不持久化</strong>这些信息。</p><ul><li>SERVER</li></ul><p>SERVER表示consul的server模式，表明这个consul是个server，这种模式下，功能和CLIENT都一样，唯一不同的是，它会把所有的信息持久化的本地，这样遇到故障，信息是可以被保留的。</p><ul><li>SERVER-LEADER</li></ul><p>中间那个SERVER下面有LEADER的字眼，表明这个SERVER是它们的老大，它和其它SERVER不一样的一点是，它需要负责同步注册的信息给其它的SERVER，同时也要负责各个节点的健康监测。</p><ul><li>其它信息</li></ul><p>其它信息包括它们之间的通信方式，还有一些协议信息，算法。它们是用于保证节点之间的数据同步，实时性要求等等一系列集群问题的解决。这些有兴趣的自己看看<a href="https://www.consul.io/docs/internals/index.html" title="文档">官方文档</a>。</p><h2 id="consul-基本使用"><a href="#consul-基本使用" class="headerlink" title="consul 基本使用"></a>consul 基本使用</h2><blockquote><p>自己就一台机子，所以这里就演示下docker下部署使用consul。容器与宿主机的端口映射忽略，正常生产环境每个宿主机一个consul，端口需要映射到宿主机</p></blockquote><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><h4 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search consul</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p>咱们用官方的镜像玩玩</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull consul</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><blockquote><p>不指定tag就拉取last，当前版本是0.8.0</p></blockquote><h4 id="启动consul"><a href="#启动consul" class="headerlink" title="启动consul"></a>启动consul</h4><ul><li><h5 id="启动节点1（server模式）"><a href="#启动节点1（server模式）" class="headerlink" title="启动节点1（server模式）"></a>启动节点1（server模式）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e &#x27;CONSUL_LOCAL_CONFIG=&#123;&quot;skip_leave_on_interrupt&quot;: true&#125;&#x27; --name=node1 consul agent -server -bind=172.17.0.2  -bootstrap-expect=3 -node=node1</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><blockquote><p>-node：节点的名称 <br>-bind：绑定的一个地址，用于节点之间通信的地址，可以是内外网，必须是可以访问到的地址 <br>-server：这个就是表示这个节点是个SERVER <br>-bootstrap-expect：这个就是表示期望提供的SERVER节点数目，数目一达到，它就会被激活，然后就是LEADER了</p></blockquote></li><li><h5 id="启动节点2-3（server模式）"><a href="#启动节点2-3（server模式）" class="headerlink" title="启动节点2-3（server模式）"></a>启动节点2-3（server模式）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e &#x27;CONSUL_LOCAL_CONFIG=&#123;&quot;skip_leave_on_interrupt&quot;: true&#125;&#x27; --name=node2 consul agent -server -bind=172.17.0.3  -join=172.17.0.2 -node-id=$(uuidgen  awk &#x27;&#123;print tolower($0)&#125;&#x27;)  -node=node2</span><br><span class="line"></span><br><span class="line">docker run -d -e &#x27;CONSUL_LOCAL_CONFIG=&#123;&quot;skip_leave_on_interrupt&quot;: true&#125;&#x27; --name=node3 consul agent -server -bind=172.17.0.4  -join=172.17.0.2 -node-id=$(uuidgen  awk &#x27;&#123;print tolower($0)&#125;&#x27;)  -node=node3 -client=172.17.0.4</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li><li>3</li><li>4</li></ul><blockquote><p>-join：这个表示启动的时候，要加入到哪个集群内，这里就是说要加入到节点1的集群 <br>-node-id：这个貌似版本8才加入的，这里用这个来指定唯一的节点ID，可以查看这个<a href="https://github.com/hashicorp/consul/issues/2877" title="issue">issue</a> <br>-client：这个表示注册或者查询等一系列客户端对它操作的IP，如果不指定这个IP，默认是127.0.0.1。</p></blockquote></li><li><h5 id="启动节点4（client模式）"><a href="#启动节点4（client模式）" class="headerlink" title="启动节点4（client模式）"></a>启动节点4（client模式）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e &#x27;CONSUL_LOCAL_CONFIG=&#123;&quot;leave_on_terminate&quot;: true&#125;&#x27; --name=node4 consul agent -bind=172.17.0.5 -retry-join=172.17.0.2 -node-id=$(uuidgen  awk &#x27;&#123;print tolower($0)&#125;&#x27;)  -node=node4</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><blockquote><p>除了没有<strong>-server</strong>，其它都是一样的，没有这个就说明这个节点是CLIENT</p></blockquote></li><li><h5 id="查看下集群的状态"><a href="#查看下集群的状态" class="headerlink" title="查看下集群的状态"></a>查看下集群的状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -t node1 consul members</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p><img src="https://upload-images.jianshu.io/upload_images/4742055-d2660468207664d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Image.png"><br>4个节点都列出来了。Status表示它们的状态，都是alive。Type表示它们的类型，三个SERVER一个CLIENT，和我们之前启动的一样。DC表示数据中心，都是dc1。</p></li><li><h4 id="节点异常consul的处理"><a href="#节点异常consul的处理" class="headerlink" title="节点异常consul的处理"></a>节点异常consul的处理</h4><ul><li><p>LEADER 挂了 <br>leader挂了，consul会重新选取出新的leader，只要超过一半的SERVER还活着，集群是可以正常工作的。node1是leader，所以把这个容器停了。docker stop node1 <br>看看其他节点的日志（node2）： <br><img src="https://upload-images.jianshu.io/upload_images/4742055-bc8b184110e5a599.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Image.png"><br>日志打印，心跳检查node1的ip超时，接着开始选举。node2被选举为新的leader。我们查看下现在的leader：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://172.17.0.4:8500/v1/status/leader</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p>返回的内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;172.17.0.3:8300&quot;</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><blockquote><p>172.17.0.3 就是 node2节点的IP</p></blockquote></li></ul></li></ul><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>部署完了，那么可以看看怎么用这个东东了。</p><h4 id="注册个服务"><a href="#注册个服务" class="headerlink" title="注册个服务"></a>注册个服务</h4><p>使用HTTP API 注册个服务，使用[接口API](<a href="https://www.consul.io/api/agent/service.html">https://www.consul.io/api/agent/service.html</a> API)调用</p><p>调用 <a href="http://consul:8500/v1/agent/service/register">http://consul:8500/v1/agent/service/register</a> PUT 注册一个服务。request body:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;ID&quot;: &quot;userServiceId&quot;, //服务id</span><br><span class="line">  &quot;Name&quot;: &quot;userService&quot;, //服务名</span><br><span class="line">  &quot;Tags&quot;: [              //服务的tag，自定义，可以根据这个tag来区分同一个服务名的服务</span><br><span class="line">    &quot;primary&quot;,</span><br><span class="line">    &quot;v1&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;Address&quot;: &quot;127.0.0.1&quot;,//服务注册到consul的IP，服务发现，发现的就是这个IP</span><br><span class="line">  &quot;Port&quot;: 8000,          //服务注册consul的PORT，发现的就是这个PORT</span><br><span class="line">  &quot;EnableTagOverride&quot;: false,</span><br><span class="line">  &quot;Check&quot;: &#123;             //健康检查部分</span><br><span class="line">    &quot;DeregisterCriticalServiceAfter&quot;: &quot;90m&quot;,</span><br><span class="line">    &quot;HTTP&quot;: &quot;http://www.baidu.com&quot;, //指定健康检查的URL，调用后只要返回20X，consul都认为是健康的</span><br><span class="line">    &quot;Interval&quot;: &quot;10s&quot;   //健康检查间隔时间，每隔10s，调用一次上面的URL</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul><p>使用curl调用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl http://172.17.0.4:8500/v1/agent/service/register -X PUT -i -H &quot;Content-Type:application/json&quot; -d &#x27;&#123;</span><br><span class="line">  &quot;ID&quot;: &quot;userServiceId&quot;,  </span><br><span class="line">  &quot;Name&quot;: &quot;userService&quot;,</span><br><span class="line">  &quot;Tags&quot;: [</span><br><span class="line">    &quot;primary&quot;,</span><br><span class="line">    &quot;v1&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;Address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">  &quot;Port&quot;: 8000,</span><br><span class="line">  &quot;EnableTagOverride&quot;: false,</span><br><span class="line">  &quot;Check&quot;: &#123;</span><br><span class="line">    &quot;DeregisterCriticalServiceAfter&quot;: &quot;90m&quot;,</span><br><span class="line">    &quot;HTTP&quot;: &quot;http://www.baidu.com&quot;,</span><br><span class="line">    &quot;Interval&quot;: &quot;10s&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul><p>OK，注册了一个服务</p><h4 id="发现个服务"><a href="#发现个服务" class="headerlink" title="发现个服务"></a>发现个服务</h4><p>刚刚注册了名为userService的服务，我们现在发现（查询）下这个服务</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://172.17.0.4:8500/v1/catalog/service/userService</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p>返回的响应：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Address&quot;: &quot;172.17.0.4&quot;,</span><br><span class="line">        &quot;CreateIndex&quot;: 880,</span><br><span class="line">        &quot;ID&quot;: &quot;e6e9a8cb-c47e-4be9-b13e-a24a1582e825&quot;,</span><br><span class="line">        &quot;ModifyIndex&quot;: 880,</span><br><span class="line">        &quot;Node&quot;: &quot;node3&quot;,</span><br><span class="line">        &quot;NodeMeta&quot;: &#123;&#125;,</span><br><span class="line">        &quot;ServiceAddress&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;ServiceEnableTagOverride&quot;: false,</span><br><span class="line">        &quot;ServiceID&quot;: &quot;userServiceId&quot;,</span><br><span class="line">        &quot;ServiceName&quot;: &quot;userService&quot;,</span><br><span class="line">        &quot;ServicePort&quot;: 8000,</span><br><span class="line">        &quot;ServiceTags&quot;: [</span><br><span class="line">            &quot;primary&quot;,</span><br><span class="line">            &quot;v1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;TaggedAddresses&quot;: &#123;</span><br><span class="line">            &quot;lan&quot;: &quot;172.17.0.4&quot;,</span><br><span class="line">            &quot;wan&quot;: &quot;172.17.0.4&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li></ul><p>内容有了吧，这个就是我们刚刚注册的服务的信息，就可以获取到</p><blockquote><p>服务的名称是“userService” <br>服务地址是“127.0.0.1” <br>服务的端口是“8000”</p></blockquote><h4 id="存储个K-x2F-V"><a href="#存储个K-x2F-V" class="headerlink" title="存储个K&#x2F;V"></a>存储个K&#x2F;V</h4><p>设置一个值到user&#x2F;config&#x2F;connections 内容为5</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -t node1 consul kv put user/config/connections 5</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p>获取特定的值</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -t node1 consul kv get -detailed user/config/connections</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li></ul><p><img src="https://upload-images.jianshu.io/upload_images/4742055-9a89920e127b568f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Image.png"></p><p>值的内容为5,还有key等相关的值</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>服务发现以及配置共享的简单样例展示了下，详细的使用还是需要看官方文档，这里只是列举了一些样例，用于理解和简单的使用consul。</p><h2 id="Spring-Cloud-结合consul使用"><a href="#Spring-Cloud-结合consul使用" class="headerlink" title="Spring Cloud 结合consul使用"></a>Spring Cloud 结合consul使用</h2><p>如果是使用spring cloud来使用consul，可以查看我的相关样例：<a href="http://git.oschina.net/buxiaoxia/spring-demo">http://git.oschina.net/buxiaoxia/spring-demo</a></p><p>spring cloud 结合consul的使用，下一篇文章再进行描述吧</p><h2 id="相关文档连接"><a href="#相关文档连接" class="headerlink" title="相关文档连接"></a>相关文档连接</h2><p>CONSUL:<a href="https://www.consul.io/">https://www.consul.io/</a> <br>CONSUL HTTP API:<a href="https://www.consul.io/api/index.html">https://www.consul.io/api/index.html</a> <br>CONSUL CLI:<a href="https://www.consul.io/docs/commands/info.html">https://www.consul.io/docs/commands/info.html</a> <br>CONSUL Health Checks:<a href="https://www.consul.io/docs/agent/checks.html">https://www.consul.io/docs/agent/checks.html</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;什么是服务发现&quot;&gt;&lt;a href=&quot;#什么是服务发现&quot; class=&quot;headerlink&quot; title=&quot;什么是服务发现&quot;&gt;&lt;/a&gt;什么是服务发现&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;相关源码： &lt;a href=&quot;http://git.oschina.net</summary>
+      
+    
+    
+    
+    <category term="工具" scheme="http://example.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="工具" scheme="http://example.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="微服务" scheme="http://example.com/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux traceroute命令详解和使用例子</title>
+    <link href="http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/"/>
+    <id>http://example.com/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/</id>
+    <published>2018-06-01T01:27:24.000Z</published>
+    <updated>2022-02-20T03:02:51.070Z</updated>
+    
+    <content type="html"><![CDATA[<p>通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的</p><p>linux系统中，我们称之为traceroute,在MS Windows中为tracert。 traceroute通过发送小的数据包到目的设备直到其返回，来测量其需要多长时间。一条路径上的每个设备traceroute要测3次。输出结果中包括每次测试的时间(ms)和设备的名称（如有的话）及其IP地址。</p><p>在大多数情况下，我们会在linux主机系统下，直接执行命令行：traceroute hostname</p><p>而在Windows系统下是执行tracert的命令： tracert hostname</p><p><strong>1.命令格式：</strong></p><p>traceroute[参数][主机]</p><p><strong>2.命令功能：</strong></p><p>traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p><p>具体参数格式：traceroute [-dFlnrvx][-f&lt;存活数值&gt;][-g&lt;网关&gt;…][-i&lt;网络界面&gt;][-m&lt;存活数值&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-t&lt;服务类型&gt;][-w&lt;超时秒数&gt;][主机名称或IP地址][数据包大小]</p><p><strong>3.命令参数：</strong></p><p>-d 使用Socket层级的排错功能。</p><p>-f 设置第一个检测数据包的存活数值TTL的大小。</p><p>-F 设置勿离断位。</p><p>-g 设置来源路由网关，最多可设置8个。</p><p>-i 使用指定的网络界面送出数据包。</p><p>-I 使用ICMP回应取代UDP资料信息。</p><p>-m 设置检测数据包的最大存活数值TTL的大小。</p><p>-n 直接使用IP地址而非主机名称。</p><p>-p 设置UDP传输协议的通信端口。</p><p>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。</p><p>-s 设置本地主机送出数据包的IP地址。</p><p>-t 设置检测数据包的TOS数值。</p><p>-v 详细显示指令的执行过程。</p><p>-w 设置等待远端主机回报的时间。</p><p>-x 开启或关闭数据包的正确性检验。</p><p><strong>4.使用实例：</strong></p><p><strong>实例1：traceroute 用法简单、最常用的用法</strong></p><p>命令：traceroute <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 192.168.74.2 (192.168.74.2) 2.606 ms 2.771 ms 2.950 ms<br>2 211.151.56.57 (211.151.56.57) 0.596 ms 0.598 ms 0.591 ms<br>3 211.151.227.206 (211.151.227.206) 0.546 ms 0.544 ms 0.538 ms<br>4 210.77.139.145 (210.77.139.145) 0.710 ms 0.748 ms 0.801 ms<br>5 202.106.42.101 (202.106.42.101) 6.759 ms 6.945 ms 7.107 ms<br>6 61.148.154.97 (61.148.154.97) 718.908 ms * bt-228-025.bta.net.cn (202.106.228.25) 5.177 ms<br>7 124.65.58.213 (124.65.58.213) 4.343 ms 4.336 ms 4.367 ms<br>8 202.106.35.190 (202.106.35.190) 1.795 ms 61.148.156.138 (61.148.156.138) 1.899 ms 1.951 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p><p>说明：</p><p>记录按序列号从1开始，每个纪录就是一跳 ，每跳表示一个网关，我们看到每行有三个时间，单位是 ms，其实就是-q的默认参数。探测数据包向每个网关发送三个数据包后，网关响应后返回的时间；如果您用 traceroute -q 4 <a href="http://www.58.com/">www.58.com</a> ，表示向每个网关发送4个数据包。</p><p>有时我们traceroute 一台主机时，会看到有一些行是以星号表示的。出现这样的情况，可能是防火墙封掉了ICMP的返回信息，所以我们得不到什么相关的数据包返回数据。</p><p>有时我们在某一网关处延时比较长，有可能是某台网关比较阻塞，也可能是物理设备本身的原因。当然如果某台DNS出现问题时，不能解析主机名、域名时，也会 有延时长的现象；您可以加-n 参数来避免DNS解析，以IP格式输出数据。</p><p>如果在局域网中的不同网段之间，我们可以通过traceroute 来排查问题所在，是主机的问题还是网关的问题。如果我们通过远程来访问某台服务器遇到问题时，我们用到traceroute 追踪数据包所经过的网关，提交IDC服务商，也有助于解决问题；但目前看来在国内解决这样的问题是比较困难的，就是我们发现问题所在，IDC服务商也不可能帮助我们解决。</p><p><strong>实例2：跳数设置</strong></p><p>命令：traceroute -m 10 <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -m 10 <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.105), 10 hops max, 40 byte packets<br>1 192.168.74.2 (192.168.74.2) 1.534 ms 1.775 ms 1.961 ms<br>2 211.151.56.1 (211.151.56.1) 0.508 ms 0.514 ms 0.507 ms<br>3 211.151.227.206 (211.151.227.206) 0.571 ms 0.558 ms 0.550 ms<br>4 210.77.139.145 (210.77.139.145) 0.708 ms 0.729 ms 0.785 ms<br>5 202.106.42.101 (202.106.42.101) 7.978 ms 8.155 ms 8.311 ms<br>6 bt-228-037.bta.net.cn (202.106.228.37) 772.460 ms bt-228-025.bta.net.cn (202.106.228.25) 2.152 ms 61.148.154.97 (61.148.154.97) 772.107 ms<br>7 124.65.58.221 (124.65.58.221) 4.875 ms 61.148.146.29 (61.148.146.29) 2.124 ms 124.65.58.221 (124.65.58.221) 4.854 ms<br>8 123.126.6.198 (123.126.6.198) 2.944 ms 61.148.156.6 (61.148.156.6) 3.505 ms 123.126.6.198 (123.126.6.198) 2.885 ms<br>9 * * *<br>10 * * *<br>[root@localhost ~]#</p><p> </p><p><strong>实例3：显示IP地址，不查主机名</strong></p><p>命令：traceroute -n <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -n <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 5.430 ms 5.636 ms 5.802 ms<br>2 211.151.56.57 0.627 ms 0.625 ms 0.617 ms<br>3 211.151.227.206 0.575 ms 0.584 ms 0.576 ms<br>4 210.77.139.145 0.703 ms 0.754 ms 0.806 ms<br>5 202.106.42.101 23.683 ms 23.869 ms 23.998 ms<br>6 202.106.228.37 247.101 ms * *<br>7 61.148.146.29 5.256 ms 124.65.58.213 4.386 ms 4.373 ms<br>8 202.106.35.190 1.610 ms 61.148.156.138 1.786 ms 61.148.3.34 2.089 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]# traceroute <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 4.671 ms 4.865 ms 5.055 ms<br>2 211.151.56.57 (211.151.56.57) 0.619 ms 0.618 ms 0.612 ms<br>3 211.151.227.206 (211.151.227.206) 0.620 ms 0.642 ms 0.636 ms<br>4 210.77.139.145 (210.77.139.145) 0.720 ms 0.772 ms 0.816 ms<br>5 202.106.42.101 (202.106.42.101) 7.667 ms 7.910 ms 8.012 ms<br>6 bt-228-025.bta.net.cn (202.106.228.25) 2.965 ms 2.440 ms 61.148.154.97 (61.148.154.97) 431.337 ms<br>7 124.65.58.213 (124.65.58.213) 5.134 ms 5.124 ms 5.044 ms<br>8 202.106.35.190 (202.106.35.190) 1.917 ms 2.052 ms 2.059 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p><p><strong>实例4：探测包使用的基本UDP端口设置6888</strong></p><p>命令：traceroute -p 6888 <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -p 6888 <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (220.181.111.147), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 4.927 ms 5.121 ms 5.298 ms<br>2 211.151.56.1 (211.151.56.1) 0.500 ms 0.499 ms 0.509 ms<br>3 211.151.224.90 (211.151.224.90) 0.637 ms 0.631 ms 0.641 ms<br>4 * * *<br>5 220.181.70.98 (220.181.70.98) 5.050 ms 5.313 ms 5.596 ms<br>6 220.181.17.94 (220.181.17.94) 1.665 ms !X * *<br>[root@localhost ~]#</p><p><strong>实例5：把探测包的个数设置为值4</strong></p><p>命令：traceroute -q 4 <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -q 4 <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 40.633 ms 40.819 ms 41.004 ms 41.188 ms<br>2 211.151.56.57 (211.151.56.57) 0.637 ms 0.633 ms 0.627 ms 0.619 ms<br>3 211.151.227.206 (211.151.227.206) 0.505 ms 0.580 ms 0.571 ms 0.569 ms<br>4 210.77.139.145 (210.77.139.145) 0.753 ms 0.800 ms 0.853 ms 0.904 ms<br>5 202.106.42.101 (202.106.42.101) 7.449 ms 7.543 ms 7.738 ms 7.893 ms<br>6 61.148.154.97 (61.148.154.97) 316.817 ms bt-228-025.bta.net.cn (202.106.228.25) 3.695 ms 3.672 ms *<br>7 124.65.58.213 (124.65.58.213) 3.056 ms 2.993 ms 2.960 ms 61.148.146.29 (61.148.146.29) 2.837 ms<br>8 61.148.3.34 (61.148.3.34) 2.179 ms 2.295 ms 2.442 ms 202.106.35.190 (202.106.35.190) 7.136 ms<br>9 * * * *<br>30 * * * *<br>[root@localhost ~]#</p><p><strong>实例6：绕过正常的路由表，直接发送到网络相连的主机</strong></p><p>命令：traceroute -r <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -r <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.125), 30 hops max, 40 byte packets<br>connect: 网络不可达<br>[root@localhost ~]#</p><p>实例7：把对外发探测包的等待响应时间设置为3秒</p><p>命令：traceroute -w 3 <a href="http://www.baidu.com/">www.baidu.com</a></p><p>输出：</p><p>复制代码</p><p>代码如下:</p><p>[root@localhost ~]# traceroute -w 3 <a href="http://www.baidu.com/">www.baidu.com</a><br>traceroute to <a href="http://www.baidu.com/">www.baidu.com</a> (61.135.169.105), 30 hops max, 40 byte packets<br>1 211.151.74.2 (211.151.74.2) 2.306 ms 2.469 ms 2.650 ms<br>2 211.151.56.1 (211.151.56.1) 0.621 ms 0.613 ms 0.603 ms<br>3 211.151.227.206 (211.151.227.206) 0.557 ms 0.560 ms 0.552 ms<br>4 210.77.139.145 (210.77.139.145) 0.708 ms 0.761 ms 0.817 ms<br>5 202.106.42.101 (202.106.42.101) 7.520 ms 7.774 ms 7.902 ms<br>6 bt-228-025.bta.net.cn (202.106.228.25) 2.890 ms 2.369 ms 61.148.154.97 (61.148.154.97) 471.961 ms<br>7 124.65.58.221 (124.65.58.221) 4.490 ms 4.483 ms 4.472 ms<br>8 123.126.6.198 (123.126.6.198) 2.948 ms 61.148.156.6 (61.148.156.6) 7.688 ms 7.756 ms<br>9 * * *<br>30 * * *<br>[root@localhost ~]#</p><p><strong>Traceroute的工作原理：</strong></p><p>Traceroute最简单的基本用法是：traceroute hostname</p><p>Traceroute程序的设计是利用ICMP及IP header的TTL（Time To Live）栏位（field）。首先，traceroute送出一个TTL是1的IP datagram（其实，每次送出的为3个40字节的包，包括源地址，目的地址和包发出的时间标签）到目的地，当路径上的第一个路由器（router）收到这个datagram时，它将TTL减1。此时，TTL变为0了，所以该路由器会将此datagram丢掉，并送回一个「ICMP time exceeded」消息（包括发IP包的源地址，IP包的所有内容及路由器的IP地址），traceroute 收到这个消息后，便知道这个路由器存在于这个路径上，接着traceroute 再送出另一个TTL是2 的datagram，发现第2 个路由器…… traceroute 每次将送出的datagram的TTL 加1来发现另一个路由器，这个重复的动作一直持续到某个datagram 抵达目的地。当datagram到达目的地后，该主机并不会送回ICMP time exceeded消息，因为它已是目的地了，那么traceroute如何得知目的地到达了呢？</p><p>Traceroute在送出UDP datagrams到目的地时，它所选择送达的port number 是一个一般应用程序都不会用的号码（30000 以上），所以当此UDP datagram 到达目的地后该主机会送回一个「ICMP port unreachable」的消息，而当traceroute 收到这个消息时，便知道目的地已经到达了。所以traceroute 在Server端也是没有所谓的Daemon 程式。</p><p>Traceroute提取发 ICMP TTL到期消息设备的IP地址并作域名解析。每次 ，Traceroute都打印出一系列数据,包括所经过的路由设备的域名及 IP地址,三个包每次来回所花时间。</p><p><strong>windows之tracert:</strong></p><p>格式：</p><p>tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout] target_name</p><p>参数说明：</p><p>tracert [-d] [-h maximum_hops] [-j computer-list] [-w timeout] target_name</p><p>该诊断实用程序通过向目的地发送具有不同生存时间 (TL) 的 Internet 控制信息协议 (CMP) 回应报文，以确定至目的地的路由。路径上的每个路由器都要在转发该 ICMP 回应报文之前将其 TTL 值至少减 1，因此 TTL 是有效的跳转计数。当报文的 TTL 值减少到 0 时，路由器向源系统发回 ICMP 超时信息。通过发送 TTL 为 1 的第一个回应报文并且在随后的发送中每次将 TTL 值加 1，直到目标响应或达到最大 TTL 值，Tracert 可以确定路由。通过检查中间路由器发发回的 ICMP 超时 (ime Exceeded) 信息，可以确定路由器。注意，有些路由器“安静”地丢弃生存时间 (TLS) 过期的报文并且对 tracert 无效。</p><p>参数：</p><p>-d 指定不对计算机名解析地址。</p><p>-h maximum_hops 指定查找目标的跳转的最大数目。</p><p>-jcomputer-list 指定在 computer-list 中松散源路由。</p><p>-w timeout 等待由 timeout 对每个应答指定的毫秒数。</p><p>target_name 目标计算机的名称。</p><p>实例：</p><p>复制代码</p><p>代码如下:</p><p>C:\Users\Administrator&gt;tracert <a href="http://www.58.com/">www.58.com</a><br>Tracing route to <a href="http://www.58.com/">www.58.com</a> [221.187.111.30]<br>over a maximum of 30 hops:<br>1 1 ms 1 ms 1 ms 10.58.156.1<br>2 1 ms &lt;1 ms &lt;1 ms 10.10.10.1<br>3 1 ms 1 ms 1 ms 211.103.193.129<br>4 2 ms 2 ms 2 ms 10.255.109.129<br>5 1 ms 1 ms 3 ms 124.205.98.205<br>6 2 ms 2 ms 2 ms 124.205.98.253<br>7 2 ms 6 ms 1 ms 202.99.1.125<br>8 5 ms 6 ms 5 ms 118.186.0.113<br>9 207 ms * * 118.186.0.106<br>10 8 ms 6 ms 11 ms 124.238.226.201<br>11 6 ms 7 ms 6 ms 219.148.19.177<br>12 12 ms 12 ms 16 ms 219.148.18.117<br>13 14 ms 17 ms 16 ms 219.148.19.125<br>14 13 ms 13 ms 12 ms 202.97.80.113<br>15 * * * Request timed out.<br>16 12 ms 12 ms 17 ms bj141-147-82.bjtelecom.net [219.141.147.82]<br>17 13 ms 13 ms 12 ms 202.97.48.2<br>18 * * * Request timed out.<br>19 14 ms 14 ms 12 ms 221.187.224.85<br>20 15 ms 13 ms 12 ms 221.187.104.2<br>21 * * * Request timed out.<br>22 15 ms 17 ms 18 ms 221.187.111.30<br>Trace complete.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的&lt;/p&gt;
+&lt;p&gt;linux系统</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    
+    <category term="shell" scheme="http://example.com/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅谈Redis数据库的键值设计(转)</title>
+    <link href="http://example.com/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/"/>
+    <id>http://example.com/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/</id>
+    <published>2018-05-12T00:57:06.000Z</published>
+    <updated>2022-02-20T03:02:51.102Z</updated>
+    
+    <content type="html"><![CDATA[<p>丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。</p><p>下面举一些常见适合kv数据库的例子来谈谈键值的设计，并与关系型数据库做一个对比，发现关系型的不足之处。</p><h3 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h3><p>记录用户登录信息的一个系统， 我们简化业务后只留下一张表。</p><h4 id="关系型数据库的设计"><a href="#关系型数据库的设计" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>mysql&gt; select * from login;<br>+———+—————-+————-+———————+<br> user_id  name            login_times  last_login_time<br>+———+—————-+————-+———————+<br>       1  ken thompson              5  2011-01-01 00:00:00<br>       2  dennis ritchie            1  2011-02-01 00:00:00<br>       3  Joe Armstrong             2  2011-03-01 00:00:00<br>+———+—————-+————-+———————+</p><p> </p><p>user_id表的主键，name表示用户名，login_times表示该用户的登录次数，每次用户登录后，login_times会自增，而last_login_time更新为当前时间。</p><h4 id="REDIS的设计"><a href="#REDIS的设计" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>关系型数据转化为KV数据库，我的方法如下：</p><p> </p><p>一般使用冒号做分割符，这是不成文的规矩。比如在php-admin for redis系统里，就是默认以冒号分割，于是user:1 user:2等key会分成一组。于是以上的关系数据转化成kv数据后记录如下：</p><p>Set login:1:login_times 5<br>Set login:2:login_times 1<br>Set login:3:login_times 2</p><p>Set login:1:last_login_time 2011-1-1<br>Set login:2:last_login_time 2011-2-1<br>Set login:3:last_login_time 2011-3-1</p><p>set login:1:name ”ken thompson“<br>set login:2:name “dennis ritchie”<br>set login:3:name ”Joe Armstrong“</p><p>这样在已知主键的情况下，通过get、set就可以获得或者修改用户的登录次数和最后登录时间和姓名。</p><p>一般用户是无法知道自己的id的，只知道自己的用户名，所以还必须有一个从name到id的映射关系，这里的设计与上面的有所不同。</p><p>set “login:ken thompson:id”      1<br>set “login:dennis ritchie:id”    2<br>set “login: Joe Armstrong:id”    3</p><p>这样每次用户登录的时候业务逻辑如下（python版），r是redis对象，name是已经获知的用户名。</p><p>#获得用户的id<br>uid &#x3D; r.get(“login:%s:id” % name)<br>#自增用户的登录次数<br>ret &#x3D; r.incr(“login:%s:login_times” % uid)<br>#更新该用户的最后登录时间<br>ret &#x3D; r.set(“login:%s:last_login_time” % uid, datetime.datetime.now())</p><p>如果需求仅仅是已知id，更新或者获取某个用户的最后登录时间，登录次数，关系型和kv数据库无啥区别。一个通过btree pk，一个通过hash，效果都很好。</p><p>假设有如下需求，查找最近登录的N个用户。开发人员看看，还是比较简单的，一个sql搞定。</p><p>select * from login order by last_login_time desc limit N</p><p>DBA了解需求后，考虑到以后表如果比较大，所以在last_login_time上建个索引。执行计划从索引leafblock 的最右边开始访问N条记录，再回表N次，效果很好。</p><p>过了两天，又来一个需求，需要知道登录次数最多的人是谁。同样的关系型如何处理？DEV说简单</p><p>select * from login order by login_times desc limit N</p><p>DBA一看，又要在login_time上建立一个索引。有没有觉得有点问题呢，表上每个字段上都有素引。</p><p>关系型数据库的数据存储的的不灵活是问题的源头，数据仅有一种储存方法，那就是按行排列的堆表。统一的数据结构意味着你必须使用索引来改变sql的访问路径来快速访问某个列的，而访问路径的增加又意味着你必须使用统计信息来辅助，于是一大堆的问题就出现了。</p><p>没有索引，没有统计计划，没有执行计划，这就是kv数据库。</p><p>redis里如何满足以上的需求呢？ 对于求最新的N条数据的需求，链表的后进后出的特点非常适合。我们在上面的登录代码之后添加一段代码，维护一个登录的链表，控制他的长度，使得里面永远保存的是最近的N个登录用户。</p><p>#把当前登录人添加到链表里<br>ret &#x3D; r.lpush(“login:last_login_times”, uid)<br>#保持链表只有N位<br>ret &#x3D; redis.ltrim(“login:last_login_times”, 0, N-1)</p><p>这样需要获得最新登录人的id，如下的代码即可</p><p>last_login_list &#x3D; r.lrange(“login:last_login_times”, 0, N-1)</p><p>另外，求登录次数最多的人，对于排序，积分榜这类需求，sorted set非常的适合，我们把用户和登录次数统一存储在一个sorted set里。</p><p>zadd login:login_times 5 1<br>zadd login:login_times 1 2<br>zadd login:login_times 2 3</p><p>这样假如某个用户登录，额外维护一个sorted set，代码如此</p><p>#对该用户的登录次数自增1<br>ret &#x3D; r.zincrby(“login:login_times”, 1, uid)</p><p>那么如何获得登录次数最多的用户呢，逆序排列取的排名第N的用户即可</p><p>ret &#x3D; r.zrevrange(“login:login_times”, 0, N-1)</p><p>可以看出，DEV需要添加2行代码，而DBA不需要考虑索引什么的。</p><h3 id="TAG系统"><a href="#TAG系统" class="headerlink" title="TAG系统"></a>TAG系统</h3><p>tag在互联网应用里尤其多见，如果以传统的关系型数据库来设计有点不伦不类。我们以查找书的例子来看看redis在这方面的优势。</p><h4 id="关系型数据库的设计-1"><a href="#关系型数据库的设计-1" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>两张表，一张book的明细，一张tag表，表示每本的tag，一本书存在多个tag。</p><p>mysql&gt; select * from book;<br>+——+——————————-+—————-+<br> id    name                           author<br>+——+——————————-+—————-+<br>    1  The Ruby Programming Language  Mark Pilgrim<br>    1  Ruby on rail                   David Flanagan<br>    1  Programming Erlang             Joe Armstrong<br>+——+——————————-+—————-+</p><p>mysql&gt; select * from tag;<br>+———+———+<br> tagname  book_id<br>+———+———+<br> ruby           1<br> ruby           2<br> web            2<br> erlang         3<br>+———+———+</p><p>假如有如此需求，查找即是ruby又是web方面的书籍，如果以关系型数据库会怎么处理？</p><p>select b.name, b.author  from tag t1, tag t2, book b<br>where t1.tagname &#x3D; ‘web’ and t2.tagname &#x3D; ‘ruby’ and t1.book_id &#x3D; t2.book_id and b.id &#x3D; t1.book_id</p><p>tag表自关联2次再与book关联，这个sql还是比较复杂的，如果要求即ruby，但不是web方面的书籍呢？</p><p>关系型数据其实并不太适合这些集合操作。</p><h4 id="REDIS的设计-1"><a href="#REDIS的设计-1" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>首先book的数据肯定要存储的，和上面一样。</p><p>set book:1:name    ”The Ruby Programming Language”<br>Set book:2:name     ”Ruby on rail”<br>Set book:3:name     ”Programming Erlang”</p><p>set book:1:author    ”Mark Pilgrim”<br>Set book:2:author     ”David Flanagan”<br>Set book:3:author     ”Joe Armstrong”</p><p>tag表我们使用集合来存储数据，因为集合擅长求交集、并集</p><p>sadd tag:ruby 1<br>sadd tag:ruby 2<br>sadd tag:web 2<br>sadd tag:erlang 3</p><p>那么，即属于ruby又属于web的书？</p><p>inter_list &#x3D; redis.sinter(“tag.web”, “tag:ruby”)</p><p>即属于ruby，但不属于web的书？</p><p>inter_list &#x3D; redis.sdiff(“tag.ruby”, “tag:web”)</p><p>属于ruby和属于web的书的合集？</p><p>inter_list &#x3D; redis.sunion(“tag.ruby”, “tag:web”)</p><p>简单到不行阿。</p><p>从以上2个例子可以看出在某些场景里，关系型数据库是不太适合的，你可能能够设计出满足需求的系统，但总是感觉的怪怪的，有种生搬硬套的感觉。</p><p>尤其登录系统这个例子，频繁的为业务建立索引。放在一个复杂的系统里，ddl（创建索引）有可能改变执行计划。导致其它的sql采用不同的执行计划，业务复杂的老系统，这个问题是很难预估的，sql千奇百怪。要求DBA对这个系统里所有的sql都了解，这点太难了。这个问题在oracle里尤其严重，每个DBA估计都碰到过。对于MySQL这类系统，ddl又不方便（虽然现在有online ddl的方法）。碰到大表，DBA凌晨爬起来在业务低峰期操作，这事我没少干过。而这种需求放到redis里就很好处理，DBA仅仅对容量进行预估即可。</p><p>未来的OLTP系统应该是kv和关系型的紧密结合。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。&lt;/p&gt;
+&lt;p&gt;下面举一些常见适合kv数据库的</summary>
+      
+    
+    
+    
+    <category term="数据库" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="redis" scheme="http://example.com/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>限制接口调用者对接口的调用频率</title>
+    <link href="http://example.com/2018/05/11/%E9%99%90%E5%88%B6%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E8%80%85%E5%AF%B9%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%B0%83%E7%94%A8%E9%A2%91%E7%8E%87/"/>
+    <id>http://example.com/2018/05/11/%E9%99%90%E5%88%B6%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E8%80%85%E5%AF%B9%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%B0%83%E7%94%A8%E9%A2%91%E7%8E%87/</id>
+    <published>2018-05-11T11:08:26.000Z</published>
+    <updated>2022-02-20T03:02:51.134Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.zhihu.com/question/63382271">https://www.zhihu.com/question/63382271</a></p><p><a href="https://segmentfault.com/q/1010000002938194">https://segmentfault.com/q/1010000002938194</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/63382271&quot;&gt;https://www.zhihu.com/question/63382271&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/q/</summary>
+      
+    
+    
+    
+    <category term="架构" scheme="http://example.com/categories/%E6%9E%B6%E6%9E%84/"/>
+    
+    
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>大牛的人生</title>
+    <link href="http://example.com/2018/05/08/%E5%A4%A7%E7%89%9B%E7%9A%84%E4%BA%BA%E7%94%9F/"/>
+    <id>http://example.com/2018/05/08/%E5%A4%A7%E7%89%9B%E7%9A%84%E4%BA%BA%E7%94%9F/</id>
+    <published>2018-05-08T11:14:58.000Z</published>
     <updated>2022-02-20T03:02:51.121Z</updated>
     
+    <content type="html"><![CDATA[<p>【swoole-韩天峰】</p><p>我最开始工作也是在2家小公司，后来加入腾讯阿里，主要原因还是我坚持学习基础知识，从而得到了这个机会。有几个方面的基础知识，我建议每一位PHP程序员都应该好好学习一下。我推荐几本书给大家，包括深入理解计算机系统、现代操作系统、C程序设计语言、C语言数据结构和算法、Unix环境高级编程、TCP&#x2F;IP网络通信详解。另外我建议大家学习一下面向对象方面知识，PHP这方面的书不太多，建议看Java面向对象编程、Java编程思想、J2EE这些书。PHP语言基础方面，建议认真地把PHP5权威编程这本书好好读完。另外不光要读，还要照着书中的讲解动手去编程实践。</p><p>【多隆-蔡景现】</p><p>我坐火车经常一坐就是七个小时，真的感觉太长了。一到上班的时候，早上9点过来，一直到晚上6点，我都不知道时间怎么一下子就过去了。因为你有事做，不会觉得很辛苦。所以说真的需要热爱这份工作，要不然你会觉得怎么老是加班。</p><p>在我看来的话，没有所谓的大神、大牛，真的都是从做项目开始。我刚开始的时候其实什么都不懂的，比如2000年进阿里的时候，我连JAVA都不懂。当你在工作中遇到问题了，就去找资料，然后去把它弄懂、弄会。只要肯花时间和力气，那你自然而然就会了。</p><p>发现问题，解决问题，不要绕开问题的本身。工程师对于代码，一定要“精益求精”，不论是性能，还是简洁优雅，都要认真打磨自己的作品。</p><p>【雪候鸟，鸟哥，惠新宸 @Laruence】</p><p><strong>你是如何成为 PHP 开发组核心成员的？</strong></p><p>我其实一直都在研究 PHP 的源代码，所以也提交了不少 Bug 和 Fix，比如我记得有一天中午，Rasmus（PHP 之父）在 IRC 上说发现一个 Bug，我差不多 5 分钟后就给出了 Fix。</p><p>等慢慢的和一些人熟悉，得到了大家的信任以后，我就发起申请，之后就获得了 PHP 核心代码的提交权限，参与到 PHP 的直接开发和 Bug 修复中，成为了开发组的一员。</p><p>至于说核心么，那是慢慢积累来的，其实也是一个互信的过程。如果你的工作大家认可，那么就会尊重你的意见。我慢慢地和 Dmitry Stogov 变的熟了起来，得到了 Zend 核心部分的提交权限，提交了很多核心 Bug 的修复和新特性，再后来成为了 Zend 外聘顾问，慢慢成为了 Core Developer。</p><p><strong>问：一名合格的 PHP 工程师的知识结构是怎样的？</strong></p><p>我记得以前有一句话说：“ PHP 工程师都是万金油”，其实这句话不仅仅对 PHP 工程师适用，应该对所有的工程师都适用。</p><p>知识结构要很广。Web 开发涉及的技术点是比较多的，HTML、CSS、JS、SQL 这些以外，还要懂得一些 Nginx、Linux、Mysql 的配置、维护、排错常用的办法，这些都应该懂一些。</p><p><strong>问：除了技术能力之外，你在面试的时候还会注重什么？</strong></p><p>我会特别注意思维清晰、沟通、谈吐。其实说穿了就是未来一起共事的话，会不会有障碍，以及成长潜力是否大。</p><p>【洪剑峰】<br>待过大公司、创过业、混过外企、写代码、做架构、带团队……洪剑峰的经历相当丰富。</p><p>要时刻注视远方，走正确的路。我一直相信努力不如选择重要，选择一个适合的方向，你就会事半功倍。应该把更多的精力放在判断方向、选择道路上，而不仅仅是闷头苦干。</p><p>对我来说，我宁愿作为团队的Leader，站在前面，找到正确的方向，告诉大家怎么做，这对团队的益处远远好过我自己去做一些具体的事情。</p><p>我每年大概会看20多本书，技术相关的大概一半，基本都是英文的，另一半主要是历史类、社科、经济、管理之类的，对提高架构思维很有帮助。除了陪家人，我基本都待在公司，其余时间就是阅读和写代码。</p><p>【李智慧】<br>我在做CTO之前，在离开Intel前的最后三个月大概写了一万行代码。但是做CTO之后没有为公司写过一行代码，我会review代码，review架构设计，但是我不会写代码，我觉得每个人都应该也有责任把自己的工作做好，CTO的工作职责不是写代码，CTO写代码是一种越俎代庖。</p><p>学习知识技能首先需要时间，工程师应该用工作时间的20%去学习，如果工作时间抽不出空学习，可以用加班时间学习，如果加班时间也被安排满满的，至少能忙完这一阵（自己熟悉了情况后）可以有机会安排时间学习。如果这种机会和希望都没有的，如果你对自己负责的话，我建议你还是辞职吧。</p><p>【贺利坚】<br>学习编程最好的方法就是实践。通过实践，享受程序运行正确带来的快乐，树立信心；通过实践，享受在错误中不断成长的快乐，训练出敏锐的感觉和与bug作斗争的耐心；通过实践，看书中可以不断找到“哦，原来是这样”的感悟，书本中的知识也能够鲜活起来。</p><p>【陆其明】<br>陆其明，北京爱奇艺科技有限公司PPS上海公司研发总监。</p><p>有人曾经问我，“你这样把技术都说白了，不怕别人超过你吗？”我说，“我不怕，因为我也一直在进步！”况且，我相信，特定的技术都是有保鲜期的，唯有分享才能发挥它的最大价值。我只后悔自己当年分享得还不够，有一些代码至今还沉睡在我的硬盘里，而它们现在已经几乎没有任何价值了。</p><p>思维方式首先要改变。做技术只要顾着自己就行了，而做管理的时候，要把关注点从自己身上转移到团队，要保证整个团队的可持续性高产出，“大家好才是真的好”。</p><p>要站高了看问题，多从公司利益、业务需求、用户体验等角度去思考问题，这对习惯于讲逻辑、细节导向的技术人员来说是很难做到的。</p><p>技术人员一般不善与人沟通。但既然做起了管理，这方面必须加强，既要做足内部的沟通协调，又要担当团队的保护者和代言人。</p><p>所谓激励，就是要充分调动团队的工作积极性。一说到激励，可能大家的直接反应就是钱。其实，金钱并不是最好的激励方式。各人有各人的情况，每个人在不同的阶段也有不同的需求，因此激励的方式也应该是多样化的，比如一句鼓励或感谢的话、请他吃顿饭、培训机会、晋升机会等等，当然加薪、奖金、股票、期权有时也是不可缺少的。最关键的是，要将个人的发展与公司的发展紧密地联系到一起。对于管理者来说，尽量做到公平也是至关重要的！</p><p>我们在心里要明白：写代码不是目的，发布产品也不是目的，我们的终极目标是解决用户的问题。</p><p>【任玉刚】</p><p>在Android开发的学习过程中，我主要通过如下几种方式来学习：</p><ol><li>在公司进行产品开发；</li><li>阅读Android源码和Android官方文档；</li><li>写技术博客对知识进行总结和分享；</li><li>关注Github中优秀的开源项目并提交自己的项目；</li><li>在公司内部做技术分享；</li><li>阅读相关技术书籍；</li><li>业余时间持续学习。</li></ol><p>【邓凡平】</p><p>我个人感觉在工作中很少能学到系统性知识，所以在此也鼓励读者一定要抽出整段时间来学习系统性知识。一个基本原则是：由点及面，努力构造完整的知识结构。</p><p>不要沉迷于技术本身和工具，要时常思考自己要做什么，做哪些东西更有价值。软件领域可学的东西太多了，但是切记要结合需求选择最合适的内容。这年头我们不缺乏做事的勇气和努力奋斗的精神，缺的是知道自己要做什么的思考以及抵御外界诱惑的定力。</p><p>求知欲是人的本能，很高兴自己一直保持了这种本能。另外，做好时间管理、明确自己的目标也非常重要。对于一些初学者我有一些以及和我一样仍在努力的人，有几点建议：</p><ol><li>在工作初期，先求广度，再求深度；只有见识面广，才有可能融会贯通；要努力接触新事物；Be Active。</li><li>工作三年后，要选择适合自己的。这个时候，知道自己要做什么，比知道怎么做更重要。</li><li>要有团队精神。覆巢之下无完卵。团队不好，个人也不会好到哪里去。大家要齐心协力把事情做好，不要过多考虑个人得失。</li><li>要有定力和钻研精神。在知识学习上，高投入才可能有好产出。</li><li>注意身体健康。活得越久，才能学得更多嘛。这是硬件，没有它，任何软件都跑不动。身体健康与否作为一个人最重要的风险因素，相信软件工程师们一定会重视并加强控制的。</li></ol><p>【左程云，华中科技大学本科（计算机科学与技术）、芝加哥大学硕士（计算机科学）。IBM软件工程师，百度工程师，GrowingIO工程师、刷题5年的算法热爱者。】<br>一般来讲，工资高的公司在面试时算法和数据结构题目的比重较大，工资一般的公司比重较小。当然同样公司的不同岗位，要求也会不同，但总体趋势就是 国内好公司爱考算法和数据结构 。这是目前国内互联网公司的情况。国外的互联网公司几乎只考算法和数据结构，早个8年前就是这样了，一直如此。我相信国内会逐渐变得像国外一样，并不是崇洋媚外，而是算法和数据结构题目真的能考出东西。<br>因为本科和硕士阶段都是计算机专业，所以走上编程之路的过程是非常自然的，但我真正享受编程的过程是在开始做算法和数据结构的题目之后，牛人们写出来的东西怎么就是比我快呢？所以开始研究起来，并越来越痴迷。程序&#x3D;算法+数据结构，所以不存在结合的问题。常用的语言是Java。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;【swoole-韩天峰】&lt;/p&gt;
+&lt;p&gt;我最开始工作也是在2家小公司，后来加入腾讯阿里，主要原因还是我坚持学习基础知识，从而得到了这个机会。有几个方面的基础知识，我建议每一位PHP程序员都应该好好学习一下。我推荐几本书给大家，包括深入理解计算机系统、现代操作系统、C程序设计</summary>
+      
     
     
     
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
+    <category term="成长" scheme="http://example.com/categories/%E6%88%90%E9%95%BF/"/>
     
     
-  </entry>
-  
-  <entry>
-    <title>张逸博客</title>
-    <link href="http://example.com/2021/01/05/%E5%BC%A0%E9%80%B8%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/%E5%BC%A0%E9%80%B8%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:57:24.000Z</published>
-    <updated>2022-02-20T03:02:51.110Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
+    <category term="成长" scheme="http://example.com/tags/%E6%88%90%E9%95%BF/"/>
     
   </entry>
   
   <entry>
-    <title>犀利豆博客</title>
-    <link href="http://example.com/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/%E7%8A%80%E5%88%A9%E8%B1%86%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:57:24.000Z</published>
-    <updated>2022-02-20T03:02:51.123Z</updated>
+    <title>一致性Hash(Consistent Hashing)原理剖析</title>
+    <link href="http://example.com/2018/05/08/%E4%B8%80%E8%87%B4%E6%80%A7hash/"/>
+    <id>http://example.com/2018/05/08/%E4%B8%80%E8%87%B4%E6%80%A7hash/</id>
+    <published>2018-05-08T08:03:30.000Z</published>
+    <updated>2022-02-20T03:02:51.105Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>在业务开发中，我们常把数据持久化到数据库中。如果需要读取这些数据，除了直接从数据库中读取外，为了减轻数据库的访问压力以及提高访问速度，我们更多地引入缓存来对数据进行存取。读取数据的过程一般为：</p><p><img src="https://img-blog.csdn.net/20170123084346849?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图1：加入缓存的数据读取过程</p><p>对于分布式缓存，不同机器上存储不同对象的数据。为了实现这些缓存机器的负载均衡，可以使用式子1来定位对象缓存的存储机器：</p><blockquote><p>m &#x3D; hash(o) mod n ——式子1</p></blockquote><p>其中，<code>o</code>为对象的名称，<code>n</code>为机器的数量，<code>m</code>为机器的编号，<code>hash</code>为一hash函数。图2中的负载均衡器（load balancer）正是使用式子1来将客户端对不同对象的请求分派到不同的机器上执行，例如，对于对象o，经过式子1的计算，得到<code>m</code>的值为3，那么所有对对象o的读取和存储的请求都被发往机器3执行。</p><p><img src="https://img-blog.csdn.net/20170108001037193?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图2：如何利用Hash取模实现负载均衡</p><p>式子1在大部分时候都可以工作得很好，然而，当机器需要扩容或者机器出现宕机的情况下，事情就比较棘手了。<br>当机器扩容，需要增加一台缓存机器时，负载均衡器使用的式子变成：</p><blockquote><p>m &#x3D; hash(o) mod (n + 1) ——式子2</p></blockquote><p>当机器宕机，机器数量减少一台时，负载均衡器使用的式子变成：</p><blockquote><p>m &#x3D; hash(o) mod (n - 1) ——式子3</p></blockquote><p>我们以机器扩容的情况为例，说明简单的取模方法会导致什么问题。假设机器由3台变成4台，对象o1由式子1计算得到的m值为2，由式子2计算得到的m值却可能为0，1，2，3（一个 3t + 2的整数对4取模，其值可能为0，1，2，3，读者可以自行验证），大约有75%（3&#x2F;4)的可能性出现缓存访问不命中的现象。随着机器集群规模的扩大，这个比例线性上升。当99台机器再加入1台机器时，不命中的概率是99%（99&#x2F;100）。这样的结果显然是不能接受的，因为这会导致数据库访问的压力陡增，严重情况，还可能导致数据库宕机。</p><p>一致性hash算法正是为了解决此类问题的方法，它可以保证当机器增加或者减少时，对缓存访问命中的概率影响减至很小。下面我们来详细说一下一致性hash算法的具体过程。</p><h1 id="一致性Hash环"><a href="#一致性Hash环" class="headerlink" title="一致性Hash环"></a>一致性Hash环</h1><p>一致性hash算法通过一个叫作一致性hash环的数据结构实现。这个环的起点是0，终点是2^32 - 1，并且起点与终点连接，环的中间的整数按逆时针分布，故这个环的整数分布范围是[0, 2^32-1]，如下图3所示：</p><p><img src="https://img-blog.csdn.net/20170108000506549?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图3：一致性Hash环</p><h1 id="将对象放置到Hash环"><a href="#将对象放置到Hash环" class="headerlink" title="将对象放置到Hash环"></a>将对象放置到Hash环</h1><p>假设现在我们有4个对象，分别为o1，o2，o3，o4，使用hash函数计算这4个对象的hash值（范围为0 ~ 2^32-1）:</p><blockquote><p>hash(o1) &#x3D; m1<br>hash(o2) &#x3D; m2<br>hash(o3) &#x3D; m3<br>hash(o4) &#x3D; m4</p></blockquote><p>把m1，m2，m3，m4这4个值放置到hash环上，得到如下图4：</p><p><img src="https://img-blog.csdn.net/20170108001141907?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图4：放置了对象的一致性Hash环</p><h1 id="将机器放置到Hash环"><a href="#将机器放置到Hash环" class="headerlink" title="将机器放置到Hash环"></a>将机器放置到Hash环</h1><p>使用同样的hash函数，我们将机器也放置到hash环上。假设我们有三台缓存机器，分别为 c1，c2，c3，使用hash函数计算这3台机器的hash值：</p><blockquote><p>hash(c1) &#x3D; t1<br>hash(c2) &#x3D; t2<br>hash(c3) &#x3D; t3</p></blockquote><p>把t1，t2，t3 这3个值放置到hash环上，得到如下图5：</p><p><img src="https://img-blog.csdn.net/20170108001228002?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图5：放置了机器的一致性Hash环</p><h1 id="为对象选择机器"><a href="#为对象选择机器" class="headerlink" title="为对象选择机器"></a>为对象选择机器</h1><p>将对象和机器都放置到同一个hash环后，在hash环上顺时针查找距离这个对象的hash值最近的机器，即是这个对象所属的机器。<br>例如，对于对象o2，顺序针找到最近的机器是c1，故机器c1会缓存对象o2。而机器c2则缓存o3，o4，机器c3则缓存对象o1。</p><p><img src="https://img-blog.csdn.net/20170108001326379?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图6：在一致性Hash环上为对象选择机器</p><h1 id="处理机器增减的情况"><a href="#处理机器增减的情况" class="headerlink" title="处理机器增减的情况"></a>处理机器增减的情况</h1><p>对于线上的业务，增加或者减少一台机器的部署是常有的事情。<br>例如，增加机器c4的部署并将机器c4加入到hash环的机器c3与c2之间。这时，只有机器c3与c4之间的对象需要重新分配新的机器。对于我们的例子，只有对象o4被重新分配到了c4，其他对象仍在原有机器上。如图7所示：</p><p><img src="https://img-blog.csdn.net/20170108001504023?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图7：增加机器后的一致性Hash环的结构</p><p>如上文前面所述，使用简单的求模方法，当新添加机器后会导致大部分缓存失效的情况，使用一致性hash算法后这种情况则会得到大大的改善。前面提到3台机器变成4台机器后，缓存命中率只有25%（不命中率75%）。而使用一致性hash算法，理想情况下缓存命中率则有75%，而且，随着机器规模的增加，命中率会进一步提高，99台机器增加一台后，命中率达到99%，这大大减轻了增加缓存机器带来的数据库访问的压力。</p><p>再例如，将机器c1下线（当然，也有可能是机器c1宕机），这时，只有原有被分配到机器c1对象需要被重新分配到新的机器。对于我们的例子，只有对象o2被重新分配到机器c3，其他对象仍在原有机器上。如图8所示：</p><p><img src="https://img-blog.csdn.net/20170108001520632?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图8：减少机器后的一致性Hash环的结构</p><h1 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h1><p>上面提到的过程基本上就是一致性hash的基本原理了，不过还有一个小小的问题。新加入的机器c4只分担了机器c2的负载，机器c1与c3的负载并没有因为机器c4的加入而减少负载压力。如果4台机器的性能是一样的，那么这种结果并不是我们想要的。<br>为此，我们引入虚拟节点来解决负载不均衡的问题。<br>将每台物理机器虚拟为一组虚拟机器，将虚拟机器放置到hash环上，如果需要确定对象的机器，先确定对象的虚拟机器，再由虚拟机器确定物理机器。<br>说得有点复杂，其实过程也很简单。</p><p>还是使用上面的例子，假如开始时存在缓存机器c1，c2，c3，对于每个缓存机器，都有3个虚拟节点对应，其一致性hash环结构如图9所示：</p><p><img src="https://img-blog.csdn.net/20170108000617634?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图9：机器c1，c2，c3的一致性Hash环结构</p><p>假设对于对象o1，其对应的虚拟节点为c11，而虚拟节点c11对象缓存机器c1，故对象o1被分配到机器c1中。</p><p>新加入缓存机器c4，其对应的虚拟节点为c41，c42，c43，将这三个虚拟节点添加到hash环中，得到的hash环结构如图10所示：</p><p><img src="https://img-blog.csdn.net/20170108000625603?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGloYW8yMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图10：机器c1，c2，c3，c4的一致性Hash环结构</p><p>新加入的缓存机器c4对应一组虚拟节点c41，c42，c43，加入到hash环后，影响的虚拟节点包括c31，c22，c11（顺时针查找到第一个节点），而这3个虚拟节点分别对应机器c3，c2，c1。即新加入的一台机器，同时影响到原有的3台机器。理想情况下，新加入的机器平等地分担了原有机器的负载，这正是虚拟节点带来的好处。而且新加入机器c4后，只影响25%（1&#x2F;4）对象分配，也就是说，命中率仍然有75%，这跟没有使用虚拟节点的一致性hash算法得到的结果是相同的。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一致性hash算法解决了分布式环境下机器增加或者减少时，简单的取模运算无法获取较高命中率的问题。通过虚拟节点的使用，一致性hash算法可以均匀分担机器的负载，使得这一算法更具现实的意义。正因如此，一致性hash算法被广泛应用于分布式系统中。</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol><li><a href="https://en.wikipedia.org/wiki/Consistent_hashing">https://en.wikipedia.org/wiki/Consistent_hashing</a></li><li><a href="https://www.codeproject.com/articles/56138/consistent-hashing">https://www.codeproject.com/articles/56138/consistent-hashing</a></li><li>《大型网站技术架构——核心原理与安全分析》，李智慧著，电子工业出版社</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;引入&quot;&gt;&lt;a href=&quot;#引入&quot; class=&quot;headerlink&quot; title=&quot;引入&quot;&gt;&lt;/a&gt;引入&lt;/h1&gt;&lt;p&gt;在业务开发中，我们常把数据持久化到数据库中。如果需要读取这些数据，除了直接从数据库中读取外，为了减轻数据库的访问压力以及提高访问速度，我们更</summary>
+      
     
     
     
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>谢乾坤博客</title>
-    <link href="http://example.com/2021/01/05/%E8%B0%A2%E4%B9%BE%E5%9D%A4%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/%E8%B0%A2%E4%B9%BE%E5%9D%A4%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:57:24.000Z</published>
-    <updated>2022-02-20T03:02:51.124Z</updated>
+    <category term="算法" scheme="http://example.com/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Jamin Zhang博客</title>
-    <link href="http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/jamin-zhang%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:53:11.000Z</published>
-    <updated>2022-02-20T03:02:51.068Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Headback博客</title>
-    <link href="http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/headback%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:53:11.000Z</published>
-    <updated>2022-02-20T03:02:51.067Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>春哥博客</title>
-    <link href="http://example.com/2021/01/05/%E6%98%A5%E5%93%A5%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/01/05/%E6%98%A5%E5%93%A5%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-01-05T15:53:11.000Z</published>
-    <updated>2022-02-20T03:02:51.111Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>LintCode</title>
-    <link href="http://example.com/2021/01/05/lintcode/"/>
-    <id>http://example.com/2021/01/05/lintcode/</id>
-    <published>2021-01-05T15:50:00.000Z</published>
-    <updated>2022-02-20T03:02:51.069Z</updated>
-    
-    
-    
-    
-    <category term="uncategorized" scheme="http://example.com/categories/uncategorized/"/>
-    
+    <category term="算法" scheme="http://example.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
