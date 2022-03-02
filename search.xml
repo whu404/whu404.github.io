@@ -318,6 +318,106 @@
       </tags>
   </entry>
   <entry>
+    <title>MySQL中有关TIMESTAMP和DATETIME的总结</title>
+    <url>/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p><strong>一、MySQL中如何表示当前时间？</strong></p>
+<p>其实，表达方式还是蛮多的，汇总如下：</p>
+<p>CURRENT_TIMESTAMP</p>
+<p>CURRENT_TIMESTAMP()</p>
+<p>NOW()</p>
+<p>LOCALTIME</p>
+<p>LOCALTIME()</p>
+<p>LOCALTIMESTAMP</p>
+<p>LOCALTIMESTAMP()</p>
+<p> </p>
+<p><strong>二、关于TIMESTAMP和DATETIME的比较</strong></p>
+<p>一个完整的日期格式如下：YYYY-MM-DD HH:MM:SS[.fraction]，它可分为两部分：date部分和time部分，其中，date部分对应格式中的“YYYY-MM-DD”，time部分对应格式中的“HH:MM:SS[.fraction]”。对于date字段来说，它只支持date部分，如果插入了time部分的内容，它会丢弃掉该部分的内容，并提示一个warning。</p>
+<p>如下所示：</p>
+<p>mysql&gt; create table test(id int,hiredate date);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208104400’);<br>Query OK, 1 row affected, 1 warning (0.01 sec)</p>
+<p>mysql&gt; show warning;<br>ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘warning’ at line 1<br>mysql&gt; select * from test;<br>+——+————+<br> id    hiredate<br>+——+————+<br>    1  2015-12-08<br>    1  2015-12-08<br>+——+————+<br>2 rows in set (0.00 sec)</p>
+<p>注：第一个没提示warning的原因在于它的time部分都是0</p>
+<p> </p>
+<p><strong>TIMESTAMP和DATETIME的相同点：</strong></p>
+<p>1&gt; 两者都可用来表示YYYY-MM-DD HH:MM:SS[.fraction]类型的日期。</p>
+<p> </p>
+<p><strong>TIMESTAMP和DATETIME的不同点：</strong></p>
+<p>1&gt; 两者的存储方式不一样</p>
+<p>对于TIMESTAMP，它把客户端插入的时间从当前时区转化为UTC（世界标准时间）进行存储。查询时，将其又转化为客户端当前时区进行返回。</p>
+<p>而对于DATETIME，不做任何改变，基本上是原样输入和输出。</p>
+<p> </p>
+<p>下面，我们来验证一下</p>
+<p>首先创建两种测试表，一个使用timestamp格式，一个使用datetime格式。</p>
+<p>mysql&gt; create table test(id int,hiredate timestamp);</p>
+<p>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; create table test1(id int,hiredate datetime);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test1 values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
+<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>两者输出是一样的。</p>
+<p> </p>
+<p>其次修改当前会话的时区</p>
+<p>mysql&gt; show variables like ‘%time_zone%’;<br>+——————+——–+<br> Variable_name     Value<br>+——————+——–+<br> system_time_zone  CST<br> time_zone         SYSTEM<br>+——————+——–+<br>2 rows in set (0.00 sec)</p>
+<p>mysql&gt; set time_zone&#x3D;’+0:00’;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-07 16:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
+<p>上述“CST”指的是MySQL所在主机的系统时间，是中国标准时间的缩写，China Standard Time UT+8:00</p>
+<p>通过结果可以看出，test中返回的时间提前了8个小时，而test1中时间则不变。这充分验证了两者的区别。</p>
+<p> </p>
+<p>2&gt; 两者所能存储的时间范围不一样</p>
+<p>timestamp所能存储的时间范围为：’1970-01-01 00:00:01.000000’ 到 ‘2038-01-19 03:14:07.999999’。</p>
+<p>datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 ‘9999-12-31 23:59:59.999999’。</p>
+<p> </p>
+<p>总结：TIMESTAMP和DATETIME除了存储范围和存储方式不一样，没有太大区别。当然，对于跨时区的业务，TIMESTAMP更为合适。</p>
+<p> </p>
+<p><strong>三、关于TIMESTAMP和DATETIME的自动初始化和更新</strong></p>
+<p>首先，我们先看一下下面的操作</p>
+<p>mysql&gt; create table test(id int,hiredate timestamp);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; insert into test(id) values(1);<br>Query OK, 1 row affected (0.00 sec)</p>
+<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 14:34:46<br>+——+———————+<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; show create table test\G<br>*************************** 1. row ***************************<br>       Table: test<br>Create Table: CREATE TABLE `test` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p>看起来是不是有点奇怪，我并没有对hiredate字段进行插入操作，它的值自动修改为当前值，而且在创建表的时候，我也并没有定义“show create table test\G”结果中显示的“ DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP”。</p>
+<p>其实，这个特性是自动初始化和自动更新（Automatic Initialization and Updating）。</p>
+<p>自动初始化指的是如果对该字段（譬如上例中的hiredate字段）没有显性赋值，则自动设置为当前系统时间。</p>
+<p>自动更新指的是如果修改了其它字段，则该字段的值将自动更新为当前系统时间。</p>
+<p>它与“explicit_defaults_for_timestamp”参数有关。</p>
+<p>默认情况下，该参数的值为OFF，如下所示：</p>
+<p>mysql&gt; show variables like ‘%explicit_defaults_for_timestamp%’;<br>+———————————+——-+<br> Variable_name                    Value<br>+———————————+——-+<br> explicit_defaults_for_timestamp  OFF<br>+———————————+——-+<br>1 row in set (0.00 sec)</p>
+<p>下面我们看看官档的说明：</p>
+<p>By default, the first TIMESTAMP column has both DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP if neither is specified explicitly。</p>
+<p>很多时候，这并不是我们想要的，如何禁用呢？</p>
+<ol>
+<li><p>将“explicit_defaults_for_timestamp”的值设置为ON。</p>
+</li>
+<li><p>“explicit_defaults_for_timestamp”的值依旧是OFF，也有两种方法可以禁用</p>
+</li>
+</ol>
+<p>1&gt; 用DEFAULT子句该该列指定一个默认值</p>
+<p>2&gt; 为该列指定NULL属性。</p>
+<p>如下所示：</p>
+<p>mysql&gt; create table test1(id int,hiredate timestamp null);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; show create table test1\G<br>*************************** 1. row ***************************<br>       Table: test1<br>Create Table: CREATE TABLE `test1` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NULL DEFAULT NULL<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p>mysql&gt; create table test2(id int,hiredate timestamp default 0);<br>Query OK, 0 rows affected (0.01 sec)</p>
+<p>mysql&gt; show create table test2\G<br>*************************** 1. row ***************************<br>       Table: test2<br>Create Table: CREATE TABLE `test2` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT ‘0000-00-00 00:00:00’<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
+<p> </p>
+<p>在MySQL 5.6.5版本之前，Automatic Initialization and Updating只适用于TIMESTAMP，而且一张表中，最多允许一个TIMESTAMP字段采用该特性。从MySQL 5.6.5开始，Automatic Initialization and Updating同时适用于TIMESTAMP和DATETIME，且不限制数量。</p>
+<p> </p>
+<p><strong>参考：</strong></p>
+<p>1. <a href="http://dev.mysql.com/doc/refman/5.6/en/datetime.html">http://dev.mysql.com/doc/refman/5.6/en/datetime.html</a></p>
+<p>2. <a href="http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html">http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html</a></p>
+<p>3. <a href="http://www.2cto.com/database/201308/233832.html">http://www.2cto.com/database/201308/233832.html</a></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux traceroute命令详解和使用例子</title>
     <url>/2018/06/01/linux-traceroute%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90/</url>
     <content><![CDATA[<p>通过traceroute我们可以知道信息从你的计算机到互联网另一端的主机是走的什么路径。当然每次数据包由某一同样的出发点（source）到达某一同样的目的地(destination)走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的</p>
@@ -422,106 +522,6 @@
       <tags>
         <tag>linux</tag>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL中有关TIMESTAMP和DATETIME的总结</title>
-    <url>/2018/04/26/mysql%E4%B8%AD%E6%9C%89%E5%85%B3timestamp%E5%92%8Cdatetime%E7%9A%84%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p><strong>一、MySQL中如何表示当前时间？</strong></p>
-<p>其实，表达方式还是蛮多的，汇总如下：</p>
-<p>CURRENT_TIMESTAMP</p>
-<p>CURRENT_TIMESTAMP()</p>
-<p>NOW()</p>
-<p>LOCALTIME</p>
-<p>LOCALTIME()</p>
-<p>LOCALTIMESTAMP</p>
-<p>LOCALTIMESTAMP()</p>
-<p> </p>
-<p><strong>二、关于TIMESTAMP和DATETIME的比较</strong></p>
-<p>一个完整的日期格式如下：YYYY-MM-DD HH:MM:SS[.fraction]，它可分为两部分：date部分和time部分，其中，date部分对应格式中的“YYYY-MM-DD”，time部分对应格式中的“HH:MM:SS[.fraction]”。对于date字段来说，它只支持date部分，如果插入了time部分的内容，它会丢弃掉该部分的内容，并提示一个warning。</p>
-<p>如下所示：</p>
-<p>mysql&gt; create table test(id int,hiredate date);<br>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
-<p>mysql&gt; insert into test values(1,’20151208104400’);<br>Query OK, 1 row affected, 1 warning (0.01 sec)</p>
-<p>mysql&gt; show warning;<br>ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘warning’ at line 1<br>mysql&gt; select * from test;<br>+——+————+<br> id    hiredate<br>+——+————+<br>    1  2015-12-08<br>    1  2015-12-08<br>+——+————+<br>2 rows in set (0.00 sec)</p>
-<p>注：第一个没提示warning的原因在于它的time部分都是0</p>
-<p> </p>
-<p><strong>TIMESTAMP和DATETIME的相同点：</strong></p>
-<p>1&gt; 两者都可用来表示YYYY-MM-DD HH:MM:SS[.fraction]类型的日期。</p>
-<p> </p>
-<p><strong>TIMESTAMP和DATETIME的不同点：</strong></p>
-<p>1&gt; 两者的存储方式不一样</p>
-<p>对于TIMESTAMP，它把客户端插入的时间从当前时区转化为UTC（世界标准时间）进行存储。查询时，将其又转化为客户端当前时区进行返回。</p>
-<p>而对于DATETIME，不做任何改变，基本上是原样输入和输出。</p>
-<p> </p>
-<p>下面，我们来验证一下</p>
-<p>首先创建两种测试表，一个使用timestamp格式，一个使用datetime格式。</p>
-<p>mysql&gt; create table test(id int,hiredate timestamp);</p>
-<p>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; insert into test values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
-<p>mysql&gt; create table test1(id int,hiredate datetime);<br>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; insert into test1 values(1,’20151208000000’);<br>Query OK, 1 row affected (0.00 sec)</p>
-<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
-<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
-<p>两者输出是一样的。</p>
-<p> </p>
-<p>其次修改当前会话的时区</p>
-<p>mysql&gt; show variables like ‘%time_zone%’;<br>+——————+——–+<br> Variable_name     Value<br>+——————+——–+<br> system_time_zone  CST<br> time_zone         SYSTEM<br>+——————+——–+<br>2 rows in set (0.00 sec)</p>
-<p>mysql&gt; set time_zone&#x3D;’+0:00’;<br>Query OK, 0 rows affected (0.00 sec)</p>
-<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-07 16:00:00<br>+——+———————+<br>1 row in set (0.00 sec)</p>
-<p>mysql&gt; select * from test1;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 00:00:00<br>+——+———————+<br>1 row in set (0.01 sec)</p>
-<p>上述“CST”指的是MySQL所在主机的系统时间，是中国标准时间的缩写，China Standard Time UT+8:00</p>
-<p>通过结果可以看出，test中返回的时间提前了8个小时，而test1中时间则不变。这充分验证了两者的区别。</p>
-<p> </p>
-<p>2&gt; 两者所能存储的时间范围不一样</p>
-<p>timestamp所能存储的时间范围为：’1970-01-01 00:00:01.000000’ 到 ‘2038-01-19 03:14:07.999999’。</p>
-<p>datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 ‘9999-12-31 23:59:59.999999’。</p>
-<p> </p>
-<p>总结：TIMESTAMP和DATETIME除了存储范围和存储方式不一样，没有太大区别。当然，对于跨时区的业务，TIMESTAMP更为合适。</p>
-<p> </p>
-<p><strong>三、关于TIMESTAMP和DATETIME的自动初始化和更新</strong></p>
-<p>首先，我们先看一下下面的操作</p>
-<p>mysql&gt; create table test(id int,hiredate timestamp);<br>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; insert into test(id) values(1);<br>Query OK, 1 row affected (0.00 sec)</p>
-<p>mysql&gt; select * from test;<br>+——+———————+<br> id    hiredate<br>+——+———————+<br>    1  2015-12-08 14:34:46<br>+——+———————+<br>1 row in set (0.00 sec)</p>
-<p>mysql&gt; show create table test\G<br>*************************** 1. row ***************************<br>       Table: test<br>Create Table: CREATE TABLE `test` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
-<p>看起来是不是有点奇怪，我并没有对hiredate字段进行插入操作，它的值自动修改为当前值，而且在创建表的时候，我也并没有定义“show create table test\G”结果中显示的“ DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP”。</p>
-<p>其实，这个特性是自动初始化和自动更新（Automatic Initialization and Updating）。</p>
-<p>自动初始化指的是如果对该字段（譬如上例中的hiredate字段）没有显性赋值，则自动设置为当前系统时间。</p>
-<p>自动更新指的是如果修改了其它字段，则该字段的值将自动更新为当前系统时间。</p>
-<p>它与“explicit_defaults_for_timestamp”参数有关。</p>
-<p>默认情况下，该参数的值为OFF，如下所示：</p>
-<p>mysql&gt; show variables like ‘%explicit_defaults_for_timestamp%’;<br>+———————————+——-+<br> Variable_name                    Value<br>+———————————+——-+<br> explicit_defaults_for_timestamp  OFF<br>+———————————+——-+<br>1 row in set (0.00 sec)</p>
-<p>下面我们看看官档的说明：</p>
-<p>By default, the first TIMESTAMP column has both DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP if neither is specified explicitly。</p>
-<p>很多时候，这并不是我们想要的，如何禁用呢？</p>
-<ol>
-<li><p>将“explicit_defaults_for_timestamp”的值设置为ON。</p>
-</li>
-<li><p>“explicit_defaults_for_timestamp”的值依旧是OFF，也有两种方法可以禁用</p>
-</li>
-</ol>
-<p>1&gt; 用DEFAULT子句该该列指定一个默认值</p>
-<p>2&gt; 为该列指定NULL属性。</p>
-<p>如下所示：</p>
-<p>mysql&gt; create table test1(id int,hiredate timestamp null);<br>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; show create table test1\G<br>*************************** 1. row ***************************<br>       Table: test1<br>Create Table: CREATE TABLE `test1` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NULL DEFAULT NULL<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
-<p>mysql&gt; create table test2(id int,hiredate timestamp default 0);<br>Query OK, 0 rows affected (0.01 sec)</p>
-<p>mysql&gt; show create table test2\G<br>*************************** 1. row ***************************<br>       Table: test2<br>Create Table: CREATE TABLE `test2` (<br>  `id` int(11) DEFAULT NULL,<br>  `hiredate` timestamp NOT NULL DEFAULT ‘0000-00-00 00:00:00’<br>) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;latin1<br>1 row in set (0.00 sec)</p>
-<p> </p>
-<p>在MySQL 5.6.5版本之前，Automatic Initialization and Updating只适用于TIMESTAMP，而且一张表中，最多允许一个TIMESTAMP字段采用该特性。从MySQL 5.6.5开始，Automatic Initialization and Updating同时适用于TIMESTAMP和DATETIME，且不限制数量。</p>
-<p> </p>
-<p><strong>参考：</strong></p>
-<p>1. <a href="http://dev.mysql.com/doc/refman/5.6/en/datetime.html">http://dev.mysql.com/doc/refman/5.6/en/datetime.html</a></p>
-<p>2. <a href="http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html">http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html</a></p>
-<p>3. <a href="http://www.2cto.com/database/201308/233832.html">http://www.2cto.com/database/201308/233832.html</a></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -1804,8 +1804,8 @@ PDO PHP Data Objects PHP数据对象，是PHP应用中的一个数据库抽象�
         <category>php</category>
       </categories>
       <tags>
-        <tag>php</tag>
         <tag>数据库</tag>
+        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -3080,112 +3080,6 @@ $GLOBALS\['g_good'\] = 'good';
       </categories>
   </entry>
   <entry>
-    <title>RPM包管理详解</title>
-    <url>/2019/01/26/rpm%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>RPM Package Manager</p>
-<p>由Red Hat公司提出，被众多Linux发行版所采用；</p>
-<p>建立统一的数据库文件，详细记录软件包安装、卸载等变化信息，能够自动分析软件包依赖关系。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607182741934-1192282493.png"></p>
-<p><strong>一、rpm命令</strong></p>
-<p>1、查询已经安装的RPM软件信息</p>
-<blockquote>
-<p>rpm  -q[子选项]  [软件名]</p>
-</blockquote>
-<p>1、q  –query查询</p>
-<p>2、query-options查询子选项</p>
-<p>[-i,–info]：查看指定软件的详细信息</p>
-<p>[-a,–all]：查看系统中已安装的所有RPM软件包列表</p>
-<p>[-l,–list]：查询指定软件包所安装的目录、文件列表</p>
-<p>[-c,–configfiles]：仅显示指定软件包安装的配置文件</p>
-<p>[-d,–docfiles]：仅显示指定软件包安装的文档文件</p>
-<p>3、查询文件&#x2F;目录属于哪个RPM软件：rpm  -qf  文件或目录名</p>
-<p>2、查询未安装的RPM包文件</p>
-<blockquote>
-<p>rpm  -qp[子选项]  RPM包文件</p>
-</blockquote>
-<p>1、-qpi：通过.rpm包文件查看该软件的详细信息</p>
-<p>2、-qpl：查看.rpm安装包内所包含的目录、文件列表</p>
-<p>3、-qpc：查看.rpm安装包内包含的配置文件列表</p>
-<p>4、-qpd：查看.rpm安装包内包含的文档文件列表</p>
-<p>3、安装或升级RPM软件</p>
-<blockquote>
-<p>rpm  [选项]  RPM包文件…</p>
-</blockquote>
-<p>1、-i：安装一个新的rpm软件包</p>
-<p>2、-U：升级某个rpm软件，若原本未装，则进行安装  {-U–upgrade}</p>
-<p>3、-F：更新某个rpm软件，若原本未装，则放弃安装  {-F–freshen}</p>
-<p>4、卸载指定的RPM软件</p>
-<blockquote>
-<p>rpm  -e  软件名　　#{-e–erase}</p>
-</blockquote>
-<p>5、辅助选项</p>
-<p>1、–force：强制安装所指定的rpm软件包（不要轻易使用）</p>
-<p>2、–nodeps：安装、升级或卸载软件时，忽略依赖关系（no dependencies）</p>
-<p>但是：可能会导致软件异常，有些软件被强行替换安装，并没有真正解决依赖关系。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607183517590-1106499087.png"></p>
-<p>所以：无论是在安装还是卸载，都是先处理被依赖的软件包。</p>
-<p>3、-h：以“#”号显示安装的进度</p>
-<p>4、-v：显示安装过程中的详细信息</p>
-<p> </p>
-<p><strong>二、安装软件和卸载软件注意事项</strong></p>
-<p>1、使用完整名字或者短名字。</p>
-<p>2、不要混血（redhat和centos之间安装软件）。</p>
-<p>3、主要软件的版本要匹配–已经安装了高版本的软件，再安装低版本的软件会报错。</p>
-<p>4、同时接很多软件包，先后顺序没有很大关系，只要有就可以，系统会自己先安装最需要的软件包。</p>
-<p>5、注意系统是32位的还是64位，不要在64位的系统上强制安装某些32位的软件，会导致系统出问题，而且安装的软件也不能使用。</p>
-<p> </p>
-<p><strong>三、RPM仓库</strong></p>
-<p>1、位置：&#x2F;var&#x2F;lib&#x2F;rpm目录下（备份好）</p>
-<p>2、RPM数据库故障原因</p>
-<p>1、非正常关机、误删除运行中的程序文件</p>
-<p>2、RPM数据文件被误写或删除</p>
-<p>3、RPM的缺点</p>
-<p>1、安装的环境必须与打包时的环境需求一致或相当；</p>
-<p>2、需要满足套件的相依属性需求；</p>
-<p>3、卸载时需要特别小心，最底层的套件不可先移除，否则可能造成整个系统的问题！</p>
-<p> </p>
-<p><strong>四、rpm安装软件实例</strong></p>
-<p>1、检查系统的版本</p>
-<p>[root@localhost ~]# cat &#x2F;etc&#x2F;issue</p>
-<p>Red Hat Enterprise Linux Server release 6.5 (Santiago)</p>
-<p>Kernel \r on an \m</p>
-<p>2、将对应系统的镜像文件放入虚拟机的光驱里</p>
-<p>3、挂载镜像文件到&#x2F;mnt</p>
-<p>[root@localhost ~]# mount   &#x2F;dev&#x2F;cdrom    &#x2F;mnt<br>mount: block device &#x2F;dev&#x2F;sr0 is write-protected, mounting read-only<br>mount: &#x2F;dev&#x2F;sr0 already mounted or &#x2F;mnt busy<br>mount: according to mtab, &#x2F;dev&#x2F;sr0 is already mounted on &#x2F;mnt</p>
-<p>[root@localhost ~]# ll &#x2F;dev&#x2F;cdrom<br>lrwxrwxrwx. 1 root root 3 Oct 22 21:46 &#x2F;dev&#x2F;cdrom -&gt; sr0</p>
-<p>4、进入&#x2F;mnt挂载点目录</p>
-<p>[root@localhost ~]# cd  &#x2F;mnt&#x2F;Packages</p>
-<p>5、进行安装</p>
-<p>1、安装ftp</p>
-<p>[root@localhost Packages]# rpm -ivh ftp-0.17-54.el6.x86_64.rpm</p>
-<p>……</p>
-<p>2、安装lftp（推荐）</p>
-<p>[root@localhost Packages]# rpm -ivh lftp-4.0.9-1.el6.x86_64.rpm</p>
-<p>3、安装tree</p>
-<p>[root@localhost Packages]# rpm -ivh tree-1.5.3-2.el6.x86_64.rpm<br>warning: tree-1.5.3-2.el6.x86_64.rpm: Header V3 RSA&#x2F;SHA256 Signature, key ID fd431d51: NOKEY<br>Preparing…                ########################################### [100%]<br>   1:tree                   ########################################### [100%]</p>
-<p>需要安装的软件包的名字一般都可能会比较长比较复杂，常用tab键补齐名字</p>
-<p> </p>
-<p><strong>五、SRPM</strong></p>
-<p>rpm包的“老祖先”</p>
-<p>源码类型的source rpm包—&gt;半成品—&gt;制作成rpm包</p>
-<p>1、简介</p>
-<p>1、SRPM 文件里面含有源代码( Source Code )</p>
-<p>2、SRPM 的文件名是以 ***.src.rpm 这种格式来命名</p>
-<p>3、需要编译生成RPM包后才能进行安装</p>
-<p>2、rpmbuild命令：安装SRPM包</p>
-<p>1、–rebuild 编译—&gt;打包—&gt;未安装</p>
-<p>最后通常会发现一行字体：Wrote: &#x2F;usr&#x2F;src&#x2F;redhat&#x2F;RPMS&#x2F;i386&#x2F;pkgname.i386.rpm</p>
-<p>2、–recompile 编译—&gt;打包—&gt;安装</p>
-<p>命令范例：rpmbuild –rebuild rp-pppoe-3.5-32.1.src.rpm</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis基础、高级特性与性能调优</title>
     <url>/2018/04/13/redis%E5%9F%BA%E7%A1%80%E3%80%81%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/</url>
     <content><![CDATA[<p>本文将从Redis的基本特性入手，通过讲述Redis的数据结构和主要命令对Redis的基本能力进行直观介绍。之后概览Redis提供的高级功能，并在部署、维护、性能调优等多个方面进行更深入的介绍。<br>本文适合使用Redis的普通开发人员，以及对Redis进行选型、架构设计和性能调优的架构设计人员。</p>
@@ -3613,6 +3507,112 @@ $GLOBALS\['g_good'\] = 'good';
       </tags>
   </entry>
   <entry>
+    <title>RPM包管理详解</title>
+    <url>/2019/01/26/rpm%E5%8C%85%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>RPM Package Manager</p>
+<p>由Red Hat公司提出，被众多Linux发行版所采用；</p>
+<p>建立统一的数据库文件，详细记录软件包安装、卸载等变化信息，能够自动分析软件包依赖关系。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607182741934-1192282493.png"></p>
+<p><strong>一、rpm命令</strong></p>
+<p>1、查询已经安装的RPM软件信息</p>
+<blockquote>
+<p>rpm  -q[子选项]  [软件名]</p>
+</blockquote>
+<p>1、q  –query查询</p>
+<p>2、query-options查询子选项</p>
+<p>[-i,–info]：查看指定软件的详细信息</p>
+<p>[-a,–all]：查看系统中已安装的所有RPM软件包列表</p>
+<p>[-l,–list]：查询指定软件包所安装的目录、文件列表</p>
+<p>[-c,–configfiles]：仅显示指定软件包安装的配置文件</p>
+<p>[-d,–docfiles]：仅显示指定软件包安装的文档文件</p>
+<p>3、查询文件&#x2F;目录属于哪个RPM软件：rpm  -qf  文件或目录名</p>
+<p>2、查询未安装的RPM包文件</p>
+<blockquote>
+<p>rpm  -qp[子选项]  RPM包文件</p>
+</blockquote>
+<p>1、-qpi：通过.rpm包文件查看该软件的详细信息</p>
+<p>2、-qpl：查看.rpm安装包内所包含的目录、文件列表</p>
+<p>3、-qpc：查看.rpm安装包内包含的配置文件列表</p>
+<p>4、-qpd：查看.rpm安装包内包含的文档文件列表</p>
+<p>3、安装或升级RPM软件</p>
+<blockquote>
+<p>rpm  [选项]  RPM包文件…</p>
+</blockquote>
+<p>1、-i：安装一个新的rpm软件包</p>
+<p>2、-U：升级某个rpm软件，若原本未装，则进行安装  {-U–upgrade}</p>
+<p>3、-F：更新某个rpm软件，若原本未装，则放弃安装  {-F–freshen}</p>
+<p>4、卸载指定的RPM软件</p>
+<blockquote>
+<p>rpm  -e  软件名　　#{-e–erase}</p>
+</blockquote>
+<p>5、辅助选项</p>
+<p>1、–force：强制安装所指定的rpm软件包（不要轻易使用）</p>
+<p>2、–nodeps：安装、升级或卸载软件时，忽略依赖关系（no dependencies）</p>
+<p>但是：可能会导致软件异常，有些软件被强行替换安装，并没有真正解决依赖关系。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1113510/201706/1113510-20170607183517590-1106499087.png"></p>
+<p>所以：无论是在安装还是卸载，都是先处理被依赖的软件包。</p>
+<p>3、-h：以“#”号显示安装的进度</p>
+<p>4、-v：显示安装过程中的详细信息</p>
+<p> </p>
+<p><strong>二、安装软件和卸载软件注意事项</strong></p>
+<p>1、使用完整名字或者短名字。</p>
+<p>2、不要混血（redhat和centos之间安装软件）。</p>
+<p>3、主要软件的版本要匹配–已经安装了高版本的软件，再安装低版本的软件会报错。</p>
+<p>4、同时接很多软件包，先后顺序没有很大关系，只要有就可以，系统会自己先安装最需要的软件包。</p>
+<p>5、注意系统是32位的还是64位，不要在64位的系统上强制安装某些32位的软件，会导致系统出问题，而且安装的软件也不能使用。</p>
+<p> </p>
+<p><strong>三、RPM仓库</strong></p>
+<p>1、位置：&#x2F;var&#x2F;lib&#x2F;rpm目录下（备份好）</p>
+<p>2、RPM数据库故障原因</p>
+<p>1、非正常关机、误删除运行中的程序文件</p>
+<p>2、RPM数据文件被误写或删除</p>
+<p>3、RPM的缺点</p>
+<p>1、安装的环境必须与打包时的环境需求一致或相当；</p>
+<p>2、需要满足套件的相依属性需求；</p>
+<p>3、卸载时需要特别小心，最底层的套件不可先移除，否则可能造成整个系统的问题！</p>
+<p> </p>
+<p><strong>四、rpm安装软件实例</strong></p>
+<p>1、检查系统的版本</p>
+<p>[root@localhost ~]# cat &#x2F;etc&#x2F;issue</p>
+<p>Red Hat Enterprise Linux Server release 6.5 (Santiago)</p>
+<p>Kernel \r on an \m</p>
+<p>2、将对应系统的镜像文件放入虚拟机的光驱里</p>
+<p>3、挂载镜像文件到&#x2F;mnt</p>
+<p>[root@localhost ~]# mount   &#x2F;dev&#x2F;cdrom    &#x2F;mnt<br>mount: block device &#x2F;dev&#x2F;sr0 is write-protected, mounting read-only<br>mount: &#x2F;dev&#x2F;sr0 already mounted or &#x2F;mnt busy<br>mount: according to mtab, &#x2F;dev&#x2F;sr0 is already mounted on &#x2F;mnt</p>
+<p>[root@localhost ~]# ll &#x2F;dev&#x2F;cdrom<br>lrwxrwxrwx. 1 root root 3 Oct 22 21:46 &#x2F;dev&#x2F;cdrom -&gt; sr0</p>
+<p>4、进入&#x2F;mnt挂载点目录</p>
+<p>[root@localhost ~]# cd  &#x2F;mnt&#x2F;Packages</p>
+<p>5、进行安装</p>
+<p>1、安装ftp</p>
+<p>[root@localhost Packages]# rpm -ivh ftp-0.17-54.el6.x86_64.rpm</p>
+<p>……</p>
+<p>2、安装lftp（推荐）</p>
+<p>[root@localhost Packages]# rpm -ivh lftp-4.0.9-1.el6.x86_64.rpm</p>
+<p>3、安装tree</p>
+<p>[root@localhost Packages]# rpm -ivh tree-1.5.3-2.el6.x86_64.rpm<br>warning: tree-1.5.3-2.el6.x86_64.rpm: Header V3 RSA&#x2F;SHA256 Signature, key ID fd431d51: NOKEY<br>Preparing…                ########################################### [100%]<br>   1:tree                   ########################################### [100%]</p>
+<p>需要安装的软件包的名字一般都可能会比较长比较复杂，常用tab键补齐名字</p>
+<p> </p>
+<p><strong>五、SRPM</strong></p>
+<p>rpm包的“老祖先”</p>
+<p>源码类型的source rpm包—&gt;半成品—&gt;制作成rpm包</p>
+<p>1、简介</p>
+<p>1、SRPM 文件里面含有源代码( Source Code )</p>
+<p>2、SRPM 的文件名是以 ***.src.rpm 这种格式来命名</p>
+<p>3、需要编译生成RPM包后才能进行安装</p>
+<p>2、rpmbuild命令：安装SRPM包</p>
+<p>1、–rebuild 编译—&gt;打包—&gt;未安装</p>
+<p>最后通常会发现一行字体：Wrote: &#x2F;usr&#x2F;src&#x2F;redhat&#x2F;RPMS&#x2F;i386&#x2F;pkgname.i386.rpm</p>
+<p>2、–recompile 编译—&gt;打包—&gt;安装</p>
+<p>命令范例：rpmbuild –rebuild rp-pppoe-3.5-32.1.src.rpm</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>shell变量</title>
     <url>/2018/12/18/shell%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<p>将某一个变量的值，作为另一个变量的变量名的方法：</p>
@@ -3709,7 +3709,7 @@ $GLOBALS\['g_good'\] = 'good';
 </blockquote>
 <blockquote>
 <p>#!&#x2F;bin&#x2F;sh</p>
-<h1 id="Begin-rc-base-x2F-init-d-x2F-sysstat"><a href="#Begin-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="Begin $rc_base&#x2F;init.d&#x2F;sysstat"></a>Begin $rc_base&#x2F;init.d&#x2F;sysstat</h1><h1 id="Based-on-sysklogd-script-from-LFS-3-1-and-earlier"><a href="#Based-on-sysklogd-script-from-LFS-3-1-and-earlier" class="headerlink" title="Based on sysklogd script from LFS-3.1 and earlier."></a>Based on sysklogd script from LFS-3.1 and earlier.</h1><h1 id="Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-x40-108-105-110-117-x78-102-114-111-109-115-99-114-97-x74-x63-x68-46-x6f-114-103"><a href="#Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-x40-108-105-110-117-x78-102-114-111-109-115-99-114-97-x74-x63-x68-46-x6f-114-103" class="headerlink" title="Rewritten by Gerard Beekmans  – &#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#110;&#117;&#x78;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#97;&#x74;&#x63;&#x68;&#46;&#x6f;&#114;&#103;"></a>Rewritten by Gerard Beekmans  – <a href="mailto:&#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#110;&#117;&#x78;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#97;&#x74;&#x63;&#x68;&#46;&#x6f;&#114;&#103;">&#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#110;&#117;&#x78;&#102;&#114;&#111;&#109;&#115;&#99;&#114;&#97;&#x74;&#x63;&#x68;&#46;&#x6f;&#114;&#103;</a></h1><p>. &#x2F;etc&#x2F;sysconfig&#x2F;rc<br>. $rc_functions</p>
+<h1 id="Begin-rc-base-x2F-init-d-x2F-sysstat"><a href="#Begin-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="Begin $rc_base&#x2F;init.d&#x2F;sysstat"></a>Begin $rc_base&#x2F;init.d&#x2F;sysstat</h1><h1 id="Based-on-sysklogd-script-from-LFS-3-1-and-earlier"><a href="#Based-on-sysklogd-script-from-LFS-3-1-and-earlier" class="headerlink" title="Based on sysklogd script from LFS-3.1 and earlier."></a>Based on sysklogd script from LFS-3.1 and earlier.</h1><h1 id="Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-x40-108-105-x6e-117-120-x66-x72-111-109-115-x63-114-x61-116-99-104-x2e-111-114-103"><a href="#Rewritten-by-Gerard-Beekmans-–-103-101-x72-97-114-100-x40-108-105-x6e-117-120-x66-x72-111-109-115-x63-114-x61-116-99-104-x2e-111-114-103" class="headerlink" title="Rewritten by Gerard Beekmans  – &#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#x6e;&#117;&#120;&#x66;&#x72;&#111;&#109;&#115;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#114;&#103;"></a>Rewritten by Gerard Beekmans  – <a href="mailto:&#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#x6e;&#117;&#120;&#x66;&#x72;&#111;&#109;&#115;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#114;&#103;">&#103;&#101;&#x72;&#97;&#114;&#100;&#x40;&#108;&#105;&#x6e;&#117;&#120;&#x66;&#x72;&#111;&#109;&#115;&#x63;&#114;&#x61;&#116;&#99;&#104;&#x2e;&#111;&#114;&#103;</a></h1><p>. &#x2F;etc&#x2F;sysconfig&#x2F;rc<br>. $rc_functions</p>
 <p>case “$1” in<br>start)<br>echo “Calling the system activity data collector (sadc)…”<br>&#x2F;usr&#x2F;lib&#x2F;sa&#x2F;sadc -F -L –<br>evaluate_retval<br>;;<br>*)</p>
 <p>echo “Usage: $0 start”<br>exit 1<br>;;<br>esac</p>
 <h1 id="End-rc-base-x2F-init-d-x2F-sysstat"><a href="#End-rc-base-x2F-init-d-x2F-sysstat" class="headerlink" title="End $rc_base&#x2F;init.d&#x2F;sysstat"></a>End $rc_base&#x2F;init.d&#x2F;sysstat</h1></blockquote>
@@ -3836,8 +3836,8 @@ $GLOBALS\['g_good'\] = 'good';
       </categories>
       <tags>
         <tag>linux</tag>
-        <tag>工具</tag>
         <tag>运维</tag>
+        <tag>工具</tag>
       </tags>
   </entry>
   <entry>
@@ -4925,134 +4925,6 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
-    <title>流行的js框架对比</title>
-    <url>/2018/04/07/%E6%B5%81%E8%A1%8C%E7%9A%84js%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/</url>
-    <content><![CDATA[<h2 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h2><p>有些日子没有正襟危坐写博客了，互联网飞速发展的时代，技术更新迭代的速度也在加快。看着Java、Js、Swift在各领域心花路放，也是煞是羡慕。寻了寻.net的消息，也是振奋人心，.net core 1，mono，xamarin等等，但大多都还在狂吼的阶段。其实一直以来对技术的理解是技术服务于业务和产品，产品又在不同程度的推进着技术的演进。</p>
-<p>Web、无线、物联网、VR、PC从不同方向推进着技术的融合与微创新。程序员在不同业务场景下的角色互换。而随着node.js的出现语言的角色也在发生着转变，Js扮演了越来越重要的角色。也就有了茶余饭后也把了解到的知识整理一下。看过“你的知识需要管理”后，强烈的意识到杂乱且范范的知识储备远不如整理后条理清晰的知识带来好处多。所以，是的，我们需要时不时的回来对掌握的知识梳理归类，以备不时之需。</p>
-<h2 id="一、前端框架库："><a href="#一、前端框架库：" class="headerlink" title="一、前端框架库："></a>一、前端框架库：</h2><h3 id="1-Zepto-js"><a href="#1-Zepto-js" class="headerlink" title="1.Zepto.js"></a>1.Zepto.js</h3><ul>
-<li><strong>地址：</strong><a href="http://www.css88.com/doc/zeptojs/">http://www.css88.com/doc/zeptojs/</a></li>
-<li><strong>描述：</strong>Zepto是一个轻量级的针对现代高级浏览器的JavaScript库， 它与jquery有着类似的api。 如果你会用jquery，那么你也会用zepto。关于Zepto认知我也是通过与一位腾讯朋友聊天的时候知道的，只作了些基础的了解。</li>
-</ul>
-<h3 id="2-SUI-Mobile"><a href="#2-SUI-Mobile" class="headerlink" title="2.SUI Mobile"></a>2.SUI Mobile</h3><ul>
-<li><strong>地址：</strong><a href="http://m.sui.taobao.org/">http://m.sui.taobao.org</a></li>
-<li><strong>描述：</strong>SUI Mobile 是一套基于 <a href="http://framework7.taobao.org/">Framework7</a> 开发的UI库。它非常轻量、精美，只需要引入我们的CDN文件就可以使用，并且能兼容到 iOS 6.0+ 和 Android 4.0+，非常适合开发跨平台Web App。</li>
-<li><strong>用途：</strong>你也看到了，他是用于无线端的Web App的开发。</li>
-</ul>
-<h3 id="3-Node-Js"><a href="#3-Node-Js" class="headerlink" title="3.Node.Js"></a>3.Node.Js</h3><ul>
-<li><strong>地址：</strong><a href="http://www.runoob.com/nodejs/nodejs-tutorial.html">http://www.runoob.com/nodejs/nodejs-tutorial.html</a> (中文网)</li>
-<li><strong>描述：</strong>Node.js是一个Javascript运行环境(runtime)。实际上它是对Google V8引擎进行了封装。V8引 擎执行Javascript的速度非常快，性能非常好。Node.js对一些特殊用例进行了优化，提供了替代的API，使得V8在非浏览器环境下运行得更好。</li>
-</ul>
-<p>　　Node.js是一个基于Chrome JavaScript运行时建立的平台， 用于方便地搭建响应速度快、易于扩展的网络应用。Node.js 使用<a href="http://baike.baidu.com/view/536048.htm">事件驱动</a>， 非阻塞<a href="http://baike.baidu.com/subview/300881/11169495.htm">I&#x2F;O</a> 模型而得以轻量和高效，非常适合在分布式设备上运行数据密集型的实时应用。</p>
-<p>　　简单的说 Node.js 就是运行在服务端的 JavaScript。</p>
-<p>Node.js 是一个基于Chrome JavaScript 运行时建立的一个平台。</p>
-<p>Node.js是一个事件驱动I&#x2F;O服务端JavaScript环境，基于Google的V8引擎，V8引擎执行Javascript的速度非常快，性能非常好。</p>
-<ul>
-<li><strong>用途：</strong></li>
-</ul>
-<ol>
-<li>RESTful API</li>
-</ol>
-<p>这是NodeJS最理想的应用场景，可以处理数万条连接，本身没有太多的逻辑，只需要请求API，组织数据进行返回即可。它本质上只是从某个数据库中查找一些值并将它们组成一个响应。由于响应是少量文本，入站请求也是少量的文本，因此流量不高，一台机器甚至也可以处理最繁忙的公司的API需求。</p>
-<ol start="2">
-<li>统一Web应用的UI层</li>
-</ol>
-<p>目前MVC的架构，在某种意义上来说，Web开发有两个UI层，一个是在浏览器里面我们最终看到的，另一个在server端，负责生成和拼接页面。</p>
-<p>不讨论这种架构是好是坏，但是有另外一种实践，面向服务的架构，更好的做前后端的依赖分离。如果所有的关键业务逻辑都封装成REST调用，就意味着在上层只需要考虑如何用这些REST接口构建具体的应用。那些后端程序员们根本不操心具体数据是如何从一个页面传递到另一个页面的，他们也不用管用户数据更新是通过Ajax异步获取的还是通过刷新页面。</p>
-<ol start="3">
-<li>大量Ajax请求的应用</li>
-</ol>
-<p>例如个性化应用，每个用户看到的页面都不一样，缓存失效，需要在页面加载的时候发起Ajax请求，NodeJS能响应大量的并发请求。　　总而言之，NodeJS适合运用在高并发、I&#x2F;O密集、少量业务逻辑的场景。</p>
-<h3 id="4-angular-Js"><a href="#4-angular-Js" class="headerlink" title="4.angular.Js"></a>4.angular.Js</h3><ul>
-<li><strong>地址：</strong><a href="http://www.runoob.com/angularjs/angularjs-tutorial.html">http://www.runoob.com/angularjs/angularjs-tutorial.html</a> (中文网)</li>
-<li><strong>描述：</strong>AngularJS[1]  诞生于2009年，由Misko Hevery 等人创建，后为Google所收购。是一款优秀的前端JS框架，已经被用于Google的多款产品当中。AngularJS有着诸多特性，最为核心的是：MVVM、模块化、自动化双向数据绑定、语义化标签、依赖注入等等。</li>
-<li><strong>用途：</strong>通过描述我们应该就能很好的明白AngularJS的真实用途了，MVVM，模块化，自动化双向数据绑定等等。除了简单的dom操作外，更能体现Js编程的强大。当然应用应该视场合而定。</li>
-</ul>
-<h3 id="5-JQuery-Mobile"><a href="#5-JQuery-Mobile" class="headerlink" title="5.JQuery Mobile"></a><strong>5.JQuery Mobile</strong></h3><ul>
-<li><strong>地址：</strong><a href="http://www.w3school.com.cn/jquerymobile/">http://www.w3school.com.cn/jquerymobile/</a>    (中文网)</li>
-<li><strong>描述：</strong>Query Mobile是<a href="http://baike.baidu.com/view/1020297.htm">jQuery</a> 在手机上和平板设备上的版本。jQuery Mobile 不仅会给主流移动平台带来jQuery核心库，而且会发布一个完整统一的jQuery移动UI框架。支持全球主流的移动平台。jQuery Mobile开发团队说：能开发这个项目，我们非常兴奋。移动Web太需要一个跨浏览器的框架，让开发人员开发出真正的移动Web网站。</li>
-<li><strong>用途：</strong>jQuery Mobile 是创建移动 web 应用程序的框架。</li>
-</ul>
-<p>jQuery Mobile 适用于所有流行的智能手机和平板电脑。</p>
-<p>jQuery Mobile 使用 HTML5 和 CSS3 通过尽可能少的脚本对页面进行布局。</p>
-<h3 id="6-requirejs"><a href="#6-requirejs" class="headerlink" title="6.requirejs"></a><strong>6.requirejs</strong></h3><ul>
-<li><strong>地址：</strong><a href="http://www.requirejs.cn/">http://www.requirejs.cn/</a></li>
-<li><strong>描述：</strong>RequireJS的目标是鼓励代码的模块化，它使用了不同于传统<script>标签的脚本加载步骤。可以用它来加速、优化代码，但其主要目的还是为了代码的模块化。它鼓励在使用脚本时以module ID替代URL地址。</li>
-</ul>
-<p>RequireJS以一个相对于<a href="http://makingmobile.org/docs/tools/requirejs-api-zh/#config-baseUrl">baseUrl</a>的地址来加载所有的代码。 页面顶层<script>标签含有一个特殊的属性data-main，require.js使用它来启动脚本加载过程，而baseUrl一般设置到与该属性相一致的目录。</p>
-<ul>
-<li><strong>用途：</strong>模块化动态加载。</li>
-</ul>
-<h3 id="7-Vue-js"><a href="#7-Vue-js" class="headerlink" title="7.Vue.js"></a><strong>7.Vue.js</strong></h3><ul>
-<li><strong>地址：</strong><a href="http://cn.vuejs.org/">http://cn.vuejs.org/</a></li>
-<li><strong>描述：</strong>Vue.js 是用于构建交互式的 Web  界面的库。它提供了 <a href="http://www.yyyweb.com/">MVVM</a> 数据绑定和一个可组合的组件系统，具有简单、灵活的 API。从技术上讲， Vue.js 集中在 <a href="http://www.yyyweb.com/">MVVM</a> 模式上的视图模型层，并通过双向数据绑定连接视图和模型。实际的 DOM 操作和输出格式被抽象出来成指令和过滤器。相比其它的 MVVM 框架，Vue.js 更容易上手。</li>
-</ul>
-<h3 id="8-backbone-js"><a href="#8-backbone-js" class="headerlink" title="8.backbone.js"></a>8.backbone.js</h3><ul>
-<li><strong>地址：</strong><a href="http://www.css88.com/doc/backbone/">http://www.css88.com/doc/backbone/</a></li>
-<li><strong>描述：</strong><a href="http://baike.baidu.com/view/342697.htm">Backbone</a> 为复杂Javascript应用程序提供模型(models)、集合(collections)、视图(views)的结构。其中模型用于绑定键值数据和自定义事件；集合附有可枚举函数的丰富API； 视图可以声明事件处理函数，并通过RESTful JSON接口连接到应用程序。</li>
-</ul>
-<h3 id="9-React"><a href="#9-React" class="headerlink" title="9.React"></a>9.React</h3><ul>
-<li><strong>地址：</strong><a href="http://reactjs.cn/react/docs/why-react.html">http://reactjs.cn/react/docs/why-react.html</a></li>
-<li><strong>描述：</strong>React 是一个 Facebook 和 Instagram 用来创建用户界面的 JavaScript 库。很多人认为 React 是 <strong><a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a></strong> 中的 <strong>V</strong>（视图）。我们创造 React 是为了解决一个问题：<strong>构建随着时间数据不断变化的大规模应用程序</strong>。为了达到这个目标，React 采用下面两个主要的思想。</li>
-</ul>
-<h3 id="10-Ionic"><a href="#10-Ionic" class="headerlink" title="10.Ionic"></a>10.Ionic</h3><ul>
-<li><strong>地址：</strong><a href="http://www.ionic.wang/js_doc-index.html">http://www.ionic.wang/js_doc-index.html</a></li>
-<li><strong>描述：</strong>Ionic既是一个CSS框架也是一个Javascript UI库。许多组件需要Javascript才能产生神奇的效果，尽管通常组件不需要编码，通过框架扩展可以很容易地使用，比如我们的AngularIonic扩展。Ionic遵循视图控制模式，通俗的理解和 Cocoa 触摸框架相似。在视图控制模式中，我们将界面的不同部分分为子视图或包含其他视图的子视图控制器。然后视图控制器“驱动”内部视图来提供交互和UI功能。一个很好的例子就是标签栏（Tab Bar）视图控制器处理点击标签栏在一系列可视化面板间切换。浏览我们的API文档来了解视图控制器和Ionic中可用的Javascript实用工具。Ionic 是目前最有潜力的一款 HTML5 手机应用开发框架。通过 SASS 构建应用程序，它 提供了很多 UI 组件来帮助开发者开发强大的应用。 它使用 JavaScript MVVM 框架和 AngularJS 来增强应用。提供数据的双向绑定，使用它成为 Web 和移动开发者的共同选择。</li>
-</ul>
-<h2 id="二、前端UI框架"><a href="#二、前端UI框架" class="headerlink" title="二、前端UI框架"></a>二、前端UI框架</h2><h3 id="1-Pure"><a href="#1-Pure" class="headerlink" title="1.Pure"></a>1.Pure</h3><ul>
-<li><strong>地址：</strong><a href="http://purecss.org/layouts/">http://purecss.org/layouts/</a></li>
-<li><strong>描述：</strong>Pure精心设计，只为可以在任何Web项目中使用。为了例证这一点，我们制作了如下几个模板。这些模板都是响应式的，并且没有使用任何JavaScript。</li>
-<li><strong>用途：</strong>真的是很精美的一个样式框架，便于我们快事构建一些个人产品，当然也可以服务于工作中的一些项目。</li>
-</ul>
-<h3 id="2-bootstrap"><a href="#2-bootstrap" class="headerlink" title="2.bootstrap"></a>2.bootstrap</h3><ul>
-<li><strong>地址：</strong><a href="http://www.bootcss.com/">http://www.bootcss.com/</a></li>
-<li><strong>描述：</strong>简洁、直观、强悍的前端开发框架，让web开发更迅速、简单。</li>
-</ul>
-<h3 id="3-EasyUI"><a href="#3-EasyUI" class="headerlink" title="3.EasyUI"></a><strong>3.EasyUI</strong></h3><ul>
-<li><strong>地址：</strong><a href="http://www.jeasyui.net/">http://www.jeasyui.net/</a>  (中文网)</li>
-<li><strong>描述：</strong>easyui是一种基于jQuery的用户界面插件集合。</li>
-</ul>
-<p>easyui为创建现代化，互动，JavaScript应用程序，提供必要的功能。</p>
-<p>使用easyui你不需要写很多代码，你只需要通过编写一些简单HTML标记，就可以定义用户界面。</p>
-<p>easyui是个完美支持HTML5网页的完整框架。</p>
-<p>easyui节省您网页开发的时间和规模。</p>
-<p>easyui很简单但功能强大的。</p>
-<h3 id="4-Ant-Design"><a href="#4-Ant-Design" class="headerlink" title="4.Ant Design"></a>4.Ant Design</h3><ul>
-<li><strong>地址：</strong><a href="http://ant.design/">http://ant.design/</a></li>
-<li><strong>描述：</strong>一个 UI 设计语言，一套提炼和应用于企业级后台产品的交互语言和视觉体系</li>
-</ul>
-<p> </p>
-<h2 id="三、可视化组件"><a href="#三、可视化组件" class="headerlink" title="三、可视化组件"></a>三、可视化组件</h2><h3 id="1-Echarts"><a href="#1-Echarts" class="headerlink" title="1.Echarts"></a>1.Echarts</h3><ul>
-<li><strong>地址：</strong><a href="http://echarts.baidu.com/">http://echarts.baidu.com/</a></li>
-<li><strong>描述：</strong>ECharts，一个纯 Javascript 的图表库，可以流畅的运行在 PC 和移动设备上，兼容当前绝大部分浏览器（IE8/9/10/11，Chrome，Firefox，Safari等），底层依赖轻量级的 Canvas 类库<a href="https://github.com/ecomfe/zrender">ZRender</a>，提供直观，生动，可交互，可高度个性化定制的数据可视化图表。</li>
-</ul>
-<h3 id="2-tableau-收费"><a href="#2-tableau-收费" class="headerlink" title="2.tableau(收费)"></a>2.tableau(收费)</h3><ul>
-<li><strong>地址：</strong><a href="http://www.yuandingit.com/special/tableau/index.html">http://www.yuandingit.com/special/tableau/index.html</a></li>
-<li><strong>描述：</strong>Tableau 是桌面系统中最简单的商业智能工具软件，Tableau 没有强迫用户编写自定义代码，新的控制台也可完全自定义配置。在控制台上，不仅能够监测信息，而且还提供完整的分析能力。Tableau控制台灵活，具有高度的动态性。</li>
-</ul>
-<p> </p>
-<h2 id="四、前端构建工具"><a href="#四、前端构建工具" class="headerlink" title="四、前端构建工具"></a><strong>四、前端构建工具</strong></h2><h3 id="1-gulp"><a href="#1-gulp" class="headerlink" title="1.gulp"></a>1.gulp</h3><ul>
-<li><strong>地址：</strong><a href="http://www.gulpjs.com.cn/">http://www.gulpjs.com.cn/</a></li>
-<li><strong>描述</strong>：<strong>易于使用</strong></li>
-</ul>
-<p>　　　　　　通过代码优于配置的策略，Gulp 让简单的任务简单，复杂的任务可管理。</p>
-<h2 id="构建快速"><a href="#构建快速" class="headerlink" title="构建快速"></a>构建快速</h2><p>利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。</p>
-<h2 id="插件高质"><a href="#插件高质" class="headerlink" title="插件高质"></a>插件高质</h2><p>Gulp 严格的插件指南确保插件如你期望的那样简洁高质得工作。</p>
-<h2 id="易于学习"><a href="#易于学习" class="headerlink" title="易于学习"></a>易于学习</h2><p>通过最少的 API，掌握 Gulp 毫不费力，构建工作尽在掌握：如同一系列流管道。</p>
-<h2 id="五、博客搭建"><a href="#五、博客搭建" class="headerlink" title="五、博客搭建"></a>五、博客搭建</h2><h3 id="1-技术组合"><a href="#1-技术组合" class="headerlink" title="1.技术组合"></a>1.技术组合</h3><p>　　HEXO+Github,搭建属于自己的博客。</p>
-<p> <strong>站点：</strong><a href="http://www.jianshu.com/p/465830080ea9">http://www.jianshu.com/p/465830080ea9</a></p>
-<p> <strong>HEXO介绍：</strong>Hexo是一个开源的静态博客生成器,用node.js开发,作者是台湾大学生tommy351</p>
-<p> <strong>准备：</strong>git  + node.js + markdown编辑 + gitcafe + 域名</p>
-<p><strong>小结：</strong>本文做为知识梳理或者说资料梳理类文章，一方面用于自身知识的管理，同时也可以用做一个资料库备查。将持续更新。</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>服务发现 - consul 的介绍、部署和使用</title>
     <url>/2018/08/16/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0-consul-%E7%9A%84%E4%BB%8B%E7%BB%8D%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h2 id="什么是服务发现"><a href="#什么是服务发现" class="headerlink" title="什么是服务发现"></a>什么是服务发现</h2><blockquote>
@@ -5304,166 +5176,6 @@ echo $output;]]></content>
       <tags>
         <tag>工具</tag>
         <tag>微服务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浅谈Redis数据库的键值设计(转)</title>
-    <url>/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/</url>
-    <content><![CDATA[<p>丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。</p>
-<p>下面举一些常见适合kv数据库的例子来谈谈键值的设计，并与关系型数据库做一个对比，发现关系型的不足之处。</p>
-<h3 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h3><p>记录用户登录信息的一个系统， 我们简化业务后只留下一张表。</p>
-<h4 id="关系型数据库的设计"><a href="#关系型数据库的设计" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>mysql&gt; select * from login;<br>+———+—————-+————-+———————+<br> user_id  name            login_times  last_login_time<br>+———+—————-+————-+———————+<br>       1  ken thompson              5  2011-01-01 00:00:00<br>       2  dennis ritchie            1  2011-02-01 00:00:00<br>       3  Joe Armstrong             2  2011-03-01 00:00:00<br>+———+—————-+————-+———————+</p>
-<p> </p>
-<p>user_id表的主键，name表示用户名，login_times表示该用户的登录次数，每次用户登录后，login_times会自增，而last_login_time更新为当前时间。</p>
-<h4 id="REDIS的设计"><a href="#REDIS的设计" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>关系型数据转化为KV数据库，我的方法如下：</p>
-<p> </p>
-<p>一般使用冒号做分割符，这是不成文的规矩。比如在php-admin for redis系统里，就是默认以冒号分割，于是user:1 user:2等key会分成一组。于是以上的关系数据转化成kv数据后记录如下：</p>
-<p>Set login:1:login_times 5<br>Set login:2:login_times 1<br>Set login:3:login_times 2</p>
-<p>Set login:1:last_login_time 2011-1-1<br>Set login:2:last_login_time 2011-2-1<br>Set login:3:last_login_time 2011-3-1</p>
-<p>set login:1:name ”ken thompson“<br>set login:2:name “dennis ritchie”<br>set login:3:name ”Joe Armstrong“</p>
-<p>这样在已知主键的情况下，通过get、set就可以获得或者修改用户的登录次数和最后登录时间和姓名。</p>
-<p>一般用户是无法知道自己的id的，只知道自己的用户名，所以还必须有一个从name到id的映射关系，这里的设计与上面的有所不同。</p>
-<p>set “login:ken thompson:id”      1<br>set “login:dennis ritchie:id”    2<br>set “login: Joe Armstrong:id”    3</p>
-<p>这样每次用户登录的时候业务逻辑如下（python版），r是redis对象，name是已经获知的用户名。</p>
-<p>#获得用户的id<br>uid &#x3D; r.get(“login:%s:id” % name)<br>#自增用户的登录次数<br>ret &#x3D; r.incr(“login:%s:login_times” % uid)<br>#更新该用户的最后登录时间<br>ret &#x3D; r.set(“login:%s:last_login_time” % uid, datetime.datetime.now())</p>
-<p>如果需求仅仅是已知id，更新或者获取某个用户的最后登录时间，登录次数，关系型和kv数据库无啥区别。一个通过btree pk，一个通过hash，效果都很好。</p>
-<p>假设有如下需求，查找最近登录的N个用户。开发人员看看，还是比较简单的，一个sql搞定。</p>
-<p>select * from login order by last_login_time desc limit N</p>
-<p>DBA了解需求后，考虑到以后表如果比较大，所以在last_login_time上建个索引。执行计划从索引leafblock 的最右边开始访问N条记录，再回表N次，效果很好。</p>
-<p>过了两天，又来一个需求，需要知道登录次数最多的人是谁。同样的关系型如何处理？DEV说简单</p>
-<p>select * from login order by login_times desc limit N</p>
-<p>DBA一看，又要在login_time上建立一个索引。有没有觉得有点问题呢，表上每个字段上都有素引。</p>
-<p>关系型数据库的数据存储的的不灵活是问题的源头，数据仅有一种储存方法，那就是按行排列的堆表。统一的数据结构意味着你必须使用索引来改变sql的访问路径来快速访问某个列的，而访问路径的增加又意味着你必须使用统计信息来辅助，于是一大堆的问题就出现了。</p>
-<p>没有索引，没有统计计划，没有执行计划，这就是kv数据库。</p>
-<p>redis里如何满足以上的需求呢？ 对于求最新的N条数据的需求，链表的后进后出的特点非常适合。我们在上面的登录代码之后添加一段代码，维护一个登录的链表，控制他的长度，使得里面永远保存的是最近的N个登录用户。</p>
-<p>#把当前登录人添加到链表里<br>ret &#x3D; r.lpush(“login:last_login_times”, uid)<br>#保持链表只有N位<br>ret &#x3D; redis.ltrim(“login:last_login_times”, 0, N-1)</p>
-<p>这样需要获得最新登录人的id，如下的代码即可</p>
-<p>last_login_list &#x3D; r.lrange(“login:last_login_times”, 0, N-1)</p>
-<p>另外，求登录次数最多的人，对于排序，积分榜这类需求，sorted set非常的适合，我们把用户和登录次数统一存储在一个sorted set里。</p>
-<p>zadd login:login_times 5 1<br>zadd login:login_times 1 2<br>zadd login:login_times 2 3</p>
-<p>这样假如某个用户登录，额外维护一个sorted set，代码如此</p>
-<p>#对该用户的登录次数自增1<br>ret &#x3D; r.zincrby(“login:login_times”, 1, uid)</p>
-<p>那么如何获得登录次数最多的用户呢，逆序排列取的排名第N的用户即可</p>
-<p>ret &#x3D; r.zrevrange(“login:login_times”, 0, N-1)</p>
-<p>可以看出，DEV需要添加2行代码，而DBA不需要考虑索引什么的。</p>
-<h3 id="TAG系统"><a href="#TAG系统" class="headerlink" title="TAG系统"></a>TAG系统</h3><p>tag在互联网应用里尤其多见，如果以传统的关系型数据库来设计有点不伦不类。我们以查找书的例子来看看redis在这方面的优势。</p>
-<h4 id="关系型数据库的设计-1"><a href="#关系型数据库的设计-1" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>两张表，一张book的明细，一张tag表，表示每本的tag，一本书存在多个tag。</p>
-<p>mysql&gt; select * from book;<br>+——+——————————-+—————-+<br> id    name                           author<br>+——+——————————-+—————-+<br>    1  The Ruby Programming Language  Mark Pilgrim<br>    1  Ruby on rail                   David Flanagan<br>    1  Programming Erlang             Joe Armstrong<br>+——+——————————-+—————-+</p>
-<p>mysql&gt; select * from tag;<br>+———+———+<br> tagname  book_id<br>+———+———+<br> ruby           1<br> ruby           2<br> web            2<br> erlang         3<br>+———+———+</p>
-<p>假如有如此需求，查找即是ruby又是web方面的书籍，如果以关系型数据库会怎么处理？</p>
-<p>select b.name, b.author  from tag t1, tag t2, book b<br>where t1.tagname &#x3D; ‘web’ and t2.tagname &#x3D; ‘ruby’ and t1.book_id &#x3D; t2.book_id and b.id &#x3D; t1.book_id</p>
-<p>tag表自关联2次再与book关联，这个sql还是比较复杂的，如果要求即ruby，但不是web方面的书籍呢？</p>
-<p>关系型数据其实并不太适合这些集合操作。</p>
-<h4 id="REDIS的设计-1"><a href="#REDIS的设计-1" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>首先book的数据肯定要存储的，和上面一样。</p>
-<p>set book:1:name    ”The Ruby Programming Language”<br>Set book:2:name     ”Ruby on rail”<br>Set book:3:name     ”Programming Erlang”</p>
-<p>set book:1:author    ”Mark Pilgrim”<br>Set book:2:author     ”David Flanagan”<br>Set book:3:author     ”Joe Armstrong”</p>
-<p>tag表我们使用集合来存储数据，因为集合擅长求交集、并集</p>
-<p>sadd tag:ruby 1<br>sadd tag:ruby 2<br>sadd tag:web 2<br>sadd tag:erlang 3</p>
-<p>那么，即属于ruby又属于web的书？</p>
-<p>inter_list &#x3D; redis.sinter(“tag.web”, “tag:ruby”)</p>
-<p>即属于ruby，但不属于web的书？</p>
-<p>inter_list &#x3D; redis.sdiff(“tag.ruby”, “tag:web”)</p>
-<p>属于ruby和属于web的书的合集？</p>
-<p>inter_list &#x3D; redis.sunion(“tag.ruby”, “tag:web”)</p>
-<p>简单到不行阿。</p>
-<p>从以上2个例子可以看出在某些场景里，关系型数据库是不太适合的，你可能能够设计出满足需求的系统，但总是感觉的怪怪的，有种生搬硬套的感觉。</p>
-<p>尤其登录系统这个例子，频繁的为业务建立索引。放在一个复杂的系统里，ddl（创建索引）有可能改变执行计划。导致其它的sql采用不同的执行计划，业务复杂的老系统，这个问题是很难预估的，sql千奇百怪。要求DBA对这个系统里所有的sql都了解，这点太难了。这个问题在oracle里尤其严重，每个DBA估计都碰到过。对于MySQL这类系统，ddl又不方便（虽然现在有online ddl的方法）。碰到大表，DBA凌晨爬起来在业务低峰期操作，这事我没少干过。而这种需求放到redis里就很好处理，DBA仅仅对容量进行预估即可。</p>
-<p>未来的OLTP系统应该是kv和关系型的紧密结合。</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬件&amp;系统性能</title>
-    <url>/2019/01/31/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD/</url>
-    <content><![CDATA[<p>首先看一下系统性能良好时的指标范围：</p>
-<p>控类别</p>
-<p>指标名称</p>
-<p>指标范围(通过)</p>
-<p>应用服务器(jvm和配置)</p>
-<p>JVM</p>
-<p>jvm内存占用率&lt;&#x3D;70%</p>
-<p>线程池连接数</p>
-<p>线程池连接数&lt;&#x3D;80%，没有出现线程阻塞、死锁现象</p>
-<p>数据库活动连接数</p>
-<p>数据库活动连接数&lt;&#x3D;85%</p>
-<p>full gc频率</p>
-<p>大于平均半小时1次GC</p>
-<p>是否有异常日志</p>
-<p>日志信息中，无错误信息如：OOM、及其他代码提示的错误</p>
-<p>是否有OOM</p>
-<p>没有年老代、持久代堆异常、栈异常及内存不够造成的异常</p>
-<p>内存泄露</p>
-<p>多次GC后，内存没有呈线性增长</p>
-<p>数据库(mysql5.5)</p>
-<p>系统负载</p>
-<p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p>
-<p>CPU占用率</p>
-<p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%或%sy&lt;&#x3D;50%，%wa&lt;&#x3D;20%，无热点CPU现象</p>
-<p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p>
-<p>内存使用率</p>
-<p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p>
-<p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p>
-<p>磁盘</p>
-<p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;30%</p>
-<p>数据库连接数</p>
-<p>关注：(Max_used_connections&#x2F;max_connections)*100&#x2F;%&lt;&#x3D;85%</p>
-<p>是否有慢查询SQL</p>
-<p>没有出现执行较长时间的SQL语句，从慢查询日志获取</p>
-<p>死锁</p>
-<p>没有出现SQL死锁</p>
-<p>操作系统(linux3.1)</p>
-<p>系统负载</p>
-<p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p>
-<p>CPU占用率</p>
-<p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%，%sy&lt;&#x3D;20%，%id&lt;&#x3D;30%，无热点CPU现象</p>
-<p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p>
-<p>内存使用率</p>
-<p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p>
-<p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p>
-<p>磁盘</p>
-<p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;20%</p>
-<p>带宽</p>
-<p>网络使用率</p>
-<p>&lt;&#x3D;系统带宽的30%，无丢包，无延迟，无阻塞</p>
-<h2 id="时间单位换算关系"><a href="#时间单位换算关系" class="headerlink" title="时间单位换算关系"></a><strong>时间单位换算关系</strong></h2><p>换算关系<br>1 s &#x3D; 10^3 ms &#x3D; 10^6 us &#x3D; 10^9 ns &#x3D; 10^12 μs</p>
-<p>秒     毫秒       微秒     纳秒        皮秒</p>
-<h2 id="周期概念"><a href="#周期概念" class="headerlink" title="周期概念"></a><strong>周期概念</strong></h2><p>　　总结一下，它们之间的关系就是，指令周期由若干个机器周期组成，总线周期一般由4个时钟周期组成。 </p>
-<p>　　机器周期和总线周期……机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。</p>
-<p> 　  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令（ARM、DSP）均采用单指令执行周期。</p>
-<p>　　机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。</p>
-<p>　　CPU周期:又称机器周期，机器内部各种操作大致可归属为对CPU内部的操作和对主存的操作两大类，由于CPU内部操作速度较快，CPU访问一次内存所花的时间较长，因此用从内存读取一条指令字的最短时间来定义，这个基准时间就是CPU周期（机器周期）。一个指令周期常由若干CPU周期构成。</p>
-<p>　　总线周期（BUS Cycle）：也就是一个访存储器或I&#x2F;O端口操作所用的时间。</p>
-<p>　　时钟周期：CPU的晶振的工作频率的倒数。(fantaxy:晶振一次需要的时间)，例如12M的晶振，它的时间周期就是1&#x2F;12 μs，若采用了1MHZ的时钟频率，则时钟周期为1μs；若采用4MHZ的时钟频率，则时钟周期为250ns。</p>
-<p>　　例子：22.1184MHZ的晶振,它的晶振周期、时钟周期和机器周期分别是多少？</p>
-<p>　　以51为例,晶振22.1184M，时钟周期(晶振周期)就是(1&#x2F;22.1184)μs，一个机器周期包含12个时钟周期，一个机器周期就是 0.5425μs。一个机器周期一般是一条指令花费的时间，也有些是2个机器周期的指令，DJNZ，是双周期指令。</p>
-<p>　　周期：就是时间，完成一次任务的时间</p>
-<p>　　时钟周期：这个名字的英文clock cycle; clock period；时钟是用来计时的，是一个基本单位；在计算机中，cpu的晶振时间就是一个最最基本的单位，因此时钟周期很基本，别的周期都用它来参考！</p>
-<p>      上下文切换：上下文切换真正的开销随平台变化而不同，不过有个经验法则:大多数通用的处理器中，上下文切换的时间是5000到10000个时钟周期，或者是几微秒 </p>
-<h2 id="内存频率"><a href="#内存频率" class="headerlink" title="内存频率"></a><strong>内存频率</strong></h2><p>        内存主频和CPU主频一样，习惯上被用来表示内存的速度，它代表着该内存所能达到的最高工作频率。内存主频是以MHz（兆赫）为单位来计量的。内存主频越高在一定程度上代表着内存所能达到的速度越快。内存主频决定着该内存最高能在什么样的频率正常工作。目前较为主流的内存频率是333MHz和400MHz的DDR内存，667MHz、800MHz和1066MHz的DDR2内存，1066MHz、1333MHz、1600MHz的DDR3内存。</p>
-<p>        内存本身并不具备晶体振荡器，因此内存工作时的时钟信号是由主板芯片组的北桥或直接由主板的时钟发生器提供的，也就是说内存无法决定自身的工作频率，其实际工作频率是由主板来决定的。</p>
-<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a><strong>磁盘</strong></h2><h3 id="磁盘性能指标"><a href="#磁盘性能指标" class="headerlink" title="磁盘性能指标"></a><strong>磁盘性能指标</strong></h3><p><strong>IOPS (Input&#x2F;Output Operations Per Second)</strong></p>
-<p>即每秒进行读写（I&#x2F;O）操作的次数，多用于数据库等场合，衡量随机访问的性能。存储端的IOPS性能和主机端的IO是不同的，IOPS是指存储每秒可接受多少次主机发出的访问，主机的一次IO需要多次访问存储才可以完成。例如，主机写入一个最小的数据块，也要经过“发送写入请求、写入数据、收到写入确认”等三个步骤，也就是3个存储端访问。</p>
-<p>决定IOPS的主要取决与阵列的算法，cache命中率，以及磁盘个数。</p>
-<p>如果一个阵列有120块15K rpm的光纤硬盘，那么，它能撑的最大IOPS为120*150&#x3D;18000，这个为硬件限制的理论值，如果超过这个值，硬盘的响应可能会变的非常缓慢而不能正常提供业务。</p>
-<p><strong>数据吞吐量</strong>(Throughput)</p>
-<p>指单位时间内可以成功传输的数据数量。对于大量顺序读写的应用，如VOD(Video On Demand)，则更关注吞吐量指标。</p>
-<h3 id="磁盘服务时间"><a href="#磁盘服务时间" class="headerlink" title="磁盘服务时间"></a><strong>磁盘服务时间</strong></h3><p>传统磁盘本质上一种机械装置，如FC, SAS, SATA磁盘，转速通常为5400&#x2F;7200&#x2F;10K&#x2F;15K rpm不等。影响磁盘的关键因素是磁盘服务时间，即磁盘完成一个I&#x2F;O请求所花费的时间，它由寻道时间、旋转延迟和数据传输时间三部分构成。</p>
-<p><strong>寻道时间</strong>Tseek是指将读写磁头移动至正确的磁道上所需要的时间。寻道时间越短，I&#x2F;O操作越快，目前磁盘的平均寻道时间一般在3－15ms。<br><strong>旋转延迟</strong>Trotation是指盘片旋转将请求数据所在扇区移至读写磁头下方所需要的时间。旋转延迟取决于磁盘转速，通常使用磁盘旋转一周所需时间的1&#x2F;2表示。比如，7200 rpm的磁盘平均旋转延迟大约为60*1000&#x2F;7200&#x2F;2 &#x3D; 4.17ms，而转速为15000 rpm的磁盘其平均旋转延迟约为2ms。<br><strong>数据传输时间</strong>Ttransfer是指完成传输所请求的数据所需要的时间，它取决于数据传输率，其值等于数据大小除以数据传输率。目前IDE&#x2F;ATA能达到133MB&#x2F;s，SATA II可达到300MB&#x2F;s的接口数据传输率，数据传输时间通常远小于前两部分时间。</p>
-<h3 id="最大IOPS的理论计算"><a href="#最大IOPS的理论计算" class="headerlink" title="最大IOPS的理论计算"></a><strong>最大IOPS的理论计算</strong></h3><p>IOPS &#x3D; 1000 ms&#x2F; (Tseek + Troatation)，忽略数据传输时间。假设磁盘平均物理寻道时间为3ms, 磁盘转速为7200,10K,15K rpm，则磁盘IOPS理论最大值分别为，<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;7200&#x2F;2)  &#x3D; 140<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;10000&#x2F;2) &#x3D; 167<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;15000&#x2F;2) &#x3D; 200</p>
-<p>固态硬盘SSD是一种电子装置， 避免了传统磁盘在寻道和旋转上的时间花费，存储单元寻址开销大大降低，因此IOPS可以非常高，能够达到数万甚至数十万。</p>
-<h3 id="IOPS的指标"><a href="#IOPS的指标" class="headerlink" title="IOPS的指标"></a><strong>IOPS的指标</strong></h3><p>通常情况下，IOPS可细分为如下几个指标：<br>Toatal IOPS，混合读写和顺序随机I&#x2F;O负载情况下的磁盘IOPS，这个与实际I&#x2F;O情况最为相符，大多数应用关注此指标。<br>Random Read IOPS，100%随机读负载情况下的IOPS。<br>Random Write IOPS，100%随机写负载情况下的IOPS。<br>Sequential Read IOPS，100%顺序负载读情况下的IOPS。<br>Sequential Write IOPS，100%顺序写负载情况下的IOPS。</p>
-]]></content>
-      <categories>
-        <category>软件工程</category>
-      </categories>
-      <tags>
-        <tag>架构</tag>
-        <tag>性能</tag>
       </tags>
   </entry>
   <entry>
@@ -5755,47 +5467,6 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
-    <title>读书笔记 -《架构修炼之道》</title>
-    <url>/2019/06/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E6%9E%B6%E6%9E%84%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B/</url>
-    <content><![CDATA[<h1 id="一-网关之道"><a href="#一-网关之道" class="headerlink" title="一.网关之道"></a>一.网关之道</h1><ol>
-<li>API网关：将所有API的调用统一接入API网关层，由网关负责输入和输出。有了API网关之后，各个API服务提供团队可以专注于自己的业务逻辑处理，而API网关专注于安全、流量、路由等问题。</li>
-<li>代理与API网关的区别：代理是纯粹的数据透传，协议不会发生变化，而网关在数据透传的背景下，还会涉及协议的转换。</li>
-<li>API网关的基本功能包括统一接入、协议适配、流量管控与容错，以及安全防护。</li>
-<li>设计API的时候常用的工具有RAML、Swagger，这两个工具都可以辅助我们设计API和生成API文档。</li>
-<li>API网关的基石：泛化调用。泛化调用与普通RPC调用的区别在于不需要接口提供者的客户端JAR包了。</li>
-<li>在API网关中引入管道的概念。将参数校验、黑白名单、限流控制、接口调用等封装成一个个管道，并且按顺序组织起来。管道技术是责任链模式的一种思维演化。</li>
-<li>管道技术与责任链模式的区别在于管道技术更加灵活，它是由我们自定义的一种方式，责任链的使用方式则相对受限。</li>
-<li>网关分为同步网关、半同步网关、全异步网关。同步网关是指，从接收请求到调用API接口提供方的过程都是同步调用；半同步是指将I&#x2F;O请求线程和业务处理线程分开，但业务线程还是同步调用API接口。</li>
-<li>API网关有两大特点：访问量大、依赖系统多。所以建议网关系统进行脱库操作，直接使用缓存。</li>
-<li>同步和异步怎么区分呢？使用一个线程干完的事情都是同步的，有线程切换才能完成的事情都是异步的。</li>
-<li>一般RPC异步模式都是使用队列或Map来实现，然后用一个事件循环线程不停地轮询队列事件。</li>
-<li>热更新：凡是不需要应用服务器就能改变程序对象的属性值的行为。热更新是一种思想，常用的热更新的方法有MQ方式、RPC方式和ZooKeeper方式。</li>
-<li>网关有七种武器：降级、限流、熔断、线程池隔离、管道技术、配置热更新、异步。</li>
-</ol>
-<h1 id="二-分布式之道"><a href="#二-分布式之道" class="headerlink" title="二. 分布式之道"></a>二. 分布式之道</h1><ol>
-<li>分布式事务：ACID，A(Atomicity)原子性,C(Consistency)一致性,I(Isolation)隔离性,D(Durability)持续性。CAP C(Consistency)一致性，A(Availability)可用性，P(Tolerance of network Partition)分区容错性。CAP不能同时满足的主要原因是存在网路故障。人们在研究CAP定理的时候，演化出了BASE理论。BASE是指基本可用(Basically Available)、软状态(Soft State)和最终一致性(Eventual Consistency)。</li>
-<li>基本可用：分布式系统出现故障的时候，允许损失一部分可用性，拿响应时间和功能上的损失来换取可用性。比如大促的时候，访问量非常大，可以对于一些不重要的功能做降级处理，同时在响应时间上做放宽现在来保证可用。</li>
-<li>软状态：也叫弱状态或柔性状态，比如订单系统，在下单完进行支付的过程中，我们可以让页面显示”支付中“，等待支付系统彻底同步数据，订单系统才显示<br>支付完成。允许系统存在中间状态，这个中间状态又不会影响系统整体可用性。在比如，数据库读写分离，写库同步到读库，会有一个延时，这个也是一种柔性状态。</li>
-<li>最终一致性：在允许出现中间状态的情况下，经过一段时间之后，各项数据状态才最终达到一致。</li>
-<li>互联网系统最核心的需求是高可用性，所以对于分布式事务，一般不按照老的两段式提交来实现，而会采用BASE理论的方式实现分布式事务来保证系统的性能和业务数据的最终一致性。</li>
-</ol>
-<h1 id="三-MQ之道"><a href="#三-MQ之道" class="headerlink" title="三.MQ之道"></a>三.MQ之道</h1><ol>
-<li>数据异构：把数据按需(数据结构、存取方式、存取形式)进行异地构建存储。把数据异构到Elasticsearch、Solr中要解决的问题跟按照多维度来查询的需求差不多，这些存储天然都有聚合的功能。同时还可以提高查询性能，以应对大访问量的请求。</li>
-<li>数据异构的常用方法：完整克隆、标记同步、binlog方式、MQ方式。</li>
-</ol>
-<h1 id="四-微服务之道"><a href="#四-微服务之道" class="headerlink" title="四.微服务之道"></a>四.微服务之道</h1><ol>
-<li>分布式与微服务的区别：分布式侧重于分摊压力，而微服务侧重于业务架构的解耦。或者说，分布式侧重于分散压力，微服务侧重于分散能力。集群是物理形态，分布式是工作方式，微服务是一种架构风格。</li>
-<li>从早先单体应用的代码依赖，到微服务的通信依赖，我们不得不考虑以下问题：网路延迟、分布式事务、异步消息等。研发一个系统不是最困难的，治理一个系统才是最复杂的工作。</li>
-</ol>
-<h1 id="五-容错之道"><a href="#五-容错之道" class="headerlink" title="五.容错之道"></a>五.容错之道</h1><ol>
-<li>熔断器(breaker)工作原理：系统在运行过程中定时向对应的熔断器报告成功、失败、超时和拒绝的状态，熔断器维护计算统计的数据，根据这些统计的信息来确定熔断器是否打开。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
     <title>成功人士必备的50个好习惯</title>
     <url>/2018/05/05/%E6%88%90%E5%8A%9F%E4%BA%BA%E5%A3%AB%E5%BF%85%E5%A4%87%E7%9A%8450%E4%B8%AA%E5%A5%BD%E4%B9%A0%E6%83%AF/</url>
     <content><![CDATA[<p>第1节：前言        </p>
@@ -5854,234 +5525,291 @@ echo $output;]]></content>
       </tags>
   </entry>
   <entry>
-    <title>进程管理supervisor的简单说明</title>
-    <url>/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<h2 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h2><p>项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里<a href="http://supervisord.org/">Supervisor</a>。关于<a href="http://supervisord.org/introduction.html">supervisor的介绍</a>在网上大致搜索总结如下：</p>
-<p>Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行进程变为后台daemon，并监控进程状态，异常退出时能自动重启。它是通过fork&#x2F;exec的方式把这些被管理的进程当作supervisor的子进程来启动，这样只要在supervisor的配置文件中，把要管理的进程的可执行文件的路径写进去即可。也实现当子进程挂掉的时候，父进程可以准确获取子进程挂掉的信息的，可以选择是否自己启动和报警。supervisor还提供了一个功能，可以为supervisord或者每个子进程，设置一个非root的user，这个user就可以管理它对应的进程。</p>
-<h2 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h2><p><strong><a href="http://supervisord.org/installing.html">1，安装</a></strong></p>
-<p>1：easy_install 安装：<br>easy_install supervisor</p>
-<p>2：pip 安装：<br>pip install supervisor</p>
-<p>3：Debian &#x2F; Ubuntu可以直接通过apt安装：<br>apt-get install supervisor</p>
-<p><strong><a href="http://supervisord.org/configuration.html">2，配置文件</a></strong></p>
-<p><strong>1）</strong>通过apt-get install安装后，supervisor的配置文件在：</p>
-<p>&#x2F;etc&#x2F;supervisor&#x2F;supervisord.conf </p>
-<p>supervisor的配置文件默认是不全的，不过在大部分默认的情况下，上面说的基本功能已经满足。而其管理的<a href="http://supervisord.org/subprocess.html">子进程配置</a>文件在：</p>
-<p>&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;*.conf</p>
-<p>然后，开始给自己需要的脚本程序编写一个子进程配置文件，让supervisor来管理它，放在&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;目录下，以.conf作为扩展名（每个进程的配置文件都可以单独分拆也可以把相关的脚本放一起）。如任意定义一个和脚本相关的项目名称的选项组（&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;test.conf）：</p>
-<p><strong>#项目名</strong><br>[program:blog]<br>#脚本目录<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>#脚本执行命令<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;test.py<br>#supervisor启动的时候是否随着同时启动，默认True<br>autostart&#x3D;true<br>#当程序exit的时候，这个program不会自动重启,默认unexpected<br>#设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected和true。如果为false的时候，无论什么情况下，都不会被重新启动，如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的<br>autorestart&#x3D;false<br>#这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启动成功了。默认值为1<br>startsecs&#x3D;1<br>#日志输出<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;blog_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;blog_stdout.log<br>#脚本运行的用户身份<br>user &#x3D; zhoujy<br>#把 stderr 重定向到 stdout，默认 false<br>redirect_stderr &#x3D; true<br>#stdout 日志文件大小，默认 50MB<br>stdout_logfile_maxbytes &#x3D; 20M<br>#stdout 日志文件备份数<br>stdout_logfile_backups &#x3D; 20</p>
-<p>[program:zhoujy] #说明同上<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;zhoujy.py<br>autostart&#x3D;true<br>autorestart&#x3D;false<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stdout.log<br>#user &#x3D; zhoujy</p>
-<p><strong>2）</strong>通过easy_install安装后，配置文件不存在，需要自己导入。</p>
-<p>①：运行<a href="http://supervisord.org/installing.html">echo_supervisord_conf</a>打印出一个配置文件的样本，样本说明可以看<a href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的详细说明，要是设置样本为一个配置文件则：</p>
-<p>1：运行 echo_supervisord_conf，查看配置样本：<br>echo_supervisord_conf</p>
-<p>2：创建配置文件：<br>echo_supervisord_conf &gt; &#x2F;etc&#x2F;supervisord.conf</p>
-<p>②：配置子进程配置文件，可以直接在supervisor中的**;[program:theprogramname]**里设置。</p>
-<p>详细的<a href="http://supervisord.org/subprocess.html">子进程配置</a>文件：</p>
-<p>样本：</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">;[program:theprogramname]</p>
-<p>;command&#x3D;&#x2F;bin&#x2F;cat              ; the program (relative uses PATH, can take args)<br>;process_name&#x3D;%(program_name)s ; process_name expr (default %(program_name)s)<br>;numprocs&#x3D;1                    ; number of processes copies to start (def 1)<br>;directory&#x3D;&#x2F;tmp                ; directory to cwd to before exec (def no cwd)<br>;umask&#x3D;022                     ; umask for process (default None)<br>;priority&#x3D;999                  ; the relative start priority (default 999)<br>;autostart&#x3D;true                ; start at supervisord start (default: true)<br>;startsecs&#x3D;1                   ; # of secs prog must stay up to be running (def. 1)<br>;startretries&#x3D;3                ; max # of serial start failures when starting (default 3)<br>;autorestart&#x3D;unexpected        ; when to restart if exited after running (def: unexpected)<br>;exitcodes&#x3D;0,2                 ; ‘expected’ exit codes used with autorestart (default 0,2)<br>;stopsignal&#x3D;QUIT               ; signal used to kill process (default TERM)<br>;stopwaitsecs&#x3D;10               ; max num secs to wait b4 SIGKILL (default 10)<br>;stopasgroup&#x3D;false             ; send stop signal to the UNIX process group (default false)<br>;killasgroup&#x3D;false             ; SIGKILL the UNIX process group (def false)<br>;user&#x3D;chrism                   ; setuid to this UNIX account to run the program<br>;redirect_stderr&#x3D;true          ; redirect proc stderr to stdout (default false)<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; stdout log path, NONE for none; default AUTO<br>;stdout_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stdout_logfile_backups&#x3D;10     ; # of stdout logfile backups (default 10)<br>;stdout_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stdout_events_enabled&#x3D;false   ; emit events on stdout writes (default false)<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; stderr log path, NONE for none; default AUTO<br>;stderr_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stderr_logfile_backups&#x3D;10     ; # of stderr logfile backups (default 10)<br>;stderr_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stderr_events_enabled&#x3D;false   ; emit events on stderr writes (default false)<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; process environment additions (def no adds)<br>;serverurl&#x3D;AUTO                ; override serverurl computation (childutils)</p>
-<p>说明：</p>
-<p>;[program:theprogramname]      ;这个就是咱们要管理的子进程了，”:”后面的是名字，最好别乱写和实际进程<br>                                有点关联最好。这样的program我们可以设置一个或多个，一个program就是<br>                                要被管理的一个进程<br>;command&#x3D;&#x2F;bin&#x2F;cat              ; 这个就是我们的要启动进程的命令路径了，可以带参数<br>                                例子：&#x2F;home&#x2F;test.py -a ‘hehe’<br>                                有一点需要注意的是，我们的command只能是那种在终端运行的进程，不能是<br>                                守护进程。这个想想也知道了，比如说command&#x3D;service httpd start。<br>                                httpd这个进程被linux的service管理了，我们的supervisor再去启动这个命令<br>                                这已经不是严格意义的子进程了。<br>                                这个是个必须设置的项<br>;process_name&#x3D;%(program_name)s ; 这个是进程名，如果我们下面的numprocs参数为1的话，就不用管这个参数<br>                                 了，它默认值%(program_name)s也就是上面的那个program冒号后面的名字，<br>                                 但是如果numprocs为多个的话，那就不能这么干了。想想也知道，不可能每个<br>                                 进程都用同一个进程名吧。</p>
-<p>;numprocs&#x3D;1                    ; 启动进程的数目。当不为1时，就是进程池的概念，注意process_name的设置<br>                                 默认为1    。。非必须设置<br>;directory&#x3D;&#x2F;tmp                ; 进程运行前，会前切换到这个目录<br>                                 默认不设置。。。非必须设置<br>;umask&#x3D;022                     ; 进程掩码，默认none，非必须<br>;priority&#x3D;999                  ; 子进程启动关闭优先级，优先级低的，最先启动，关闭的时候最后关闭<br>                                 默认值为999 。。非必须设置<br>;autostart&#x3D;true                ; 如果是true的话，子进程将在supervisord启动后被自动启动<br>                                 默认就是true   。。非必须设置<br>;autorestart&#x3D;unexpected        ; 这个是设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected<br>                                 和true。如果为false的时候，无论什么情况下，都不会被重新启动，<br>                                 如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的退<br>                                 出码的时候，才会被自动重启。当为true的时候，只要子进程挂掉，将会被无<br>                                 条件的重启<br>;startsecs&#x3D;1                   ; 这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启<br>                                 动成功了<br>                                 默认值为1 。。非必须设置<br>;startretries&#x3D;3                ; 当进程启动失败后，最大尝试启动的次数。。当超过3次后，supervisor将把<br>                                 此进程的状态置为FAIL<br>                                 默认值为3 。。非必须设置<br>;exitcodes&#x3D;0,2                 ; 注意和上面的的autorestart&#x3D;unexpected对应。。exitcodes里面的定义的<br>                                 退出码是expected的。<br>;stopsignal&#x3D;QUIT               ; 进程停止信号，可以为TERM, HUP, INT, QUIT, KILL, USR1, or USR2等信号<br>                                  默认为TERM 。。当用设定的信号去干掉进程，退出码会被认为是expected<br>                                  非必须设置<br>;stopwaitsecs&#x3D;10               ; 这个是当我们向子进程发送stopsignal信号后，到系统返回信息<br>                                 给supervisord，所等待的最大时间。 超过这个时间，supervisord会向该<br>                                 子进程发送一个强制kill的信号。<br>                                 默认为10秒。。非必须设置<br>;stopasgroup&#x3D;false             ; 这个东西主要用于，supervisord管理的子进程，这个子进程本身还有<br>                                 子进程。那么我们如果仅仅干掉supervisord的子进程的话，子进程的子进程<br>                                 有可能会变成孤儿进程。所以咱们可以设置可个选项，把整个该子进程的<br>                                 整个进程组都干掉。 设置为true的话，一般killasgroup也会被设置为true。<br>                                 需要注意的是，该选项发送的是stop信号<br>                                 默认为false。。非必须设置。。<br>;killasgroup&#x3D;false             ; 这个和上面的stopasgroup类似，不过发送的是kill信号<br>;user&#x3D;chrism                   ; 如果supervisord是root启动，我们在这里设置这个非root用户，可以用来<br>                                 管理该program<br>                                 默认不设置。。。非必须设置项<br>;redirect_stderr&#x3D;true          ; 如果为true，则stderr的日志会被写入stdout日志文件中<br>                                 默认为false，非必须设置<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; 子进程的stdout的日志路径，可以指定路径，AUTO，none等三个选项。<br>                                 设置为none的话，将没有日志产生。设置为AUTO的话，将随机找一个地方<br>                                 生成日志文件，而且当supervisord重新启动的时候，以前的日志文件会被<br>                                 清空。当 redirect_stderr&#x3D;true的时候，sterr也会写进这个日志文件<br>;stdout_logfile_maxbytes&#x3D;1MB   ; 日志文件最大大小，和[supervisord]中定义的一样。默认为50<br>;stdout_logfile_backups&#x3D;10     ; 和[supervisord]定义的一样。默认10<br>;stdout_capture_maxbytes&#x3D;1MB   ; 这个东西是设定capture管道的大小，当值不为0的时候，子进程可以从stdout<br>                                 发送信息，而supervisor可以根据信息，发送相应的event。<br>                                 默认为0，为0的时候表达关闭管道。。。非必须项<br>;stdout_events_enabled&#x3D;false   ; 当设置为ture的时候，当子进程由stdout向文件描述符中写日志的时候，将<br>                                 触发supervisord发送PROCESS_LOG_STDOUT类型的event<br>                                 默认为false。。。非必须设置<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; 这个东西是设置stderr写的日志路径，当redirect_stderr&#x3D;true。这个就不用<br>                                 设置了，设置了也是白搭。因为它会被写入stdout_logfile的同一个文件中<br>                                 默认为AUTO，也就是随便找个地存，supervisord重启被清空。。非必须设置<br>;stderr_logfile_maxbytes&#x3D;1MB   ; 这个出现好几次了，就不重复了<br>;stderr_logfile_backups&#x3D;10     ; 这个也是<br>;stderr_capture_maxbytes&#x3D;1MB   ; 这个一样，和stdout_capture一样。 默认为0，关闭状态<br>;stderr_events_enabled&#x3D;false   ; 这个也是一样，默认为false<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; 这个是该子进程的环境变量，和别的子进程是不共享的<br>;serverurl&#x3D;AUTO                ;</p>
-<p> </p>
-<p>改成自己实际的配置文件：和①上面一样。</p>
-<p><strong><a href="http://supervisord.org/running.html">3：运行</a></strong></p>
-<p>1）apt-get install 安装的supervisor直接可以通过 &#x2F;etc&#x2F;init.d&#x2F;supervisor 运行：</p>
-<p>&#x2F;etc&#x2F;init.d&#x2F;supervisor start</p>
-<p>2）通过easy_install 安装的supervisor运行supervisord 运行：</p>
-<p>supervisord</p>
-<p><strong>4：web界面操作</strong></p>
-<p>需要在supervisor的配置文件里添加[inet_http_server]选项组：之后可以通过<a href="http://10.211.55.11:9001来访问控制子线程的管理。">http://10.211.55.11:9001来访问控制子线程的管理。</a></p>
-<p>[inet_http_server]<br>port&#x3D;10.211.55.11:9001<br>username&#x3D;user<br>password&#x3D;123</p>
-<p>效果：</p>
-<p><img src="https://images2015.cnblogs.com/blog/163084/201611/163084-20161118021632920-889244058.png"></p>
-<p><strong><a href="http://supervisord.org/running.html#running-supervisorctl">5：子进程管理</a>(supervisorctl)</strong> </p>
+    <title>流行的js框架对比</title>
+    <url>/2018/04/07/%E6%B5%81%E8%A1%8C%E7%9A%84js%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<h2 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h2><p>有些日子没有正襟危坐写博客了，互联网飞速发展的时代，技术更新迭代的速度也在加快。看着Java、Js、Swift在各领域心花路放，也是煞是羡慕。寻了寻.net的消息，也是振奋人心，.net core 1，mono，xamarin等等，但大多都还在狂吼的阶段。其实一直以来对技术的理解是技术服务于业务和产品，产品又在不同程度的推进着技术的演进。</p>
+<p>Web、无线、物联网、VR、PC从不同方向推进着技术的融合与微创新。程序员在不同业务场景下的角色互换。而随着node.js的出现语言的角色也在发生着转变，Js扮演了越来越重要的角色。也就有了茶余饭后也把了解到的知识整理一下。看过“你的知识需要管理”后，强烈的意识到杂乱且范范的知识储备远不如整理后条理清晰的知识带来好处多。所以，是的，我们需要时不时的回来对掌握的知识梳理归类，以备不时之需。</p>
+<h2 id="一、前端框架库："><a href="#一、前端框架库：" class="headerlink" title="一、前端框架库："></a>一、前端框架库：</h2><h3 id="1-Zepto-js"><a href="#1-Zepto-js" class="headerlink" title="1.Zepto.js"></a>1.Zepto.js</h3><ul>
+<li><strong>地址：</strong><a href="http://www.css88.com/doc/zeptojs/">http://www.css88.com/doc/zeptojs/</a></li>
+<li><strong>描述：</strong>Zepto是一个轻量级的针对现代高级浏览器的JavaScript库， 它与jquery有着类似的api。 如果你会用jquery，那么你也会用zepto。关于Zepto认知我也是通过与一位腾讯朋友聊天的时候知道的，只作了些基础的了解。</li>
+</ul>
+<h3 id="2-SUI-Mobile"><a href="#2-SUI-Mobile" class="headerlink" title="2.SUI Mobile"></a>2.SUI Mobile</h3><ul>
+<li><strong>地址：</strong><a href="http://m.sui.taobao.org/">http://m.sui.taobao.org</a></li>
+<li><strong>描述：</strong>SUI Mobile 是一套基于 <a href="http://framework7.taobao.org/">Framework7</a> 开发的UI库。它非常轻量、精美，只需要引入我们的CDN文件就可以使用，并且能兼容到 iOS 6.0+ 和 Android 4.0+，非常适合开发跨平台Web App。</li>
+<li><strong>用途：</strong>你也看到了，他是用于无线端的Web App的开发。</li>
+</ul>
+<h3 id="3-Node-Js"><a href="#3-Node-Js" class="headerlink" title="3.Node.Js"></a>3.Node.Js</h3><ul>
+<li><strong>地址：</strong><a href="http://www.runoob.com/nodejs/nodejs-tutorial.html">http://www.runoob.com/nodejs/nodejs-tutorial.html</a> (中文网)</li>
+<li><strong>描述：</strong>Node.js是一个Javascript运行环境(runtime)。实际上它是对Google V8引擎进行了封装。V8引 擎执行Javascript的速度非常快，性能非常好。Node.js对一些特殊用例进行了优化，提供了替代的API，使得V8在非浏览器环境下运行得更好。</li>
+</ul>
+<p>　　Node.js是一个基于Chrome JavaScript运行时建立的平台， 用于方便地搭建响应速度快、易于扩展的网络应用。Node.js 使用<a href="http://baike.baidu.com/view/536048.htm">事件驱动</a>， 非阻塞<a href="http://baike.baidu.com/subview/300881/11169495.htm">I&#x2F;O</a> 模型而得以轻量和高效，非常适合在分布式设备上运行数据密集型的实时应用。</p>
+<p>　　简单的说 Node.js 就是运行在服务端的 JavaScript。</p>
+<p>Node.js 是一个基于Chrome JavaScript 运行时建立的一个平台。</p>
+<p>Node.js是一个事件驱动I&#x2F;O服务端JavaScript环境，基于Google的V8引擎，V8引擎执行Javascript的速度非常快，性能非常好。</p>
+<ul>
+<li><strong>用途：</strong></li>
+</ul>
 <ol>
-<li>查看所有子进程的状态：</li>
+<li>RESTful API</li>
 </ol>
-<p># <strong>supervisorctl status</strong><br>blog                             RUNNING    pid 2395, uptime 0:08:41<br>zhoujy                           RUNNING    pid 2396, uptime 0:08:41</p>
-<p>2）关闭、开启指定的子进程：</p>
-<p># <strong>supervisorctl stop zhoujy</strong><br>zhoujy: stopped</p>
-<h1 id="supervisorctl-start-zhoujy"><a href="#supervisorctl-start-zhoujy" class="headerlink" title="supervisorctl start zhoujy"></a><strong>supervisorctl start zhoujy</strong></h1><p>zhoujy: started</p>
-<p>3）关闭、开启所有的子进程：</p>
-<p># <strong>supervisorctl stop all</strong><br>blog: stopped<br>zhoujy: stopped</p>
-<h1 id="supervisorctl-start-all"><a href="#supervisorctl-start-all" class="headerlink" title="supervisorctl start all"></a><strong>supervisorctl start all</strong></h1><p>blog: started<br>zhoujy: started</p>
-<p>4）：其他参数：supervisor开启后子进程自动开启（<strong>autostart&#x3D;true</strong>）和子进程退出后自动启动（<strong>autorestart&#x3D;ture</strong>）</p>
-<p>更多的参数可以看<a href="http://supervisord.org/configuration.html">官方文档</a>和<a href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的说明。</p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>我们需要的功能在上面介绍的supervisor的基本功能中已经实现，supervisor还有其他的一些功能：如进程组、web页面管理子进程、监控子线程情况等等，更多的信息可以去<a href="http://supervisord.org/">官网</a>上查看。</p>
-<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a href="http://supervisord.org/">Supervisor官方文档</a></p>
-<p><a href="http://lixcto.blog.51cto.com/4834175/1539136">Supervisor(一)基础篇</a></p>
-<p><a href="http://lixcto.blog.51cto.com/4834175/1540169" title="supervisor(二)event">Supervisor(二)event</a></p>
-<p><a href="http://lixcto.blog.51cto.com/4834175/1540795" title="supervisor(三)xml_rpc">Supervisor(三)xml_rpc</a></p>
+<p>这是NodeJS最理想的应用场景，可以处理数万条连接，本身没有太多的逻辑，只需要请求API，组织数据进行返回即可。它本质上只是从某个数据库中查找一些值并将它们组成一个响应。由于响应是少量文本，入站请求也是少量的文本，因此流量不高，一台机器甚至也可以处理最繁忙的公司的API需求。</p>
+<ol start="2">
+<li>统一Web应用的UI层</li>
+</ol>
+<p>目前MVC的架构，在某种意义上来说，Web开发有两个UI层，一个是在浏览器里面我们最终看到的，另一个在server端，负责生成和拼接页面。</p>
+<p>不讨论这种架构是好是坏，但是有另外一种实践，面向服务的架构，更好的做前后端的依赖分离。如果所有的关键业务逻辑都封装成REST调用，就意味着在上层只需要考虑如何用这些REST接口构建具体的应用。那些后端程序员们根本不操心具体数据是如何从一个页面传递到另一个页面的，他们也不用管用户数据更新是通过Ajax异步获取的还是通过刷新页面。</p>
+<ol start="3">
+<li>大量Ajax请求的应用</li>
+</ol>
+<p>例如个性化应用，每个用户看到的页面都不一样，缓存失效，需要在页面加载的时候发起Ajax请求，NodeJS能响应大量的并发请求。　　总而言之，NodeJS适合运用在高并发、I&#x2F;O密集、少量业务逻辑的场景。</p>
+<h3 id="4-angular-Js"><a href="#4-angular-Js" class="headerlink" title="4.angular.Js"></a>4.angular.Js</h3><ul>
+<li><strong>地址：</strong><a href="http://www.runoob.com/angularjs/angularjs-tutorial.html">http://www.runoob.com/angularjs/angularjs-tutorial.html</a> (中文网)</li>
+<li><strong>描述：</strong>AngularJS[1]  诞生于2009年，由Misko Hevery 等人创建，后为Google所收购。是一款优秀的前端JS框架，已经被用于Google的多款产品当中。AngularJS有着诸多特性，最为核心的是：MVVM、模块化、自动化双向数据绑定、语义化标签、依赖注入等等。</li>
+<li><strong>用途：</strong>通过描述我们应该就能很好的明白AngularJS的真实用途了，MVVM，模块化，自动化双向数据绑定等等。除了简单的dom操作外，更能体现Js编程的强大。当然应用应该视场合而定。</li>
+</ul>
+<h3 id="5-JQuery-Mobile"><a href="#5-JQuery-Mobile" class="headerlink" title="5.JQuery Mobile"></a><strong>5.JQuery Mobile</strong></h3><ul>
+<li><strong>地址：</strong><a href="http://www.w3school.com.cn/jquerymobile/">http://www.w3school.com.cn/jquerymobile/</a>    (中文网)</li>
+<li><strong>描述：</strong>Query Mobile是<a href="http://baike.baidu.com/view/1020297.htm">jQuery</a> 在手机上和平板设备上的版本。jQuery Mobile 不仅会给主流移动平台带来jQuery核心库，而且会发布一个完整统一的jQuery移动UI框架。支持全球主流的移动平台。jQuery Mobile开发团队说：能开发这个项目，我们非常兴奋。移动Web太需要一个跨浏览器的框架，让开发人员开发出真正的移动Web网站。</li>
+<li><strong>用途：</strong>jQuery Mobile 是创建移动 web 应用程序的框架。</li>
+</ul>
+<p>jQuery Mobile 适用于所有流行的智能手机和平板电脑。</p>
+<p>jQuery Mobile 使用 HTML5 和 CSS3 通过尽可能少的脚本对页面进行布局。</p>
+<h3 id="6-requirejs"><a href="#6-requirejs" class="headerlink" title="6.requirejs"></a><strong>6.requirejs</strong></h3><ul>
+<li><strong>地址：</strong><a href="http://www.requirejs.cn/">http://www.requirejs.cn/</a></li>
+<li><strong>描述：</strong>RequireJS的目标是鼓励代码的模块化，它使用了不同于传统<script>标签的脚本加载步骤。可以用它来加速、优化代码，但其主要目的还是为了代码的模块化。它鼓励在使用脚本时以module ID替代URL地址。</li>
+</ul>
+<p>RequireJS以一个相对于<a href="http://makingmobile.org/docs/tools/requirejs-api-zh/#config-baseUrl">baseUrl</a>的地址来加载所有的代码。 页面顶层<script>标签含有一个特殊的属性data-main，require.js使用它来启动脚本加载过程，而baseUrl一般设置到与该属性相一致的目录。</p>
+<ul>
+<li><strong>用途：</strong>模块化动态加载。</li>
+</ul>
+<h3 id="7-Vue-js"><a href="#7-Vue-js" class="headerlink" title="7.Vue.js"></a><strong>7.Vue.js</strong></h3><ul>
+<li><strong>地址：</strong><a href="http://cn.vuejs.org/">http://cn.vuejs.org/</a></li>
+<li><strong>描述：</strong>Vue.js 是用于构建交互式的 Web  界面的库。它提供了 <a href="http://www.yyyweb.com/">MVVM</a> 数据绑定和一个可组合的组件系统，具有简单、灵活的 API。从技术上讲， Vue.js 集中在 <a href="http://www.yyyweb.com/">MVVM</a> 模式上的视图模型层，并通过双向数据绑定连接视图和模型。实际的 DOM 操作和输出格式被抽象出来成指令和过滤器。相比其它的 MVVM 框架，Vue.js 更容易上手。</li>
+</ul>
+<h3 id="8-backbone-js"><a href="#8-backbone-js" class="headerlink" title="8.backbone.js"></a>8.backbone.js</h3><ul>
+<li><strong>地址：</strong><a href="http://www.css88.com/doc/backbone/">http://www.css88.com/doc/backbone/</a></li>
+<li><strong>描述：</strong><a href="http://baike.baidu.com/view/342697.htm">Backbone</a> 为复杂Javascript应用程序提供模型(models)、集合(collections)、视图(views)的结构。其中模型用于绑定键值数据和自定义事件；集合附有可枚举函数的丰富API； 视图可以声明事件处理函数，并通过RESTful JSON接口连接到应用程序。</li>
+</ul>
+<h3 id="9-React"><a href="#9-React" class="headerlink" title="9.React"></a>9.React</h3><ul>
+<li><strong>地址：</strong><a href="http://reactjs.cn/react/docs/why-react.html">http://reactjs.cn/react/docs/why-react.html</a></li>
+<li><strong>描述：</strong>React 是一个 Facebook 和 Instagram 用来创建用户界面的 JavaScript 库。很多人认为 React 是 <strong><a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a></strong> 中的 <strong>V</strong>（视图）。我们创造 React 是为了解决一个问题：<strong>构建随着时间数据不断变化的大规模应用程序</strong>。为了达到这个目标，React 采用下面两个主要的思想。</li>
+</ul>
+<h3 id="10-Ionic"><a href="#10-Ionic" class="headerlink" title="10.Ionic"></a>10.Ionic</h3><ul>
+<li><strong>地址：</strong><a href="http://www.ionic.wang/js_doc-index.html">http://www.ionic.wang/js_doc-index.html</a></li>
+<li><strong>描述：</strong>Ionic既是一个CSS框架也是一个Javascript UI库。许多组件需要Javascript才能产生神奇的效果，尽管通常组件不需要编码，通过框架扩展可以很容易地使用，比如我们的AngularIonic扩展。Ionic遵循视图控制模式，通俗的理解和 Cocoa 触摸框架相似。在视图控制模式中，我们将界面的不同部分分为子视图或包含其他视图的子视图控制器。然后视图控制器“驱动”内部视图来提供交互和UI功能。一个很好的例子就是标签栏（Tab Bar）视图控制器处理点击标签栏在一系列可视化面板间切换。浏览我们的API文档来了解视图控制器和Ionic中可用的Javascript实用工具。Ionic 是目前最有潜力的一款 HTML5 手机应用开发框架。通过 SASS 构建应用程序，它 提供了很多 UI 组件来帮助开发者开发强大的应用。 它使用 JavaScript MVVM 框架和 AngularJS 来增强应用。提供数据的双向绑定，使用它成为 Web 和移动开发者的共同选择。</li>
+</ul>
+<h2 id="二、前端UI框架"><a href="#二、前端UI框架" class="headerlink" title="二、前端UI框架"></a>二、前端UI框架</h2><h3 id="1-Pure"><a href="#1-Pure" class="headerlink" title="1.Pure"></a>1.Pure</h3><ul>
+<li><strong>地址：</strong><a href="http://purecss.org/layouts/">http://purecss.org/layouts/</a></li>
+<li><strong>描述：</strong>Pure精心设计，只为可以在任何Web项目中使用。为了例证这一点，我们制作了如下几个模板。这些模板都是响应式的，并且没有使用任何JavaScript。</li>
+<li><strong>用途：</strong>真的是很精美的一个样式框架，便于我们快事构建一些个人产品，当然也可以服务于工作中的一些项目。</li>
+</ul>
+<h3 id="2-bootstrap"><a href="#2-bootstrap" class="headerlink" title="2.bootstrap"></a>2.bootstrap</h3><ul>
+<li><strong>地址：</strong><a href="http://www.bootcss.com/">http://www.bootcss.com/</a></li>
+<li><strong>描述：</strong>简洁、直观、强悍的前端开发框架，让web开发更迅速、简单。</li>
+</ul>
+<h3 id="3-EasyUI"><a href="#3-EasyUI" class="headerlink" title="3.EasyUI"></a><strong>3.EasyUI</strong></h3><ul>
+<li><strong>地址：</strong><a href="http://www.jeasyui.net/">http://www.jeasyui.net/</a>  (中文网)</li>
+<li><strong>描述：</strong>easyui是一种基于jQuery的用户界面插件集合。</li>
+</ul>
+<p>easyui为创建现代化，互动，JavaScript应用程序，提供必要的功能。</p>
+<p>使用easyui你不需要写很多代码，你只需要通过编写一些简单HTML标记，就可以定义用户界面。</p>
+<p>easyui是个完美支持HTML5网页的完整框架。</p>
+<p>easyui节省您网页开发的时间和规模。</p>
+<p>easyui很简单但功能强大的。</p>
+<h3 id="4-Ant-Design"><a href="#4-Ant-Design" class="headerlink" title="4.Ant Design"></a>4.Ant Design</h3><ul>
+<li><strong>地址：</strong><a href="http://ant.design/">http://ant.design/</a></li>
+<li><strong>描述：</strong>一个 UI 设计语言，一套提炼和应用于企业级后台产品的交互语言和视觉体系</li>
+</ul>
+<p> </p>
+<h2 id="三、可视化组件"><a href="#三、可视化组件" class="headerlink" title="三、可视化组件"></a>三、可视化组件</h2><h3 id="1-Echarts"><a href="#1-Echarts" class="headerlink" title="1.Echarts"></a>1.Echarts</h3><ul>
+<li><strong>地址：</strong><a href="http://echarts.baidu.com/">http://echarts.baidu.com/</a></li>
+<li><strong>描述：</strong>ECharts，一个纯 Javascript 的图表库，可以流畅的运行在 PC 和移动设备上，兼容当前绝大部分浏览器（IE8/9/10/11，Chrome，Firefox，Safari等），底层依赖轻量级的 Canvas 类库<a href="https://github.com/ecomfe/zrender">ZRender</a>，提供直观，生动，可交互，可高度个性化定制的数据可视化图表。</li>
+</ul>
+<h3 id="2-tableau-收费"><a href="#2-tableau-收费" class="headerlink" title="2.tableau(收费)"></a>2.tableau(收费)</h3><ul>
+<li><strong>地址：</strong><a href="http://www.yuandingit.com/special/tableau/index.html">http://www.yuandingit.com/special/tableau/index.html</a></li>
+<li><strong>描述：</strong>Tableau 是桌面系统中最简单的商业智能工具软件，Tableau 没有强迫用户编写自定义代码，新的控制台也可完全自定义配置。在控制台上，不仅能够监测信息，而且还提供完整的分析能力。Tableau控制台灵活，具有高度的动态性。</li>
+</ul>
+<p> </p>
+<h2 id="四、前端构建工具"><a href="#四、前端构建工具" class="headerlink" title="四、前端构建工具"></a><strong>四、前端构建工具</strong></h2><h3 id="1-gulp"><a href="#1-gulp" class="headerlink" title="1.gulp"></a>1.gulp</h3><ul>
+<li><strong>地址：</strong><a href="http://www.gulpjs.com.cn/">http://www.gulpjs.com.cn/</a></li>
+<li><strong>描述</strong>：<strong>易于使用</strong></li>
+</ul>
+<p>　　　　　　通过代码优于配置的策略，Gulp 让简单的任务简单，复杂的任务可管理。</p>
+<h2 id="构建快速"><a href="#构建快速" class="headerlink" title="构建快速"></a>构建快速</h2><p>利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。</p>
+<h2 id="插件高质"><a href="#插件高质" class="headerlink" title="插件高质"></a>插件高质</h2><p>Gulp 严格的插件指南确保插件如你期望的那样简洁高质得工作。</p>
+<h2 id="易于学习"><a href="#易于学习" class="headerlink" title="易于学习"></a>易于学习</h2><p>通过最少的 API，掌握 Gulp 毫不费力，构建工作尽在掌握：如同一系列流管道。</p>
+<h2 id="五、博客搭建"><a href="#五、博客搭建" class="headerlink" title="五、博客搭建"></a>五、博客搭建</h2><h3 id="1-技术组合"><a href="#1-技术组合" class="headerlink" title="1.技术组合"></a>1.技术组合</h3><p>　　HEXO+Github,搭建属于自己的博客。</p>
+<p> <strong>站点：</strong><a href="http://www.jianshu.com/p/465830080ea9">http://www.jianshu.com/p/465830080ea9</a></p>
+<p> <strong>HEXO介绍：</strong>Hexo是一个开源的静态博客生成器,用node.js开发,作者是台湾大学生tommy351</p>
+<p> <strong>准备：</strong>git  + node.js + markdown编辑 + gitcafe + 域名</p>
+<p><strong>小结：</strong>本文做为知识梳理或者说资料梳理类文章，一方面用于自身知识的管理，同时也可以用做一个资料库备查。将持续更新。</p>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>运维</tag>
+        <tag>前端</tag>
+        <tag>js</tag>
       </tags>
   </entry>
   <entry>
-    <title>追MM与设计模式（23种设计模式巧妙解析，趣味理解）</title>
-    <url>/2019/07/16/%E8%BF%BDmm%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8823%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%B7%A7%E5%A6%99%E8%A7%A3%E6%9E%90%EF%BC%8C%E8%B6%A3%E5%91%B3%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<p><strong>创建型模式</strong></p>
-<p>1、FACTORY—追MM少不了请吃饭了，麦当劳的鸡翅和肯德基的鸡翅都是MM爱吃的东西，虽然口味有所不同，但不管你带MM去麦当劳或肯德基，只管向服务员说“来四个鸡翅”就行了。麦当劳和肯德基就是生产鸡翅的Factory</p>
-<p><strong>工厂模式：</strong>客户类和工厂类分开。消费者任何时候需要某种产品，只需向工厂请求即可。消费者无须修改就可以接纳新产品。缺点是当产品修改时，工厂类也要做相应的修改。如：如何创建及如何向客户端提供。</p>
-<p>2、BUILDER—MM最爱听的就是“我爱你”这句话了，见到不同地方的MM,要能够用她们的方言跟她说这句话哦，我有一个多种语言翻译机，上面每种语言都有一个按键，见到MM我只要按对应的键，它就能够用相应的语言说出“我爱你”这句话了，国外的MM也可以轻松搞掂，这就是我的“我爱你”builder。（这一定比美军在伊拉克用的翻译机好卖）</p>
-<p><strong>建造模式：</strong>将产品的内部表象和产品的生成过程分割开来，从而使一个建造过程生成具有不同的内部表象的产品对象。建造模式使得产品内部表象可以独立的变化，客户不必知道产品内部组成的细节。建造模式可以强制实行一种分步骤进行的建造过程。</p>
-<p>3、FACTORY METHOD—请MM去麦当劳吃汉堡，不同的MM有不同的口味，要每个都记住是一件烦人的事情，我一般采用Factory Method模式，带着MM到服务员那儿，说“要一个汉堡”，具体要什么样的汉堡呢，让MM直接跟服务员说就行了。</p>
-<p><strong>工厂方法模式：</strong>核心工厂类不再负责所有产品的创建，而是将具体创建的工作交给子类去做，成为一个抽象工厂角色，仅负责给出具体工厂类必须实现的接口，而不接触哪一个产品类应当被实例化这种细节。</p>
-<p>4、PROTOTYPE—跟MM用QQ聊天，一定要说些深情的话语了，我搜集了好多肉麻的情话，需要时只要copy出来放到QQ里面就行了，这就是我的情话prototype了。（100块钱一份，你要不要）</p>
-<p><strong>原始模型模式：</strong>通过给出一个原型对象来指明所要创建的对象的类型，然后用复制这个原型对象的方法创建出更多同类型的对象。原始模型模式允许动态的增加或减少产品类，产品类不需要非得有任何事先确定的等级结构，原始模型模式适用于任何的等级结构。缺点是每一个类都必须配备一个克隆方法。</p>
-<p>5、SINGLETON—俺有6个漂亮的老婆，她们的老公都是我，我就是我们家里的老公Sigleton，她们只要说道“老公”，都是指的同一个人，那就是我(刚才做了个梦啦，哪有这么好的事)</p>
-<p><strong>单例模式：</strong>单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例单例模式。单例模式只应在有真正的“单一实例”的需求时才可使用。</p>
-<p><strong>结构型模式</strong></p>
-<p>6、ADAPTER—在朋友聚会上碰到了一个美女Sarah，从香港来的，可我不会说粤语，她不会说普通话，只好求助于我的朋友kent了，他作为我和Sarah之间的Adapter，让我和Sarah可以相互交谈了(也不知道他会不会耍我)</p>
-<p><strong>适配器（变压器）模式：</strong>把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口原因不匹配而无法一起工作的两个类能够一起工作。适配类可以根据参数返还一个合适的实例给客户端。</p>
-<p>7、BRIDGE—早上碰到MM，要说早上好，晚上碰到MM，要说晚上好；碰到MM穿了件新衣服，要说你的衣服好漂亮哦，碰到MM新做的发型，要说你的头发好漂亮哦。不要问我“早上碰到MM新做了个发型怎么说”这种问题，自己用BRIDGE组合一下不就行了</p>
-<p><strong>桥梁模式：</strong>将抽象化与实现化脱耦，使得二者可以独立的变化，也就是说将他们之间的强关联变成弱关联，也就是指在一个软件系统的抽象化和实现化之间使用组合&#x2F;聚合关系而不是继承关系，从而使两者可以独立的变化。</p>
-<p>8、COMPOSITE—Mary今天过生日。“我过生日，你要送我一件礼物。”“嗯，好吧，去商店，你自己挑。”“这件T恤挺漂亮，买，这条裙子好看，买，这个包也不错，买。”“喂，买了三件了呀，我只答应送一件礼物的哦。”“什么呀，T恤加裙子加包包，正好配成一套呀，小姐，麻烦你包起来。”“……”，MM都会用Composite模式了，你会了没有？</p>
-<p><strong>合成模式：</strong>合成模式将对象组织到树结构中，可以用来描述整体与部分的关系。合成模式就是一个处理对象的树结构的模式。合成模式把部分与整体的关系用树结构表示出来。合成模式使得客户端把一个个单独的成分对象和由他们复合而成的合成对象同等看待。</p>
-<p>9、DECORATOR—Mary过完轮到Sarly过生日，还是不要叫她自己挑了，不然这个月伙食费肯定玩完，拿出我去年在华山顶上照的照片，在背面写上“最好的的礼物，就是爱你的Fita”，再到街上礼品店买了个像框（卖礼品的MM也很漂亮哦），再找隔壁搞美术设计的Mike设计了一个漂亮的盒子装起来……，我们都是Decorator，最终都在修饰我这个人呀，怎么样，看懂了吗？</p>
-<p><strong>装饰模式：</strong>装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案，提供比继承更多的灵活性。动态给一个对象增加功能，这些功能可以再动态的撤消。增加由一些基本功能的排列组合而产生的非常大量的功能。</p>
-<p>10、FACADE—我有一个专业的Nikon相机，我就喜欢自己手动调光圈、快门，这样照出来的照片才专业，但MM可不懂这些，教了半天也不会。幸好相机有Facade设计模式，把相机调整到自动档，只要对准目标按快门就行了，一切由相机自动调整，这样MM也可以用这个相机给我拍张照片了。</p>
-<p><strong>门面模式：</strong>外部与一个子系统的通信必须通过一个统一的门面对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。每一个子系统只有一个门面类，而且此门面类只有一个实例，也就是说它是一个单例模式。但整个系统可以有多个门面类。</p>
-<p>11、FLYWEIGHT—每天跟MM发短信，手指都累死了，最近买了个新手机，可以把一些常用的句子存在手机里，要用的时候，直接拿出来，在前面加上MM的名字就可以发送了，再不用一个字一个字敲了。共享的句子就是Flyweight，MM的名字就是提取出来的外部特征，根据上下文情况使用。</p>
-<p><strong>享元模式：</strong>FLYWEIGHT在拳击比赛中指最轻量级。享元模式以共享的方式高效的支持大量的细粒度对象。享元模式能做到共享的关键是区分内蕴状态和外蕴状态。内蕴状态存储在享元内部，不会随环境的改变而有所不同。外蕴状态是随环境的改变而改变的。外蕴状态不能影响内蕴状态，它们是相互独立的。将可以共享的状态和不可以共享的状态从常规类中区分开来，将不可以共享的状态从类里剔除出去。客户端不可以直接创建被共享的对象，而应当使用一个工厂对象负责创建被共享的对象。享元模式大幅度的降低内存中对象的数量。</p>
-<p>12、PROXY—跟MM在网上聊天，一开头总是“hi,你好”,“你从哪儿来呀？”“你多大了？”“身高多少呀？”这些话，真烦人，写个程序做为我的Proxy吧，凡是接收到这些话都设置好了自动的回答，接收到其他的话时再通知我回答，怎么样，酷吧。</p>
-<p><strong>代理模式：</strong>代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用。代理就是一个人或一个机构代表另一个人或者一个机构采取行动。某些情况下，客户不想或者不能够直接引用一个对象，代理对象可以在客户和目标对象直接起到中介的作用。客户端分辨不出代理主题对象与真实主题对象。代理模式可以并不知道真正的被代理对象，而仅仅持有一个被代理对象的接口，这时候代理对象不能够创建被代理对象，被代理对象必须有系统的其他角色代为创建并传入。</p>
-<p><strong>行为模式</strong></p>
-<p>13、CHAIN OF RESPONSIBLEITY—晚上去上英语课，为了好开溜坐到了最后一排，哇，前面坐了好几个漂亮的MM哎，找张纸条，写上“Hi,可以做我的女朋友吗？如果不愿意请向前传”，纸条就一个接一个的传上去了，糟糕，传到第一排的MM把纸条传给老师了，听说是个老处女呀，快跑!</p>
-<p><strong>责任链模式：</strong>在责任链模式中，很多对象由每一个对象对其下家的引用而接</p>
-<p>起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。客户并不知道链上的哪一个对象最终处理这个请求，系统可以在不影响客户端的情况下动态的重新组织链和分配责任。处理者有两个选择：承担责任或者把责任推给下家。一个请求可以最终不被任何接收端对象所接受。</p>
-<p>14、COMMAND—俺有一个MM家里管得特别严，没法见面，只好借助于她弟弟在我们俩之间传送信息，她对我有什么指示，就写一张纸条让她弟弟带给我。这不，她弟弟又传送过来一个COMMAND，为了感谢他，我请他吃了碗杂酱面，哪知道他说：“我同时给我姐姐三个男朋友送COMMAND，就数你最小气，才请我吃面。”，:-(</p>
-<p><strong>命令模式：</strong>命令模式把一个请求或者操作封装到一个对象中。命令模式把发出命令的责任和执行命令的责任分割开，委派给不同的对象。命令模式允许请求的一方和发送的一方独立开来，使得请求的一方不必知道接收请求的一方的接口，更不必知道请求是怎么被接收，以及操作是否执行，何时被执行以及是怎么被执行的。系统支持命令的撤消。</p>
-<p>15、INTERPRETER—俺有一个《泡MM真经》，上面有各种泡MM的攻略，比如说去吃西餐的步骤、去看电影的方法等等，跟MM约会时，只要做一个Interpreter，照着上面的脚本执行就可以了。</p>
-<p><strong>解释器模式：</strong>给定一个语言后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。客户端可以使用这个解释器来解释这个语言中的句子。解释器模式将描述怎样在有了一个简单的文法后，使用模式设计解释这些语句。在解释器模式里面提到的语言是指任何解释器对象能够解释的任何组合。在解释器模式中需要定义一个代表文法的命令类的等级结构，也就是一系列的组合规则。每一个命令对象都有一个解释方法，代表对命令对象的解释。命令对象的等级结构中的对象的任何排列组合都是一个语言。</p>
-<p>16、ITERATOR—我爱上了Mary，不顾一切的向她求婚。</p>
-<p>Mary：“想要我跟你结婚，得答应我的条件”</p>
-<p>我：“什么条件我都答应，你说吧”</p>
-<p>Mary：“我看上了那个一克拉的钻石”</p>
-<p>我：“我买，我买，还有吗？”</p>
-<p>Mary：“我看上了湖边的那栋别墅”</p>
-<p>我：“我买，我买，还有吗？”</p>
-<p>Mary：“你的小弟弟必须要有50cm长”</p>
-<p>我脑袋嗡的一声，坐在椅子上，一咬牙：“我剪，我剪，还有吗？”</p>
-<p>……</p>
-<p><strong>迭代子模式：</strong>迭代子模式可以顺序访问一个聚集中的元素而不必暴露聚集的内部表象。多个对象聚在一起形成的总体称之为聚集，聚集对象是能够包容一组对象的容器对象。迭代子模式将迭代逻辑封装到一个独立的子对象中，从而与聚集本身隔开。迭代子模式简化了聚集的界面。每一个聚集对象都可以有一个或一个以上的迭代子对象，每一个迭代子的迭代状态可以是彼此独立的。迭代算法可以独立于聚集角色变化。</p>
-<p>17、MEDIATOR—四个MM打麻将，相互之间谁应该给谁多少钱算不清楚了，幸亏当时我在旁边，按照各自的筹码数算钱，赚了钱的从我这里拿，赔了钱的也付给我，一切就OK啦，俺得到了四个MM的电话。</p>
-<p><strong>调停者模式：</strong>调停者模式包装了一系列对象相互作用的方式，使得这些对象不必相互明显作用。从而使他们可以松散偶合。当某些对象之间的作用发生改变时，不会立即影响其他的一些对象之间的作用。保证这些作用可以彼此独立的变化。调停者模式将多对多的相互作用转化为一对多的相互作用。调停者模式将对象的行为和协作抽象化，把对象在小尺度的行为上与其他对象的相互作用分开处理。</p>
-<p>18、MEMENTO—同时跟几个MM聊天时，一定要记清楚刚才跟MM说了些什么话，不然MM发现了会不高兴的哦，幸亏我有个备忘录，刚才与哪个MM说了什么话我都拷贝一份放到备忘录里面保存，这样可以随时察看以前的记录啦。</p>
-<p><strong>备忘录模式：</strong>备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捉住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。</p>
-<p>19、OBSERVER—想知道咱们公司最新MM情报吗？加入公司的MM情报邮件组就行了，tom负责搜集情报，他发现的新情报不用一个一个通知我们，直接发布给邮件组，我们作为订阅者（观察者）就可以及时收到情报啦</p>
-<p><strong>观察者模式：</strong>观察者模式定义了一种一队多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使他们能够自动更新自己。</p>
-<p>20、STATE—跟MM交往时，一定要注意她的状态哦，在不同的状态时她的行为会有不同，比如你约她今天晚上去看电影，对你没兴趣的MM就会说“有事情啦”，对你不讨厌但还没喜欢上的MM就会说“好啊，不过可以带上我同事么？”，已经喜欢上你的MM就会说“几点钟？看完电影再去泡吧怎么样？”，当然你看电影过程中表现良好的话，也可以把MM的状态从不讨厌不喜欢变成喜欢哦。</p>
-<p><strong>状态模式：</strong>状态模式允许一个对象在其内部状态改变的时候改变行为。这个对象看上去象是改变了它的类一样。状态模式把所研究的对象的行为包装在不同的状态对象里，每一个状态对象都属于一个抽象状态类的一个子类。状态模式的意图是让一个对象在其内部状态改变的时候，其行为也随之改变。状态模式需要对每一个系统可能取得的状态创立一个状态类的子类。当系统的状态变化时，系统便改变所选的子类。</p>
-<p>21、STRATEGY—跟不同类型的MM约会，要用不同的策略，有的请电影比较好，有的则去吃小吃效果不错，有的去海边浪漫最合适，单目的都是为了得到MM的芳心，我的追MM锦囊中有好多Strategy哦。</p>
-<p><strong>策略模式：</strong>策略模式针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。策略模式把行为和环境分开。环境类负责维持和查询行为类，各种算法在具体的策略类中提供。由于算法和环境独立开来，算法的增减，修改都不会影响到环境和客户端。</p>
-<p>22、TEMPLATE METHOD——看过《如何说服女生上床》这部经典文章吗？女生从认识到上床的不变的步骤分为巧遇、打破僵局、展开追求、接吻、前戏、动手、爱抚、进去八大步骤(Template method)，但每个步骤针对不同的情况，都有不一样的做法，这就要看你随机应变啦(具体实现)；</p>
-<p><strong>模板方法模式：</strong>模板方法模式准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先制定一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p>
-<p>23、VISITOR—情人节到了，要给每个MM送一束鲜花和一张卡片，可是每个MM送的花都要针对她个人的特点，每张卡片也要根据个人的特点来挑，我一个人哪搞得清楚，还是找花店老板和礼品店老板做一下Visitor，让花店老板根据MM的特点选一束花，让礼品店老板也根据每个人特点选一张卡，这样就轻松多了；</p>
-<p><strong>访问者模式：</strong>访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构可以保持不变。访问者模式适用于数据结构相对未定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由的演化。访问者模式使得增加新的操作变的很容易，就是增加一个新的访问者类。访问者模式将有关的行为集中到一个访问者对象中，而不是分散到一个个的节点类中。当使用访问者模式时，要将尽可能多的对象浏览逻辑放在访问者类中，而不是放到它的子类中。访问者模式可以跨过几个类的等级结构访问属于不同的等级结构的成员类。</p>
+    <title>浅谈Redis数据库的键值设计(转)</title>
+    <url>/2018/05/12/%E6%B5%85%E8%B0%88redis%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E5%80%BC%E8%AE%BE%E8%AE%A1%E8%BD%AC/</url>
+    <content><![CDATA[<p>丰富的数据结构使得redis的设计非常的有趣。不像关系型数据库那样，DEV和DBA需要深度沟通，review每行sql语句，也不像memcached那样，不需要DBA的参与。redis的DBA需要熟悉数据结构，并能了解使用场景。</p>
+<p>下面举一些常见适合kv数据库的例子来谈谈键值的设计，并与关系型数据库做一个对比，发现关系型的不足之处。</p>
+<h3 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h3><p>记录用户登录信息的一个系统， 我们简化业务后只留下一张表。</p>
+<h4 id="关系型数据库的设计"><a href="#关系型数据库的设计" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>mysql&gt; select * from login;<br>+———+—————-+————-+———————+<br> user_id  name            login_times  last_login_time<br>+———+—————-+————-+———————+<br>       1  ken thompson              5  2011-01-01 00:00:00<br>       2  dennis ritchie            1  2011-02-01 00:00:00<br>       3  Joe Armstrong             2  2011-03-01 00:00:00<br>+———+—————-+————-+———————+</p>
+<p> </p>
+<p>user_id表的主键，name表示用户名，login_times表示该用户的登录次数，每次用户登录后，login_times会自增，而last_login_time更新为当前时间。</p>
+<h4 id="REDIS的设计"><a href="#REDIS的设计" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>关系型数据转化为KV数据库，我的方法如下：</p>
+<p> </p>
+<p>一般使用冒号做分割符，这是不成文的规矩。比如在php-admin for redis系统里，就是默认以冒号分割，于是user:1 user:2等key会分成一组。于是以上的关系数据转化成kv数据后记录如下：</p>
+<p>Set login:1:login_times 5<br>Set login:2:login_times 1<br>Set login:3:login_times 2</p>
+<p>Set login:1:last_login_time 2011-1-1<br>Set login:2:last_login_time 2011-2-1<br>Set login:3:last_login_time 2011-3-1</p>
+<p>set login:1:name ”ken thompson“<br>set login:2:name “dennis ritchie”<br>set login:3:name ”Joe Armstrong“</p>
+<p>这样在已知主键的情况下，通过get、set就可以获得或者修改用户的登录次数和最后登录时间和姓名。</p>
+<p>一般用户是无法知道自己的id的，只知道自己的用户名，所以还必须有一个从name到id的映射关系，这里的设计与上面的有所不同。</p>
+<p>set “login:ken thompson:id”      1<br>set “login:dennis ritchie:id”    2<br>set “login: Joe Armstrong:id”    3</p>
+<p>这样每次用户登录的时候业务逻辑如下（python版），r是redis对象，name是已经获知的用户名。</p>
+<p>#获得用户的id<br>uid &#x3D; r.get(“login:%s:id” % name)<br>#自增用户的登录次数<br>ret &#x3D; r.incr(“login:%s:login_times” % uid)<br>#更新该用户的最后登录时间<br>ret &#x3D; r.set(“login:%s:last_login_time” % uid, datetime.datetime.now())</p>
+<p>如果需求仅仅是已知id，更新或者获取某个用户的最后登录时间，登录次数，关系型和kv数据库无啥区别。一个通过btree pk，一个通过hash，效果都很好。</p>
+<p>假设有如下需求，查找最近登录的N个用户。开发人员看看，还是比较简单的，一个sql搞定。</p>
+<p>select * from login order by last_login_time desc limit N</p>
+<p>DBA了解需求后，考虑到以后表如果比较大，所以在last_login_time上建个索引。执行计划从索引leafblock 的最右边开始访问N条记录，再回表N次，效果很好。</p>
+<p>过了两天，又来一个需求，需要知道登录次数最多的人是谁。同样的关系型如何处理？DEV说简单</p>
+<p>select * from login order by login_times desc limit N</p>
+<p>DBA一看，又要在login_time上建立一个索引。有没有觉得有点问题呢，表上每个字段上都有素引。</p>
+<p>关系型数据库的数据存储的的不灵活是问题的源头，数据仅有一种储存方法，那就是按行排列的堆表。统一的数据结构意味着你必须使用索引来改变sql的访问路径来快速访问某个列的，而访问路径的增加又意味着你必须使用统计信息来辅助，于是一大堆的问题就出现了。</p>
+<p>没有索引，没有统计计划，没有执行计划，这就是kv数据库。</p>
+<p>redis里如何满足以上的需求呢？ 对于求最新的N条数据的需求，链表的后进后出的特点非常适合。我们在上面的登录代码之后添加一段代码，维护一个登录的链表，控制他的长度，使得里面永远保存的是最近的N个登录用户。</p>
+<p>#把当前登录人添加到链表里<br>ret &#x3D; r.lpush(“login:last_login_times”, uid)<br>#保持链表只有N位<br>ret &#x3D; redis.ltrim(“login:last_login_times”, 0, N-1)</p>
+<p>这样需要获得最新登录人的id，如下的代码即可</p>
+<p>last_login_list &#x3D; r.lrange(“login:last_login_times”, 0, N-1)</p>
+<p>另外，求登录次数最多的人，对于排序，积分榜这类需求，sorted set非常的适合，我们把用户和登录次数统一存储在一个sorted set里。</p>
+<p>zadd login:login_times 5 1<br>zadd login:login_times 1 2<br>zadd login:login_times 2 3</p>
+<p>这样假如某个用户登录，额外维护一个sorted set，代码如此</p>
+<p>#对该用户的登录次数自增1<br>ret &#x3D; r.zincrby(“login:login_times”, 1, uid)</p>
+<p>那么如何获得登录次数最多的用户呢，逆序排列取的排名第N的用户即可</p>
+<p>ret &#x3D; r.zrevrange(“login:login_times”, 0, N-1)</p>
+<p>可以看出，DEV需要添加2行代码，而DBA不需要考虑索引什么的。</p>
+<h3 id="TAG系统"><a href="#TAG系统" class="headerlink" title="TAG系统"></a>TAG系统</h3><p>tag在互联网应用里尤其多见，如果以传统的关系型数据库来设计有点不伦不类。我们以查找书的例子来看看redis在这方面的优势。</p>
+<h4 id="关系型数据库的设计-1"><a href="#关系型数据库的设计-1" class="headerlink" title="关系型数据库的设计"></a>关系型数据库的设计</h4><p>两张表，一张book的明细，一张tag表，表示每本的tag，一本书存在多个tag。</p>
+<p>mysql&gt; select * from book;<br>+——+——————————-+—————-+<br> id    name                           author<br>+——+——————————-+—————-+<br>    1  The Ruby Programming Language  Mark Pilgrim<br>    1  Ruby on rail                   David Flanagan<br>    1  Programming Erlang             Joe Armstrong<br>+——+——————————-+—————-+</p>
+<p>mysql&gt; select * from tag;<br>+———+———+<br> tagname  book_id<br>+———+———+<br> ruby           1<br> ruby           2<br> web            2<br> erlang         3<br>+———+———+</p>
+<p>假如有如此需求，查找即是ruby又是web方面的书籍，如果以关系型数据库会怎么处理？</p>
+<p>select b.name, b.author  from tag t1, tag t2, book b<br>where t1.tagname &#x3D; ‘web’ and t2.tagname &#x3D; ‘ruby’ and t1.book_id &#x3D; t2.book_id and b.id &#x3D; t1.book_id</p>
+<p>tag表自关联2次再与book关联，这个sql还是比较复杂的，如果要求即ruby，但不是web方面的书籍呢？</p>
+<p>关系型数据其实并不太适合这些集合操作。</p>
+<h4 id="REDIS的设计-1"><a href="#REDIS的设计-1" class="headerlink" title="REDIS的设计"></a>REDIS的设计</h4><p>首先book的数据肯定要存储的，和上面一样。</p>
+<p>set book:1:name    ”The Ruby Programming Language”<br>Set book:2:name     ”Ruby on rail”<br>Set book:3:name     ”Programming Erlang”</p>
+<p>set book:1:author    ”Mark Pilgrim”<br>Set book:2:author     ”David Flanagan”<br>Set book:3:author     ”Joe Armstrong”</p>
+<p>tag表我们使用集合来存储数据，因为集合擅长求交集、并集</p>
+<p>sadd tag:ruby 1<br>sadd tag:ruby 2<br>sadd tag:web 2<br>sadd tag:erlang 3</p>
+<p>那么，即属于ruby又属于web的书？</p>
+<p>inter_list &#x3D; redis.sinter(“tag.web”, “tag:ruby”)</p>
+<p>即属于ruby，但不属于web的书？</p>
+<p>inter_list &#x3D; redis.sdiff(“tag.ruby”, “tag:web”)</p>
+<p>属于ruby和属于web的书的合集？</p>
+<p>inter_list &#x3D; redis.sunion(“tag.ruby”, “tag:web”)</p>
+<p>简单到不行阿。</p>
+<p>从以上2个例子可以看出在某些场景里，关系型数据库是不太适合的，你可能能够设计出满足需求的系统，但总是感觉的怪怪的，有种生搬硬套的感觉。</p>
+<p>尤其登录系统这个例子，频繁的为业务建立索引。放在一个复杂的系统里，ddl（创建索引）有可能改变执行计划。导致其它的sql采用不同的执行计划，业务复杂的老系统，这个问题是很难预估的，sql千奇百怪。要求DBA对这个系统里所有的sql都了解，这点太难了。这个问题在oracle里尤其严重，每个DBA估计都碰到过。对于MySQL这类系统，ddl又不方便（虽然现在有online ddl的方法）。碰到大表，DBA凌晨爬起来在业务低峰期操作，这事我没少干过。而这种需求放到redis里就很好处理，DBA仅仅对容量进行预估即可。</p>
+<p>未来的OLTP系统应该是kv和关系型的紧密结合。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬件&amp;系统性能</title>
+    <url>/2019/01/31/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD/</url>
+    <content><![CDATA[<p>首先看一下系统性能良好时的指标范围：</p>
+<p>控类别</p>
+<p>指标名称</p>
+<p>指标范围(通过)</p>
+<p>应用服务器(jvm和配置)</p>
+<p>JVM</p>
+<p>jvm内存占用率&lt;&#x3D;70%</p>
+<p>线程池连接数</p>
+<p>线程池连接数&lt;&#x3D;80%，没有出现线程阻塞、死锁现象</p>
+<p>数据库活动连接数</p>
+<p>数据库活动连接数&lt;&#x3D;85%</p>
+<p>full gc频率</p>
+<p>大于平均半小时1次GC</p>
+<p>是否有异常日志</p>
+<p>日志信息中，无错误信息如：OOM、及其他代码提示的错误</p>
+<p>是否有OOM</p>
+<p>没有年老代、持久代堆异常、栈异常及内存不够造成的异常</p>
+<p>内存泄露</p>
+<p>多次GC后，内存没有呈线性增长</p>
+<p>数据库(mysql5.5)</p>
+<p>系统负载</p>
+<p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p>
+<p>CPU占用率</p>
+<p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%或%sy&lt;&#x3D;50%，%wa&lt;&#x3D;20%，无热点CPU现象</p>
+<p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p>
+<p>内存使用率</p>
+<p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p>
+<p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p>
+<p>磁盘</p>
+<p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;30%</p>
+<p>数据库连接数</p>
+<p>关注：(Max_used_connections&#x2F;max_connections)*100&#x2F;%&lt;&#x3D;85%</p>
+<p>是否有慢查询SQL</p>
+<p>没有出现执行较长时间的SQL语句，从慢查询日志获取</p>
+<p>死锁</p>
+<p>没有出现SQL死锁</p>
+<p>操作系统(linux3.1)</p>
+<p>系统负载</p>
+<p>系统负载(Load Average)&lt;&#x3D;系统中CPU的核数<em>个数</em>0.7</p>
+<p>CPU占用率</p>
+<p>总CPU占用率&lt;&#x3D;70%，其中%us&lt;&#x3D;50%，%sy&lt;&#x3D;20%，%id&lt;&#x3D;30%，无热点CPU现象</p>
+<p>关注(1-id)%：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>90%、严重性能问题：90%</del>100%</p>
+<p>内存使用率</p>
+<p>使用的内存利用率&lt;&#x3D;70%，si so中值为0</p>
+<p>使用的内存利用率：无性能压力：0%<del>50%、有一定性能压力：50%</del>70%、达到性能阀值：70%<del>80%、严重性能问题：80%</del>100%</p>
+<p>磁盘</p>
+<p>%util&lt;&#x3D;80%，await约等于svctm，r&#x2F;s+w&#x2F;s&#x3D;iops根据磁盘来计算后来判断，%iowait&lt;&#x3D;20%</p>
+<p>带宽</p>
+<p>网络使用率</p>
+<p>&lt;&#x3D;系统带宽的30%，无丢包，无延迟，无阻塞</p>
+<h2 id="时间单位换算关系"><a href="#时间单位换算关系" class="headerlink" title="时间单位换算关系"></a><strong>时间单位换算关系</strong></h2><p>换算关系<br>1 s &#x3D; 10^3 ms &#x3D; 10^6 us &#x3D; 10^9 ns &#x3D; 10^12 μs</p>
+<p>秒     毫秒       微秒     纳秒        皮秒</p>
+<h2 id="周期概念"><a href="#周期概念" class="headerlink" title="周期概念"></a><strong>周期概念</strong></h2><p>　　总结一下，它们之间的关系就是，指令周期由若干个机器周期组成，总线周期一般由4个时钟周期组成。 </p>
+<p>　　机器周期和总线周期……机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。</p>
+<p> 　  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令（ARM、DSP）均采用单指令执行周期。</p>
+<p>　　机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。</p>
+<p>　　CPU周期:又称机器周期，机器内部各种操作大致可归属为对CPU内部的操作和对主存的操作两大类，由于CPU内部操作速度较快，CPU访问一次内存所花的时间较长，因此用从内存读取一条指令字的最短时间来定义，这个基准时间就是CPU周期（机器周期）。一个指令周期常由若干CPU周期构成。</p>
+<p>　　总线周期（BUS Cycle）：也就是一个访存储器或I&#x2F;O端口操作所用的时间。</p>
+<p>　　时钟周期：CPU的晶振的工作频率的倒数。(fantaxy:晶振一次需要的时间)，例如12M的晶振，它的时间周期就是1&#x2F;12 μs，若采用了1MHZ的时钟频率，则时钟周期为1μs；若采用4MHZ的时钟频率，则时钟周期为250ns。</p>
+<p>　　例子：22.1184MHZ的晶振,它的晶振周期、时钟周期和机器周期分别是多少？</p>
+<p>　　以51为例,晶振22.1184M，时钟周期(晶振周期)就是(1&#x2F;22.1184)μs，一个机器周期包含12个时钟周期，一个机器周期就是 0.5425μs。一个机器周期一般是一条指令花费的时间，也有些是2个机器周期的指令，DJNZ，是双周期指令。</p>
+<p>　　周期：就是时间，完成一次任务的时间</p>
+<p>　　时钟周期：这个名字的英文clock cycle; clock period；时钟是用来计时的，是一个基本单位；在计算机中，cpu的晶振时间就是一个最最基本的单位，因此时钟周期很基本，别的周期都用它来参考！</p>
+<p>      上下文切换：上下文切换真正的开销随平台变化而不同，不过有个经验法则:大多数通用的处理器中，上下文切换的时间是5000到10000个时钟周期，或者是几微秒 </p>
+<h2 id="内存频率"><a href="#内存频率" class="headerlink" title="内存频率"></a><strong>内存频率</strong></h2><p>        内存主频和CPU主频一样，习惯上被用来表示内存的速度，它代表着该内存所能达到的最高工作频率。内存主频是以MHz（兆赫）为单位来计量的。内存主频越高在一定程度上代表着内存所能达到的速度越快。内存主频决定着该内存最高能在什么样的频率正常工作。目前较为主流的内存频率是333MHz和400MHz的DDR内存，667MHz、800MHz和1066MHz的DDR2内存，1066MHz、1333MHz、1600MHz的DDR3内存。</p>
+<p>        内存本身并不具备晶体振荡器，因此内存工作时的时钟信号是由主板芯片组的北桥或直接由主板的时钟发生器提供的，也就是说内存无法决定自身的工作频率，其实际工作频率是由主板来决定的。</p>
+<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a><strong>磁盘</strong></h2><h3 id="磁盘性能指标"><a href="#磁盘性能指标" class="headerlink" title="磁盘性能指标"></a><strong>磁盘性能指标</strong></h3><p><strong>IOPS (Input&#x2F;Output Operations Per Second)</strong></p>
+<p>即每秒进行读写（I&#x2F;O）操作的次数，多用于数据库等场合，衡量随机访问的性能。存储端的IOPS性能和主机端的IO是不同的，IOPS是指存储每秒可接受多少次主机发出的访问，主机的一次IO需要多次访问存储才可以完成。例如，主机写入一个最小的数据块，也要经过“发送写入请求、写入数据、收到写入确认”等三个步骤，也就是3个存储端访问。</p>
+<p>决定IOPS的主要取决与阵列的算法，cache命中率，以及磁盘个数。</p>
+<p>如果一个阵列有120块15K rpm的光纤硬盘，那么，它能撑的最大IOPS为120*150&#x3D;18000，这个为硬件限制的理论值，如果超过这个值，硬盘的响应可能会变的非常缓慢而不能正常提供业务。</p>
+<p><strong>数据吞吐量</strong>(Throughput)</p>
+<p>指单位时间内可以成功传输的数据数量。对于大量顺序读写的应用，如VOD(Video On Demand)，则更关注吞吐量指标。</p>
+<h3 id="磁盘服务时间"><a href="#磁盘服务时间" class="headerlink" title="磁盘服务时间"></a><strong>磁盘服务时间</strong></h3><p>传统磁盘本质上一种机械装置，如FC, SAS, SATA磁盘，转速通常为5400&#x2F;7200&#x2F;10K&#x2F;15K rpm不等。影响磁盘的关键因素是磁盘服务时间，即磁盘完成一个I&#x2F;O请求所花费的时间，它由寻道时间、旋转延迟和数据传输时间三部分构成。</p>
+<p><strong>寻道时间</strong>Tseek是指将读写磁头移动至正确的磁道上所需要的时间。寻道时间越短，I&#x2F;O操作越快，目前磁盘的平均寻道时间一般在3－15ms。<br><strong>旋转延迟</strong>Trotation是指盘片旋转将请求数据所在扇区移至读写磁头下方所需要的时间。旋转延迟取决于磁盘转速，通常使用磁盘旋转一周所需时间的1&#x2F;2表示。比如，7200 rpm的磁盘平均旋转延迟大约为60*1000&#x2F;7200&#x2F;2 &#x3D; 4.17ms，而转速为15000 rpm的磁盘其平均旋转延迟约为2ms。<br><strong>数据传输时间</strong>Ttransfer是指完成传输所请求的数据所需要的时间，它取决于数据传输率，其值等于数据大小除以数据传输率。目前IDE&#x2F;ATA能达到133MB&#x2F;s，SATA II可达到300MB&#x2F;s的接口数据传输率，数据传输时间通常远小于前两部分时间。</p>
+<h3 id="最大IOPS的理论计算"><a href="#最大IOPS的理论计算" class="headerlink" title="最大IOPS的理论计算"></a><strong>最大IOPS的理论计算</strong></h3><p>IOPS &#x3D; 1000 ms&#x2F; (Tseek + Troatation)，忽略数据传输时间。假设磁盘平均物理寻道时间为3ms, 磁盘转速为7200,10K,15K rpm，则磁盘IOPS理论最大值分别为，<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;7200&#x2F;2)  &#x3D; 140<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;10000&#x2F;2) &#x3D; 167<br>IOPS &#x3D; 1000 &#x2F; (3 + 60000&#x2F;15000&#x2F;2) &#x3D; 200</p>
+<p>固态硬盘SSD是一种电子装置， 避免了传统磁盘在寻道和旋转上的时间花费，存储单元寻址开销大大降低，因此IOPS可以非常高，能够达到数万甚至数十万。</p>
+<h3 id="IOPS的指标"><a href="#IOPS的指标" class="headerlink" title="IOPS的指标"></a><strong>IOPS的指标</strong></h3><p>通常情况下，IOPS可细分为如下几个指标：<br>Toatal IOPS，混合读写和顺序随机I&#x2F;O负载情况下的磁盘IOPS，这个与实际I&#x2F;O情况最为相符，大多数应用关注此指标。<br>Random Read IOPS，100%随机读负载情况下的IOPS。<br>Random Write IOPS，100%随机写负载情况下的IOPS。<br>Sequential Read IOPS，100%顺序负载读情况下的IOPS。<br>Sequential Write IOPS，100%顺序写负载情况下的IOPS。</p>
 ]]></content>
       <categories>
         <category>软件工程</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>间歇性努力的人，持续性一事无成</title>
-    <url>/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/</url>
-    <content><![CDATA[<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg"></p>
-<p>昙花一现的努力，都是伪努力。</p>
-<p>01</p>
-<p>工作上认识个老哥，四十多岁，有意思的人。</p>
-<p>他在一线门户做过电商一把手，后来出来单干，又经历过两次创业。</p>
-<p>无论职业经理人，还是创业当老板，他保持着每周工作 100 小时以上的习惯。</p>
-<p>和他喝过了一次酒，发现个有趣的事情：在如此高强度的工作状态下，他却从来没感到过“痛苦，难受，度日如年”。</p>
-<p>创业之路，百转千回，困难挫折如同家常便饭，但他的目光并没因此暗淡。他相信，“人生本来就是由开心和不开心串起来的”。</p>
-<p>老哥的事业做得不小。但他有一件特质，尤其吸引我的注意：努力常态化。</p>
-<p>这点特质，在我认识的许多大牛身上都能看见。你看他们：</p>
-<p>大年初二的早晨，坐到桌前写方案；</p>
-<p>年会狂欢结束后，回到办公室改合同；</p>
-<p>高铁上、机场里，用手机写稿子，回邮件。</p>
-<blockquote>
-<p><strong>他们不会觉得以上这些有多了不起；</strong></p>
-<p><strong>他们不会被自己“熬夜一次”而感动；</strong></p>
-<p><strong>他们也不会把这些发到朋友圈里，然后在旁边写上“我也是挺拼的”。</strong></p>
-</blockquote>
-<p>这些努力，不需要心理建设，不需要自我说服，不需要意志力驱动。</p>
-<p>这些努力，是潜意识中的自发行为，是肌肉记忆的习惯动作。</p>
-<p>在我的视角里，这些点点滴滴、无人关注的努力，才是真努力。</p>
-<p><strong>常态化的努力，才是真努力。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/6a2dc53523cb41a9a9590385eb7f93f7.jpeg"></p>
-<p>02</p>
-<p>常态化努力的对面，是间歇式努力。</p>
-<p>你办了一张健身卡，决心重塑自己的身体和生活。 1 月 1 日开始，12 月 31 日到期，中间只去过两次。</p>
-<p>你买了英语六级的单词书，占了图书馆的座位，雄心勃勃要大干一场。最后脑子里，除了对 abandon 滚瓜烂熟，什么也没留下。</p>
-<p>你朝九晚五地上班，你浑浑噩噩地过活。你觉得百无聊赖，看不到生活的希望。你决定每天下班回家后，拿出两个小时充电和学习……</p>
-<p>回家的那一瞬间，着了魔一样，懒神附体：凌云壮志滚一边去，打开电视，端上平板，舒服窝在沙发里。</p>
-<p>你的生活特别像那本六级单词书：书的前一小段被翻看了无数次，页角都皱了；但后边的内容，崭新如初，少有触及。</p>
-<p>这似乎是微不足道的小事，但却又关乎成败的大事。</p>
-<p>这些细节， 折射出的是努力的属性。努力常态化是牛逼与否的分水岭，各自延伸出的，是截然不同的轨迹。</p>
-<p>多数人只是在热血和堕落间徘徊：<strong>一段时间，猛冲猛打，自己感动哭了；一段时间，懒散放纵，行尸走肉一般。</strong></p>
-<p>我相信，每个人都努力过：都有过热血沸腾、立誓发狠的时候，都有过奋进狂飙、强力输出的经历。</p>
-<p>然而，平庸和杰出之所以泾渭分明，那是因为，平庸者的努力是碎片化的、不成系统的，走走停停，断断续续。</p>
-<p>我们有时候会想，“我都努力过了，为什么还是没得到好运气”。实际上，努力不是重点，常态化才是关键。</p>
-<p><strong>昙花一现的努力，都是伪努力。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/1249308917f34a6f94880524a9c02416.jpeg"></p>
-<p>03</p>
-<p>高中时，同桌和我的关系，类似于皇马巴萨。</p>
-<p>他是最令我胆寒的人：下午期末考试完毕，晚上还默默去自习——我的竞对啊，连半天都不让人休息。我心都要碎了。</p>
-<p>可怕之处在于，他风轻云淡，面沉似水。一切发生的如此自然，不需自我说服，不需心理建设……我能怎么办？我也很绝望啊。</p>
-<p>努力常态化的人最可怕：对这些人来说，努力不是一项需要分配的工作，而是自然发生的事情。不管有喜恶高低、状态好坏，他们能随时进入角色，在过程中找到感觉和快乐。</p>
-<p>普通人最大的问题是：干活看心情。状态不好，身体微恙，就不干活了？不存在的。这么娇贵，哪里是成事的样子。你玩王者荣耀，刷微信淘宝，需要心理建设么，需要状态好么？</p>
-<p>当年彭德怀在左权县召集干部会议，与会者饿得连坐都不稳，彭将军只好请大家躺在炕上开会——画面虽然醉人，这才是成事的状态啊。</p>
-<p>你当兵打仗，事情来了，你说我今天心情不好。那你不做炮灰谁做炮灰啊。</p>
-<p>圈里有句黑话：小姐不能有了性欲才接客；作者不能有了灵感才写字。</p>
-<p>话糙了点，但是这个理。</p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/87d09e9dada34837996b172b1043fe17.jpeg"></p>
-<p>04</p>
-<p>顺丰这些年高歌猛进，气势如虹，和老板王卫的职业习惯不无关系：</p>
-<p>创业二十年，每天工作 14 小时是太正常的事。王是很有危机感的人，三个月没有变革创新，就会觉得危机四伏。</p>
-<p>地产大佬罗康瑞是瑞安集团的主席，也是含着金钥匙出生的富二代。</p>
-<p>罗的崛起，可不光靠家里：大学毕业，找家里借了十万块，整整七年，每天工作十几个小时，没有一天休息……于是才崭露头角，小有名声。</p>
-<p>朋友在广州面试了几家游戏公司，都是要求一周上六天班，每天朝九晚九，而且这是广州行业常态。</p>
-<p>你以为你很努力了，可在别人眼中只是基本工作要求而已。广东的游戏做的那么好，奖金发那么多，有它的基础逻辑。</p>
-<p>都说勤能补拙，更何况人家”拙”么？</p>
-<p>大学同学就职于经纬中国。 他有绚丽的履历和出众的能力，情智双高，犀利通透。</p>
-<p>安逸不在他的字典里：“除了吃喝拉撒，经纬是我生活的全部”…… 看了他的状态，多少能理解经纬的牛逼了。</p>
-<p>我不是“工作玩命”的拥趸，我厌恶“要成功，先发疯”之类的毒鸡汤。</p>
-<p>我认为，任何透支身体去工作的行为都是不明智、不值得的……</p>
-<p>但实际情况是，对于多数创业者来说，不经历 5 至 8 年、每周 7×12 小时的创业奋斗很难有大成；一个草根，想在北京有所成就，每周 60 个小时的工作量是标准配置。</p>
-<p>5×8 小时的时间表，远远不足以支撑你出人头地的。</p>
-<p>你家境平平、智商普通，你只是玩玩打打、优哉游哉地做一做，就想成功，凭什么？我不认为那个运气万里挑一的人是你。</p>
-<p>刚加了两次班，就觉好感爆棚、天下在手，这样的人注定没有出息。</p>
-<p>工作时间是表象，它的本质是努力常态化。它保证不了你成功，它只是基本配置。</p>
-<p>它需要你坚持不懈，需要数年一日，需要持续输出，需要你有坚如磐石的耐心。</p>
-<p><strong>有多大耐心，才配得上多大野心。没毛病。</strong></p>
-<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/5ce0b2f99c0a425d96ce715e95152f56.jpeg"></p>
-<p>05</p>
-<p>这是个浮躁的时代。在这个时代，努力无用的论调，变得非常受欢迎。</p>
-<p>我们说，“人的命运，不光依靠个人努力，也要依赖历史进程”。话虽如此，但不能抹杀了努力的意义。</p>
-<p>努力无用也好，阶级固化也罢，多数时候，是不努力者的借口。一个人，连力气都没有用尽，还谈什么方法、理想和人生？</p>
-<p>在我的公式里：<strong>成就 &#x3D; 天赋 × 运气 × 努力。</strong></p>
-<p>其中，只有努力是我们唯一能掌控的东西。</p>
-<p>努力当然是有用的，扪心自问，你做 12 个小时是不是就比 8 个小时更有产出？如果不是，那你也太弱了，别折腾了，找个地方养老吧。</p>
-<p>这里的努力，不是一天两天，不是一月两月，甚至可能要一两年才能看出端倪。</p>
-<p>可惜大多数人在回报来临之前，选择了放弃。努力一两下就有回报？哪有这样的好事。生孩子都要十个月。</p>
-<p>我们总认为付出够多，得到太少。</p>
-<p>其实，还是付出的不够：一般的，把付出打一折，才是自己应该得到的。天地不仁以万物为刍狗，这才符合世界运行的规律。</p>
-<p>持续而稳定的输出十分重要：拆开来看，只是一件件的小事；时间长远，便是天与地的距离。这就是努力常态的意义：</p>
-<p><strong>当努力的因子融入你的血液，当努力对你根本不算一个要求，相信我，你会看到一个新的世界、新的自己。</strong></p>
-]]></content>
-      <categories>
-        <category>成长</category>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
+        <tag>架构</tag>
+        <tag>性能</tag>
       </tags>
   </entry>
   <entry>
@@ -10145,6 +9873,278 @@ echo $output;]]></content>
       </categories>
       <tags>
         <tag>文学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进程管理supervisor的简单说明</title>
+    <url>/2018/04/13/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86supervisor%E7%9A%84%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h2 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h2><p>项目中遇到有些脚本需要通过后台进程运行，保证不被异常中断，之前都是通过nohup、&amp;、screen来实现，带着能否做一个start&#x2F;stop&#x2F;restart&#x2F;reload的服务启动的想法找到里<a href="http://supervisord.org/">Supervisor</a>。关于<a href="http://supervisord.org/introduction.html">supervisor的介绍</a>在网上大致搜索总结如下：</p>
+<p>Supervisor是用Python开发的一套通用的进程管理程序，能将一个普通的命令行进程变为后台daemon，并监控进程状态，异常退出时能自动重启。它是通过fork&#x2F;exec的方式把这些被管理的进程当作supervisor的子进程来启动，这样只要在supervisor的配置文件中，把要管理的进程的可执行文件的路径写进去即可。也实现当子进程挂掉的时候，父进程可以准确获取子进程挂掉的信息的，可以选择是否自己启动和报警。supervisor还提供了一个功能，可以为supervisord或者每个子进程，设置一个非root的user，这个user就可以管理它对应的进程。</p>
+<h2 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h2><p><strong><a href="http://supervisord.org/installing.html">1，安装</a></strong></p>
+<p>1：easy_install 安装：<br>easy_install supervisor</p>
+<p>2：pip 安装：<br>pip install supervisor</p>
+<p>3：Debian &#x2F; Ubuntu可以直接通过apt安装：<br>apt-get install supervisor</p>
+<p><strong><a href="http://supervisord.org/configuration.html">2，配置文件</a></strong></p>
+<p><strong>1）</strong>通过apt-get install安装后，supervisor的配置文件在：</p>
+<p>&#x2F;etc&#x2F;supervisor&#x2F;supervisord.conf </p>
+<p>supervisor的配置文件默认是不全的，不过在大部分默认的情况下，上面说的基本功能已经满足。而其管理的<a href="http://supervisord.org/subprocess.html">子进程配置</a>文件在：</p>
+<p>&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;*.conf</p>
+<p>然后，开始给自己需要的脚本程序编写一个子进程配置文件，让supervisor来管理它，放在&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;目录下，以.conf作为扩展名（每个进程的配置文件都可以单独分拆也可以把相关的脚本放一起）。如任意定义一个和脚本相关的项目名称的选项组（&#x2F;etc&#x2F;supervisor&#x2F;conf.d&#x2F;test.conf）：</p>
+<p><strong>#项目名</strong><br>[program:blog]<br>#脚本目录<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>#脚本执行命令<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;test.py<br>#supervisor启动的时候是否随着同时启动，默认True<br>autostart&#x3D;true<br>#当程序exit的时候，这个program不会自动重启,默认unexpected<br>#设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected和true。如果为false的时候，无论什么情况下，都不会被重新启动，如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的<br>autorestart&#x3D;false<br>#这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启动成功了。默认值为1<br>startsecs&#x3D;1<br>#日志输出<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;blog_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;blog_stdout.log<br>#脚本运行的用户身份<br>user &#x3D; zhoujy<br>#把 stderr 重定向到 stdout，默认 false<br>redirect_stderr &#x3D; true<br>#stdout 日志文件大小，默认 50MB<br>stdout_logfile_maxbytes &#x3D; 20M<br>#stdout 日志文件备份数<br>stdout_logfile_backups &#x3D; 20</p>
+<p>[program:zhoujy] #说明同上<br>directory&#x3D;&#x2F;opt&#x2F;bin<br>command&#x3D;&#x2F;usr&#x2F;bin&#x2F;python &#x2F;opt&#x2F;bin&#x2F;zhoujy.py<br>autostart&#x3D;true<br>autorestart&#x3D;false<br>stderr_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stderr.log<br>stdout_logfile&#x3D;&#x2F;tmp&#x2F;zhoujy_stdout.log<br>#user &#x3D; zhoujy</p>
+<p><strong>2）</strong>通过easy_install安装后，配置文件不存在，需要自己导入。</p>
+<p>①：运行<a href="http://supervisord.org/installing.html">echo_supervisord_conf</a>打印出一个配置文件的样本，样本说明可以看<a href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的详细说明，要是设置样本为一个配置文件则：</p>
+<p>1：运行 echo_supervisord_conf，查看配置样本：<br>echo_supervisord_conf</p>
+<p>2：创建配置文件：<br>echo_supervisord_conf &gt; &#x2F;etc&#x2F;supervisord.conf</p>
+<p>②：配置子进程配置文件，可以直接在supervisor中的**;[program:theprogramname]**里设置。</p>
+<p>详细的<a href="http://supervisord.org/subprocess.html">子进程配置</a>文件：</p>
+<p>样本：</p>
+<p><img src="https://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif">;[program:theprogramname]</p>
+<p>;command&#x3D;&#x2F;bin&#x2F;cat              ; the program (relative uses PATH, can take args)<br>;process_name&#x3D;%(program_name)s ; process_name expr (default %(program_name)s)<br>;numprocs&#x3D;1                    ; number of processes copies to start (def 1)<br>;directory&#x3D;&#x2F;tmp                ; directory to cwd to before exec (def no cwd)<br>;umask&#x3D;022                     ; umask for process (default None)<br>;priority&#x3D;999                  ; the relative start priority (default 999)<br>;autostart&#x3D;true                ; start at supervisord start (default: true)<br>;startsecs&#x3D;1                   ; # of secs prog must stay up to be running (def. 1)<br>;startretries&#x3D;3                ; max # of serial start failures when starting (default 3)<br>;autorestart&#x3D;unexpected        ; when to restart if exited after running (def: unexpected)<br>;exitcodes&#x3D;0,2                 ; ‘expected’ exit codes used with autorestart (default 0,2)<br>;stopsignal&#x3D;QUIT               ; signal used to kill process (default TERM)<br>;stopwaitsecs&#x3D;10               ; max num secs to wait b4 SIGKILL (default 10)<br>;stopasgroup&#x3D;false             ; send stop signal to the UNIX process group (default false)<br>;killasgroup&#x3D;false             ; SIGKILL the UNIX process group (def false)<br>;user&#x3D;chrism                   ; setuid to this UNIX account to run the program<br>;redirect_stderr&#x3D;true          ; redirect proc stderr to stdout (default false)<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; stdout log path, NONE for none; default AUTO<br>;stdout_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stdout_logfile_backups&#x3D;10     ; # of stdout logfile backups (default 10)<br>;stdout_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stdout_events_enabled&#x3D;false   ; emit events on stdout writes (default false)<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; stderr log path, NONE for none; default AUTO<br>;stderr_logfile_maxbytes&#x3D;1MB   ; max # logfile bytes b4 rotation (default 50MB)<br>;stderr_logfile_backups&#x3D;10     ; # of stderr logfile backups (default 10)<br>;stderr_capture_maxbytes&#x3D;1MB   ; number of bytes in ‘capturemode’ (default 0)<br>;stderr_events_enabled&#x3D;false   ; emit events on stderr writes (default false)<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; process environment additions (def no adds)<br>;serverurl&#x3D;AUTO                ; override serverurl computation (childutils)</p>
+<p>说明：</p>
+<p>;[program:theprogramname]      ;这个就是咱们要管理的子进程了，”:”后面的是名字，最好别乱写和实际进程<br>                                有点关联最好。这样的program我们可以设置一个或多个，一个program就是<br>                                要被管理的一个进程<br>;command&#x3D;&#x2F;bin&#x2F;cat              ; 这个就是我们的要启动进程的命令路径了，可以带参数<br>                                例子：&#x2F;home&#x2F;test.py -a ‘hehe’<br>                                有一点需要注意的是，我们的command只能是那种在终端运行的进程，不能是<br>                                守护进程。这个想想也知道了，比如说command&#x3D;service httpd start。<br>                                httpd这个进程被linux的service管理了，我们的supervisor再去启动这个命令<br>                                这已经不是严格意义的子进程了。<br>                                这个是个必须设置的项<br>;process_name&#x3D;%(program_name)s ; 这个是进程名，如果我们下面的numprocs参数为1的话，就不用管这个参数<br>                                 了，它默认值%(program_name)s也就是上面的那个program冒号后面的名字，<br>                                 但是如果numprocs为多个的话，那就不能这么干了。想想也知道，不可能每个<br>                                 进程都用同一个进程名吧。</p>
+<p>;numprocs&#x3D;1                    ; 启动进程的数目。当不为1时，就是进程池的概念，注意process_name的设置<br>                                 默认为1    。。非必须设置<br>;directory&#x3D;&#x2F;tmp                ; 进程运行前，会前切换到这个目录<br>                                 默认不设置。。。非必须设置<br>;umask&#x3D;022                     ; 进程掩码，默认none，非必须<br>;priority&#x3D;999                  ; 子进程启动关闭优先级，优先级低的，最先启动，关闭的时候最后关闭<br>                                 默认值为999 。。非必须设置<br>;autostart&#x3D;true                ; 如果是true的话，子进程将在supervisord启动后被自动启动<br>                                 默认就是true   。。非必须设置<br>;autorestart&#x3D;unexpected        ; 这个是设置子进程挂掉后自动重启的情况，有三个选项，false,unexpected<br>                                 和true。如果为false的时候，无论什么情况下，都不会被重新启动，<br>                                 如果为unexpected，只有当进程的退出码不在下面的exitcodes里面定义的退<br>                                 出码的时候，才会被自动重启。当为true的时候，只要子进程挂掉，将会被无<br>                                 条件的重启<br>;startsecs&#x3D;1                   ; 这个选项是子进程启动多少秒之后，此时状态如果是running，则我们认为启<br>                                 动成功了<br>                                 默认值为1 。。非必须设置<br>;startretries&#x3D;3                ; 当进程启动失败后，最大尝试启动的次数。。当超过3次后，supervisor将把<br>                                 此进程的状态置为FAIL<br>                                 默认值为3 。。非必须设置<br>;exitcodes&#x3D;0,2                 ; 注意和上面的的autorestart&#x3D;unexpected对应。。exitcodes里面的定义的<br>                                 退出码是expected的。<br>;stopsignal&#x3D;QUIT               ; 进程停止信号，可以为TERM, HUP, INT, QUIT, KILL, USR1, or USR2等信号<br>                                  默认为TERM 。。当用设定的信号去干掉进程，退出码会被认为是expected<br>                                  非必须设置<br>;stopwaitsecs&#x3D;10               ; 这个是当我们向子进程发送stopsignal信号后，到系统返回信息<br>                                 给supervisord，所等待的最大时间。 超过这个时间，supervisord会向该<br>                                 子进程发送一个强制kill的信号。<br>                                 默认为10秒。。非必须设置<br>;stopasgroup&#x3D;false             ; 这个东西主要用于，supervisord管理的子进程，这个子进程本身还有<br>                                 子进程。那么我们如果仅仅干掉supervisord的子进程的话，子进程的子进程<br>                                 有可能会变成孤儿进程。所以咱们可以设置可个选项，把整个该子进程的<br>                                 整个进程组都干掉。 设置为true的话，一般killasgroup也会被设置为true。<br>                                 需要注意的是，该选项发送的是stop信号<br>                                 默认为false。。非必须设置。。<br>;killasgroup&#x3D;false             ; 这个和上面的stopasgroup类似，不过发送的是kill信号<br>;user&#x3D;chrism                   ; 如果supervisord是root启动，我们在这里设置这个非root用户，可以用来<br>                                 管理该program<br>                                 默认不设置。。。非必须设置项<br>;redirect_stderr&#x3D;true          ; 如果为true，则stderr的日志会被写入stdout日志文件中<br>                                 默认为false，非必须设置<br>;stdout_logfile&#x3D;&#x2F;a&#x2F;path        ; 子进程的stdout的日志路径，可以指定路径，AUTO，none等三个选项。<br>                                 设置为none的话，将没有日志产生。设置为AUTO的话，将随机找一个地方<br>                                 生成日志文件，而且当supervisord重新启动的时候，以前的日志文件会被<br>                                 清空。当 redirect_stderr&#x3D;true的时候，sterr也会写进这个日志文件<br>;stdout_logfile_maxbytes&#x3D;1MB   ; 日志文件最大大小，和[supervisord]中定义的一样。默认为50<br>;stdout_logfile_backups&#x3D;10     ; 和[supervisord]定义的一样。默认10<br>;stdout_capture_maxbytes&#x3D;1MB   ; 这个东西是设定capture管道的大小，当值不为0的时候，子进程可以从stdout<br>                                 发送信息，而supervisor可以根据信息，发送相应的event。<br>                                 默认为0，为0的时候表达关闭管道。。。非必须项<br>;stdout_events_enabled&#x3D;false   ; 当设置为ture的时候，当子进程由stdout向文件描述符中写日志的时候，将<br>                                 触发supervisord发送PROCESS_LOG_STDOUT类型的event<br>                                 默认为false。。。非必须设置<br>;stderr_logfile&#x3D;&#x2F;a&#x2F;path        ; 这个东西是设置stderr写的日志路径，当redirect_stderr&#x3D;true。这个就不用<br>                                 设置了，设置了也是白搭。因为它会被写入stdout_logfile的同一个文件中<br>                                 默认为AUTO，也就是随便找个地存，supervisord重启被清空。。非必须设置<br>;stderr_logfile_maxbytes&#x3D;1MB   ; 这个出现好几次了，就不重复了<br>;stderr_logfile_backups&#x3D;10     ; 这个也是<br>;stderr_capture_maxbytes&#x3D;1MB   ; 这个一样，和stdout_capture一样。 默认为0，关闭状态<br>;stderr_events_enabled&#x3D;false   ; 这个也是一样，默认为false<br>;environment&#x3D;A&#x3D;”1”,B&#x3D;”2”       ; 这个是该子进程的环境变量，和别的子进程是不共享的<br>;serverurl&#x3D;AUTO                ;</p>
+<p> </p>
+<p>改成自己实际的配置文件：和①上面一样。</p>
+<p><strong><a href="http://supervisord.org/running.html">3：运行</a></strong></p>
+<p>1）apt-get install 安装的supervisor直接可以通过 &#x2F;etc&#x2F;init.d&#x2F;supervisor 运行：</p>
+<p>&#x2F;etc&#x2F;init.d&#x2F;supervisor start</p>
+<p>2）通过easy_install 安装的supervisor运行supervisord 运行：</p>
+<p>supervisord</p>
+<p><strong>4：web界面操作</strong></p>
+<p>需要在supervisor的配置文件里添加[inet_http_server]选项组：之后可以通过<a href="http://10.211.55.11:9001来访问控制子线程的管理。">http://10.211.55.11:9001来访问控制子线程的管理。</a></p>
+<p>[inet_http_server]<br>port&#x3D;10.211.55.11:9001<br>username&#x3D;user<br>password&#x3D;123</p>
+<p>效果：</p>
+<p><img src="https://images2015.cnblogs.com/blog/163084/201611/163084-20161118021632920-889244058.png"></p>
+<p><strong><a href="http://supervisord.org/running.html#running-supervisorctl">5：子进程管理</a>(supervisorctl)</strong> </p>
+<ol>
+<li>查看所有子进程的状态：</li>
+</ol>
+<p># <strong>supervisorctl status</strong><br>blog                             RUNNING    pid 2395, uptime 0:08:41<br>zhoujy                           RUNNING    pid 2396, uptime 0:08:41</p>
+<p>2）关闭、开启指定的子进程：</p>
+<p># <strong>supervisorctl stop zhoujy</strong><br>zhoujy: stopped</p>
+<h1 id="supervisorctl-start-zhoujy"><a href="#supervisorctl-start-zhoujy" class="headerlink" title="supervisorctl start zhoujy"></a><strong>supervisorctl start zhoujy</strong></h1><p>zhoujy: started</p>
+<p>3）关闭、开启所有的子进程：</p>
+<p># <strong>supervisorctl stop all</strong><br>blog: stopped<br>zhoujy: stopped</p>
+<h1 id="supervisorctl-start-all"><a href="#supervisorctl-start-all" class="headerlink" title="supervisorctl start all"></a><strong>supervisorctl start all</strong></h1><p>blog: started<br>zhoujy: started</p>
+<p>4）：其他参数：supervisor开启后子进程自动开启（<strong>autostart&#x3D;true</strong>）和子进程退出后自动启动（<strong>autorestart&#x3D;ture</strong>）</p>
+<p>更多的参数可以看<a href="http://supervisord.org/configuration.html">官方文档</a>和<a href="http://lixcto.blog.51cto.com/4834175/1539136">supervisor(一)基础篇</a>的说明。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>我们需要的功能在上面介绍的supervisor的基本功能中已经实现，supervisor还有其他的一些功能：如进程组、web页面管理子进程、监控子线程情况等等，更多的信息可以去<a href="http://supervisord.org/">官网</a>上查看。</p>
+<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p><a href="http://supervisord.org/">Supervisor官方文档</a></p>
+<p><a href="http://lixcto.blog.51cto.com/4834175/1539136">Supervisor(一)基础篇</a></p>
+<p><a href="http://lixcto.blog.51cto.com/4834175/1540169" title="supervisor(二)event">Supervisor(二)event</a></p>
+<p><a href="http://lixcto.blog.51cto.com/4834175/1540795" title="supervisor(三)xml_rpc">Supervisor(三)xml_rpc</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书笔记 -《架构修炼之道》</title>
+    <url>/2019/06/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E6%9E%B6%E6%9E%84%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B/</url>
+    <content><![CDATA[<h1 id="一-网关之道"><a href="#一-网关之道" class="headerlink" title="一.网关之道"></a>一.网关之道</h1><ol>
+<li>API网关：将所有API的调用统一接入API网关层，由网关负责输入和输出。有了API网关之后，各个API服务提供团队可以专注于自己的业务逻辑处理，而API网关专注于安全、流量、路由等问题。</li>
+<li>代理与API网关的区别：代理是纯粹的数据透传，协议不会发生变化，而网关在数据透传的背景下，还会涉及协议的转换。</li>
+<li>API网关的基本功能包括统一接入、协议适配、流量管控与容错，以及安全防护。</li>
+<li>设计API的时候常用的工具有RAML、Swagger，这两个工具都可以辅助我们设计API和生成API文档。</li>
+<li>API网关的基石：泛化调用。泛化调用与普通RPC调用的区别在于不需要接口提供者的客户端JAR包了。</li>
+<li>在API网关中引入管道的概念。将参数校验、黑白名单、限流控制、接口调用等封装成一个个管道，并且按顺序组织起来。管道技术是责任链模式的一种思维演化。</li>
+<li>管道技术与责任链模式的区别在于管道技术更加灵活，它是由我们自定义的一种方式，责任链的使用方式则相对受限。</li>
+<li>网关分为同步网关、半同步网关、全异步网关。同步网关是指，从接收请求到调用API接口提供方的过程都是同步调用；半同步是指将I&#x2F;O请求线程和业务处理线程分开，但业务线程还是同步调用API接口。</li>
+<li>API网关有两大特点：访问量大、依赖系统多。所以建议网关系统进行脱库操作，直接使用缓存。</li>
+<li>同步和异步怎么区分呢？使用一个线程干完的事情都是同步的，有线程切换才能完成的事情都是异步的。</li>
+<li>一般RPC异步模式都是使用队列或Map来实现，然后用一个事件循环线程不停地轮询队列事件。</li>
+<li>热更新：凡是不需要应用服务器就能改变程序对象的属性值的行为。热更新是一种思想，常用的热更新的方法有MQ方式、RPC方式和ZooKeeper方式。</li>
+<li>网关有七种武器：降级、限流、熔断、线程池隔离、管道技术、配置热更新、异步。</li>
+</ol>
+<h1 id="二-分布式之道"><a href="#二-分布式之道" class="headerlink" title="二. 分布式之道"></a>二. 分布式之道</h1><ol>
+<li>分布式事务：ACID，A(Atomicity)原子性,C(Consistency)一致性,I(Isolation)隔离性,D(Durability)持续性。CAP C(Consistency)一致性，A(Availability)可用性，P(Tolerance of network Partition)分区容错性。CAP不能同时满足的主要原因是存在网路故障。人们在研究CAP定理的时候，演化出了BASE理论。BASE是指基本可用(Basically Available)、软状态(Soft State)和最终一致性(Eventual Consistency)。</li>
+<li>基本可用：分布式系统出现故障的时候，允许损失一部分可用性，拿响应时间和功能上的损失来换取可用性。比如大促的时候，访问量非常大，可以对于一些不重要的功能做降级处理，同时在响应时间上做放宽现在来保证可用。</li>
+<li>软状态：也叫弱状态或柔性状态，比如订单系统，在下单完进行支付的过程中，我们可以让页面显示”支付中“，等待支付系统彻底同步数据，订单系统才显示<br>支付完成。允许系统存在中间状态，这个中间状态又不会影响系统整体可用性。在比如，数据库读写分离，写库同步到读库，会有一个延时，这个也是一种柔性状态。</li>
+<li>最终一致性：在允许出现中间状态的情况下，经过一段时间之后，各项数据状态才最终达到一致。</li>
+<li>互联网系统最核心的需求是高可用性，所以对于分布式事务，一般不按照老的两段式提交来实现，而会采用BASE理论的方式实现分布式事务来保证系统的性能和业务数据的最终一致性。</li>
+</ol>
+<h1 id="三-MQ之道"><a href="#三-MQ之道" class="headerlink" title="三.MQ之道"></a>三.MQ之道</h1><ol>
+<li>数据异构：把数据按需(数据结构、存取方式、存取形式)进行异地构建存储。把数据异构到Elasticsearch、Solr中要解决的问题跟按照多维度来查询的需求差不多，这些存储天然都有聚合的功能。同时还可以提高查询性能，以应对大访问量的请求。</li>
+<li>数据异构的常用方法：完整克隆、标记同步、binlog方式、MQ方式。</li>
+</ol>
+<h1 id="四-微服务之道"><a href="#四-微服务之道" class="headerlink" title="四.微服务之道"></a>四.微服务之道</h1><ol>
+<li>分布式与微服务的区别：分布式侧重于分摊压力，而微服务侧重于业务架构的解耦。或者说，分布式侧重于分散压力，微服务侧重于分散能力。集群是物理形态，分布式是工作方式，微服务是一种架构风格。</li>
+<li>从早先单体应用的代码依赖，到微服务的通信依赖，我们不得不考虑以下问题：网路延迟、分布式事务、异步消息等。研发一个系统不是最困难的，治理一个系统才是最复杂的工作。</li>
+</ol>
+<h1 id="五-容错之道"><a href="#五-容错之道" class="headerlink" title="五.容错之道"></a>五.容错之道</h1><ol>
+<li>熔断器(breaker)工作原理：系统在运行过程中定时向对应的熔断器报告成功、失败、超时和拒绝的状态，熔断器维护计算统计的数据，根据这些统计的信息来确定熔断器是否打开。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>追MM与设计模式（23种设计模式巧妙解析，趣味理解）</title>
+    <url>/2019/07/16/%E8%BF%BDmm%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8823%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%B7%A7%E5%A6%99%E8%A7%A3%E6%9E%90%EF%BC%8C%E8%B6%A3%E5%91%B3%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<p><strong>创建型模式</strong></p>
+<p>1、FACTORY—追MM少不了请吃饭了，麦当劳的鸡翅和肯德基的鸡翅都是MM爱吃的东西，虽然口味有所不同，但不管你带MM去麦当劳或肯德基，只管向服务员说“来四个鸡翅”就行了。麦当劳和肯德基就是生产鸡翅的Factory</p>
+<p><strong>工厂模式：</strong>客户类和工厂类分开。消费者任何时候需要某种产品，只需向工厂请求即可。消费者无须修改就可以接纳新产品。缺点是当产品修改时，工厂类也要做相应的修改。如：如何创建及如何向客户端提供。</p>
+<p>2、BUILDER—MM最爱听的就是“我爱你”这句话了，见到不同地方的MM,要能够用她们的方言跟她说这句话哦，我有一个多种语言翻译机，上面每种语言都有一个按键，见到MM我只要按对应的键，它就能够用相应的语言说出“我爱你”这句话了，国外的MM也可以轻松搞掂，这就是我的“我爱你”builder。（这一定比美军在伊拉克用的翻译机好卖）</p>
+<p><strong>建造模式：</strong>将产品的内部表象和产品的生成过程分割开来，从而使一个建造过程生成具有不同的内部表象的产品对象。建造模式使得产品内部表象可以独立的变化，客户不必知道产品内部组成的细节。建造模式可以强制实行一种分步骤进行的建造过程。</p>
+<p>3、FACTORY METHOD—请MM去麦当劳吃汉堡，不同的MM有不同的口味，要每个都记住是一件烦人的事情，我一般采用Factory Method模式，带着MM到服务员那儿，说“要一个汉堡”，具体要什么样的汉堡呢，让MM直接跟服务员说就行了。</p>
+<p><strong>工厂方法模式：</strong>核心工厂类不再负责所有产品的创建，而是将具体创建的工作交给子类去做，成为一个抽象工厂角色，仅负责给出具体工厂类必须实现的接口，而不接触哪一个产品类应当被实例化这种细节。</p>
+<p>4、PROTOTYPE—跟MM用QQ聊天，一定要说些深情的话语了，我搜集了好多肉麻的情话，需要时只要copy出来放到QQ里面就行了，这就是我的情话prototype了。（100块钱一份，你要不要）</p>
+<p><strong>原始模型模式：</strong>通过给出一个原型对象来指明所要创建的对象的类型，然后用复制这个原型对象的方法创建出更多同类型的对象。原始模型模式允许动态的增加或减少产品类，产品类不需要非得有任何事先确定的等级结构，原始模型模式适用于任何的等级结构。缺点是每一个类都必须配备一个克隆方法。</p>
+<p>5、SINGLETON—俺有6个漂亮的老婆，她们的老公都是我，我就是我们家里的老公Sigleton，她们只要说道“老公”，都是指的同一个人，那就是我(刚才做了个梦啦，哪有这么好的事)</p>
+<p><strong>单例模式：</strong>单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例单例模式。单例模式只应在有真正的“单一实例”的需求时才可使用。</p>
+<p><strong>结构型模式</strong></p>
+<p>6、ADAPTER—在朋友聚会上碰到了一个美女Sarah，从香港来的，可我不会说粤语，她不会说普通话，只好求助于我的朋友kent了，他作为我和Sarah之间的Adapter，让我和Sarah可以相互交谈了(也不知道他会不会耍我)</p>
+<p><strong>适配器（变压器）模式：</strong>把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口原因不匹配而无法一起工作的两个类能够一起工作。适配类可以根据参数返还一个合适的实例给客户端。</p>
+<p>7、BRIDGE—早上碰到MM，要说早上好，晚上碰到MM，要说晚上好；碰到MM穿了件新衣服，要说你的衣服好漂亮哦，碰到MM新做的发型，要说你的头发好漂亮哦。不要问我“早上碰到MM新做了个发型怎么说”这种问题，自己用BRIDGE组合一下不就行了</p>
+<p><strong>桥梁模式：</strong>将抽象化与实现化脱耦，使得二者可以独立的变化，也就是说将他们之间的强关联变成弱关联，也就是指在一个软件系统的抽象化和实现化之间使用组合&#x2F;聚合关系而不是继承关系，从而使两者可以独立的变化。</p>
+<p>8、COMPOSITE—Mary今天过生日。“我过生日，你要送我一件礼物。”“嗯，好吧，去商店，你自己挑。”“这件T恤挺漂亮，买，这条裙子好看，买，这个包也不错，买。”“喂，买了三件了呀，我只答应送一件礼物的哦。”“什么呀，T恤加裙子加包包，正好配成一套呀，小姐，麻烦你包起来。”“……”，MM都会用Composite模式了，你会了没有？</p>
+<p><strong>合成模式：</strong>合成模式将对象组织到树结构中，可以用来描述整体与部分的关系。合成模式就是一个处理对象的树结构的模式。合成模式把部分与整体的关系用树结构表示出来。合成模式使得客户端把一个个单独的成分对象和由他们复合而成的合成对象同等看待。</p>
+<p>9、DECORATOR—Mary过完轮到Sarly过生日，还是不要叫她自己挑了，不然这个月伙食费肯定玩完，拿出我去年在华山顶上照的照片，在背面写上“最好的的礼物，就是爱你的Fita”，再到街上礼品店买了个像框（卖礼品的MM也很漂亮哦），再找隔壁搞美术设计的Mike设计了一个漂亮的盒子装起来……，我们都是Decorator，最终都在修饰我这个人呀，怎么样，看懂了吗？</p>
+<p><strong>装饰模式：</strong>装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案，提供比继承更多的灵活性。动态给一个对象增加功能，这些功能可以再动态的撤消。增加由一些基本功能的排列组合而产生的非常大量的功能。</p>
+<p>10、FACADE—我有一个专业的Nikon相机，我就喜欢自己手动调光圈、快门，这样照出来的照片才专业，但MM可不懂这些，教了半天也不会。幸好相机有Facade设计模式，把相机调整到自动档，只要对准目标按快门就行了，一切由相机自动调整，这样MM也可以用这个相机给我拍张照片了。</p>
+<p><strong>门面模式：</strong>外部与一个子系统的通信必须通过一个统一的门面对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。每一个子系统只有一个门面类，而且此门面类只有一个实例，也就是说它是一个单例模式。但整个系统可以有多个门面类。</p>
+<p>11、FLYWEIGHT—每天跟MM发短信，手指都累死了，最近买了个新手机，可以把一些常用的句子存在手机里，要用的时候，直接拿出来，在前面加上MM的名字就可以发送了，再不用一个字一个字敲了。共享的句子就是Flyweight，MM的名字就是提取出来的外部特征，根据上下文情况使用。</p>
+<p><strong>享元模式：</strong>FLYWEIGHT在拳击比赛中指最轻量级。享元模式以共享的方式高效的支持大量的细粒度对象。享元模式能做到共享的关键是区分内蕴状态和外蕴状态。内蕴状态存储在享元内部，不会随环境的改变而有所不同。外蕴状态是随环境的改变而改变的。外蕴状态不能影响内蕴状态，它们是相互独立的。将可以共享的状态和不可以共享的状态从常规类中区分开来，将不可以共享的状态从类里剔除出去。客户端不可以直接创建被共享的对象，而应当使用一个工厂对象负责创建被共享的对象。享元模式大幅度的降低内存中对象的数量。</p>
+<p>12、PROXY—跟MM在网上聊天，一开头总是“hi,你好”,“你从哪儿来呀？”“你多大了？”“身高多少呀？”这些话，真烦人，写个程序做为我的Proxy吧，凡是接收到这些话都设置好了自动的回答，接收到其他的话时再通知我回答，怎么样，酷吧。</p>
+<p><strong>代理模式：</strong>代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用。代理就是一个人或一个机构代表另一个人或者一个机构采取行动。某些情况下，客户不想或者不能够直接引用一个对象，代理对象可以在客户和目标对象直接起到中介的作用。客户端分辨不出代理主题对象与真实主题对象。代理模式可以并不知道真正的被代理对象，而仅仅持有一个被代理对象的接口，这时候代理对象不能够创建被代理对象，被代理对象必须有系统的其他角色代为创建并传入。</p>
+<p><strong>行为模式</strong></p>
+<p>13、CHAIN OF RESPONSIBLEITY—晚上去上英语课，为了好开溜坐到了最后一排，哇，前面坐了好几个漂亮的MM哎，找张纸条，写上“Hi,可以做我的女朋友吗？如果不愿意请向前传”，纸条就一个接一个的传上去了，糟糕，传到第一排的MM把纸条传给老师了，听说是个老处女呀，快跑!</p>
+<p><strong>责任链模式：</strong>在责任链模式中，很多对象由每一个对象对其下家的引用而接</p>
+<p>起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。客户并不知道链上的哪一个对象最终处理这个请求，系统可以在不影响客户端的情况下动态的重新组织链和分配责任。处理者有两个选择：承担责任或者把责任推给下家。一个请求可以最终不被任何接收端对象所接受。</p>
+<p>14、COMMAND—俺有一个MM家里管得特别严，没法见面，只好借助于她弟弟在我们俩之间传送信息，她对我有什么指示，就写一张纸条让她弟弟带给我。这不，她弟弟又传送过来一个COMMAND，为了感谢他，我请他吃了碗杂酱面，哪知道他说：“我同时给我姐姐三个男朋友送COMMAND，就数你最小气，才请我吃面。”，:-(</p>
+<p><strong>命令模式：</strong>命令模式把一个请求或者操作封装到一个对象中。命令模式把发出命令的责任和执行命令的责任分割开，委派给不同的对象。命令模式允许请求的一方和发送的一方独立开来，使得请求的一方不必知道接收请求的一方的接口，更不必知道请求是怎么被接收，以及操作是否执行，何时被执行以及是怎么被执行的。系统支持命令的撤消。</p>
+<p>15、INTERPRETER—俺有一个《泡MM真经》，上面有各种泡MM的攻略，比如说去吃西餐的步骤、去看电影的方法等等，跟MM约会时，只要做一个Interpreter，照着上面的脚本执行就可以了。</p>
+<p><strong>解释器模式：</strong>给定一个语言后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。客户端可以使用这个解释器来解释这个语言中的句子。解释器模式将描述怎样在有了一个简单的文法后，使用模式设计解释这些语句。在解释器模式里面提到的语言是指任何解释器对象能够解释的任何组合。在解释器模式中需要定义一个代表文法的命令类的等级结构，也就是一系列的组合规则。每一个命令对象都有一个解释方法，代表对命令对象的解释。命令对象的等级结构中的对象的任何排列组合都是一个语言。</p>
+<p>16、ITERATOR—我爱上了Mary，不顾一切的向她求婚。</p>
+<p>Mary：“想要我跟你结婚，得答应我的条件”</p>
+<p>我：“什么条件我都答应，你说吧”</p>
+<p>Mary：“我看上了那个一克拉的钻石”</p>
+<p>我：“我买，我买，还有吗？”</p>
+<p>Mary：“我看上了湖边的那栋别墅”</p>
+<p>我：“我买，我买，还有吗？”</p>
+<p>Mary：“你的小弟弟必须要有50cm长”</p>
+<p>我脑袋嗡的一声，坐在椅子上，一咬牙：“我剪，我剪，还有吗？”</p>
+<p>……</p>
+<p><strong>迭代子模式：</strong>迭代子模式可以顺序访问一个聚集中的元素而不必暴露聚集的内部表象。多个对象聚在一起形成的总体称之为聚集，聚集对象是能够包容一组对象的容器对象。迭代子模式将迭代逻辑封装到一个独立的子对象中，从而与聚集本身隔开。迭代子模式简化了聚集的界面。每一个聚集对象都可以有一个或一个以上的迭代子对象，每一个迭代子的迭代状态可以是彼此独立的。迭代算法可以独立于聚集角色变化。</p>
+<p>17、MEDIATOR—四个MM打麻将，相互之间谁应该给谁多少钱算不清楚了，幸亏当时我在旁边，按照各自的筹码数算钱，赚了钱的从我这里拿，赔了钱的也付给我，一切就OK啦，俺得到了四个MM的电话。</p>
+<p><strong>调停者模式：</strong>调停者模式包装了一系列对象相互作用的方式，使得这些对象不必相互明显作用。从而使他们可以松散偶合。当某些对象之间的作用发生改变时，不会立即影响其他的一些对象之间的作用。保证这些作用可以彼此独立的变化。调停者模式将多对多的相互作用转化为一对多的相互作用。调停者模式将对象的行为和协作抽象化，把对象在小尺度的行为上与其他对象的相互作用分开处理。</p>
+<p>18、MEMENTO—同时跟几个MM聊天时，一定要记清楚刚才跟MM说了些什么话，不然MM发现了会不高兴的哦，幸亏我有个备忘录，刚才与哪个MM说了什么话我都拷贝一份放到备忘录里面保存，这样可以随时察看以前的记录啦。</p>
+<p><strong>备忘录模式：</strong>备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捉住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。</p>
+<p>19、OBSERVER—想知道咱们公司最新MM情报吗？加入公司的MM情报邮件组就行了，tom负责搜集情报，他发现的新情报不用一个一个通知我们，直接发布给邮件组，我们作为订阅者（观察者）就可以及时收到情报啦</p>
+<p><strong>观察者模式：</strong>观察者模式定义了一种一队多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使他们能够自动更新自己。</p>
+<p>20、STATE—跟MM交往时，一定要注意她的状态哦，在不同的状态时她的行为会有不同，比如你约她今天晚上去看电影，对你没兴趣的MM就会说“有事情啦”，对你不讨厌但还没喜欢上的MM就会说“好啊，不过可以带上我同事么？”，已经喜欢上你的MM就会说“几点钟？看完电影再去泡吧怎么样？”，当然你看电影过程中表现良好的话，也可以把MM的状态从不讨厌不喜欢变成喜欢哦。</p>
+<p><strong>状态模式：</strong>状态模式允许一个对象在其内部状态改变的时候改变行为。这个对象看上去象是改变了它的类一样。状态模式把所研究的对象的行为包装在不同的状态对象里，每一个状态对象都属于一个抽象状态类的一个子类。状态模式的意图是让一个对象在其内部状态改变的时候，其行为也随之改变。状态模式需要对每一个系统可能取得的状态创立一个状态类的子类。当系统的状态变化时，系统便改变所选的子类。</p>
+<p>21、STRATEGY—跟不同类型的MM约会，要用不同的策略，有的请电影比较好，有的则去吃小吃效果不错，有的去海边浪漫最合适，单目的都是为了得到MM的芳心，我的追MM锦囊中有好多Strategy哦。</p>
+<p><strong>策略模式：</strong>策略模式针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。策略模式把行为和环境分开。环境类负责维持和查询行为类，各种算法在具体的策略类中提供。由于算法和环境独立开来，算法的增减，修改都不会影响到环境和客户端。</p>
+<p>22、TEMPLATE METHOD——看过《如何说服女生上床》这部经典文章吗？女生从认识到上床的不变的步骤分为巧遇、打破僵局、展开追求、接吻、前戏、动手、爱抚、进去八大步骤(Template method)，但每个步骤针对不同的情况，都有不一样的做法，这就要看你随机应变啦(具体实现)；</p>
+<p><strong>模板方法模式：</strong>模板方法模式准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先制定一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p>
+<p>23、VISITOR—情人节到了，要给每个MM送一束鲜花和一张卡片，可是每个MM送的花都要针对她个人的特点，每张卡片也要根据个人的特点来挑，我一个人哪搞得清楚，还是找花店老板和礼品店老板做一下Visitor，让花店老板根据MM的特点选一束花，让礼品店老板也根据每个人特点选一张卡，这样就轻松多了；</p>
+<p><strong>访问者模式：</strong>访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构可以保持不变。访问者模式适用于数据结构相对未定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由的演化。访问者模式使得增加新的操作变的很容易，就是增加一个新的访问者类。访问者模式将有关的行为集中到一个访问者对象中，而不是分散到一个个的节点类中。当使用访问者模式时，要将尽可能多的对象浏览逻辑放在访问者类中，而不是放到它的子类中。访问者模式可以跨过几个类的等级结构访问属于不同的等级结构的成员类。</p>
+]]></content>
+      <categories>
+        <category>软件工程</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>间歇性努力的人，持续性一事无成</title>
+    <url>/2021/03/16/%E9%97%B4%E6%AD%87%E6%80%A7%E5%8A%AA%E5%8A%9B%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%8C%81%E7%BB%AD%E6%80%A7%E4%B8%80%E4%BA%8B%E6%97%A0%E6%88%90/</url>
+    <content><![CDATA[<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/546b42a8ac5746e593fedc930d218ca6.jpeg"></p>
+<p>昙花一现的努力，都是伪努力。</p>
+<p>01</p>
+<p>工作上认识个老哥，四十多岁，有意思的人。</p>
+<p>他在一线门户做过电商一把手，后来出来单干，又经历过两次创业。</p>
+<p>无论职业经理人，还是创业当老板，他保持着每周工作 100 小时以上的习惯。</p>
+<p>和他喝过了一次酒，发现个有趣的事情：在如此高强度的工作状态下，他却从来没感到过“痛苦，难受，度日如年”。</p>
+<p>创业之路，百转千回，困难挫折如同家常便饭，但他的目光并没因此暗淡。他相信，“人生本来就是由开心和不开心串起来的”。</p>
+<p>老哥的事业做得不小。但他有一件特质，尤其吸引我的注意：努力常态化。</p>
+<p>这点特质，在我认识的许多大牛身上都能看见。你看他们：</p>
+<p>大年初二的早晨，坐到桌前写方案；</p>
+<p>年会狂欢结束后，回到办公室改合同；</p>
+<p>高铁上、机场里，用手机写稿子，回邮件。</p>
+<blockquote>
+<p><strong>他们不会觉得以上这些有多了不起；</strong></p>
+<p><strong>他们不会被自己“熬夜一次”而感动；</strong></p>
+<p><strong>他们也不会把这些发到朋友圈里，然后在旁边写上“我也是挺拼的”。</strong></p>
+</blockquote>
+<p>这些努力，不需要心理建设，不需要自我说服，不需要意志力驱动。</p>
+<p>这些努力，是潜意识中的自发行为，是肌肉记忆的习惯动作。</p>
+<p>在我的视角里，这些点点滴滴、无人关注的努力，才是真努力。</p>
+<p><strong>常态化的努力，才是真努力。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/6a2dc53523cb41a9a9590385eb7f93f7.jpeg"></p>
+<p>02</p>
+<p>常态化努力的对面，是间歇式努力。</p>
+<p>你办了一张健身卡，决心重塑自己的身体和生活。 1 月 1 日开始，12 月 31 日到期，中间只去过两次。</p>
+<p>你买了英语六级的单词书，占了图书馆的座位，雄心勃勃要大干一场。最后脑子里，除了对 abandon 滚瓜烂熟，什么也没留下。</p>
+<p>你朝九晚五地上班，你浑浑噩噩地过活。你觉得百无聊赖，看不到生活的希望。你决定每天下班回家后，拿出两个小时充电和学习……</p>
+<p>回家的那一瞬间，着了魔一样，懒神附体：凌云壮志滚一边去，打开电视，端上平板，舒服窝在沙发里。</p>
+<p>你的生活特别像那本六级单词书：书的前一小段被翻看了无数次，页角都皱了；但后边的内容，崭新如初，少有触及。</p>
+<p>这似乎是微不足道的小事，但却又关乎成败的大事。</p>
+<p>这些细节， 折射出的是努力的属性。努力常态化是牛逼与否的分水岭，各自延伸出的，是截然不同的轨迹。</p>
+<p>多数人只是在热血和堕落间徘徊：<strong>一段时间，猛冲猛打，自己感动哭了；一段时间，懒散放纵，行尸走肉一般。</strong></p>
+<p>我相信，每个人都努力过：都有过热血沸腾、立誓发狠的时候，都有过奋进狂飙、强力输出的经历。</p>
+<p>然而，平庸和杰出之所以泾渭分明，那是因为，平庸者的努力是碎片化的、不成系统的，走走停停，断断续续。</p>
+<p>我们有时候会想，“我都努力过了，为什么还是没得到好运气”。实际上，努力不是重点，常态化才是关键。</p>
+<p><strong>昙花一现的努力，都是伪努力。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/1249308917f34a6f94880524a9c02416.jpeg"></p>
+<p>03</p>
+<p>高中时，同桌和我的关系，类似于皇马巴萨。</p>
+<p>他是最令我胆寒的人：下午期末考试完毕，晚上还默默去自习——我的竞对啊，连半天都不让人休息。我心都要碎了。</p>
+<p>可怕之处在于，他风轻云淡，面沉似水。一切发生的如此自然，不需自我说服，不需心理建设……我能怎么办？我也很绝望啊。</p>
+<p>努力常态化的人最可怕：对这些人来说，努力不是一项需要分配的工作，而是自然发生的事情。不管有喜恶高低、状态好坏，他们能随时进入角色，在过程中找到感觉和快乐。</p>
+<p>普通人最大的问题是：干活看心情。状态不好，身体微恙，就不干活了？不存在的。这么娇贵，哪里是成事的样子。你玩王者荣耀，刷微信淘宝，需要心理建设么，需要状态好么？</p>
+<p>当年彭德怀在左权县召集干部会议，与会者饿得连坐都不稳，彭将军只好请大家躺在炕上开会——画面虽然醉人，这才是成事的状态啊。</p>
+<p>你当兵打仗，事情来了，你说我今天心情不好。那你不做炮灰谁做炮灰啊。</p>
+<p>圈里有句黑话：小姐不能有了性欲才接客；作者不能有了灵感才写字。</p>
+<p>话糙了点，但是这个理。</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/87d09e9dada34837996b172b1043fe17.jpeg"></p>
+<p>04</p>
+<p>顺丰这些年高歌猛进，气势如虹，和老板王卫的职业习惯不无关系：</p>
+<p>创业二十年，每天工作 14 小时是太正常的事。王是很有危机感的人，三个月没有变革创新，就会觉得危机四伏。</p>
+<p>地产大佬罗康瑞是瑞安集团的主席，也是含着金钥匙出生的富二代。</p>
+<p>罗的崛起，可不光靠家里：大学毕业，找家里借了十万块，整整七年，每天工作十几个小时，没有一天休息……于是才崭露头角，小有名声。</p>
+<p>朋友在广州面试了几家游戏公司，都是要求一周上六天班，每天朝九晚九，而且这是广州行业常态。</p>
+<p>你以为你很努力了，可在别人眼中只是基本工作要求而已。广东的游戏做的那么好，奖金发那么多，有它的基础逻辑。</p>
+<p>都说勤能补拙，更何况人家”拙”么？</p>
+<p>大学同学就职于经纬中国。 他有绚丽的履历和出众的能力，情智双高，犀利通透。</p>
+<p>安逸不在他的字典里：“除了吃喝拉撒，经纬是我生活的全部”…… 看了他的状态，多少能理解经纬的牛逼了。</p>
+<p>我不是“工作玩命”的拥趸，我厌恶“要成功，先发疯”之类的毒鸡汤。</p>
+<p>我认为，任何透支身体去工作的行为都是不明智、不值得的……</p>
+<p>但实际情况是，对于多数创业者来说，不经历 5 至 8 年、每周 7×12 小时的创业奋斗很难有大成；一个草根，想在北京有所成就，每周 60 个小时的工作量是标准配置。</p>
+<p>5×8 小时的时间表，远远不足以支撑你出人头地的。</p>
+<p>你家境平平、智商普通，你只是玩玩打打、优哉游哉地做一做，就想成功，凭什么？我不认为那个运气万里挑一的人是你。</p>
+<p>刚加了两次班，就觉好感爆棚、天下在手，这样的人注定没有出息。</p>
+<p>工作时间是表象，它的本质是努力常态化。它保证不了你成功，它只是基本配置。</p>
+<p>它需要你坚持不懈，需要数年一日，需要持续输出，需要你有坚如磐石的耐心。</p>
+<p><strong>有多大耐心，才配得上多大野心。没毛病。</strong></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20180926/5ce0b2f99c0a425d96ce715e95152f56.jpeg"></p>
+<p>05</p>
+<p>这是个浮躁的时代。在这个时代，努力无用的论调，变得非常受欢迎。</p>
+<p>我们说，“人的命运，不光依靠个人努力，也要依赖历史进程”。话虽如此，但不能抹杀了努力的意义。</p>
+<p>努力无用也好，阶级固化也罢，多数时候，是不努力者的借口。一个人，连力气都没有用尽，还谈什么方法、理想和人生？</p>
+<p>在我的公式里：<strong>成就 &#x3D; 天赋 × 运气 × 努力。</strong></p>
+<p>其中，只有努力是我们唯一能掌控的东西。</p>
+<p>努力当然是有用的，扪心自问，你做 12 个小时是不是就比 8 个小时更有产出？如果不是，那你也太弱了，别折腾了，找个地方养老吧。</p>
+<p>这里的努力，不是一天两天，不是一月两月，甚至可能要一两年才能看出端倪。</p>
+<p>可惜大多数人在回报来临之前，选择了放弃。努力一两下就有回报？哪有这样的好事。生孩子都要十个月。</p>
+<p>我们总认为付出够多，得到太少。</p>
+<p>其实，还是付出的不够：一般的，把付出打一折，才是自己应该得到的。天地不仁以万物为刍狗，这才符合世界运行的规律。</p>
+<p>持续而稳定的输出十分重要：拆开来看，只是一件件的小事；时间长远，便是天与地的距离。这就是努力常态的意义：</p>
+<p><strong>当努力的因子融入你的血液，当努力对你根本不算一个要求，相信我，你会看到一个新的世界、新的自己。</strong></p>
+]]></content>
+      <categories>
+        <category>成长</category>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>生活</tag>
       </tags>
   </entry>
   <entry>
